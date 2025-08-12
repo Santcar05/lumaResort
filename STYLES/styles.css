@@ -31,6 +31,7 @@ header {
   align-items: center;
   justify-items: center;
   padding: 10px;
+  padding-bottom: 0;
   background-color: #c2dded;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -83,9 +84,8 @@ header nav ul {
 header nav ul li,
 input,
 button {
-  background-color: #58b9f4; /* Color celeste como en la imagen */
-  padding: 10px 25px; /* Espaciado interno */
-  border-radius: 999px; /* Hace el óvalo */
+  background-color: none; /* Color celeste como en la imagen */
+  padding: 20px; /* Espaciado interno */
   transition: background-color 0.3s ease;
   border: none; /* Sin borde */
 }

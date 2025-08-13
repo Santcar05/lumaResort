@@ -809,7 +809,7 @@ textarea {
 
 .footer-section a {
   margin: 0 8px;
-  font-size: 1.5em;
+  font-size: 2em;
   color: #123c78;
   text-decoration: none;
   transition: transform 0.3s ease, color 0.3s ease;
@@ -818,4 +818,41 @@ textarea {
 .footer-section a:hover {
   color: #0a2a57;
   transform: scale(1.2);
+}
+
+/* Bajar redes sociales y contacto */
+.redes-sociales,
+.footer-section {
+  margin-top: 20px;
+}
+
+/* Contenedor del título con icono y texto */
+.contact-title {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centra horizontalmente */
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.contact-title i {
+  font-size: 1em;
+  color: #123c78;
+}
+
+.contact-title span {
+  font-size: 16px;
+  font-weight: bold;
+  color: #123c78;
+}
+
+/* Información de contacto centrada */
+.contact-info {
+  text-align: center;
+}
+
+.contact-info p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #123c78;
 }

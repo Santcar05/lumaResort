@@ -229,27 +229,92 @@ button:hover,
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  color: black;
+  color: rgb(82, 62, 43);
   text-align: center;
   background-size: cover;
   background-position: center;
   overflow: hidden;
-  background-color: #c7ddf0;
+  background-color: #f5bf82;
   height: 90vh;
-  padding: 2rem;
-}
-.descubre div {
   width: 100%;
+  flex: 1 0 50%; /* Crece y encoge, base del 50% */
+}
+.descubre > div {
+  width: 50%;
+  height: 100%;
+}
+
+.descubre div h2 {
+  font-size: 3rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  margin-bottom: 40px;
+  color: rgb(78, 58, 41);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+#info_descubre {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgb(82, 62, 43);
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  background-color: #f5bf82;
+  height: 90vh;
+  width: 100%;
+  flex: 1 0 50%; /* Crece y encoge, base del 50% */
+}
+
+#info_descubre > p {
+  font-size: 1.5rem;
+  text-align: justify;
+  padding: 0 30px;
+}
+
+.descubre > div > p {
+  font-size: 1.5rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  margin-bottom: 40px;
+  color: rgb(78, 58, 41);
+  text-align: center;
+}
+
+.btn-container button {
+  background-color: #1a3d92;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.btn-container button:hover {
+  background-color: #14407a;
+  transform: scale(1.05);
+  transition: ease-in-out 0.3s;
 }
 
 .container {
-  padding: 2rem;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.super-contenedor {
+  height: 100%;
 }
 
 .slide-wrapper {
   position: relative;
-  max-width: 48rem;
+  /*max-width: 48rem;*/
   margin: 0 auto;
+  height: 100%;
 }
 
 .slider {
@@ -259,8 +324,8 @@ button:hover,
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   box-shadow: 0 1.5rem 3rem -0.75rem hsla(0, 0%, 0%, 0.25);
-  border-radius: 0.5rem;
   scrollbar-width: none;
+  height: 100%;
 }
 
 .slider::-webkit-scrollbar {
@@ -300,25 +365,30 @@ button:hover,
 
 .slide-container img {
   width: 100%;
-  height: 100%;
+  height: 102%;
   object-fit: cover;
+}
+
+.slider-wrapper {
+  height: 100%;
 }
 
 .slide-info {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 60%;
+  height: 102%;
   background: rgba(25, 52, 141, 0.9);
   color: white;
   padding: 20px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   opacity: 0;
   transition: opacity 0.3s ease;
-  border-radius: 0.5rem;
+  /*flex: 1 0 50%; */ /* Crece y encoge, base del 50% */
 }
 
 .slide-container:hover .slide-info {
@@ -339,6 +409,7 @@ button:hover,
   font-size: 1rem;
   line-height: 1.5;
   margin-bottom: 15px;
+  color: white;
 }
 
 .slide-info .precio {

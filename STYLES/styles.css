@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter';
+  font-family: "Inter";
 }
 
 /* Animación de entrada */
@@ -156,7 +156,7 @@ body {
 
 #buttonBanner {
   color: #f0f0f0;
-  font-family: 'Inter';
+  font-family: "Inter";
   font-size: 2em;
   font-weight: bold;
   padding: 10px 25px;
@@ -211,16 +211,16 @@ button:hover,
 
 @keyframes cambioImagenes {
   0% {
-    background-image: url('https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg');
+    background-image: url("https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg");
   }
   33.33% {
-    background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
+    background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e");
   }
   66.66% {
-    background-image: url('https://images.unsplash.com/photo-1493558103817-58b2924bce98');
+    background-image: url("https://images.unsplash.com/photo-1493558103817-58b2924bce98");
   }
   100% {
-    background-image: url('https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg');
+    background-image: url("https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg");
   }
 }
 /* Estilos existentes que se mantienen */
@@ -352,127 +352,8 @@ button:hover,
   font-size: 0.9rem;
   color: #e67e22;
 }
-/* ---------DISCOVER-----*/
-/*
-.carousel_discover {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-}
-#descubre {
-  text-align: center;
-  padding: 20px 0;
-  background: #c2dded;
-  font-weight: bold;
-  color: #1d3a8a;
-  font-size: 1.8rem;
-}
 
-#descubre .subtitulo {
-  max-width: 70%;
-  margin: 0 auto 30px;
-  color: #555;
-  width: 100%;
-  font-size: 1.2rem;
-}
-  */
-/*
-.carousel {
-  overflow: hidden;
-  width: 100%;
-  position: relative;
-}
-*/
-
-/*
-.cards-track {
-  display: flex;
-  flex-grow: 1;
-  animation: scroll 60s linear infinite;
-}
-
-.card {
-  flex: 0 0 calc(100% / 5);
-  box-sizing: border-box;
-  padding: 15px;
-  background: #19348d;
-  border-radius: 10px;
-  margin: 0 5px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-.card p {
-  color: white;
-  font-size: 20px;
-  margin-bottom: 5px;
-  text-align: justify;
-}
-
-.card img {
-  width: 100%;
-  border-radius: 10px;
-  height: 1px;
-}
-
-.rating {
-  font-size: 14px;
-  margin: 5px 0;
-}
-
-.precio {
-  font-weight: bold;
-  color: #c2dded;
-}
-
-.promo {
-  font-size: 16px;
-  color: #e67e22;
-}
-*/
-
-/* Animación: 3 tarjetas cada 10s */
-
-/*
-@keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(-200%);
-  }
-}
-
-.btn-container {
-  margin-top: 20px;
-}
-
-.btn-container button {
-  background-color: #1a3d92;
-  color: white;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 50px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.btn-container button:hover {
-  background-color: #14407a;
-}
-*/
 /*---------SERVICES-----*/
-
 #servicios {
   background-color: #8ac6f2;
   text-align: center;
@@ -885,7 +766,7 @@ textarea {
   background-color: #c7ddf0;
   text-align: center;
   padding: 30px 15px;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .footer-content {

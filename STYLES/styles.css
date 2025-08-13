@@ -223,8 +223,137 @@ button:hover,
     background-image: url('https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg');
   }
 }
+/* Estilos existentes que se mantienen */
+.descubre {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  background-color: #c7ddf0;
+  height: 90vh;
+  padding: 2rem;
+}
+.descubre div {
+  width: 100%;
+}
 
+.container {
+  padding: 2rem;
+}
+
+.slide-wrapper {
+  position: relative;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.slider {
+  display: flex;
+  aspect-ratio: 16/9;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  box-shadow: 0 1.5rem 3rem -0.75rem hsla(0, 0%, 0%, 0.25);
+  border-radius: 0.5rem;
+  scrollbar-width: none;
+}
+
+.slider::-webkit-scrollbar {
+  display: none;
+}
+
+.slider-nav {
+  display: flex;
+  column-gap: 1rem;
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.slider-nav a {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background-color: hsla(0, 0%, 100%, 0.5);
+  opacity: 0.5;
+  transition: opacity 250ms ease, background-color 250ms ease;
+  display: inline-block;
+}
+
+.slider-nav a:hover {
+  opacity: 1;
+}
+
+/* Nuevos estilos para la información al hover */
+.slide-container {
+  position: relative;
+  flex: 1 0 100%;
+  scroll-snap-align: start;
+}
+
+.slide-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(25, 52, 141, 0.9);
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 0.5rem;
+}
+
+.slide-container:hover .slide-info {
+  opacity: 1;
+}
+
+.slide-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.slide-info .rating {
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.slide-info p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.slide-info .precio {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #c2dded;
+  margin-top: auto;
+}
+
+.slide-info .promo {
+  font-size: 0.9rem;
+  color: #e67e22;
+}
 /* ---------DISCOVER-----*/
+/*
 .carousel_discover {
   position: relative;
   width: 100%;
@@ -255,6 +384,7 @@ button:hover,
   width: 100%;
   font-size: 1.2rem;
 }
+  */
 /*
 .carousel {
   overflow: hidden;
@@ -262,6 +392,8 @@ button:hover,
   position: relative;
 }
 */
+
+/*
 .cards-track {
   display: flex;
   flex-grow: 1;
@@ -287,7 +419,7 @@ button:hover,
 .card img {
   width: 100%;
   border-radius: 10px;
-  height: 150px;
+  height: 1px;
 }
 
 .rating {
@@ -304,8 +436,11 @@ button:hover,
   font-size: 16px;
   color: #e67e22;
 }
+*/
 
 /* Animación: 3 tarjetas cada 10s */
+
+/*
 @keyframes scroll {
   0% {
     transform: translateX(0);
@@ -335,7 +470,7 @@ button:hover,
 .btn-container button:hover {
   background-color: #14407a;
 }
-
+*/
 /*---------SERVICES-----*/
 
 #servicios {

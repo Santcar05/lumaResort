@@ -727,20 +727,57 @@ textarea {
 .footer {
   background-color: #c7ddf0;
   text-align: center;
-  padding: 20px 10px;
+  padding: 30px 15px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.footer-logo {
+  flex: 1 1 200px;
 }
 
 .footer-logo img {
-  width: 50px;
-  height: 50px;
-  display: block;
-  margin: 0 auto 10px;
+  width: 60px;
+  height: 60px;
   object-fit: cover;
   border-radius: 50%;
+  margin-bottom: 10px;
 }
 
-.footer p {
+.footer-logo p {
   font-size: 13px;
   color: #123c78;
   margin: 0;
+}
+
+.footer-section {
+  flex: 1 1 200px;
+}
+
+.footer-section p {
+  font-size: 14px;
+  color: #123c78;
+  margin-bottom: 10px;
+}
+
+.footer-section a {
+  margin: 0 8px;
+  font-size: 1.5em;
+  color: #123c78;
+  text-decoration: none;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: #0a2a57;
+  transform: scale(1.2);
 }

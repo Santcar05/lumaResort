@@ -927,3 +927,16 @@ textarea {
   font-size: 14px;
   color: #123c78;
 }
+
+/* Efecto hover para redes sociales y contacto */
+.redes-sociales a,
+.contact-title a {
+  display: inline-block;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.redes-sociales a:hover,
+.contact-title a:hover {
+  color: #0a2a57; /* Cambia el color */
+  transform: scale(1.2); /* Aumenta tamaño */
+}

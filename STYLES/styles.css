@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter';
+  font-family: "Inter";
 }
 
 /* Animación de entrada */
@@ -159,7 +159,7 @@ body {
 
 #buttonBanner {
   color: #f0f0f0;
-  font-family: 'Inter';
+  font-family: "Inter";
   font-size: 2em;
   font-weight: bold;
   padding: 10px 25px;
@@ -214,16 +214,16 @@ button:hover,
 
 @keyframes cambioImagenes {
   0% {
-    background-image: url('https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg');
+    background-image: url("https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg");
   }
   33.33% {
-    background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
+    background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e");
   }
   66.66% {
-    background-image: url('https://images.unsplash.com/photo-1493558103817-58b2924bce98');
+    background-image: url("https://images.unsplash.com/photo-1493558103817-58b2924bce98");
   }
   100% {
-    background-image: url('https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg');
+    background-image: url("https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg");
   }
 }
 /* Estilos existentes que se mantienen */
@@ -428,44 +428,52 @@ button:hover,
   color: #e67e22;
 }
 
-/*---------SERVICES-----*/
+/* ===== Sección Servicios ===== */
 #servicios {
-  background-color: #8ac6f2;
-  text-align: center;
+  background-color: #8ac6f2; /* Azul agua cristalina */
   padding: 50px 20px;
+  height: 90vh; /* Mantener la altura fija */
+  display: flex;
+  align-items: center;
 }
 
-#servicios h2 {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #1d3a8a;
-  margin-bottom: 10px;
-}
-
-#servicios .subtitulo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #1d3a8a;
-  margin-bottom: 10px;
-}
-
-#servicios .descripcion {
-  max-width: 900px;
-  margin: 0 auto 40px;
-  font-size: 1rem;
-  color: #1d3a8a;
-}
-
-.servicios-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-template-rows: repeat(2, 1fr); /* Fijamos máximo 2 filas */
-  gap: 20px;
-  flex-shrink: 0;
+.servicios-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1200px;
+  margin: auto;
   width: 100%;
 }
 
-/* Tarjetas */
+/* ===== Carrusel ===== */
+.servicios-carousel {
+  flex: 1 1 55%;
+  overflow: hidden;
+}
+
+.servicios-slider {
+  display: flex;
+}
+
+.servicios-container {
+  display: flex;
+  gap: 20px;
+  animation: scrollInfinite 30s linear infinite;
+}
+
+/* Animación scroll infinito hasta el final */
+@keyframes scrollInfinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ===== Tarjetas ===== */
 .servicio-card {
   background: #ffffff;
   border-radius: 20px;
@@ -474,12 +482,13 @@ button:hover,
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
   border: 2px solid #f58220;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;
 }
 
 .servicio-card:hover {
   transform: scale(1.05);
   box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
 }
 
 .servicio-card img {
@@ -493,7 +502,6 @@ button:hover,
 .servicio-card h3 {
   font-size: 1.1rem;
   color: #1d3a8a;
-  margin-bottom: 8px;
 }
 
 .servicio-card p {
@@ -501,10 +509,10 @@ button:hover,
   color: #333;
 }
 
-/* Texto */
+/* ===== Texto descriptivo ===== */
 .servicios-info {
   flex: 1 1 40%;
-  text-align: center; /* Centrado en su bloque */
+  text-align: center;
 }
 
 .servicios-info h2 {
@@ -539,16 +547,6 @@ button:hover,
 
 .servicios-info .btn-container button:hover {
   background: #163070;
-}
-
-/* Animación carrusel */
-@keyframes scroll-servicios {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
 }
 
 /* -------RECOMMEND -----*/
@@ -1042,7 +1040,7 @@ textarea {
   background: linear-gradient(90deg, #262de0, #49aee0);
   text-align: center;
   padding: 30px 15px;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .footer-content {

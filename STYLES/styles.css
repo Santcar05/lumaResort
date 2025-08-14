@@ -41,6 +41,8 @@ body {
   width: 100%;
   min-height: 100%;
   animation: fadeIn 0.8s ease-in-out;
+  background-color: #111111;
+  color: #e0e1dd;
 }
 
 /* Header principal */
@@ -49,7 +51,8 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  background: linear-gradient(90deg, #8ac6f2, #6db0e1);
+  background: linear-gradient(90deg, #262de0, #49aee0);
+  /*background: linear-gradient(90deg, #8ac6f2, #6db0e1);*/
   color: white;
   position: sticky;
   top: 0;
@@ -113,6 +116,7 @@ body {
 .main-nav a:hover {
   background-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
+  color: #ffd700;
   width: 100%;
   height: 100%;
 }
@@ -138,7 +142,7 @@ body {
 
 .search-form button {
   padding: 7px 15px;
-  background-color: white;
+  background-color: #262de0;
   color: #8ac6f2;
   border: none;
   border-radius: 20px;
@@ -148,7 +152,7 @@ body {
 }
 
 .search-form button:hover {
-  background-color: #e0f2f1;
+  background-color: #49aee0;
   transform: scale(1.05);
   width: 100%;
   height: 100%;
@@ -229,12 +233,12 @@ button:hover,
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  color: rgb(82, 62, 43);
+  color: white;
   text-align: center;
   background-size: cover;
   background-position: center;
   overflow: hidden;
-  background-color: #f5bf82;
+  background-color: #e09a00;
   height: 90vh;
   width: 100%;
   flex: 1 0 50%; /* Crece y encoge, base del 50% */
@@ -296,7 +300,7 @@ button:hover,
 }
 
 .btn-container button:hover {
-  background-color: #14407a;
+  background-color: #4aa7df;
   transform: scale(1.05);
   transition: ease-in-out 0.3s;
 }
@@ -426,29 +430,30 @@ button:hover,
 
 /*---------SERVICES-----*/
 #servicios {
-  background-color: #8ac6f2; /* Azul agua clara */
-  height: 90vh; /* Ocupa casi toda la pantalla */
-  display: flex;
-  align-items: center;
+  background-color: #8ac6f2;
+  text-align: center;
+  padding: 50px 20px;
 }
 
-.servicios-layout {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  width: 100%;
-  padding: 20px;
+#servicios h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1d3a8a;
+  margin-bottom: 10px;
 }
 
-/* Carrusel */
-.servicios-carousel {
-  flex: 1 1 55%;
-  overflow: hidden;
+#servicios .subtitulo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1d3a8a;
+  margin-bottom: 10px;
 }
 
-.servicios-slider {
-  display: flex;
-  animation: scroll-servicios 20s linear infinite;
+#servicios .descripcion {
+  max-width: 900px;
+  margin: 0 auto 40px;
+  font-size: 1rem;
+  color: #1d3a8a;
 }
 
 .servicios-container {
@@ -468,6 +473,7 @@ button:hover,
   padding: 15px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
+  border: 2px solid #f58220;
 }
 
 .servicio-card:hover {
@@ -884,7 +890,7 @@ textarea {
 }
 
 .footer {
-  background-color: #c7ddf0;
+  background: linear-gradient(90deg, #262de0, #49aee0);
   text-align: center;
   padding: 30px 15px;
   font-family: "Segoe UI", sans-serif;
@@ -914,7 +920,7 @@ textarea {
 
 .footer-logo p {
   font-size: 13px;
-  color: #123c78;
+  color: white;
   margin: 0;
 }
 
@@ -924,20 +930,20 @@ textarea {
 
 .footer-section p {
   font-size: 14px;
-  color: #123c78;
+  color: white;
   margin-bottom: 10px;
 }
 
 .footer-section a {
   margin: 0 8px;
   font-size: 2em;
-  color: #123c78;
+  color: white;
   text-decoration: none;
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .footer-section a:hover {
-  color: #0a2a57;
+  color: white;
   transform: scale(1.2);
 }
 
@@ -958,13 +964,13 @@ textarea {
 
 .contact-title i {
   font-size: 1em;
-  color: #123c78;
+  color: white;
 }
 
 .contact-title span {
   font-size: 16px;
   font-weight: bold;
-  color: #123c78;
+  color: white;
 }
 
 /* Información de contacto centrada */
@@ -975,7 +981,7 @@ textarea {
 .contact-info p {
   margin: 5px 0;
   font-size: 14px;
-  color: #123c78;
+  color: white;
 }
 
 /* Efecto hover para redes sociales y contacto */

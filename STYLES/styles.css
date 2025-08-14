@@ -330,6 +330,7 @@ button:hover,
   box-shadow: 0 1.5rem 3rem -0.75rem hsla(0, 0%, 0%, 0.25);
   scrollbar-width: none;
   height: 100%;
+  width: 100%;
 }
 
 .slider::-webkit-scrollbar {
@@ -365,6 +366,7 @@ button:hover,
   position: relative;
   flex: 1 0 100%;
   scroll-snap-align: start;
+  width: 100%;
 }
 
 .slide-container img {
@@ -381,18 +383,21 @@ button:hover,
   position: absolute;
   top: 0;
   left: 0;
-  width: 60%;
-  height: 102%;
+  width: 100%; /* Cubrir todo el ancho de la imagen */
+  height: 100%; /* Cubrir toda la altura de la imagen */
   background: rgba(25, 52, 141, 0.9);
-  color: white;
-  padding: 20px;
+
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  text-align: center;
+
+  color: white;
+  padding: 20px;
+
   opacity: 0;
   transition: opacity 0.3s ease;
-  /*flex: 1 0 50%; */ /* Crece y encoge, base del 50% */
 }
 
 .slide-container:hover .slide-info {
@@ -553,14 +558,16 @@ button:hover,
 
 /* Testimonios */
 #testimonios {
-  background: #8ac6f2;
-  padding: 50px 20px;
+  background: #f5bf82;
+  padding: 50px 0;
   text-align: center;
+  height: 90vh;
+  color: rgb(78, 58, 41);
 }
 
 #testimonios h2 {
   font-size: 2.5rem;
-  color: #1d3a8a;
+  color: rgb(78, 58, 41);
 }
 
 #testimonios .descripcion {
@@ -593,7 +600,8 @@ button:hover,
   flex-wrap: wrap;
   background: #e8eef2;
   padding: 20px;
-  border-radius: 20px;
+  width: 100%;
+  margin: 0;
 }
 
 .tarjeta {
@@ -631,16 +639,22 @@ button:hover,
 
 /* Beneficios */
 #porque-reservar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background: #8ac6f2;
   padding: 50px 20px;
   text-align: center;
   color: #1d3a8a;
+  height: 90vh;
 }
 
 #porque-reservar h3 {
-  font-size: 1.8rem;
+  font-size: 3rem;
+  font-weight: bold;
   color: #1d3a8a;
-  margin-bottom: 40px;
+  margin-bottom: 70px;
 }
 
 .beneficios {
@@ -705,6 +719,7 @@ button:hover,
   font-size: 1.5rem;
   text-align: justify;
   padding: 20px 30px;
+  color: rgb(78, 58, 41);
 }
 #info_ofertas button {
   background-color: #3a5aa8;

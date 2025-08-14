@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Inter";
+  font-family: 'Inter';
 }
 
 /* Animación de entrada */
@@ -160,7 +160,7 @@ body {
 
 #buttonBanner {
   color: #f0f0f0;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-size: 2em;
   font-weight: bold;
   padding: 10px 25px;
@@ -215,16 +215,16 @@ button:hover,
 
 @keyframes cambioImagenes {
   0% {
-    background-image: url("https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg");
+    background-image: url('https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg');
   }
   33.33% {
-    background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e");
+    background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
   }
   66.66% {
-    background-image: url("https://images.unsplash.com/photo-1493558103817-58b2924bce98");
+    background-image: url('https://images.unsplash.com/photo-1493558103817-58b2924bce98');
   }
   100% {
-    background-image: url("https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg");
+    background-image: url('https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg');
   }
 }
 /* Estilos existentes que se mantienen */
@@ -288,7 +288,8 @@ button:hover,
   text-align: center;
 }
 
-.btn-container button {
+.btn-container button,
+.btn-principal-ofertas {
   background-color: #1a3d92;
   color: white;
   padding: 12px 25px;
@@ -300,7 +301,7 @@ button:hover,
 }
 
 .btn-container button:hover {
-  background-color: #4aa7df;
+  background-color: #14407a;
   transform: scale(1.05);
   transition: ease-in-out 0.3s;
 }
@@ -675,7 +676,152 @@ button:hover,
 }
 
 /*---------OFFER-----*/
+.ofertas {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex: 1 0 50%;
+  max-width: 100%;
+  height: 90vh;
+  background-color: #f5bf82;
+}
+#info_ofertas {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+#info_ofertas h2 {
+  font-size: 3rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  margin-bottom: 40px;
+  color: rgb(78, 58, 41);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+#info_ofertas p {
+  font-size: 1.5rem;
+  text-align: justify;
+  padding: 20px 30px;
+}
+#info_ofertas button {
+  background-color: #3a5aa8;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
 
+#info_ofertas button:hover {
+  background-color: #1d3a8a;
+}
+
+#contenido_ofertas {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+#contenido_ofertas h2 {
+  font-size: 3rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  margin-bottom: 40px;
+  color: rgb(78, 58, 41);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+#contenido_ofertas img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /*margin-bottom: 10px;*/
+}
+
+/*----------------*/
+/* Contenedor flexible para las imágenes */
+.carrusel-ofertas {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 90vh;
+  overflow: hidden;
+  /*Distribución igualitaria a todos los hijos*/
+}
+
+/* Cada imagen como item */
+.oferta-item {
+  position: relative;
+  flex: 1;
+  transition: flex 0.5s ease;
+  overflow: hidden;
+  min-height: 0; /* Para que pueda encogerse bien */
+  height: 100%;
+}
+
+/* Imagen dentro del item */
+.oferta-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+/* Overlay oculto inicialmente */
+.overlay-info {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  text-align: center;
+  font-size: 1.2rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  height: 100%;
+}
+
+/* Al hacer hover: ocupar todo el alto y mostrar info */
+.oferta-item:hover {
+  height: 100%;
+}
+
+.oferta-item:hover img {
+  transform: scale(1.05);
+  /*Quiero que tome toda la altura del contenedor sin importar si hay otras imagenes*/
+  height: 100%;
+}
+
+.oferta-item:hover .overlay-info {
+  opacity: 1;
+}
+.carrusel-ofertas:hover .oferta-item {
+  flex: 0; /* Las demás se encogen a nada */
+}
+
+.carrusel-ofertas:hover .oferta-item:hover {
+  flex: 1 1 100%; /* La que recibe hover crece al 100% */
+}
+
+/*
 #ofertas-especiales {
   background: #7ea8f8;
   padding: 50px 20px;
@@ -713,8 +859,9 @@ button:hover,
   margin: auto;
   color: #1f2937;
 }
-
+*/
 /* Bloque ofertas destacadas */
+/*
 .ofertas-destacadas {
   background: #55c9f0;
   border-radius: 15px;
@@ -767,7 +914,6 @@ button:hover,
   font-weight: bold;
 }
 
-/* Tarjetas secundarias */
 .tarjetas-secundarias {
   display: flex;
   gap: 20px;
@@ -811,12 +957,15 @@ button:hover,
   cursor: pointer;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+*/
 /*--------- CONTACT AND FOOTER-----*/
 
 .planifica {
   text-align: center;
   padding: 40px 20px;
   background-color: #d0e6f4;
+  height: 90vh;
 }
 
 .planifica h2 {
@@ -841,13 +990,14 @@ button:hover,
   max-width: 600px;
   margin: 0 auto;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
 }
 
 .formulario label {
   display: block;
   text-align: left;
   font-weight: bold;
-  margin: 10px 0 5px;
+  margin: 5px 0 5px;
   color: #1f3f77;
   width: 100%;
 }
@@ -857,7 +1007,7 @@ button:hover,
   width: 100%;
   padding: 10px;
   border: none;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   border-radius: 3px;
   font-size: 14px;
 }
@@ -893,7 +1043,7 @@ textarea {
   background: linear-gradient(90deg, #262de0, #49aee0);
   text-align: center;
   padding: 30px 15px;
-  font-family: "Segoe UI", sans-serif;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .footer-content {

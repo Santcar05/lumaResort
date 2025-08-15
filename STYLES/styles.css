@@ -2,7 +2,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Inter";
+  font-family: 'Inter';
+}
+html {
+  scroll-behavior: smooth;
 }
 
 /* Animación de entrada */
@@ -38,7 +41,7 @@
 }
 
 body {
-  width: 100%;
+  min-width: 100%;
   min-height: 100%;
   animation: fadeIn 0.8s ease-in-out;
   background-color: #111111;
@@ -50,13 +53,17 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 40px;
+  padding: 20px 30px;
   background: linear-gradient(90deg, #262de0, #49aee0);
   /*background: linear-gradient(90deg, #8ac6f2, #6db0e1);*/
   color: white;
   position: sticky;
   top: 0;
   z-index: 1000;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* Logo */
@@ -80,18 +87,23 @@ body {
 }
 
 .logo-title {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   letter-spacing: 2px;
   animation: fadeIn 1.2s ease-out;
+  max-width: 100px;
 }
 
 /* Navegación */
+.main-nav {
+  max-width: 60%;
+  height: 100%;
+}
 .main-nav ul {
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 5px;
   height: 100%;
-  width: 100%;
+  width: 50%;
 }
 
 .main-nav li {
@@ -100,20 +112,28 @@ body {
   height: 100%;
   width: 100%;
 }
+.search-form button {
+  background: none;
+  text-align: center;
+  border: none;
+}
 
-.main-nav a {
+.main-nav a,
+.search-form button {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   text-decoration: none;
   color: white;
   font-weight: 500;
-  padding: 0 15px;
+  padding: 0 3px;
   transition: background-color 0.3s, transform 0.2s;
   height: 100%;
+  width: 100%;
 }
 
-.main-nav a:hover {
+.main-nav a:hover,
+.search-form button:hover {
   transform: translateY(-2px);
   color: #ffd700;
   width: 100%;
@@ -124,6 +144,7 @@ body {
 .search-form {
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
 .search-form input {
@@ -138,7 +159,7 @@ body {
 .search-form input:focus {
   box-shadow: 0 0 5px white;
 }
-
+/*
 .search-form button {
   padding: 7px 15px;
   background-color: #262de0;
@@ -151,15 +172,17 @@ body {
 }
 
 .search-form button:hover {
-  background-color: #49aee0;
+  background: none;
+  color: black;
   transform: scale(1.05);
   width: 100%;
   height: 100%;
 }
+  */
 
 #buttonBanner {
   color: #f0f0f0;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-size: 2em;
   font-weight: bold;
   padding: 10px 25px;
@@ -214,16 +237,16 @@ button:hover,
 
 @keyframes cambioImagenes {
   0% {
-    background-image: url("https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg");
+    background-image: url('https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg');
   }
   33.33% {
-    background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e");
+    background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
   }
   66.66% {
-    background-image: url("https://images.unsplash.com/photo-1493558103817-58b2924bce98");
+    background-image: url('https://images.unsplash.com/photo-1493558103817-58b2924bce98');
   }
   100% {
-    background-image: url("https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg");
+    background-image: url('https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg');
   }
 }
 /* Estilos existentes que se mantienen */
@@ -371,7 +394,7 @@ button:hover,
 
 .slide-container img {
   width: 100%;
-  height: 102%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -405,7 +428,7 @@ button:hover,
 }
 
 .slide-info h3 {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   margin-bottom: 10px;
 }
 
@@ -415,22 +438,33 @@ button:hover,
 }
 
 .slide-info p {
-  font-size: 1rem;
+  font-size: 1.5rem;
   line-height: 1.5;
   margin-bottom: 15px;
   color: white;
 }
 
 .slide-info .precio {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #c2dded;
   margin-top: auto;
 }
 
 .slide-info .promo {
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   color: #e67e22;
+}
+.slide-info button {
+  background-color: white;
+  color: #1a3d92;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  margin-top: 30px;
+  cursor: pointer;
+  align-self: flex-start;
 }
 
 /* ===== Sección Servicios ===== */
@@ -574,17 +608,17 @@ button:hover,
   max-width: 800px;
   margin: 15px auto 30px;
   font-size: 1rem;
-  color: #1d3a8a;
+  color: rgb(78, 58, 41);
 }
 
 .rating {
   display: inline-flex;
   align-items: center;
-  background: white;
+  background: #f5bf82;
   padding: 5px 10px;
   border-radius: 10px;
   font-weight: bold;
-  color: #1d3a8a;
+  color: rgb(78, 58, 41);
   margin-bottom: 30px;
 }
 
@@ -598,7 +632,7 @@ button:hover,
   gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
-  background: #e8eef2;
+  background: #f5bf82;
   padding: 20px;
   width: 100%;
   margin: 0;
@@ -619,7 +653,7 @@ button:hover,
 
 .tarjeta .estrellas {
   width: 100%;
-  color: gold;
+  color: rgb(232, 231, 225);
   margin: 5px 0;
   font-size: x-large;
   text-align: center;
@@ -629,12 +663,14 @@ button:hover,
 .tarjeta .comentario {
   font-style: italic;
   color: #333;
+  padding-left: 5%;
 }
 
 .tarjeta .autor {
   font-weight: bold;
   margin-top: 5px;
-  color: #555;
+  color: rgb(78, 58, 41);
+  padding-left: 5%;
 }
 
 /* Beneficios */
@@ -975,19 +1011,39 @@ button:hover,
 
 .planifica {
   text-align: center;
-  padding: 40px 20px;
+  padding: 0px 20px;
   background-color: #d0e6f4;
   height: 90vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex: 1 0 50%;
+}
+.planifica div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .planifica h2 {
-  font-size: 24px;
   font-weight: bold;
   color: #123c78;
+
+  font-size: 3rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  margin-bottom: 40px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .planifica .descripcion {
-  font-size: 14px;
+  font-size: 1.5rem;
   max-width: 700px;
   margin: 10px auto 30px;
   color: #1f3f77;
@@ -996,13 +1052,14 @@ button:hover,
 .formulario {
   display: flex;
   flex-direction: column;
-  background-color: #dff4fa;
+  background-color:/* #dff4fa;*/ none;
   padding: 20px;
   border-radius: 5px;
-  max-width: 600px;
+  width: 100%;
   margin: 0 auto;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  /*box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);*/
   margin-bottom: 10px;
+  height: 100%;
 }
 
 .formulario label {
@@ -1019,13 +1076,18 @@ button:hover,
   width: 100%;
   padding: 10px;
   border: none;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
   border-radius: 3px;
-  font-size: 14px;
+  font-size: 12px;
 }
 .formulario input {
   background-color: white;
   width: 100%;
+}
+
+label p {
+  color: #0a2a57;
+  margin-bottom: 3px;
 }
 
 textarea {
@@ -1035,7 +1097,7 @@ textarea {
 
 .btn-enviar {
   display: block;
-  margin: 20px auto 0;
+  margin: 20px 0 0 0 0;
   background-color: #4d6fc9;
   color: #fff;
   padding: 12px 25px;
@@ -1055,7 +1117,7 @@ textarea {
   background: linear-gradient(90deg, #262de0, #49aee0);
   text-align: center;
   padding: 30px 15px;
-  font-family: "Segoe UI", sans-serif;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .footer-content {

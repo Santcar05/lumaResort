@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Iniciar el auto-desplazamiento
   function startAutoSlide() {
-    autoSlideInterval = setInterval(nextSlide, 10000); // 8 segundos
+    autoSlideInterval = setInterval(nextSlide, 4000); // 8 segundos
   }
 
   // Detener el auto-desplazamiento cuando el usuario interactúa

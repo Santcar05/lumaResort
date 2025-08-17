@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.example.lumaresort.entities.Historial;
 
+@Repository
 public class HistorialRepository {
 
     private List<Historial> historiales = new ArrayList<>();

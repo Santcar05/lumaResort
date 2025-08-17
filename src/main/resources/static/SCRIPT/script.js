@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const slider = document.querySelector('.slider');
-  const slides = document.querySelectorAll('.slide-container');
-  const dots = document.querySelectorAll('.slider-nav a');
+  const slider = document.querySelector('.Slider');
+  const slides = document.querySelectorAll('.SlideContainer');
+  const dots = document.querySelectorAll('.SliderNav a');
   let currentIndex = 0;
   let autoSlideInterval;
 

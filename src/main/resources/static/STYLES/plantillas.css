@@ -247,7 +247,7 @@ textarea {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 90vh;
+  height: calc(72.4vh);
   overflow: hidden;
 }
 
@@ -304,4 +304,44 @@ textarea {
 
 .CarruselOfertas:hover .OfertaItem:hover {
   flex: 1 1 100%;
+}
+
+/* ============================================= */
+/* === FORMULARIO RESPONSIVE ============== */
+/* ============================================= */
+
+@media (max-height: 760px) {
+  .Formulario {
+    padding: 5px;
+    width: 100%;
+    margin-bottom: 2px;
+  }
+
+  .Formulario label {
+    margin: 2.5px 0 2.5px;
+  }
+
+  .Formulario input,
+  .Formulario textarea {
+    padding: 5px;
+    margin-bottom: 2px;
+    font-size: 10px;
+  }
+
+  label p {
+    margin-bottom: 2px;
+  }
+
+  textarea {
+    resize: none;
+    height: 75px;
+  }
+
+  .BtnEnviar {
+    margin: 10px 0 0 0 0;
+
+    padding: 6px 12px;
+
+    font-size: 12px;
+  }
 }

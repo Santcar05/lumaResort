@@ -237,6 +237,15 @@
   color: rgb(78, 58, 41);
 }
 
+#InfoTestimonios {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
 #Testimonios h2 {
   font-size: 2.5rem;
   color: rgb(78, 58, 41);
@@ -501,5 +510,17 @@
   }
   .Planifica div {
     height: calc(72.4vh);
+  }
+
+  #Testimonios {
+    height: calc(144.8vh);
+    padding: 10px 0;
+  }
+  #Testimonios > div {
+    height: calc(72.4vh);
+  }
+
+  .TarjetasTestimonios {
+    padding: 0px;
   }
 }

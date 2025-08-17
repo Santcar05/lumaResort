@@ -1,7 +1,6 @@
 /* ============================================= */
 /* === PLANTILLA CARRUSEL ===================== */
 /* ============================================= */
-
 .Carousel {
   position: relative;
   width: 100%;
@@ -23,7 +22,6 @@
   margin-bottom: 40px;
 }
 
-/* Animación para el cambio de imágenes del carrusel */
 @keyframes CambioImagenes {
   0% {
     background-image: url('https://cloudfront-us-east-1.images.arcpublishing.com/elespectador/244QE6GXHBGE5AJV6VCLLG3MVE.jpg');
@@ -42,10 +40,10 @@
 /* ============================================= */
 /* === PLANTILLA FORMULARIO ==================== */
 /* ============================================= */
-
 .Formulario {
   display: flex;
   flex-direction: column;
+  /*background-color: var(--section-light-blue);*/
   background-color: none;
   padding: 20px;
   border-radius: 5px;
@@ -53,6 +51,7 @@
   margin: 0 auto;
   margin-bottom: 10px;
   height: 100%;
+  transition: background-color var(--transition-speed) ease;
 }
 
 .Formulario label {
@@ -60,8 +59,9 @@
   text-align: left;
   font-weight: bold;
   margin: 5px 0 5px;
-  color: #1f3f77;
+  color: var(--card-text);
   width: 100%;
+  transition: color var(--transition-speed) ease;
 }
 
 .Formulario input,
@@ -80,8 +80,9 @@
 }
 
 label p {
-  color: #0a2a57;
+  color: var(--card-text);
   margin-bottom: 3px;
+  transition: color var(--transition-speed) ease;
 }
 
 textarea {
@@ -92,7 +93,7 @@ textarea {
 .BtnEnviar {
   display: block;
   margin: 20px 0 0 0 0;
-  background-color: #4d6fc9;
+  background-color: var(--button-primary);
   color: #fff;
   padding: 12px 25px;
   border: none;
@@ -101,16 +102,16 @@ textarea {
   font-weight: bold;
   font-size: 14px;
   box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color var(--transition-speed) ease;
 }
 
 .BtnEnviar:hover {
-  background-color: #3a5aa8;
+  background-color: var(--button-hover);
 }
 
 /* ============================================= */
 /* === PLANTILLA CARRUSEL DESLIZANTE =========== */
 /* ============================================= */
-
 .SlideWrapper {
   position: relative;
   margin: 0 auto;
@@ -157,7 +158,6 @@ textarea {
   opacity: 1;
 }
 
-/* Contenedor de cada slide */
 .SlideContainer {
   position: relative;
   flex: 1 0 100%;
@@ -175,14 +175,13 @@ textarea {
   height: 100%;
 }
 
-/* Información que aparece al hacer hover */
 .SlideInfo {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(25, 52, 141, 0.9);
+  background: rgba(15, 23, 42, 0.9);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -191,7 +190,11 @@ textarea {
   color: white;
   padding: 20px;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+[data-theme='dark'] .SlideInfo {
+  background: rgba(30, 41, 59, 0.9);
 }
 
 .SlideContainer:hover .SlideInfo {
@@ -242,7 +245,6 @@ textarea {
 /* ============================================= */
 /* === PLANTILLA CARRUSEL OFERTAS ============== */
 /* ============================================= */
-
 .CarruselOfertas {
   display: flex;
   flex-direction: column;
@@ -307,9 +309,8 @@ textarea {
 }
 
 /* ============================================= */
-/* === FORMULARIO RESPONSIVE ============== */
+/* === FORMULARIO RESPONSIVE =================== */
 /* ============================================= */
-
 @media (max-height: 760px) {
   .Formulario {
     padding: 5px;
@@ -339,9 +340,7 @@ textarea {
 
   .BtnEnviar {
     margin: 10px 0 0 0 0;
-
     padding: 6px 12px;
-
     font-size: 12px;
   }
 }

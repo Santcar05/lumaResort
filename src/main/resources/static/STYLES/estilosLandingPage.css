@@ -1,7 +1,6 @@
 /* ============================================= */
 /* === SECCIÓN BANNER ========================== */
 /* ============================================= */
-
 #Banner {
   position: relative;
   width: 100%;
@@ -12,7 +11,6 @@
 /* ============================================= */
 /* === SECCIÓN DESCUBRE ======================== */
 /* ============================================= */
-
 .Descubre {
   display: flex;
   flex-direction: row;
@@ -54,7 +52,7 @@
   background-size: cover;
   background-position: center;
   overflow: hidden;
-  background-color: #f5bf82;
+  background-color: var(--section-beige);
   height: calc(72.4vh);
   width: 100%;
   flex: 1 0 50%;
@@ -76,7 +74,7 @@
 
 .BtnContainer button,
 .BtnPrincipalOfertas {
-  background-color: #1a3d92;
+  background-color: var(--button-primary);
   color: white;
   padding: 12px 25px;
   border: none;
@@ -84,10 +82,11 @@
   font-size: 16px;
   margin-top: 30px;
   cursor: pointer;
+  transition: background-color var(--transition-speed) ease;
 }
 
 .BtnContainer button:hover {
-  background-color: #14407a;
+  background-color: var(--button-hover);
   transform: scale(1.05);
   transition: ease-in-out 0.3s;
 }
@@ -104,13 +103,13 @@
 /* ============================================= */
 /* === SECCIÓN SERVICIOS ======================= */
 /* ============================================= */
-
 #Servicios {
-  background-color: #8ac6f2;
+  background-color: var(--section-blue);
   padding: 50px 20px;
   height: calc(72.4vh);
   display: flex;
   align-items: center;
+  transition: background-color var(--transition-speed) ease;
 }
 
 .ServiciosLayout {
@@ -123,7 +122,6 @@
   width: 100%;
 }
 
-/* Carrusel de servicios */
 .ServiciosCarousel {
   flex: 1 1 55%;
   overflow: hidden;
@@ -139,7 +137,6 @@
   animation: ScrollInfinite 30s linear infinite;
 }
 
-/* Animación para el scroll infinito */
 @keyframes ScrollInfinite {
   0% {
     transform: translateX(0);
@@ -149,17 +146,15 @@
   }
 }
 
-/* Tarjetas de servicios */
 .ServicioCard {
-  background: #ffffff;
+  background: var(--card-bg);
   border-radius: 20px;
   width: 250px;
   padding: 15px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
   border: 2px solid #f58220;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  flex-shrink: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, color var(--transition-speed) ease;
 }
 
 .ServicioCard:hover {
@@ -177,15 +172,16 @@
 
 .ServicioCard h3 {
   font-size: 1.1rem;
-  color: #1d3a8a;
+  color: var(--card-text);
+  transition: color var(--transition-speed) ease;
 }
 
 .ServicioCard p {
   font-size: 0.9rem;
-  color: #333;
+  color: var(--card-text);
+  transition: color var(--transition-speed) ease;
 }
 
-/* Información de servicios */
 .ServiciosInfo {
   flex: 1 1 40%;
   text-align: center;
@@ -194,47 +190,51 @@
 .ServiciosInfo h2 {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #1d3a8a;
+  color: var(--card-text);
+  transition: color var(--transition-speed) ease;
 }
 
 .ServiciosInfo .Subtitulo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #1d3a8a;
+  color: var(--card-text);
   margin-top: 10px;
+  transition: color var(--transition-speed) ease;
 }
 
 .ServiciosInfo .Descripcion {
   max-width: 500px;
   font-size: 1rem;
-  color: #1d3a8a;
+  color: var(--card-text);
   margin: 20px auto;
   line-height: 1.5;
+  transition: color var(--transition-speed) ease;
 }
 
 .ServiciosInfo .BtnContainer button {
   padding: 10px 20px;
-  background: #1d3a8a;
+  background: var(--button-primary);
   color: white;
   border: none;
   border-radius: 25px;
   cursor: pointer;
+  transition: background-color var(--transition-speed) ease;
 }
 
 .ServiciosInfo .BtnContainer button:hover {
-  background: #163070;
+  background: var(--button-hover);
 }
 
 /* ============================================= */
 /* === SECCIÓN TESTIMONIOS ===================== */
 /* ============================================= */
-
 #Testimonios {
-  background: #f5bf82;
+  background: var(--section-beige);
   padding: 50px 0;
   text-align: center;
   height: calc(72.4vh);
-  color: rgb(78, 58, 41);
+  color: var(--card-text);
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
 #InfoTestimonios {
@@ -248,25 +248,28 @@
 
 #Testimonios h2 {
   font-size: 2.5rem;
-  color: rgb(78, 58, 41);
+  color: var(--card-text);
+  transition: color var(--transition-speed) ease;
 }
 
 #Testimonios .Descripcion {
   max-width: 800px;
   margin: 15px auto 30px;
   font-size: 1rem;
-  color: rgb(78, 58, 41);
+  color: var(--section-beige);
+  transition: color var(--transition-speed) ease;
 }
 
 .Rating {
   display: inline-flex;
   align-items: center;
-  background: #f5bf82;
+  background: var(--section-beige);
   padding: 5px 10px;
   border-radius: 10px;
   font-weight: bold;
-  color: rgb(78, 58, 41);
+  color: var(--card-text);
   margin-bottom: 30px;
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
 .Rating img {
@@ -279,10 +282,11 @@
   gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
-  background: #f5bf82;
+  background: var(--section-beige);
   padding: 20px;
   width: 100%;
   margin: 0;
+  transition: background-color var(--transition-speed) ease;
 }
 
 .Tarjeta {
@@ -309,38 +313,41 @@
 
 .Tarjeta .Comentario {
   font-style: italic;
-  color: #333;
+  color: var(--card-text);
   padding-left: 5%;
+  transition: color var(--transition-speed) ease;
 }
 
 .Tarjeta .Autor {
   font-weight: bold;
   margin-top: 5px;
-  color: rgb(78, 58, 41);
+  color: var(--card-text);
   padding-left: 5%;
+  transition: color var(--transition-speed) ease;
 }
 
 /* ============================================= */
 /* === SECCIÓN BENEFICIOS ====================== */
 /* ============================================= */
-
 #PorqueReservar {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #8ac6f2;
+  background: var(--section-blue);
   padding: 50px 20px;
   text-align: center;
-  color: #1d3a8a;
+  color: var(--card-text);
   height: calc(72.4vh);
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
 #PorqueReservar h3 {
   font-size: 3rem;
   font-weight: bold;
-  color: #1d3a8a;
+  color: var(--card-text);
   margin-bottom: 70px;
+  transition: color var(--transition-speed) ease;
 }
 
 .Beneficios {
@@ -365,17 +372,19 @@
 .Beneficio h4 {
   font-size: 1.2rem;
   margin: 0;
+  color: var(--card-text);
+  transition: color var(--transition-speed) ease;
 }
 
 .Beneficio p {
   font-size: 0.9rem;
-  color: #333;
+  color: var(--card-text);
+  transition: color var(--transition-speed) ease;
 }
 
 /* ============================================= */
 /* === SECCIÓN OFERTAS ========================= */
 /* ============================================= */
-
 .Ofertas {
   display: flex;
   flex-direction: row;
@@ -385,7 +394,8 @@
   flex: 1 0 50%;
   max-width: 100%;
   height: calc(72.4vh);
-  background-color: #f5bf82;
+  background-color: var(--section-beige);
+  transition: background-color var(--transition-speed) ease;
 }
 
 #InfoOfertas {
@@ -401,21 +411,23 @@
   font-size: 3rem;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   margin-bottom: 40px;
-  color: rgb(78, 58, 41);
+  color: var(--card-text);
   text-align: center;
   align-items: center;
   justify-content: center;
+  transition: color var(--transition-speed) ease;
 }
 
 #InfoOfertas p {
   font-size: 1.5rem;
   text-align: justify;
   padding: 20px 30px;
-  color: rgb(78, 58, 41);
+  color: var(--card-text);
+  transition: color var(--transition-speed) ease;
 }
 
 #InfoOfertas button {
-  background-color: #3a5aa8;
+  background-color: var(--button-primary);
   border: none;
   color: white;
   padding: 15px 32px;
@@ -425,10 +437,11 @@
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+  transition: background-color var(--transition-speed) ease;
 }
 
 #InfoOfertas button:hover {
-  background-color: #1d3a8a;
+  background-color: var(--button-hover);
 }
 
 #ContenidoOfertas {
@@ -444,10 +457,11 @@
   font-size: 3rem;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   margin-bottom: 40px;
-  color: rgb(78, 58, 41);
+  color: var(--card-text);
   text-align: center;
   align-items: center;
   justify-content: center;
+  transition: color var(--transition-speed) ease;
 }
 
 #ContenidoOfertas img {
@@ -459,11 +473,10 @@
 /* ============================================= */
 /* === SECCIÓN PLANIFICA/CONTACTO ============== */
 /* ============================================= */
-
 .Planifica {
   text-align: center;
   padding: 0px 20px;
-  background-color: #d0e6f4;
+  background-color: var(--section-blue);
   height: calc(72.4vh);
   display: flex;
   flex-direction: row;
@@ -471,6 +484,7 @@
   align-items: center;
   width: 100%;
   flex: 1 0 50%;
+  transition: background-color var(--transition-speed) ease;
 }
 
 .Planifica div {
@@ -484,24 +498,26 @@
 
 .Planifica h2 {
   font-weight: bold;
-  color: #123c78;
+  color: var(--card-text);
   font-size: 3rem;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   margin-bottom: 40px;
   text-align: center;
   align-items: center;
   justify-content: center;
+  transition: color var(--transition-speed) ease;
 }
 
 .Planifica .Descripcion {
   font-size: 1.5rem;
   max-width: 700px;
   margin: 10px auto 30px;
-  color: #1f3f77;
+  color: var(--card-text);
+  transition: color var(--transition-speed) ease;
 }
 
 /* ============================================= */
-/* === SECCION FORMULARIO RESPONSIVE ========================= */
+/* === SECCION FORMULARIO RESPONSIVE =========== */
 /* ============================================= */
 @media (max-height: 760px) {
   .Planifica {
@@ -525,7 +541,6 @@
   }
   #PorqueReservar {
     padding: 20px 10px;
-
     height: calc(144.8vh);
   }
   .Beneficios {

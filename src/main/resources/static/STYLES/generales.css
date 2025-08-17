@@ -1,11 +1,94 @@
 /* ============================================= */
-/* === RESET Y CONFIGURACIONES GLOBALES ======= */
+/* === VARIABLES DE TEMA Y ESTILOS BASE ======= */
+/* ============================================= */
+:root {
+  /* Modo claro (valores actuales) */
+  --bg-primary: #111111;
+  --text-primary: #e0e1dd;
+  --header-bg: linear-gradient(90deg, #262de0, #49aee0);
+  --footer-bg: linear-gradient(90deg, #262de0, #49aee0);
+  --button-primary: #1d3a8a;
+  --button-hover: #4aa7df;
+  --card-bg: #ffffff;
+  --card-text: #333;
+  --header-height: 80px;
+  --section-orange: #e09a00;
+  --section-beige: #f5bf82;
+  --section-blue: #8ac6f2;
+  --section-light-blue: #d0e6f4;
+  --section-dark-blue: #123c78;
+
+  /* Transiciones */
+  --transition-speed: 0.3s;
+}
+
+[data-theme='dark'] {
+  /* Modo oscuro */
+  --bg-primary: #0a0a0a;
+  --text-primary: #f0f0f0;
+  --header-bg: linear-gradient(90deg, #1a1a2e, #16213e);
+  --footer-bg: linear-gradient(90deg, #1a1a2e, #16213e);
+  --button-primary: #3b82f6;
+  --button-hover: #60a5fa;
+  --card-bg: #1e293b;
+  --card-text: #e2e8f0;
+  --section-orange: #9c6d1a;
+  --section-beige: #c49d6d;
+  --section-blue: #5a8cb5;
+  --section-light-blue: #8fb3d1;
+  --section-dark-blue: #1e4a8e;
+}
+
+/* ============================================= */
+/* === ANIMACIONES PARA CAMBIO DE TEMA ======== */
 /* ============================================= */
 
-/**
- * Reset básico para eliminar márgenes y paddings por defecto
- * y establecer box-sizing: border-box para un modelo de caja más predecible
- */
+.theme-transition-logo {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.theme-transition-active * {
+  transition-duration: 0.7s !important;
+}
+
+/* Efecto de ripple/partículas */
+.theme-ripple-effect {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  animation: themeRipple 0.7s ease-out forwards;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+@keyframes themeRipple {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(30);
+    opacity: 0;
+  }
+}
+
+/* Efecto de brillo para el logo */
+[data-theme='light'] .LogoImg:hover {
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.7));
+}
+
+[data-theme='dark'] .LogoImg:hover {
+  filter: drop-shadow(0 0 8px rgba(100, 200, 255, 0.7));
+}
+
+/* ============================================= */
+/* === RESET Y CONFIGURACIONES GLOBALES ======= */
+/* ============================================= */
 * {
   margin: 0;
   padding: 0;
@@ -13,17 +96,20 @@
   font-family: 'Inter', sans-serif;
 }
 
-/**
- * Configuración suave del scroll para una mejor experiencia de usuario
- */
 html {
   scroll-behavior: smooth;
-  zoom: 125%; /* Equivalente a 1.25 */
+  zoom: 125%;
 }
 
-/* ============================================= */
-/* === MAIN ======================== */
-/* ============================================= */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-width: 100%;
+  min-height: 100%;
+  animation: FadeIn 0.8s ease-in-out;
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
 main {
   min-height: 100%;
   min-width: 100%;
@@ -33,11 +119,6 @@ main {
 /* ============================================= */
 /* === ANIMACIONES ============================= */
 /* ============================================= */
-
-/**
- * Animación de entrada para elementos
- * Efecto de fade in con desplazamiento vertical
- */
 @keyframes FadeIn {
   from {
     opacity: 0;
@@ -50,27 +131,14 @@ main {
 }
 
 /* ============================================= */
-/* === ESTILOS GENERALES DEL BODY ============== */
-/* ============================================= */
-
-body {
-  min-width: 100%;
-  min-height: 100%;
-  animation: FadeIn 0.8s ease-in-out;
-  background-color: #111111;
-  color: #e0e1dd;
-}
-
-/* ============================================= */
 /* === HEADER PRINCIPAL ======================== */
 /* ============================================= */
-
 .MainHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  background: linear-gradient(90deg, #262de0, #49aee0);
+  background: var(--header-bg);
   color: white;
   position: sticky;
   top: 0;
@@ -78,31 +146,34 @@ body {
   width: 100%;
   min-width: 100%;
   max-width: 100%;
-  height: calc(100vh - 90vh);
+  height: var(--header-height);
+  transition: color var(--transition-speed) ease;
 }
 
-/* Contenedor del logo */
 .LogoContainer {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-/* Estilos de la imagen del logo */
 .LogoImg {
   width: 60px;
   height: 60px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid white;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
 .LogoImg:hover {
   transform: rotate(5deg) scale(1.05);
 }
 
-/* Texto del logo */
+.LogoImg:active {
+  transform: scale(0.95);
+}
+
 .LogoTitle {
   font-size: 1.5rem;
   letter-spacing: 2px;
@@ -111,9 +182,8 @@ body {
 }
 
 /* ============================================= */
-/* === NAVEGACIÓN PRINCIPAL ==================== */
+/* === NAVEGACIÓN Y BÚSQUEDA ================== */
 /* ============================================= */
-
 .MainNav {
   max-width: 60%;
   height: 100%;
@@ -153,10 +223,6 @@ body {
   color: #ffd700;
 }
 
-/* ============================================= */
-/* === BARRA DE BÚSQUEDA ======================= */
-/* ============================================= */
-
 .SearchForm {
   display: flex;
   gap: 10px;
@@ -183,9 +249,8 @@ body {
 }
 
 /* ============================================= */
-/* === BOTONES GENERALES ======================= */
+/* === BOTONES ================================ */
 /* ============================================= */
-
 #ButtonBanner,
 header nav ul li,
 input,
@@ -204,23 +269,23 @@ button {
   padding: 10px 25px;
   border-radius: 999px;
   transition: background-color 0.3s ease;
-  background-color: #1d3a8a;
+  background-color: var(--button-primary);
 }
 
 button:hover,
 #ButtonBanner:hover {
-  background-color: #4aa7df;
+  background-color: var(--button-hover);
 }
 
 /* ============================================= */
 /* === FOOTER ================================== */
 /* ============================================= */
-
 .Footer {
-  background: linear-gradient(90deg, #262de0, #49aee0);
+  background: var(--footer-bg);
   text-align: center;
   padding: 30px 15px;
   font-family: 'Segoe UI', sans-serif;
+  transition: color var(--transition-speed) ease;
 }
 
 .FooterContent {
@@ -321,9 +386,8 @@ button:hover,
 }
 
 /* ============================================= */
-/* === MEDIA QUERIES PARA RESPONSIVO =========== */
+/* === MEDIA QUERIES =========================== */
 /* ============================================= */
-
 @media (max-width: 1400px) {
   .MainHeader {
     flex-direction: column;

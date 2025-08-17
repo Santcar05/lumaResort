@@ -10,10 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.example.lumaresort.entities.Usuario;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Repository
 public class UsuarioRepository {
 

@@ -1,38 +1,45 @@
 package com.example.lumaresort.repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
 import com.example.lumaresort.entities.Cliente;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @Repository
 public class ClienteRepository {
 
-    private List<Cliente> clientes = new ArrayList<>();
+    private Map<Integer, Cliente> clientes = new HashMap<>();
 
     public ClienteRepository() {
-        initData();
+        initFakeData();
     }
 
-    private void initData() {
-        clientes.add(new Cliente(1, null, new ArrayList<>()));
-        clientes.add(new Cliente(2, null, new ArrayList<>()));
-        clientes.add(new Cliente(3, null, new ArrayList<>()));
-        clientes.add(new Cliente(4, null, new ArrayList<>()));
-        clientes.add(new Cliente(5, null, new ArrayList<>()));
+    public void initFakeData() {
+
     }
 
     public List<Cliente> findAll() {
-        return clientes;
+        return new ArrayList<>(clientes.values());
     }
 
     public Cliente findById(int id) {
-        return clientes.stream().filter(c -> c.getIdCliente() == id).findFirst().orElse(null);
+        return clientes.get(id);
     }
 
-    public void save(Cliente c) {
-        clientes.add(c);
+    public Cliente save(Cliente c) {
+        clientes.put(c.getIdCliente(), c);
+        return c;
     }
+
+    public void delete(Cliente c) {
+        clientes.remove(c.getIdCliente());
+    }
+
 }

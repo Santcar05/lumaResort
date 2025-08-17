@@ -324,21 +324,43 @@ button:hover,
 /* === MEDIA QUERIES PARA RESPONSIVO =========== */
 /* ============================================= */
 
-@media (max-width: 768px) {
+@media (max-width: 1400px) {
   .MainHeader {
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
-    gap: 15px;
+    gap: 5px;
     text-align: center;
+    padding: 2px;
+    padding-bottom: 5px;
+    height: 140px;
   }
-
-  .MainNav ul {
-    flex-wrap: wrap;
-    gap: 10px;
+  .LogoImg {
+    width: 40px;
+    height: 40px;
   }
 
   .SearchForm {
+    display: flex;
     width: 100%;
     justify-content: center;
+    align-items: center;
+    align-self: center;
+  }
+
+  .SearchForm input {
+    padding: 2px;
+  }
+
+  .SearchForm button {
+    padding: 2px;
+    max-width: 60px;
+    max-height: 30px;
+  }
+
+  .MainNav {
+    max-width: 100%;
+    font-size: 12px;
+    padding: 0px;
+    margin: 0px;
   }
 }

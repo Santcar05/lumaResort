@@ -1,7 +1,9 @@
 package com.example.lumaresort.repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -10,29 +12,34 @@ import com.example.lumaresort.entities.TipoHabitacion;
 @Repository
 public class TipoHabitacionRepository {
 
-    private List<TipoHabitacion> tipos = new ArrayList<>();
+    private Map<Integer, TipoHabitacion> tipos = new HashMap<>();
 
     public TipoHabitacionRepository() {
         initData();
     }
 
     private void initData() {
-        tipos.add(new TipoHabitacion(1, "Simple", "Habitación sencilla"));
-        tipos.add(new TipoHabitacion(2, "Doble", "Habitación para dos personas"));
-        tipos.add(new TipoHabitacion(3, "Suite", "Habitación de lujo"));
-        tipos.add(new TipoHabitacion(4, "Familiar", "Habitación amplia para familias"));
-        tipos.add(new TipoHabitacion(5, "Presidencial", "Habitación premium"));
+        tipos.put(1, new TipoHabitacion(1, "Simple", "Habitación sencilla"));
+        tipos.put(2, new TipoHabitacion(2, "Doble", "Habitación para dos personas"));
+        tipos.put(3, new TipoHabitacion(3, "Suite", "Habitación de lujo"));
+        tipos.put(4, new TipoHabitacion(4, "Familiar", "Habitación amplia para familias"));
+        tipos.put(5, new TipoHabitacion(5, "Presidencial", "Habitación premium"));
     }
 
     public List<TipoHabitacion> findAll() {
-        return tipos;
+        return new ArrayList<>(tipos.values());
     }
 
     public TipoHabitacion findById(int id) {
-        return tipos.stream().filter(t -> t.getIdTipo() == id).findFirst().orElse(null);
+        return tipos.get(id);
     }
 
-    public void save(TipoHabitacion t) {
-        tipos.add(t);
+    public TipoHabitacion save(TipoHabitacion tipo) {
+        tipos.put(tipo.getIdTipo(), tipo);
+        return tipo;
+    }
+
+    public void delete(int id) {
+        tipos.remove(id);
     }
 }

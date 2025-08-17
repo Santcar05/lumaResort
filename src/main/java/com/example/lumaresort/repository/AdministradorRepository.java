@@ -1,7 +1,9 @@
 package com.example.lumaresort.repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -10,29 +12,30 @@ import com.example.lumaresort.entities.Administrador;
 @Repository
 public class AdministradorRepository {
 
-    private List<Administrador> administradores = new ArrayList<>();
+    private Map<Integer, Administrador> administradores = new HashMap<>();
 
     public AdministradorRepository() {
         initData();
     }
 
     private void initData() {
-        administradores.add(new Administrador(1, null));
-        administradores.add(new Administrador(2, null));
-        administradores.add(new Administrador(3, null));
-        administradores.add(new Administrador(4, null));
-        administradores.add(new Administrador(5, null));
     }
 
     public List<Administrador> findAll() {
-        return administradores;
+        return new ArrayList<>(administradores.values());
     }
 
     public Administrador findById(int id) {
-        return administradores.stream().filter(a -> a.getIdAdministrador() == id).findFirst().orElse(null);
+        return administradores.get(id);
     }
 
-    public void save(Administrador a) {
-        administradores.add(a);
+    public Administrador save(Administrador a) {
+        administradores.put(a.getIdAdministrador(), a);
+        return a;
     }
+
+    public Administrador delete(int id) {
+        return administradores.remove(id);
+    }
+
 }

@@ -1,0 +1,492 @@
+/* ============================================= */
+/* === SECCIÓN BANNER ========================== */
+/* ============================================= */
+
+#Banner {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 250px);
+  overflow: hidden;
+}
+
+/* ============================================= */
+/* === SECCIÓN DESCUBRE ======================== */
+/* ============================================= */
+
+.Descubre {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  background-color: #e09a00;
+  height: 90vh;
+  width: 100%;
+  flex: 1 0 50%;
+}
+
+.Descubre > div {
+  width: 50%;
+  height: 100%;
+}
+
+.Descubre div h2 {
+  font-size: 3rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  margin-bottom: 40px;
+  color: rgb(78, 58, 41);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+#InfoDescubre {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgb(82, 62, 43);
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  background-color: #f5bf82;
+  height: 90vh;
+  width: 100%;
+  flex: 1 0 50%;
+}
+
+#InfoDescubre > p {
+  font-size: 1.5rem;
+  text-align: justify;
+  padding: 0 30px;
+}
+
+.Descubre > div > p {
+  font-size: 1.5rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  margin-bottom: 40px;
+  color: rgb(78, 58, 41);
+  text-align: center;
+}
+
+.BtnContainer button,
+.BtnPrincipalOfertas {
+  background-color: #1a3d92;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.BtnContainer button:hover {
+  background-color: #14407a;
+  transform: scale(1.05);
+  transition: ease-in-out 0.3s;
+}
+
+.Container {
+  height: 100%;
+  border-radius: 5px;
+}
+
+.SuperContenedor {
+  height: 100%;
+}
+
+/* ============================================= */
+/* === SECCIÓN SERVICIOS ======================= */
+/* ============================================= */
+
+#Servicios {
+  background-color: #8ac6f2;
+  padding: 50px 20px;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+}
+
+.ServiciosLayout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1200px;
+  margin: auto;
+  width: 100%;
+}
+
+/* Carrusel de servicios */
+.ServiciosCarousel {
+  flex: 1 1 55%;
+  overflow: hidden;
+}
+
+.ServiciosSlider {
+  display: flex;
+}
+
+.ServiciosContainer {
+  display: flex;
+  gap: 20px;
+  animation: ScrollInfinite 30s linear infinite;
+}
+
+/* Animación para el scroll infinito */
+@keyframes ScrollInfinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Tarjetas de servicios */
+.ServicioCard {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 250px;
+  padding: 15px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border: 2px solid #f58220;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;
+}
+
+.ServicioCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.ServicioCard img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
+
+.ServicioCard h3 {
+  font-size: 1.1rem;
+  color: #1d3a8a;
+}
+
+.ServicioCard p {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Información de servicios */
+.ServiciosInfo {
+  flex: 1 1 40%;
+  text-align: center;
+}
+
+.ServiciosInfo h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1d3a8a;
+}
+
+.ServiciosInfo .Subtitulo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1d3a8a;
+  margin-top: 10px;
+}
+
+.ServiciosInfo .Descripcion {
+  max-width: 500px;
+  font-size: 1rem;
+  color: #1d3a8a;
+  margin: 20px auto;
+  line-height: 1.5;
+}
+
+.ServiciosInfo .BtnContainer button {
+  padding: 10px 20px;
+  background: #1d3a8a;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.ServiciosInfo .BtnContainer button:hover {
+  background: #163070;
+}
+
+/* ============================================= */
+/* === SECCIÓN TESTIMONIOS ===================== */
+/* ============================================= */
+
+#Testimonios {
+  background: #f5bf82;
+  padding: 50px 0;
+  text-align: center;
+  height: 90vh;
+  color: rgb(78, 58, 41);
+}
+
+#Testimonios h2 {
+  font-size: 2.5rem;
+  color: rgb(78, 58, 41);
+}
+
+#Testimonios .Descripcion {
+  max-width: 800px;
+  margin: 15px auto 30px;
+  font-size: 1rem;
+  color: rgb(78, 58, 41);
+}
+
+.Rating {
+  display: inline-flex;
+  align-items: center;
+  background: #f5bf82;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  color: rgb(78, 58, 41);
+  margin-bottom: 30px;
+}
+
+.Rating img {
+  height: 20px;
+  margin-left: 5px;
+}
+
+.TarjetasTestimonios {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: #f5bf82;
+  padding: 20px;
+  width: 100%;
+  margin: 0;
+}
+
+.Tarjeta {
+  background: none;
+  text-align: left;
+  max-width: 200px;
+}
+
+.Tarjeta img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.Tarjeta .Estrellas {
+  width: 100%;
+  color: rgb(232, 231, 225);
+  margin: 5px 0;
+  font-size: x-large;
+  text-align: center;
+  align-self: center;
+}
+
+.Tarjeta .Comentario {
+  font-style: italic;
+  color: #333;
+  padding-left: 5%;
+}
+
+.Tarjeta .Autor {
+  font-weight: bold;
+  margin-top: 5px;
+  color: rgb(78, 58, 41);
+  padding-left: 5%;
+}
+
+/* ============================================= */
+/* === SECCIÓN BENEFICIOS ====================== */
+/* ============================================= */
+
+#PorqueReservar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #8ac6f2;
+  padding: 50px 20px;
+  text-align: center;
+  color: #1d3a8a;
+  height: 90vh;
+}
+
+#PorqueReservar h3 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #1d3a8a;
+  margin-bottom: 70px;
+}
+
+.Beneficios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.Beneficio {
+  display: flex;
+  align-items: flex-start;
+  max-width: 400px;
+  text-align: left;
+  gap: 15px;
+}
+
+.Beneficio span {
+  font-size: 2rem;
+}
+
+.Beneficio h4 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.Beneficio p {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* ============================================= */
+/* === SECCIÓN OFERTAS ========================= */
+/* ============================================= */
+
+.Ofertas {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex: 1 0 50%;
+  max-width: 100%;
+  height: 90vh;
+  background-color: #f5bf82;
+}
+
+#InfoOfertas {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+
+#InfoOfertas h2 {
+  font-size: 3rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  margin-bottom: 40px;
+  color: rgb(78, 58, 41);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+#InfoOfertas p {
+  font-size: 1.5rem;
+  text-align: justify;
+  padding: 20px 30px;
+  color: rgb(78, 58, 41);
+}
+
+#InfoOfertas button {
+  background-color: #3a5aa8;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+#InfoOfertas button:hover {
+  background-color: #1d3a8a;
+}
+
+#ContenidoOfertas {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+#ContenidoOfertas h2 {
+  font-size: 3rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  margin-bottom: 40px;
+  color: rgb(78, 58, 41);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+#ContenidoOfertas img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ============================================= */
+/* === SECCIÓN PLANIFICA/CONTACTO ============== */
+/* ============================================= */
+
+.Planifica {
+  text-align: center;
+  padding: 0px 20px;
+  background-color: #d0e6f4;
+  height: 90vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex: 1 0 50%;
+}
+
+.Planifica div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Planifica h2 {
+  font-weight: bold;
+  color: #123c78;
+  font-size: 3rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  margin-bottom: 40px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.Planifica .Descripcion {
+  font-size: 1.5rem;
+  max-width: 700px;
+  margin: 10px auto 30px;
+  color: #1f3f77;
+}

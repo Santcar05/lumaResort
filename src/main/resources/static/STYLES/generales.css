@@ -1,0 +1,344 @@
+/* ============================================= */
+/* === RESET Y CONFIGURACIONES GLOBALES ======= */
+/* ============================================= */
+
+/**
+ * Reset básico para eliminar márgenes y paddings por defecto
+ * y establecer box-sizing: border-box para un modelo de caja más predecible
+ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+/**
+ * Configuración suave del scroll para una mejor experiencia de usuario
+ */
+html {
+  scroll-behavior: smooth;
+  zoom: 125%; /* Equivalente a 1.25 */
+}
+
+/* ============================================= */
+/* === MAIN ======================== */
+/* ============================================= */
+main {
+  min-height: 100%;
+  min-width: 100%;
+  max-width: 100%;
+}
+
+/* ============================================= */
+/* === ANIMACIONES ============================= */
+/* ============================================= */
+
+/**
+ * Animación de entrada para elementos
+ * Efecto de fade in con desplazamiento vertical
+ */
+@keyframes FadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================= */
+/* === ESTILOS GENERALES DEL BODY ============== */
+/* ============================================= */
+
+body {
+  min-width: 100%;
+  min-height: 100%;
+  animation: FadeIn 0.8s ease-in-out;
+  background-color: #111111;
+  color: #e0e1dd;
+}
+
+/* ============================================= */
+/* === HEADER PRINCIPAL ======================== */
+/* ============================================= */
+
+.MainHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background: linear-gradient(90deg, #262de0, #49aee0);
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  height: 100px;
+}
+
+/* Contenedor del logo */
+.LogoContainer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Estilos de la imagen del logo */
+.LogoImg {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+  transition: transform 0.3s ease;
+}
+
+.LogoImg:hover {
+  transform: rotate(5deg) scale(1.05);
+}
+
+/* Texto del logo */
+.LogoTitle {
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  animation: FadeIn 1.2s ease-out;
+  max-width: 100px;
+}
+
+/* ============================================= */
+/* === NAVEGACIÓN PRINCIPAL ==================== */
+/* ============================================= */
+
+.MainNav {
+  max-width: 60%;
+  height: 100%;
+}
+
+.MainNav ul {
+  list-style: none;
+  display: flex;
+  gap: 5px;
+  height: 100%;
+  width: 50%;
+}
+
+.MainNav li {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.MainNav a,
+.SearchForm button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  padding: 0 3px;
+  transition: background-color 0.3s, transform 0.2s;
+  height: 100%;
+  width: 100%;
+}
+
+.MainNav a:hover,
+.SearchForm button:hover {
+  transform: translateY(-2px);
+  color: #ffd700;
+}
+
+/* ============================================= */
+/* === BARRA DE BÚSQUEDA ======================= */
+/* ============================================= */
+
+.SearchForm {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.SearchForm input {
+  padding: 7px 10px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  font-size: 0.9rem;
+  transition: box-shadow 0.3s;
+}
+
+.SearchForm input:focus {
+  box-shadow: 0 0 5px white;
+}
+
+.SearchForm button {
+  background: none;
+  text-align: center;
+  border: none;
+}
+
+/* ============================================= */
+/* === BOTONES GENERALES ======================= */
+/* ============================================= */
+
+#ButtonBanner,
+header nav ul li,
+input,
+button {
+  background-color: none;
+  padding: 20px;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+#ButtonBanner {
+  color: #f0f0f0;
+  font-family: 'Inter';
+  font-size: 2em;
+  font-weight: bold;
+  padding: 10px 25px;
+  border-radius: 999px;
+  transition: background-color 0.3s ease;
+  background-color: #1d3a8a;
+}
+
+button:hover,
+#ButtonBanner:hover {
+  background-color: #4aa7df;
+}
+
+/* ============================================= */
+/* === FOOTER ================================== */
+/* ============================================= */
+
+.Footer {
+  background: linear-gradient(90deg, #262de0, #49aee0);
+  text-align: center;
+  padding: 30px 15px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.FooterContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.FooterLogo {
+  flex: 1 1 200px;
+}
+
+.FooterLogo img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.FooterLogo p {
+  font-size: 13px;
+  color: white;
+  margin: 0;
+}
+
+.FooterSection {
+  flex: 1 1 200px;
+}
+
+.FooterSection p {
+  font-size: 14px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.FooterSection a {
+  margin: 0 8px;
+  font-size: 2em;
+  color: white;
+  text-decoration: none;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.FooterSection a:hover {
+  color: white;
+  transform: scale(1.2);
+}
+
+.RedesSociales,
+.FooterSection {
+  margin-top: 20px;
+}
+
+.ContactTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.ContactTitle i {
+  font-size: 1em;
+  color: white;
+}
+
+.ContactTitle span {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+}
+
+.ContactInfo {
+  text-align: center;
+}
+
+.ContactInfo p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: white;
+}
+
+.RedesSociales a,
+.ContactTitle a {
+  display: inline-block;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.RedesSociales a:hover,
+.ContactTitle a:hover {
+  color: #0a2a57;
+  transform: scale(1.2);
+}
+
+/* ============================================= */
+/* === MEDIA QUERIES PARA RESPONSIVO =========== */
+/* ============================================= */
+
+@media (max-width: 768px) {
+  .MainHeader {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .MainNav ul {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .SearchForm {
+    width: 100%;
+    justify-content: center;
+  }
+}

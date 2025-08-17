@@ -1,34 +1,55 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
+    <!-- Metadatos básicos -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LUMA RESORT</title>
-    <link rel="stylesheet" href="/STYLES/styles.css" />
+    <title>LUMA RESORT - Paraíso de Lujo y Relax</title>
+
+    <!-- Favicon (agregado como mejora) -->
+    <link rel="icon" href="/IMAGES/favicon.ico" type="image/x-icon" />
+
+    <!-- Hojas de estilo -->
+    <link rel="stylesheet" href="/STYLES/estilosLandingPage.css" />
+    <link rel="stylesheet" href="/STYLES/generales.css" />
+    <link rel="stylesheet" href="/STYLES/plantillas.css" />
+
+    <!-- Fuentes de Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+
+    <!-- Iconos Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
   </head>
+
   <body>
-    <!--HEADER-->
-    <header class="main-header">
-      <div class="logo-container">
-        <img src="/IMAGES/luma_Corregido.jpg" alt="Luma Resort Logo" class="logo-img" />
-        <h1 class="logo-title">LUMA RESORT</h1>
+    <!-- ============================================= -->
+    <!-- === HEADER PRINCIPAL ======================== -->
+    <!-- ============================================= -->
+    <header class="MainHeader">
+      <div class="LogoContainer">
+        <img
+          src="/IMAGES/luma_Corregido.jpg"
+          alt="Luma Resort Logo"
+          class="LogoImg"
+          loading="lazy"
+        />
+        <h1 class="LogoTitle">LUMA RESORT</h1>
       </div>
 
-      <nav class="main-nav">
+      <!-- Navegación principal -->
+      <nav class="MainNav" aria-label="Navegación principal">
+        <!-- Mejora de accesibilidad -->
         <ul>
           <li><a href="#">Inicio</a></li>
           <li><a href="#">Habitaciones</a></li>
@@ -38,206 +59,237 @@
         </ul>
       </nav>
 
-      <form class="search-form">
-        <input type="text" placeholder="Buscar..." />
+      <!-- Barra de búsqueda -->
+      <form class="SearchForm" role="search">
+        <!-- Mejora de semántica -->
+        <input type="text" placeholder="Buscar..." aria-label="Buscar en el sitio" />
         <button type="submit">Buscar</button>
       </form>
     </header>
 
-    <!--MAIN-->
+    <!-- ============================================= -->
+    <!-- === CONTENIDO PRINCIPAL ===================== -->
+    <!-- ============================================= -->
     <main>
-      <!--Banner Section-->
-      <section id="banner">
-        <div class="carousel">
-          <h1>Descubre el paraíso en Luma Resort</h1>
-          <button id="buttonBanner">Reservar Ahora</button>
+      <!-- ============================================= -->
+      <!-- === SECCIÓN BANNER ========================= -->
+      <!-- ============================================= -->
+      <section id="Banner" aria-labelledby="bannerHeading">
+        <!-- Mejora de accesibilidad -->
+        <div class="Carousel">
+          <h1 id="bannerHeading">Descubre el paraíso en Luma Resort</h1>
+          <button id="ButtonBanner">Reservar Ahora</button>
         </div>
       </section>
 
-      <section class="descubre">
-        <div id="info_descubre">
+      <!-- ============================================= -->
+      <!-- === SECCIÓN DESCUBRE ======================= -->
+      <!-- ============================================= -->
+      <section class="Descubre">
+        <div id="InfoDescubre">
           <h2>Descubre Luma Resort</h2>
-          <p class="subtitulo">
+          <p class="Subtitulo">
             Un oasis de tranquilidad y lujo te espera. Sumérgete en la belleza natural y el confort
             sin igual de nuestro resort, creado para ofrecerte una experiencia inolvidable en cada
             rincón.
           </p>
-          <div class="btn-container">
+          <div class="BtnContainer">
             <button>VER TODAS LAS OPCIONES</button>
           </div>
         </div>
 
-        <div class="super-contenedor">
-          <section class="container">
-            <div class="slider-wrapper">
-              <div class="slider">
-                <!-- Slide 1 -->
-                <div class="slide-container">
+        <div class="SuperContenedor">
+          <section class="Container">
+            <div class="SliderWrapper">
+              <div class="Slider">
+                <!-- Slide 1 - Suite Vista al Mar -->
+                <div class="SlideContainer">
                   <img
-                    id="img1"
+                    id="Img1"
                     src="https://images.rosewoodhotels.com/is/image/rwhg/three-bedroom-oceanview-suite-s3b:WIDE-LARGE-16-9"
                     alt="Suite Vista al Mar"
+                    loading="lazy"
                   />
-                  <div class="slide-info">
+                  <div class="SlideInfo">
                     <div>
                       <h3>Suite Vista al Mar</h3>
-                      <div class="rating">⭐ 4.72 (71)</div>
+                      <div class="Rating">⭐ 4.72 (71)</div>
                       <p>
                         Habitación premium con balcón privado y jacuzzi, decoración elegante y
                         atención personalizada
                       </p>
-                      <span class="precio">$350</span>
-                      <span class="promo">$300/noche (estancias de 5+ noches)</span>
+                      <span class="Precio">$350</span>
+                      <span class="Promo">$300/noche (estancias de 5+ noches)</span>
                       <button>Ver Detalles</button>
                     </div>
                   </div>
                 </div>
 
-                <!-- Slide 2 -->
-                <div class="slide-container">
+                <!-- Slide 2 - Paquete Romántico -->
+                <div class="SlideContainer">
                   <img
                     src="https://fantasyrooms.com/blog/wp-content/uploads/2024/09/Cena-romantica-restaurante-en-San-Jose.jpg"
                     alt="Paquete Romántico"
+                    loading="lazy"
                   />
-                  <div class="slide-info">
+                  <div class="SlideInfo">
                     <div>
                       <h3>Paquete Romántico</h3>
-                      <div class="rating">⭐ 4.72 (71)</div>
+                      <div class="Rating">⭐ 4.72 (71)</div>
                       <p>
                         Incluye cena gourmet, masaje en pareja y decoración especial con pétalos
                       </p>
-                      <span class="precio">$500</span>
-                      <span class="promo">Incluye botella de champagne gratis</span>
+                      <span class="Precio">$500</span>
+                      <span class="Promo">Incluye botella de champagne gratis</span>
                       <button>Ver Detalles</button>
                     </div>
                   </div>
                 </div>
 
-                <!-- Slide 3 -->
-                <div class="slide-container">
+                <!-- Slide 3 - Piscina Privada -->
+                <div class="SlideContainer">
                   <img
                     src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
                     alt="Piscina Privada"
+                    loading="lazy"
                   />
-                  <div class="slide-info">
+                  <div class="SlideInfo">
                     <div>
                       <h3>Piscina Privada</h3>
-                      <div class="rating">⭐ 4.72 (71)</div>
+                      <div class="Rating">⭐ 4.72 (71)</div>
                       <p>
                         Espacio exclusivo con acceso directo a playa, servicio de mayordomo y
                         desayuno incluido
                       </p>
-                      <span class="precio">$700</span>
-                      <span class="promo">Promo verano: 15% de descuento</span>
+                      <span class="Precio">$700</span>
+                      <span class="Promo">Promo verano: 15% de descuento</span>
                       <button>Ver Detalles</button>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="slider-nav">
-                <a href="#slider-1"></a>
-                <a href="#slider-2"></a>
-                <a href="#slider-3"></a>
+              <div class="SliderNav" aria-label="Navegación del carrusel">
+                <!-- Accesibilidad -->
+                <a href="#slider-1" aria-label="Slide 1"></a>
+                <a href="#slider-2" aria-label="Slide 2"></a>
+                <a href="#slider-3" aria-label="Slide 3"></a>
               </div>
             </div>
           </section>
         </div>
       </section>
 
-      <!-- ===== Sección de Servicios ===== -->
-      <section id="servicios">
-        <div class="servicios-layout">
-          <!-- Carrusel -->
-          <div class="servicios-carousel">
-            <div class="servicios-slider">
-              <div class="servicios-container">
-                <!-- Tarjetas originales -->
-                <div class="servicio-card">
+      <!-- ============================================= -->
+      <!-- === SECCIÓN SERVICIOS ====================== -->
+      <!-- ============================================= -->
+      <section id="Servicios" aria-labelledby="serviciosHeading">
+        <div class="ServiciosLayout">
+          <!-- Carrusel de Servicios -->
+          <div class="ServiciosCarousel">
+            <div class="ServiciosSlider">
+              <div class="ServiciosContainer">
+                <!-- Tarjeta 1 - Gastronomía -->
+                <div class="ServicioCard">
                   <img
                     src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092"
                     alt="Gastronomía Excepcional"
+                    loading="lazy"
                   />
                   <h3>Gastronomía Excepcional</h3>
                   <p>Buffets gourmet, restaurantes temáticos y cocina internacional.</p>
                 </div>
 
-                <div class="servicio-card">
+                <!-- Tarjeta 2 - Alojamiento -->
+                <div class="ServicioCard">
                   <img
                     src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353"
                     alt="Alojamiento Premium"
+                    loading="lazy"
                   />
                   <h3>Alojamiento Premium</h3>
                   <p>Habitaciones con vista al mar y suites privadas.</p>
                 </div>
 
-                <div class="servicio-card">
+                <!-- Tarjeta 3 - Ocio -->
+                <div class="ServicioCard">
                   <img
                     src="https://images.unsplash.com/photo-1506744038136-46273834b3fb"
                     alt="Ocio y Relax"
+                    loading="lazy"
                   />
                   <h3>Ocio y Relax</h3>
                   <p>Piscinas infinity, playa privada y spa.</p>
                 </div>
 
-                <div class="servicio-card">
+                <!-- Tarjeta 4 - Experiencias -->
+                <div class="ServicioCard">
                   <img
                     src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
                     alt="Experiencias Únicas"
+                    loading="lazy"
                   />
                   <h3>Experiencias Únicas</h3>
                   <p>Tours, deportes acuáticos y aventuras.</p>
                 </div>
 
-                <div class="servicio-card">
+                <!-- Tarjeta 5 - Desayunos -->
+                <div class="ServicioCard">
                   <img
                     src="https://comedera.com/wp-content/uploads/sites/9/2022/12/Desayono-americano-shutterstock_2120331371.jpg"
                     alt="Desayunos Premium"
+                    loading="lazy"
                   />
                   <h3>Desayunos Premium</h3>
                   <p>Opciones gourmet frescas y saludables.</p>
                 </div>
 
-                <div class="servicio-card">
+                <!-- Tarjeta 6 - Traslados -->
+                <div class="ServicioCard">
                   <img
                     src="https://images.unsplash.com/photo-1502920514313-52581002a659"
                     alt="Traslados VIP"
+                    loading="lazy"
                   />
                   <h3>Traslados VIP</h3>
                   <p>Transporte exclusivo y cómodo.</p>
                 </div>
 
-                <!-- Duplicadas para bucle infinito -->
-                <div class="servicio-card">
+                <!-- Tarjetas duplicadas para efecto infinito -->
+                <div class="ServicioCard">
                   <img
                     src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092"
                     alt="Gastronomía Excepcional"
+                    loading="lazy"
                   />
                   <h3>Gastronomía Excepcional</h3>
                   <p>Buffets gourmet, restaurantes temáticos y cocina internacional.</p>
                 </div>
 
-                <div class="servicio-card">
+                <div class="ServicioCard">
                   <img
                     src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353"
                     alt="Alojamiento Premium"
+                    loading="lazy"
                   />
                   <h3>Alojamiento Premium</h3>
                   <p>Habitaciones con vista al mar y suites privadas.</p>
                 </div>
 
-                <div class="servicio-card">
+                <div class="ServicioCard">
                   <img
                     src="https://images.unsplash.com/photo-1506744038136-46273834b3fb"
                     alt="Ocio y Relax"
+                    loading="lazy"
                   />
                   <h3>Ocio y Relax</h3>
                   <p>Piscinas infinity, playa privada y spa.</p>
                 </div>
 
-                <div class="servicio-card">
+                <div class="ServicioCard">
                   <img
                     src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
                     alt="Experiencias Únicas"
+                    loading="lazy"
                   />
                   <h3>Experiencias Únicas</h3>
                   <p>Tours, deportes acuáticos y aventuras.</p>
@@ -246,107 +298,123 @@
             </div>
           </div>
 
-          <!-- Texto descriptivo -->
-          <div class="servicios-info">
-            <h2>Nuestros Servicios</h2>
-            <p class="subtitulo">Vive el Lujo en Cada Detalle</p>
-            <p class="descripcion">
+          <!-- Información de Servicios -->
+          <div class="ServiciosInfo">
+            <h2 id="serviciosHeading">Nuestros Servicios</h2>
+            <p class="Subtitulo">Vive el Lujo en Cada Detalle</p>
+            <p class="Descripcion">
               Disfruta suites con vistas al mar, restaurantes gourmet, piscinas infinity y playa
               privada. Relájate en nuestro spa, prueba deportes acuáticos o déjate consentir con
               nuestro servicio personalizado. ¡Tu escape perfecto comienza aquí!
             </p>
-            <div class="btn-container">
+            <div class="BtnContainer">
               <button>VER TODOS LOS SERVICIOS</button>
             </div>
           </div>
         </div>
       </section>
 
-      <!--Recommend Section-->
-
-      <section id="testimonios">
-        <h2>Lo que dicen nuestros huéspedes</h2>
-        <p class="descripcion">
+      <!-- ============================================= -->
+      <!-- === SECCIÓN TESTIMONIOS ==================== -->
+      <!-- ============================================= -->
+      <section id="Testimonios" aria-labelledby="testimoniosHeading">
+        <h2 id="testimoniosHeading">Lo que dicen nuestros huéspedes</h2>
+        <p class="Descripcion">
           "Un refugio donde el lujo y la naturaleza se unen. Vive momentos inolvidables en un
           espacio diseñado para tu máximo confort y relax, con detalles que transforman tu estancia
           en una experiencia única."
         </p>
 
-        <div class="rating">
+        <div class="Rating">
           <span>5.0 Rating</span>
           <img
             src="https://ps.w.org/better-business-reviews/assets/banner-1544x500.png?rev=3130324"
             alt="Trustpilot"
+            loading="lazy"
           />
         </div>
 
-        <div class="tarjetas-testimonios">
-          <div class="tarjeta">
+        <div class="TarjetasTestimonios">
+          <!-- Testimonio 1 -->
+          <div class="Tarjeta">
             <img
               src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d"
               alt="Testimonio 1"
+              loading="lazy"
             />
-            <div class="info">
-              <p class="estrellas">★★★★★</p>
-              <p class="comentario">"Una experiencia increíble, el servicio es impecable"</p>
-              <p class="autor">Laura G.</p>
+            <div class="Info">
+              <p class="Estrellas">★★★★★</p>
+              <p class="Comentario">"Una experiencia increíble, el servicio es impecable"</p>
+              <p class="Autor">Laura G.</p>
             </div>
           </div>
 
-          <div class="tarjeta">
+          <!-- Testimonio 2 -->
+          <div class="Tarjeta">
             <img
               src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
               alt="Testimonio 2"
+              loading="lazy"
             />
-            <div class="info">
-              <p class="estrellas">★★★★★</p>
-              <p class="comentario">"La playa privada es un sueño hecho realidad"</p>
-              <p class="autor">Carlos M.</p>
+            <div class="Info">
+              <p class="Estrellas">★★★★★</p>
+              <p class="Comentario">"La playa privada es un sueño hecho realidad"</p>
+              <p class="Autor">Carlos M.</p>
             </div>
           </div>
 
-          <div class="tarjeta">
+          <!-- Testimonio 3 -->
+          <div class="Tarjeta">
             <img
               src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092"
               alt="Testimonio 3"
+              loading="lazy"
             />
-            <div class="info">
-              <p class="estrellas">★★★★★</p>
-              <p class="comentario">"Las cenas gourmet superaron todas mis expectativas"</p>
-              <p class="autor">Ana R.</p>
+            <div class="Info">
+              <p class="Estrellas">★★★★★</p>
+              <p class="Comentario">"Las cenas gourmet superaron todas mis expectativas"</p>
+              <p class="Autor">Ana R.</p>
             </div>
           </div>
 
-          <div class="tarjeta">
+          <!-- Testimonio 4 -->
+          <div class="Tarjeta">
             <img
               src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353"
               alt="Testimonio 4"
+              loading="lazy"
             />
-            <div class="info">
-              <p class="estrellas">★★★★★</p>
-              <p class="comentario">"El spa es el mejor que he visitado, ¡relax total!"</p>
-              <p class="autor">David S.</p>
+            <div class="Info">
+              <p class="Estrellas">★★★★★</p>
+              <p class="Comentario">"El spa es el mejor que he visitado, ¡relax total!"</p>
+              <p class="Autor">David S.</p>
             </div>
           </div>
 
-          <div class="tarjeta">
+          <!-- Testimonio 5 -->
+          <div class="Tarjeta">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK3c5-bfa2I9lFWpkcaVKWLYIFFJtvYR9tqQ&s"
               alt="Testimonio 5"
+              loading="lazy"
             />
-            <div class="info">
-              <p class="estrellas">★★★★★</p>
-              <p class="comentario">"Habitaciones con vistas que quitan el aliento"</p>
-              <p class="autor">Sofía P.</p>
+            <div class="Info">
+              <p class="Estrellas">★★★★★</p>
+              <p class="Comentario">"Habitaciones con vistas que quitan el aliento"</p>
+              <p class="Autor">Sofía P.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="porque-reservar">
-        <h3>¿Por qué reservar con nosotros?</h3>
-        <div class="beneficios">
-          <div class="beneficio">
+      <!-- ============================================= -->
+      <!-- === SECCIÓN BENEFICIOS ===================== -->
+      <!-- ============================================= -->
+      <section id="PorqueReservar" aria-labelledby="beneficiosHeading">
+        <h3 id="beneficiosHeading">¿Por qué reservar con nosotros?</h3>
+        <div class="Beneficios">
+          <!-- Beneficio 1 -->
+          <div class="Beneficio">
             <span>🎁</span>
             <div>
               <h4>Experiencia Exclusiva</h4>
@@ -354,7 +422,8 @@
             </div>
           </div>
 
-          <div class="beneficio">
+          <!-- Beneficio 2 -->
+          <div class="Beneficio">
             <span>🏨</span>
             <div>
               <h4>Variedad de Lujo</h4>
@@ -364,7 +433,8 @@
             </div>
           </div>
 
-          <div class="beneficio">
+          <!-- Beneficio 3 -->
+          <div class="Beneficio">
             <span>😊</span>
             <div>
               <h4>Tranquilidad Garantizada</h4>
@@ -375,7 +445,8 @@
             </div>
           </div>
 
-          <div class="beneficio">
+          <!-- Beneficio 4 -->
+          <div class="Beneficio">
             <span>💎</span>
             <div>
               <h4>Calidad Superior</h4>
@@ -385,7 +456,8 @@
             </div>
           </div>
 
-          <div class="beneficio">
+          <!-- Beneficio 5 -->
+          <div class="Beneficio">
             <span>⭐</span>
             <div>
               <h4>Recomendado por Huéspedes</h4>
@@ -393,7 +465,8 @@
             </div>
           </div>
 
-          <div class="beneficio">
+          <!-- Beneficio 6 -->
+          <div class="Beneficio">
             <span>🚌</span>
             <div>
               <h4>Llegada Sin Esfuerzo</h4>
@@ -406,45 +479,55 @@
         </div>
       </section>
 
-      <!--Offers Section-->
-
-      <section class="ofertas">
-        <div id="info_ofertas">
-          <h2>Ofertas Especiales</h2>
+      <!-- ============================================= -->
+      <!-- === SECCIÓN OFERTAS ======================== -->
+      <!-- ============================================= -->
+      <section class="Ofertas" aria-labelledby="ofertasHeading">
+        <div id="InfoOfertas">
+          <h2 id="ofertasHeading">Ofertas Especiales</h2>
           <p>
             Empieza tu aventura con nuestras ofertas exclusivas para tu escape perfecto de lujo en
             Luma Resort
           </p>
-          <button class="btn-principal-ofertas">Ver todas las ofertas</button>
+          <button class="BtnPrincipalOfertas">Ver todas las ofertas</button>
         </div>
-        <div id="contenido_ofertas">
-          <!-- <h2>🌟Ofertas Exclusivas para tu Escape Perfecto🌟</h2>  -->
-          <!-- Carrusel de ofertas-->
-
-          <div class="carrusel-ofertas">
-            <div class="oferta-item">
+        <div id="ContenidoOfertas">
+          <!-- Carrusel de Ofertas -->
+          <div class="CarruselOfertas">
+            <!-- Oferta 1 - Piscina -->
+            <div class="OfertaItem">
               <img
                 src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
                 alt="Piscina"
+                loading="lazy"
               />
-              <div class="overlay-info">
+              <div class="OverlayInfo">
                 <h3>Piscina Privada</h3>
                 <p>Relájate en nuestra piscina con vista al mar, disponible las 24 horas.</p>
               </div>
             </div>
-            <div class="oferta-item">
-              <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945" alt="Playa" />
-              <div class="overlay-info">
+
+            <!-- Oferta 2 - Playa -->
+            <div class="OfertaItem">
+              <img
+                src="https://images.unsplash.com/photo-1566073771259-6a8506099945"
+                alt="Playa"
+                loading="lazy"
+              />
+              <div class="OverlayInfo">
                 <h3>Playa Exclusiva</h3>
                 <p>Acceso privado a una playa de arena blanca y aguas cristalinas.</p>
               </div>
             </div>
-            <div class="oferta-item">
+
+            <!-- Oferta 3 - Gimnasio -->
+            <div class="OfertaItem">
               <img
                 src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092"
                 alt="Gimnasio"
+                loading="lazy"
               />
-              <div class="overlay-info">
+              <div class="OverlayInfo">
                 <h3>Gimnasio de Lujo</h3>
                 <p>Entrena con equipos de última generación frente a una vista panorámica.</p>
               </div>
@@ -453,154 +536,142 @@
         </div>
       </section>
 
-      <!--
-      <section id="ofertas-especiales">
-        <h2>Ofertas Especiales</h2>
-        <button class="btn-principal">Ver todas las ofertas</button>
-
-        <div class="oferta-principal">
-          <h3>🌟Ofertas Exclusivas para tu Escape Perfecto🌟</h3>
-          <p>
-            Descubre paquetes con descuentos en suites, spa, gastronomía y experiencias únicas.
-            ¡Aprovecha promociones limitadas para vivir el lujo que mereces!
-          </p>
-        </div>
-
-        <div class="ofertas-destacadas">
-          <div class="texto">
-            <h4>5 Ofertas que No Puedes Perderte</h4>
-          </div>
-          <div class="imagenes">
-            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" alt="Piscina" />
-            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945" alt="Playa" />
-            <img
-              src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092"
-              alt="Gimnasio"
-            />
-            <div class="overlay-img">
-              <img src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353" alt="Spa" />
-              <span class="overlay-text">Descubre Más</span>
-            </div>
-            <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0" alt="Resort" />
-          </div>
-        </div>
-
-        <div class="tarjetas-secundarias">
-          <div class="tarjeta">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQByzQ-5Av2mzeLalwfKzbvSSD7nfCuwKfpjw&s"
-              alt="Guía"
-            />
-            <h5>Guía de Confort</h5>
-            <p>Aprende los secretos para disfrutar al máximo tu suite de lujo.</p>
-            <button class="btn-secundario">Explorar Consejos</button>
-          </div>
-
-          <div class="tarjeta">
-            <img
-              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
-              alt="Diseña tu escape"
-            />
-            <h5>Diseña tu Escape Perfecto</h5>
-            <p>
-              Recibe inspiración mensual con ideas para personalizar tu experiencia en el resort.
-            </p>
-            <button class="btn-secundario">Ver Recomendaciones</button>
-          </div>
-        </div>
-      </section>
-
-    -->
-      <!--Contact Section-->
-
-      <section class="planifica">
+      <!-- ============================================= -->
+      <!-- === SECCIÓN CONTACTO ======================= -->
+      <!-- ============================================= -->
+      <section class="Planifica" aria-labelledby="contactoHeading">
         <div>
-          <h2>Planifica tu Estancia</h2>
-          <p class="descripcion">
+          <h2 id="contactoHeading">Planifica tu Estancia</h2>
+          <p class="Descripcion">
             Contáctanos para más información o para realizar tu reserva. Estamos listos para
             ayudarte a crear tu experiencia ideal.
           </p>
         </div>
 
         <div>
-          <form class="formulario">
+          <form class="Formulario" method="post" aria-labelledby="contactoHeading">
+            <!-- Campo Nombre -->
             <label>
               <p>Nombre completo</p>
-              <input type="text" placeholder="Tu nombre" />
+              <input type="text" placeholder="Tu nombre" required />
             </label>
 
+            <!-- Campo Email -->
             <label>
               <p>Correo electrónico</p>
-
-              <input type="email" placeholder="tu@example.com" />
+              <input type="email" placeholder="tu@example.com" required />
             </label>
 
+            <!-- Campo Fecha Llegada -->
             <label>
               <p>Fecha de llegada</p>
-              <input type="text" placeholder="dd/mm/aaaa" />
+              <input type="date" placeholder="dd/mm/aaaa" required />
             </label>
 
+            <!-- Campo Fecha Salida -->
             <label>
               <p>Fecha de salida</p>
-              <input type="text" placeholder="dd/mm/aaaa" />
+              <input type="date" placeholder="dd/mm/aaaa" required />
             </label>
 
+            <!-- Campo Huéspedes -->
             <label>
               <p>Número de huéspedes</p>
-
-              <input type="text" placeholder="1 huésped" />
+              <input type="number" min="1" placeholder="1 huésped" required />
             </label>
 
+            <!-- Campo Mensaje -->
             <label>
               <p>Mensaje (Opcional)</p>
               <textarea placeholder="¿Alguna petición especial?"></textarea>
             </label>
 
-            <button type="submit" class="btn-enviar">ENVIAR SOLICITUD</button>
+            <!-- Botón Enviar -->
+            <button type="submit" class="BtnEnviar">ENVIAR SOLICITUD</button>
           </form>
         </div>
       </section>
 
-      <!--footer Section-->
-      <footer class="footer">
-        <div class="footer-content">
-          <!-- Redes sociales a la izquierda -->
-          <div class="footer-section redes-sociales">
+      <!-- ============================================= -->
+      <!-- === FOOTER ================================ -->
+      <!-- ============================================= -->
+      <footer class="Footer">
+        <div class="FooterContent">
+          <!-- Redes Sociales -->
+          <div class="FooterSection RedesSociales">
             <p>Síguenos en redes sociales:</p>
-            <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://twitter.com" target="_blank"><i class="fab fa-x-twitter"></i></a>
-            <a href="https://www.instagram.com/hotellumaresort/" target="_blank">
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+            >
+              <i class="fab fa-x-twitter"></i>
+            </a>
+            <a
+              href="https://www.instagram.com/hotellumaresort/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
               <i class="fab fa-instagram"></i>
             </a>
-            <a href="https://www.tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
-            <a href="https://www.youtube.com/@HotelLumaResort" target="_blank">
+            <a
+              href="https://www.tiktok.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="TikTok"
+            >
+              <i class="fab fa-tiktok"></i>
+            </a>
+            <a
+              href="https://www.youtube.com/@HotelLumaResort"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+            >
               <i class="fab fa-youtube"></i>
             </a>
           </div>
 
-          <!-- Logo centrado con texto -->
-          <div class="footer-logo">
-            <img src="/IMAGES/logoSurf.jpeg" alt="Luma Resort" />
+          <!-- Logo y Copyright -->
+          <div class="FooterLogo">
+            <img src="/IMAGES/logoSurf.jpeg" alt="Luma Resort" loading="lazy" />
             <p>© 2025 Luma Resort. Todos los derechos reservados</p>
           </div>
 
-          <!-- Contacto a la derecha -->
-          <!-- Contacto a la derecha -->
-          <div class="footer-section contacto">
-            <div class="contact-title">
-              <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox">
+          <!-- Información de Contacto -->
+          <div class="FooterSection Contacto">
+            <div class="ContactTitle">
+              <a href="mailto:HotelLumaResort@gmail.com" aria-label="Enviar correo">
                 <i class="fas fa-envelope"></i>
               </a>
               <span>Contáctanos:</span>
             </div>
-            <div class="contact-info">
-              <p>Teléfono de contacto: 3158278278</p>
-              <p>Correo: HotelLumaResort@gmail.com</p>
+            <div class="ContactInfo">
+              <p>
+                Teléfono:
+                <a href="tel:+573158278278">315 827 8278</a>
+              </p>
+              <p>
+                Correo:
+                <a href="mailto:HotelLumaResort@gmail.com">HotelLumaResort@gmail.com</a>
+              </p>
             </div>
           </div>
         </div>
       </footer>
     </main>
+
+    <!-- Scripts al final del body para mejor performance -->
+    <script src="/SCRIPT/script.js" defer></script>
   </body>
-  <script src="/SCRIPT/script.js"></script>
 </html>

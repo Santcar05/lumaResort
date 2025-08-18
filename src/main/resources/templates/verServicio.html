@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/STYLES/estilosLandingPage.css" />
     <link rel="stylesheet" href="/STYLES/generales.css" />
     <link rel="stylesheet" href="/STYLES/plantillas.css" />
-    <link rel="stylesheet" href="/STYLES/mostrarServicios.css" />
+    <link rel="stylesheet" href="/STYLES/verServicio.css" />
 
     <!-- Fuentes de Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -39,7 +39,7 @@
   <body>
     <th:block th:replace="~{fragmentos :: header_f}"></th:block>
 
-    <main>
+    <main class="main_servicio">
       <h1 th:text="${servicio.nombre}"></h1>
       <img th:src="${servicio.imagenURL}" alt="Imagen del servicio" />
       <p th:text="${servicio.descripcion}"></p>

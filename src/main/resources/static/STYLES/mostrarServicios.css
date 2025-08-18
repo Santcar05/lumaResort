@@ -1,0 +1,18 @@
+#serviciosTabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#serviciosTabla th,
+#serviciosTabla td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+#serviciosTabla img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}

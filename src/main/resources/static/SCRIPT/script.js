@@ -70,12 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
   goToSlide(0);
   startAutoSlide();
 });
+
+//------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', function () {
   const logo = document.querySelector('.LogoImg');
   const themeDuration = 700; // Duración en milisegundos (0.7 segundos)
-
-  // Agregar clase de animación inicial al logo
-  logo.classList.add('theme-transition-logo');
 
   // Verificar preferencia del usuario
   const savedTheme = localStorage.getItem('theme') || 'light';
@@ -85,35 +84,34 @@ document.addEventListener('DOMContentLoaded', function () {
   logo.addEventListener('click', function () {
     // Deshabilitar múltiples clics durante la transición
     if (logo.classList.contains('theme-changing')) return;
-    logo.classList.add('theme-changing');
+    logo.classList.add('theme-changing', 'logo-active');
 
-    // 1. Animación de pulsación mejorada
-    logo.style.transform = 'scale(0.85) rotate(10deg)';
-    logo.style.filter = 'brightness(1.2)';
+    // 1. Animación de pulsación mediante clases CSS
+    logo.classList.add('logo-click-animation');
 
-    // 2. Efecto de partículas/brillo (puedes personalizar)
+    // 2. Efecto de partículas/brillo
     createRippleEffect(logo);
 
-    // 3. Cambiar tema después de un pequeño retraso para mejor feedback
+    // 3. Cambiar tema después de un pequeño retraso
     setTimeout(() => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
 
-      // Agregar clase de transición al body
       document.body.classList.add('theme-transition-active');
-
-      // Cambiar tema
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
 
-      // 4. Restaurar estado del logo después de la animación
+      // 4. Restaurar estado del logo
       setTimeout(() => {
-        logo.style.transform = 'scale(1) rotate(0)';
-        logo.style.filter = 'brightness(1)';
+        logo.classList.remove('logo-click-animation', 'theme-changing');
         document.body.classList.remove('theme-transition-active');
-        logo.classList.remove('theme-changing');
+
+        // Eliminar la clase active después de la transición
+        setTimeout(() => {
+          logo.classList.remove('logo-active');
+        }, 100);
       }, themeDuration);
-    }, 150); // Pequeño retraso antes de cambiar el tema
+    }, 150);
   });
 
   // Respeta la preferencia del sistema
@@ -128,21 +126,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Función para crear efecto de partículas/brillo
   function createRippleEffect(element) {
     const ripple = document.createElement('div');
     ripple.className = 'theme-ripple-effect';
-
-    // Posicionar en el centro del logo
-    const rect = element.getBoundingClientRect();
-    ripple.style.left = `${rect.width / 2}px`;
-    ripple.style.top = `${rect.height / 2}px`;
-
     element.appendChild(ripple);
-
-    // Animación completa
-    setTimeout(() => {
-      ripple.remove();
-    }, themeDuration);
+    setTimeout(() => ripple.remove(), themeDuration);
   }
 });

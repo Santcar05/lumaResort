@@ -18,6 +18,7 @@
   --section-light-blue: #d0e6f4;
   --section-dark-blue: #123c78;
 
+  --table-white: #f0f0f0;
   /* Transiciones */
   --transition-speed: 0.3s;
 }
@@ -37,6 +38,8 @@
   --section-blue: #5a8cb5;
   --section-light-blue: #8fb3d1;
   --section-dark-blue: #1e4a8e;
+
+  --table-white: #0a0a0a;
 }
 
 /* ============================================= */

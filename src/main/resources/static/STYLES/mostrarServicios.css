@@ -1,8 +1,37 @@
+#servicios {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  height: calc(--header-height);
+}
+#infoServicios {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  height: calc(72.4vh);
+  background-color: var(--section-dark-blue);
+  color: var(--card-text);
+  transition: background-color var(--transition-speed) ease;
+}
+
+#infoServicios h1 {
+  font-size: 3em;
+}
+
 #serviciosTabla {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
   margin-bottom: 20px;
+  background-color: var(--section-dark-blue);
+  color: var(--card-text);
+  transition: background-color var(--transition-speed) ease;
 }
 
 #serviciosTabla th,
@@ -15,4 +44,45 @@
   width: 100px;
   height: 100px;
   object-fit: cover;
+}
+#serviciosTabla button {
+  background-color: var(--button-primary);
+  color: var(--card-text);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color var(--transition-speed) ease;
+}
+#serviciosTabla button:hover {
+  background-color: var(--button-hover);
+}
+
+#tarjetaServicio {
+  gap: 15px;
+  width: 100%;
+  height: calc(var(--header-height) / 5);
+  background-color: var(--section-dark-blue);
+  color: var(--card-text);
+  transition: background-color var(--transition-speed) ease;
+}
+
+#tarjetaServicio:hover {
+  background-color: var(--section-light-blue);
+  color: var(--card-text);
+  transition: background-color var(--transition-speed) ease;
+  animation: translate 1s ease-in-out infinite;
+  cursor: pointer;
+}
+
+@keyframes translate {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }

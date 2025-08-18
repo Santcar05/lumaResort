@@ -70,7 +70,7 @@ public class ServicioRepository {
         servicios.put(11, new Servicio(11, "Acceso a los salones de reuniones", "Puede acceder a los salones de reuniones durante las horas de apertura del complejo", 200, "https://cache.marriott.com/is/image/marriotts7prod/wh-bogwh-studio-1-w-bogot--12315:Feature-Hor?wid=1920&fit=constrain", lista5, null));
         servicios.put(12, new Servicio(12, "Acceso a la piscina de lujo", "Puede acceder a la piscina de lujo durante las horas de apertura del complejo", 250, "https://i.pinimg.com/originals/b5/78/f7/b578f71b74b10579cf0f5545925a97b3.jpg", lista2, null));
         servicios.put(13, new Servicio(13, "Acceso a los salones de baile", "Puede acceder a los salones de baile durante las horas de apertura del complejo", 300, "https://bogota.gov.co/sites/default/files/eventos/2024-09/salonesdebaile-2.png", lista4, null));
-        servicios.put(14, new Servicio(15, "Acceso a los salones de eventos privados", "Puede acceder a los salones de eventos privados durante las horas de apertura del complejo", 400, "https://image-tc.galaxy.tf/wijpeg-1dc34z106v9ady8s7gj2kcb4j/rooftop-social-event2.jpg?width=1920", lista3, null));
+        servicios.put(14, new Servicio(14, "Acceso a los salones de eventos privados", "Puede acceder a los salones de eventos privados durante las horas de apertura del complejo", 400, "https://image-tc.galaxy.tf/wijpeg-1dc34z106v9ady8s7gj2kcb4j/rooftop-social-event2.jpg?width=1920", lista3, null));
     }
 
     public List<Servicio> findAll() {

@@ -38,51 +38,23 @@
   </head>
   <body>
     <th:block th:replace="~{fragmentos :: header_f}"></th:block>
-    <main>
-      <section id="servicios">
-        <div id="infoServicios">
-          <h1>Nuestros Servicios</h1>
-          <h4>
-            En Luma Resort, ofrecemos una amplia variedad de servicios para satisfacer las
-            necesidades de nuestros huéspedes.
-          </h4>
 
-          <!-- Barra de búsqueda -->
-          <form class="SearchForm" role="search">
-            <!-- Mejora de semántica -->
-            <input type="text" placeholder="Buscar..." aria-label="Buscar en el sitio" />
-            <button type="submit">Buscar</button>
-          </form>
-        </div>
-        <div id="tablaServicios">
-          <table id="serviciosTabla">
-            <thead>
-              <tr>
-                <th>Imagen del servicio</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Precio</th>
-                <th>Ver Servicio</th>
-              </tr>
-              <tr th:each="servicio : ${servicios}">
-                <td><img th:src="${servicio.imagenURL}" alt="Imagen del servicio" /></td>
-                <td th:text="${servicio.nombre}"></td>
-                <td th:text="${servicio.descripcion}"></td>
-                <td th:text="${servicio.precio}"></td>
-                <td>
-                  <a th:href="@{/servicios(id=${servicio.idServicio})}">
-                    <button>Detalles</button>
-                  </a>
-                </td>
-              </tr>
-            </thead>
-          </table>
-        </div>
-      </section>
+    <main>
+      <h1 th:text="${servicio.nombre}"></h1>
+      <img th:src="${servicio.imagenURL}" alt="Imagen del servicio" />
+      <p th:text="${servicio.descripcion}"></p>
+      <p th:text="${servicio.precio}"></p>
+      <!--Bucle de comentarios del servicio-->
+      <ul>
+        <li th:each="comentario : ${servicio.comentarios}">
+          <p th:text="${comentario.comentario}"></p>
+          <p th:text="${comentario.fecha}"></p>
+          <p th:text="${comentario.calificacion}"></p>
+        </li>
+      </ul>
     </main>
 
     <th:block th:replace="~{fragmentos :: footer_f}"></th:block>
   </body>
-  <!-- Scripts al final del body para mejor performance -->
   <script src="/SCRIPT/script.js" defer></script>
 </html>

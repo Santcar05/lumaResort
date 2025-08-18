@@ -1,0 +1,24 @@
+package com.example.lumaresort.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.lumaresort.repository.ServicioRepository;
+import com.example.lumaresort.service.ServicioService;
+
+@RequestMapping("/servicios")
+@Controller
+public class mostrarServiciosController {
+
+    private ServicioService servicioService;
+
+    @GetMapping(params = "id")
+    public String verServicio(int id, Model model) {
+        servicioService = new ServicioService(new ServicioRepository());
+        model.addAttribute("servicio", servicioService.findById(id));
+        return "verServicio";
+    }
+
+}

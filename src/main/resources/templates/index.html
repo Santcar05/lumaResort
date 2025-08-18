@@ -36,36 +36,7 @@
     <!-- ============================================= -->
     <!-- === HEADER PRINCIPAL ======================== -->
     <!-- ============================================= -->
-    <header class="MainHeader">
-      <div class="LogoContainer">
-        <img
-          src="/IMAGES/luma_Corregido.jpg"
-          alt="Luma Resort Logo"
-          class="LogoImg"
-          loading="lazy"
-        />
-        <h1 class="LogoTitle">LUMA RESORT</h1>
-      </div>
-
-      <!-- Navegación principal -->
-      <nav class="MainNav" aria-label="Navegación principal">
-        <!-- Mejora de accesibilidad -->
-        <ul>
-          <li><a href="#">Inicio</a></li>
-          <li><a href="#">Habitaciones</a></li>
-          <li><a href="#">Servicios</a></li>
-          <li><a href="#">Reservas</a></li>
-          <li><a href="#">Contacto</a></li>
-        </ul>
-      </nav>
-
-      <!-- Barra de búsqueda -->
-      <form class="SearchForm" role="search">
-        <!-- Mejora de semántica -->
-        <input type="text" placeholder="Buscar..." aria-label="Buscar en el sitio" />
-        <button type="submit">Buscar</button>
-      </form>
-    </header>
+    <th:block th:replace="~{fragmentos :: header_f}"></th:block>
 
     <!-- ============================================= -->
     <!-- === CONTENIDO PRINCIPAL ===================== -->
@@ -600,80 +571,8 @@
       <!-- ============================================= -->
       <!-- === FOOTER ================================ -->
       <!-- ============================================= -->
-      <footer class="Footer">
-        <div class="FooterContent">
-          <!-- Redes Sociales -->
-          <div class="FooterSection RedesSociales">
-            <p>Síguenos en redes sociales:</p>
-            <a
-              href="https://www.facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-            >
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Twitter"
-            >
-              <i class="fab fa-x-twitter"></i>
-            </a>
-            <a
-              href="https://www.instagram.com/hotellumaresort/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-            >
-              <i class="fab fa-instagram"></i>
-            </a>
-            <a
-              href="https://www.tiktok.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="TikTok"
-            >
-              <i class="fab fa-tiktok"></i>
-            </a>
-            <a
-              href="https://www.youtube.com/@HotelLumaResort"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="YouTube"
-            >
-              <i class="fab fa-youtube"></i>
-            </a>
-          </div>
 
-          <!-- Logo y Copyright -->
-          <div class="FooterLogo">
-            <img src="/IMAGES/logoSurf.jpeg" alt="Luma Resort" loading="lazy" />
-            <p>© 2025 Luma Resort. Todos los derechos reservados</p>
-          </div>
-
-          <!-- Información de Contacto -->
-          <div class="FooterSection Contacto">
-            <div class="ContactTitle">
-              <a href="mailto:HotelLumaResort@gmail.com" aria-label="Enviar correo">
-                <i class="fas fa-envelope"></i>
-              </a>
-              <span>Contáctanos:</span>
-            </div>
-            <div class="ContactInfo">
-              <p>
-                Teléfono:
-                <a href="tel:+573158278278">315 827 8278</a>
-              </p>
-              <p>
-                Correo:
-                <a href="mailto:HotelLumaResort@gmail.com">HotelLumaResort@gmail.com</a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <div th:replace="~{fragmentos :: footer_f}"></div>
     </main>
 
     <!-- Scripts al final del body para mejor performance -->

@@ -40,27 +40,30 @@
     <th:block th:replace="~{fragmentos :: header_f}"></th:block>
 
     <main class="main_servicio">
-      <div id="seccion_servicio">
-        <img th:src="${servicio.imagenURL}" alt="Imagen del servicio" />
-
-        <div id="informacion_servicio">
-          <h1 th:text="${servicio.nombre}"></h1>
-          <p th:text="${servicio.descripcion}"></p>
-          <p th:text="${servicio.precio}"></p>
+  <div class="servicio-container">
+    <div class="servicio-info">
+      <h1 th:text="${servicio.nombre}" class="servicio-titulo"></h1>
+      <img th:src="${servicio.imagenURL}" alt="Imagen del servicio" class="servicio-imagen"/>
+      <p th:text="${servicio.descripcion}" class="servicio-descripcion"></p>
+      <p class="servicio-precio">Precio del servicio: <span th:text="${servicio.precio}"></span></p>
+    </div>
+      <!--Bucle de comentarios del servicio-->
+      <div class="comentarios-section">
+          <h2>Comentarios</h2>
+          <ul class="comentarios-lista">
+            <li th:each="comentario : ${servicio.comentarios}" class="comentario-item">
+              <div class="comentario-contenido">
+                <p class="comentario-texto" th:text="${comentario.comentario}"></p>
+                <div class="comentario-meta">
+                  <p class="comentario-fecha" th:text="${comentario.fecha}"></p>
+                  <p class="comentario-rating">
+                    <span class="estrellas" th:text="${comentario.calificacion}">★</span>
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
-      </div>
-
-      <div id="comentarios">
-        <h1>Comentarios</h1>
-
-        <!--Bucle de comentarios del servicio-->
-        <ul>
-          <li th:each="comentario : ${servicio.comentarios}">
-            <p th:text="${comentario.comentario}"></p>
-            <p th:text="${comentario.fecha}"></p>
-            <p th:text="${comentario.calificacion}"></p>
-          </li>
-        </ul>
       </div>
     </main>
 

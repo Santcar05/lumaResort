@@ -40,18 +40,28 @@
     <th:block th:replace="~{fragmentos :: header_f}"></th:block>
 
     <main class="main_servicio">
-      <h1 th:text="${servicio.nombre}"></h1>
-      <img th:src="${servicio.imagenURL}" alt="Imagen del servicio" />
-      <p th:text="${servicio.descripcion}"></p>
-      <p th:text="${servicio.precio}"></p>
-      <!--Bucle de comentarios del servicio-->
-      <ul>
-        <li th:each="comentario : ${servicio.comentarios}">
-          <p th:text="${comentario.comentario}"></p>
-          <p th:text="${comentario.fecha}"></p>
-          <p th:text="${comentario.calificacion}"></p>
-        </li>
-      </ul>
+      <div id="seccion_servicio">
+        <img th:src="${servicio.imagenURL}" alt="Imagen del servicio" />
+
+        <div id="informacion_servicio">
+          <h1 th:text="${servicio.nombre}"></h1>
+          <p th:text="${servicio.descripcion}"></p>
+          <p th:text="${servicio.precio}"></p>
+        </div>
+      </div>
+
+      <div id="comentarios">
+        <h1>Comentarios</h1>
+
+        <!--Bucle de comentarios del servicio-->
+        <ul>
+          <li th:each="comentario : ${servicio.comentarios}">
+            <p th:text="${comentario.comentario}"></p>
+            <p th:text="${comentario.fecha}"></p>
+            <p th:text="${comentario.calificacion}"></p>
+          </li>
+        </ul>
+      </div>
     </main>
 
     <th:block th:replace="~{fragmentos :: footer_f}"></th:block>

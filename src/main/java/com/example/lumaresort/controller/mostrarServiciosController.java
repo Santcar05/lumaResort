@@ -14,6 +14,16 @@ public class mostrarServiciosController {
 
     private ServicioService servicioService;
 
+    //http://localhost:8090/servicios
+    @GetMapping()
+    public String servicios(Model model) {
+        servicioService = new ServicioService(new ServicioRepository());
+
+        model.addAttribute("servicios", servicioService.findAll());
+
+        return "tarjetas";
+    }
+
     @GetMapping(params = "id")
     public String verServicio(int id, Model model) {
         servicioService = new ServicioService(new ServicioRepository());
@@ -21,4 +31,21 @@ public class mostrarServiciosController {
         return "verServicio";
     }
 
+    @GetMapping("/tabla")
+    public String tabla(Model model) {
+        servicioService = new ServicioService(new ServicioRepository());
+
+        model.addAttribute("servicios", servicioService.findAll());
+
+        return "mostrarServicios";
+    }
+
+    @GetMapping("/tarjetas")
+    public String tarjetas(Model model) {
+        servicioService = new ServicioService(new ServicioRepository());
+
+        model.addAttribute("servicios", servicioService.findAll());
+
+        return "tarjetas";
+    }
 }

@@ -1,0 +1,117 @@
+/* General */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: var(--bg-primary);
+}
+
+h1,
+h2 {
+  font-family: 'Rubik Mono One', sans-serif;
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-color: var(--text-primary);
+}
+
+#titulo {
+  flex: 1;
+  text-align: center;
+}
+
+.logo {
+  height: 50px;
+}
+
+.carrito-container {
+  position: relative;
+}
+
+#carrito-icono {
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.3s;
+  filter: invert(1);
+  align-self: center;
+}
+#carrito-icono:hover {
+  transform: scale(1.1);
+}
+
+@keyframes bounceDark {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.92);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.oculto {
+  display: none;
+}
+
+.productos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.tarjeta {
+  background: white;
+  border: 2px solid #ccc;
+  width: 200px;
+  padding: 15px;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tarjeta img {
+  width: 100%;
+  height: auto;
+}
+
+.tarjeta h3 {
+  font-size: 1.1em;
+  margin: 10px 0;
+}
+
+.tarjeta button {
+  background: #111;
+  color: white;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.tarjeta button:hover {
+  background: crimson;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: auto;
+  gap: 10px;
+  padding: 20px;
+}
+
+form input,
+form button {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+form button {
+  background: #111;
+  color: white;
+  cursor: pointer;
+}
+
+form button:hover {
+  background: green;
+}

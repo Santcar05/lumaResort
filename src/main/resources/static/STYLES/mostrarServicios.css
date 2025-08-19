@@ -31,55 +31,77 @@
   transition: color var(--transition-speed) ease;
 }
 
-#serviciosTabla {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  background-color: var(--section-dark-blue);
-  color: var(--text-only-white);
-  transition: background-color var(--transition-speed) ease;
+#tablaServicios {
+  width: 90%;
+  margin: 30px auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  background: var(--section-dark-blue);
 }
 
-#serviciosTabla th,
+/* Encabezados */
+#serviciosTabla thead {
+  background: linear-gradient(90deg, #262de0, #303261);
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+#serviciosTabla th {
+  padding: 15px;
+  text-align: center;
+}
+
+/* Celdas */
 #serviciosTabla td {
-  padding: 10px;
-  border: 1px solid #ccc;
+  padding: 15px;
+  text-align: center;
+  color: var(--text-only-white);
+  font-size: 0.95rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Filas alternas */
+#serviciosTabla tbody tr:nth-child(even) {
+  background-color: rgba(48, 50, 97, 0.6);
+}
+
+#serviciosTabla tbody tr:hover {
+  background-color: rgba(73, 174, 224, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+/* Imagen */
 #serviciosTabla img {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
-#serviciosTabla button {
-  background-color: var(--button-primary);
-  color: var(--text-only-white);
-  padding: 10px 20px;
+
+#serviciosTabla img:hover {
+  transform: scale(1.1);
+}
+
+/* Botón */
+.btn-detalle {
+  background: linear-gradient(90deg, #262de0, #49aee0);
+  color: #fff;
+  padding: 10px 18px;
   border: none;
-  border-radius: 25px;
+  border-radius: 30px;
   cursor: pointer;
-  transition: background-color var(--transition-speed) ease;
-}
-#serviciosTabla button:hover {
-  background-color: var(--button-hover);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-#tarjetaServicio {
-  gap: 15px;
-  width: 100%;
-  height: calc(var(--header-height) / 5);
-  background-color: var(--section-dark-blue);
-  color: var(--text-only-white);
-  transition: background-color var(--transition-speed) ease;
-}
-
-#tarjetaServicio:hover {
-  background-color: var(--section-light-blue);
-  color: var(--card-text);
-  transition: background-color var(--transition-speed) ease;
-  animation: translate 1s ease-in-out infinite;
-  cursor: pointer;
+.btn-detalle:hover {
+  background: linear-gradient(90deg, #e09a00, #ffb733);
+  transform: translateY(-2px);
 }
 
 @keyframes translate {

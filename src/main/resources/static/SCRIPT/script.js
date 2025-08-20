@@ -28,9 +28,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Función para avanzar al siguiente slide
   function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    goToSlide(currentIndex);
+  currentIndex++;
+  const totalSlides = slides.length;
+
+  slider.scrollTo({
+    left: slider.offsetWidth * currentIndex,
+    behavior: 'smooth',
+  });
+
+  // Reinicio al llegar a la mitad (porque duplicamos slides)
+  if (currentIndex >= totalSlides / 2) {
+    setTimeout(() => {
+      slider.scrollLeft = 0; // volvemos al inicio sin animación
+      currentIndex = 0;
+    }, 500); // espera a que termine la transición
   }
+
+  updateDots(currentIndex % (totalSlides / 2)); // actualizar puntos
+}
 
   // Iniciar el auto-desplazamiento
   function startAutoSlide() {
@@ -132,4 +147,25 @@ document.addEventListener('DOMContentLoaded', function () {
     element.appendChild(ripple);
     setTimeout(() => ripple.remove(), themeDuration);
   }
+});
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const sliderTrack = document.getElementById('sliderTrack');
+
+  // Duplicar todas las tarjetas para scroll infinito
+  sliderTrack.innerHTML += sliderTrack.innerHTML;
+
+  // Si quieres velocidad controlada con requestAnimationFrame:
+  let position = 0;
+  const speed = 0.5; // px por frame
+  const sliderWidth = sliderTrack.scrollWidth / 2; // mitad porque duplicamos
+
+  function animate() {
+    position += speed;
+    if (position >= sliderWidth) position = 0; // reset para infinito
+    sliderTrack.style.transform = `translateX(${-position}px)`;
+    requestAnimationFrame(animate);
+  }
+
+  animate();
 });

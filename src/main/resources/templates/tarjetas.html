@@ -42,47 +42,98 @@
 
     <!-- Contenido principal -->
     <main>
-      <section class="intro">
-        <h2>Bienvenido a nuestros servicios</h2>
-        <p>
-          Descubre la experiencia de hospedarte en el Hotel Paraíso. Disfruta de nuestras amenidades
-          exclusivas diseñadas para tu comodidad y bienestar: desde spa de lujo hasta restaurantes
-          gourmet y excursiones guiadas.
-        </p>
-        <a th:href="@{/servicios/tabla}">
-          <button>TABLA</button>
-        </a>
-      </section>
+      <!-- Sección 1: Azul eléctrico con diseño llamativo -->
+<section class="seccion seccion-azul hero-section">
+  <div class="contenido-seccion hero-content">
+    <div class="hero-texto">
+      <h1>¡Bienvenido a la experiencia LUMA Resort!</h1>
+      <p>
+        Vive momentos únicos en nuestro paraíso de lujo y relax. Desde spa de alta gama hasta
+        restaurantes gourmet y excursiones inolvidables, tenemos todo preparado para tu bienestar.
+      </p>
+      <a th:href="@{/servicios/tabla}">
+        <button class="btn-principal">
+          ¡Da click aquí para descubrir todos nuestros servicios!
+        </button>
+      </a>
+    </div>
+    <div class="hero-imagen">
+  <img src="https://phantom-telva.uecdn.es/e1c097ad930ecefcff4ae8d0ef6f0339/crop/164x0/1909x1160/resize/828/f/jpg/assets/multimedia/imagenes/2022/04/28/16511388091039.jpg" 
+       alt="Hotel paraíso" />
+</div>
+  </div>
+</section>
 
-      <section class="tienda">
-        <h2>Catálogo de Servicios</h2>
-        <div id="productos-container" class="productos">
-          <!-- Iteración con Thymeleaf -->
-          <div class="tarjeta" th:each="servicio : ${servicios}">
-            <img th:src="${servicio.imagenURL}" th:alt="${servicio.nombre}" />
-            <h3 th:text="${servicio.nombre}"></h3>
-            <p th:text="${servicio.descripcion}"></p>
-            <p>
-              <strong>Precio:</strong>
-              <span th:text="${servicio.precio}"></span>
-              USD
-            </p>
-            <a th:href="@{/servicios(id=${servicio.idServicio})}">
-              <button>Detalles</button>
-            </a>
+
+
+      <!-- Sección 2: Ámbar dorado -->
+      <section class="seccion seccion-ambar">
+        <div class="contenido-seccion">
+          <h2>Catálogo de Servicios</h2>
+
+          <!-- Carrusel infinito -->
+          <div class="Slider">
+  <div class="SliderTrack">
+    <!-- Tarjetas originales -->
+    <div class="SlideContainer" th:each="servicio : ${servicios}">
+      <div class="tarjeta">
+        <img th:src="${servicio.imagenURL}" th:alt="${servicio.nombre}" />
+        <h3 th:text="${servicio.nombre}"></h3>
+        <p th:text="${servicio.descripcion}"></p>
+        <p>
+          <strong>Precio:</strong>
+          <span th:text="${servicio.precio}"></span>
+          USD
+        </p>
+        <a th:href="@{/servicios(id=${servicio.idServicio})}">
+          <button>Detalles</button>
+        </a>
+      </div>
+    </div>
+
+    <!-- Duplicado para scroll infinito -->
+    <div class="SlideContainer" th:each="servicio : ${servicios}">
+      <div class="tarjeta">
+        <img th:src="${servicio.imagenURL}" th:alt="${servicio.nombre}" />
+        <h3 th:text="${servicio.nombre}"></h3>
+        <p th:text="${servicio.descripcion}"></p>
+        <p>
+          <strong>Precio:</strong>
+          <span th:text="${servicio.precio}"></span>
+          USD
+        </p>
+        <a th:href="@{/servicios(id=${servicio.idServicio})}">
+          <button>Detalles</button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Puntos de navegación -->
+  <div class="SliderNav">
+    <a href="#"></a>
+    <a href="#"></a>
+    <a href="#"></a>
+    <!-- Se pueden generar dinámicamente según cantidad de slides -->
+  </div>
+</div>
+
           </div>
         </div>
       </section>
 
-      <section class="agregar">
-        <h2>Agregar nuevo servicio</h2>
-        <form th:action="@{/servicios/agregar}" method="post">
-          <input type="text" name="nombre" placeholder="Nombre del servicio" required />
-          <input type="text" name="descripcion" placeholder="Descripción" required />
-          <input type="number" step="0.01" name="precio" placeholder="Precio" required />
-          <input type="url" name="imagenURL" placeholder="URL de la imagen" required />
-          <button type="submit">Agregar servicio</button>
-        </form>
+      <!-- Sección 3: Azul eléctrico -->
+      <section class="seccion seccion-azul">
+        <div class="contenido-seccion">
+          <h2>Agregar nuevo servicio</h2>
+          <form th:action="@{/servicios/agregar}" method="post">
+            <input type="text" name="nombre" placeholder="Nombre del servicio" required />
+            <input type="text" name="descripcion" placeholder="Descripción" required />
+            <input type="number" step="0.01" name="precio" placeholder="Precio" required />
+            <input type="url" name="imagenURL" placeholder="URL de la imagen" required />
+            <button type="submit">Agregar servicio</button>
+          </form>
+        </div>
       </section>
     </main>
 

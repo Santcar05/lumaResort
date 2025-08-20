@@ -7,79 +7,156 @@
   width: 100%;
   height: calc(--header-height);
 }
-#infoServicios {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  width: 100%;
-  height: calc(72.4vh);
-  background-color: var(--section-dark-blue);
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(135deg, #303261, #1b1c34, #49aee0);
+  background-size: 400% 400%;
+  animation: fondoAnimado 15s ease infinite;
   color: var(--text-only-white);
-  transition: background-color var(--transition-speed) ease;
+}
+
+/* Animación de degradado */
+@keyframes fondoAnimado {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+/* Fondo llamativo con degradado dinámico */
+#infoServicios {
+  background: transparent; /* deja ver el fondo global */
+  color: var(--text-only-white);
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* Animación del degradado */
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 #infoServicios h1 {
   font-size: 3em;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  margin-bottom: 40px;
-  color: var(--text-only-white);
-  text-align: center;
-  align-items: center;
-  justify-content: center;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  margin-bottom: 20px;
   transition: color var(--transition-speed) ease;
 }
 
-#serviciosTabla {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  background-color: var(--section-dark-blue);
-  color: var(--text-only-white);
-  transition: background-color var(--transition-speed) ease;
-}
-
-#serviciosTabla th,
-#serviciosTabla td {
-  padding: 10px;
-  border: 1px solid #ccc;
-}
-
-#serviciosTabla img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-}
-#serviciosTabla button {
-  background-color: var(--button-primary);
-  color: var(--text-only-white);
-  padding: 10px 20px;
+/* -------------------- BOTÓN DETALLE -------------------- */
+.btn-detalle {
+  background: linear-gradient(90deg, #49aee0, #262de0);
+  color: #fff;
+  font-size: 0.5em;
+  font-weight: 600;
+  padding: 10x 20px;
   border: none;
-  border-radius: 25px;
+  border-radius: 50px;
   cursor: pointer;
-  transition: background-color var(--transition-speed) ease;
-}
-#serviciosTabla button:hover {
-  background-color: var(--button-hover);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.4s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
 }
 
-#tarjetaServicio {
-  gap: 15px;
+/* Efecto brillante al pasar el mouse */
+.btn-detalle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
   width: 100%;
-  height: calc(var(--header-height) / 5);
-  background-color: var(--section-dark-blue);
-  color: var(--text-only-white);
-  transition: background-color var(--transition-speed) ease;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: skewX(-25deg);
+  transition: left 0.7s ease;
 }
 
-#tarjetaServicio:hover {
-  background-color: var(--section-light-blue);
-  color: var(--card-text);
-  transition: background-color var(--transition-speed) ease;
-  animation: translate 1s ease-in-out infinite;
-  cursor: pointer;
+.btn-detalle:hover::before {
+  left: 200%;
+}
+
+.btn-detalle:hover {
+  background: linear-gradient(90deg, #e09a00, #ffb733);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 183, 51, 0.7);
+}
+
+#tablaServicios {
+  width: 90%;
+  margin: 30px auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  background: var(--section-dark-blue);
+}
+
+/* Encabezados */
+#serviciosTabla thead {
+  background: linear-gradient(90deg, #262de0, #303261);
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+#serviciosTabla th {
+  padding: 15px;
+  text-align: center;
+}
+
+/* Celdas */
+#serviciosTabla td {
+  padding: 15px;
+  text-align: center;
+  color: var(--text-only-white);
+  font-size: 0.95rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Filas alternas */
+#serviciosTabla tbody tr:nth-child(even) {
+  background-color: rgba(48, 50, 97, 0.6);
+}
+
+#serviciosTabla tbody tr:hover {
+  background-color: rgba(73, 174, 224, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+/* Imagen */
+#serviciosTabla img {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+#serviciosTabla img:hover {
+  transform: scale(1.1);
+}
+
+.btn-detalle:hover {
+  background: linear-gradient(90deg, #e09a00, #ffb733);
+  transform: translateY(-2px);
 }
 
 @keyframes translate {

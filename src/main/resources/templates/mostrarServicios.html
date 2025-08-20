@@ -43,17 +43,21 @@
         <div id="infoServicios">
           <h1>Nuestros Servicios</h1>
           <h4>
-            En Luma Resort, ofrecemos una amplia variedad de servicios para satisfacer las
-            necesidades de nuestros huéspedes.
+            En Luma Resort, ofrecemos una amplia variedad de servicios para
+            satisfacer las necesidades de nuestros huéspedes.
           </h4>
           <a th:href="@{/servicios/tarjetas}">
-            <button>TARJETAS</button>
+            <button class="btn-detalle">TARJETAS</button>
           </a>
 
           <!-- Barra de búsqueda -->
           <form class="SearchForm" role="search">
             <!-- Mejora de semántica -->
-            <input type="text" placeholder="Buscar..." aria-label="Buscar en el sitio" />
+            <input
+              type="text"
+              placeholder="Buscar..."
+              aria-label="Buscar en el sitio"
+            />
             <button type="submit">Buscar</button>
           </form>
         </div>
@@ -65,20 +69,27 @@
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Precio</th>
-                <th>Ver Servicio</th>
+                <th>Acción</th>
               </tr>
+            </thead>
+            <tbody>
               <tr th:each="servicio : ${servicios}">
-                <td><img th:src="${servicio.imagenURL}" alt="Imagen del servicio" /></td>
+                <td>
+                  <img
+                    th:src="${servicio.imagenURL}"
+                    alt="Imagen del servicio"
+                  />
+                </td>
                 <td th:text="${servicio.nombre}"></td>
                 <td th:text="${servicio.descripcion}"></td>
                 <td th:text="${servicio.precio}"></td>
                 <td>
                   <a th:href="@{/servicios(id=${servicio.idServicio})}">
-                    <button>Detalles</button>
+                    <button class="btn-detalle">Ver Detalles</button>
                   </a>
                 </td>
               </tr>
-            </thead>
+            </tbody>
           </table>
         </div>
       </section>

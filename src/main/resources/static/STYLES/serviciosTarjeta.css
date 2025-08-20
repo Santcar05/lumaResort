@@ -1,85 +1,182 @@
-/* General */
+/* ---------------------- Colores de la paleta ---------------------- */
+:root {
+  --azul-electrico: #262de0;
+  --ambar-dorado: #e09a00;
+  --azul-nocturno: #303261;
+  --verde-azulado: #305161;
+  --marron-oscuro: #614c1f;
+  --blanco: #ffffff;
+  --gris-claro: #ccc;
+}
+
+/* ---------------------- Estilos generales ---------------------- */
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  background: var(--bg-primary);
+  background: var(--blanco);
+  overflow-x: hidden; /* evitar scroll horizontal */
 }
 
 h1,
 h2 {
   font-family: 'Rubik Mono One', sans-serif;
   text-align: center;
-  text-decoration: underline;
-  text-decoration-color: var(--text-primary);
 }
 
-#titulo {
-  flex: 1;
+h3 {
+  font-family: 'Inter', sans-serif;
+}
+
+/* ---------------------- Secciones de pantalla completa según contenido ---------------------- */
+.seccion {
+  width: 79vw;
+  height: 69vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* ahora centra verticalmente el contenido */
+  padding: 60px 20px; /* espacio alrededor */
+  box-sizing: border-box;
+  color: var(--blanco);
+}
+
+.contenido-seccion {
+  max-width: 1200px; /* no exceder ancho máximo */
+  width: 100%;
+}
+
+/* Colores de cada sección */
+/* Sección de agregar servicio */
+.seccion-azul {
+  background: linear-gradient(135deg, #262de0 0%, #303261 100%);
+}
+.seccion-azul .contenido-seccion {
+  background: #262de0;
+  padding: 40px 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Título más destacado */
+.seccion-azul .contenido-seccion h2 {
+  font-size: 2em;
+  margin-bottom: 25px;
+  color: white; /* ámbar dorado para resaltar */
   text-align: center;
 }
 
-.logo {
-  height: 50px;
+/* Formulario más atractivo */
+.seccion-azul form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+  margin: auto;
 }
 
-.carrito-container {
-  position: relative;
+/* Inputs más llamativos */
+.seccion-azul form input {
+  padding: 12px 15px;
+  border: 2px solid #e09a00; /* borde ámbar */
+  border-radius: 8px;
+  background-color: #ffffff;
+  font-size: 1em;
+  transition: all 0.3s;
 }
 
-#carrito-icono {
-  height: 40px;
+.seccion-azul form input:focus {
+  outline: none;
+  border-color: #262de0; /* azul eléctrico al enfocar */
+  box-shadow: 0 0 8px rgba(38, 45, 224, 0.6);
+}
+
+/* Botón más destacado */
+.seccion-azul form button {
+  background-color: #e09a00; /* ámbar dorado */
+  color: #111;
+  font-weight: bold;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
   cursor: pointer;
-  transition: transform 0.3s;
-  filter: invert(1);
-  align-self: center;
-}
-#carrito-icono:hover {
-  transform: scale(1.1);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-@keyframes bounceDark {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(0.92);
-  }
-  100% {
-    transform: scale(1);
-  }
+.seccion-azul form button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
-.oculto {
-  display: none;
+.seccion-ambar {
+  background-color: var(--ambar-dorado);
+  color: #111; /* contraste con ámbar */
+  padding: 40px 20px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
+/* ---------------------- Productos / Tarjetas ---------------------- */
 .productos {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  padding: 20px;
+  padding: 20px 0;
 }
 
+/* Tarjeta estilo existente */
+
 .tarjeta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* espacio entre contenido y footer */
+  width: 250px;
+  height: 400px;
+  padding: 15px;
+  box-sizing: border-box;
   background: white;
   border: 2px solid #ccc;
-  width: 200px;
-  padding: 15px;
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 .tarjeta img {
-  width: 100%;
-  height: auto;
+  width: 100%; /* ocupa todo el ancho de la tarjeta */
+  height: 180px; /* alto fijo para todas */
+  object-fit: cover; /* recorta la imagen si no cabe, mantiene proporción */
+  border-radius: 5px; /* opcional, bordes redondeados */
 }
 
-.tarjeta h3 {
-  font-size: 1.1em;
-  margin: 10px 0;
+.tarjeta h3,
+.tarjeta p {
+  margin: 5px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tarjeta button {
+  background: var(--azul-nocturno);
+  color: var(--blanco);
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.tarjeta button:hover {
+  background: var(--marron-oscuro);
+}
+
+.tarjeta-footer {
+  display: flex;
+  flex-direction: column; /* precio arriba, botón debajo */
+  gap: 10px; /* espacio entre precio y botón */
+  margin-top: auto; /* empuja al final de la tarjeta */
+}
+
+.tarjeta-footer p {
+  margin: 0;
+}
+
+.tarjeta-footer button {
   background: #111;
   color: white;
   border: none;
@@ -87,31 +184,206 @@ h2 {
   cursor: pointer;
 }
 
-.tarjeta button:hover {
+.tarjeta-footer button:hover {
   background: crimson;
 }
 
+/* ---------------------- Formulario ---------------------- */
 form {
   display: flex;
   flex-direction: column;
-  width: 300px;
-  margin: auto;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
   gap: 10px;
-  padding: 20px;
 }
 
 form input,
 form button {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--gris-claro);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 form button {
-  background: #111;
-  color: white;
+  background: var(--azul-nocturno);
+  color: var(--blanco);
   cursor: pointer;
 }
 
 form button:hover {
-  background: green;
+  background: var(--marron-oscuro);
+}
+
+/* ---------------------- Botones de secciones ---------------------- */
+.seccion-ambar button,
+.seccion-ambar a button {
+  background-color: var(--azul-nocturno);
+  color: var(--blanco);
+}
+
+.seccion-ambar button:hover,
+.seccion-ambar a button:hover {
+  background-color: var(--marron-oscuro);
+}
+
+/* ---------------------- Responsividad ---------------------- */
+@media (max-width: 768px) {
+  .productos {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  form {
+    max-width: 90%;
+  }
+}
+/* Slider contenedor */
+
+.Slider {
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center; /* centra verticalmente si es necesario */
+}
+
+.SliderTrack {
+  display: flex;
+  gap: 20px;
+  scroll-behavior: smooth;
+  animation: scrollInfinite 30s linear infinite;
+}
+
+.SlideContainer {
+  flex: 0 0 auto;
+  width: 250px; /* Ajusta según tu diseño */
+}
+
+/* Puntos de navegación */
+.SliderNav {
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+  display: none !important;
+}
+
+.SliderNav a {
+  display: block;
+  width: 12px;
+  height: 12px;
+  background-color: #111;
+  border-radius: 50%;
+  text-decoration: none;
+}
+
+.SliderNav a.active {
+  background-color: #e09a00; /* ámbar para resaltar */
+}
+
+.ServiciosContainer {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: ScrollInfinite 40s linear infinite;
+}
+
+@keyframes scrollInfinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  } /* 50% porque duplicaste las tarjetas */
+}
+
+/* Hero Section */
+.hero-section {
+  width: 79vw;
+  min-height: 69vh;
+  background: linear-gradient(
+    135deg,
+    #262de0 0%,
+    #305161 100%
+  ); /* azul eléctrico + verde azulado oscuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  padding: 50px 20px;
+  box-sizing: border-box;
+}
+
+.hero-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
+  gap: 40px;
+}
+
+.hero-texto {
+  flex: 1;
+  min-width: 300px;
+}
+
+.hero-texto h1 {
+  font-family: 'Rubik Mono One', sans-serif;
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.hero-texto p {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.hero-imagen {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-imagen img {
+  max-width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Botón principal destacado */
+.btn-principal {
+  background: #e09a00; /* ámbar dorado */
+  color: #111;
+  border: none;
+  padding: 15px 25px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-principal:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive: Se ajusta en pantallas pequeñas */
+@media (max-width: 900px) {
+  .hero-content {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+  .hero-imagen img {
+    max-width: 80%;
+    margin-bottom: 30px;
+  }
 }

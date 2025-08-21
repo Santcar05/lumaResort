@@ -11,7 +11,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   background: linear-gradient(135deg, #303261, #1b1c34, #49aee0);
   background-size: 400% 400%;
   animation: fondoAnimado 15s ease infinite;
@@ -56,47 +56,6 @@ body {
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
   margin-bottom: 20px;
   transition: color var(--transition-speed) ease;
-}
-
-/* -------------------- BOTÓN DETALLE -------------------- */
-.btn-detalle {
-  background: linear-gradient(90deg, #49aee0, #262de0);
-  color: #fff;
-  font-size: 0.5em;
-  font-weight: 600;
-  padding: 10x 20px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.4s ease;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Efecto brillante al pasar el mouse */
-.btn-detalle::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  transform: skewX(-25deg);
-  transition: left 0.7s ease;
-}
-
-.btn-detalle:hover::before {
-  left: 200%;
-}
-
-.btn-detalle:hover {
-  background: linear-gradient(90deg, #e09a00, #ffb733);
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 183, 51, 0.7);
 }
 
 #tablaServicios {
@@ -152,11 +111,6 @@ body {
 
 #serviciosTabla img:hover {
   transform: scale(1.1);
-}
-
-.btn-detalle:hover {
-  background: linear-gradient(90deg, #e09a00, #ffb733);
-  transform: translateY(-2px);
 }
 
 @keyframes translate {

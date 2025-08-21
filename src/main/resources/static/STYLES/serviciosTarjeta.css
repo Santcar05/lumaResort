@@ -12,19 +12,19 @@
 /* ---------------------- Estilos generales ---------------------- */
 body {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   background: var(--blanco);
   overflow-x: hidden; /* evitar scroll horizontal */
 }
 
 h1,
 h2 {
-  font-family: 'Rubik Mono One', sans-serif;
+  font-family: "Rubik Mono One", sans-serif;
   text-align: center;
 }
 
 h3 {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 /* ---------------------- Secciones de pantalla completa según contenido ---------------------- */
@@ -290,6 +290,22 @@ form button:hover {
   animation: ScrollInfinite 40s linear infinite;
 }
 
+.carousel {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.carousel-track {
+  display: flex;
+  animation: scrollInfinite 20s linear infinite;
+}
+
+.carousel-track > * {
+  flex: 0 0 auto;
+  margin-right: 20px;
+}
+
 @keyframes scrollInfinite {
   0% {
     transform: translateX(0);
@@ -336,7 +352,7 @@ form button:hover {
 }
 
 .hero-texto h1 {
-  font-family: 'Rubik Mono One', sans-serif;
+  font-family: "Rubik Mono One", sans-serif;
   font-size: 3em;
   margin-bottom: 20px;
 }

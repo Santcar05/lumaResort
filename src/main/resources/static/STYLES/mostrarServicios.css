@@ -15,6 +15,7 @@ body {
   background: linear-gradient(135deg, #303261, #1b1c34, #49aee0);
   background-size: 400% 400%;
   animation: fondoAnimado 15s ease infinite;
+  animation: FadeIn 0.8s ease-in-out;
   color: var(--text-only-white);
 }
 

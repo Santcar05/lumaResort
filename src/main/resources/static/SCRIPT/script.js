@@ -28,24 +28,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Función para avanzar al siguiente slide
   function nextSlide() {
-  currentIndex++;
-  const totalSlides = slides.length;
+    currentIndex++;
+    const totalSlides = slides.length;
 
-  slider.scrollTo({
-    left: slider.offsetWidth * currentIndex,
-    behavior: 'smooth',
-  });
+    slider.scrollTo({
+      left: slider.offsetWidth * currentIndex,
+      behavior: 'smooth',
+    });
 
-  // Reinicio al llegar a la mitad (porque duplicamos slides)
-  if (currentIndex >= totalSlides / 2) {
-    setTimeout(() => {
-      slider.scrollLeft = 0; // volvemos al inicio sin animación
-      currentIndex = 0;
-    }, 500); // espera a que termine la transición
+    // Reinicio al llegar a la mitad (porque duplicamos slides)
+    if (currentIndex >= totalSlides / 2) {
+      setTimeout(() => {
+        slider.scrollLeft = 0; // volvemos al inicio sin animación
+        currentIndex = 0;
+      }, 500); // espera a que termine la transición
+    }
+
+    updateDots(currentIndex % (totalSlides / 2)); // actualizar puntos
   }
-
-  updateDots(currentIndex % (totalSlides / 2)); // actualizar puntos
-}
 
   // Iniciar el auto-desplazamiento
   function startAutoSlide() {
@@ -148,7 +148,6 @@ document.addEventListener('DOMContentLoaded', function () {
     setTimeout(() => ripple.remove(), themeDuration);
   }
 });
-<script>
 document.addEventListener('DOMContentLoaded', () => {
   const sliderTrack = document.getElementById('sliderTrack');
 

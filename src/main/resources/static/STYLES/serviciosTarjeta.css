@@ -329,6 +329,10 @@ form button:hover {
 .hero-texto {
   flex: 1;
   min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .hero-texto h1 {
@@ -378,7 +382,7 @@ form button:hover {
 /* Responsive: Se ajusta en pantallas pequeñas */
 @media (max-width: 900px) {
   .hero-content {
-    flex-direction: column-reverse;
+    flex-direction: center;
     text-align: center;
   }
   .hero-imagen img {

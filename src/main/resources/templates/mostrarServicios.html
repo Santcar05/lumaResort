@@ -43,23 +43,20 @@
         <div id="infoServicios">
           <h1>Nuestros Servicios</h1>
           <h4>
-            En Luma Resort, ofrecemos una amplia variedad de servicios para
-            satisfacer las necesidades de nuestros huéspedes.
+            En Luma Resort, ofrecemos una amplia variedad de servicios para satisfacer las
+            necesidades de nuestros huéspedes.
           </h4>
           <a th:href="@{/servicios/tarjetas}">
             <button class="btn-detalle">TARJETAS</button>
           </a>
-
-          <!-- Barra de búsqueda -->
-          <form class="SearchForm" role="search">
-            <!-- Mejora de semántica -->
-            <input
-              type="text"
-              placeholder="Buscar..."
-              aria-label="Buscar en el sitio"
-            />
-            <button type="submit">Buscar</button>
-          </form>
+          <div id="buscar_contenedor">
+            <!-- Barra de búsqueda -->
+            <form class="SearchForm" role="search">
+              <!-- Mejora de semántica -->
+              <input type="text" placeholder="Buscar..." aria-label="Buscar en el sitio" />
+              <button type="submit">Buscar</button>
+            </form>
+          </div>
         </div>
         <div id="tablaServicios">
           <table id="serviciosTabla">
@@ -75,10 +72,7 @@
             <tbody>
               <tr th:each="servicio : ${servicios}">
                 <td>
-                  <img
-                    th:src="${servicio.imagenURL}"
-                    alt="Imagen del servicio"
-                  />
+                  <img th:src="${servicio.imagenURL}" alt="Imagen del servicio" />
                 </td>
                 <td th:text="${servicio.nombre}"></td>
                 <td th:text="${servicio.descripcion}"></td>

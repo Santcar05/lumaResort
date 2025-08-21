@@ -33,9 +33,14 @@ body {
 /* Fondo llamativo con degradado dinámico */
 #infoServicios {
   background: transparent; /* deja ver el fondo global */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   color: var(--text-only-white);
   text-align: center;
   padding: 40px 20px;
+  height: 71vh;
 }
 
 /* Animación del degradado */
@@ -56,6 +61,12 @@ body {
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
   margin-bottom: 20px;
   transition: color var(--transition-speed) ease;
+}
+#infoServicios h4 {
+  font-size: 1.5em;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+  transition: color var(--transition-speed) ease;
+  margin-bottom: 30px;
 }
 
 #tablaServicios {
@@ -111,6 +122,16 @@ body {
 
 #serviciosTabla img:hover {
   transform: scale(1.1);
+}
+
+#buscar_contenedor {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  margin-top: 30px;
 }
 
 @keyframes translate {

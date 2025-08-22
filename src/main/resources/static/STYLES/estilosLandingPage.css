@@ -133,6 +133,7 @@
 .ServiciosContainer {
   display: flex;
   gap: 20px;
+  padding: 10px 0;
   animation: ScrollInfinite 30s linear infinite;
 }
 

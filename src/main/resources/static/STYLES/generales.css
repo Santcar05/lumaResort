@@ -2,45 +2,106 @@
 /* === VARIABLES DE TEMA Y ESTILOS BASE ======= */
 /* ============================================= */
 :root {
-  /* Modo claro (valores actuales) */
-  --bg-primary: #111111;
-  --text-primary: #e0e1dd;
+  /* 🌞 Modo claro */
+  --bg-primary: #f7f9fc; /* Fondo base claro */
+  --bg-secondary: #ffffff; /* Fondo tarjetas */
+  --text-primary: #1e293b; /* Texto principal */
+  --text-secondary: #475569; /* Texto secundario */
   --header-bg: linear-gradient(90deg, #262de0, #49aee0);
   --footer-bg: linear-gradient(90deg, #262de0, #49aee0);
+
+  /* Botones */
   --button-primary: #1d3a8a;
   --button-hover: #4aa7df;
-  --card-bg: #ffffff;
-  --card-text: #333;
-  --header-height: 80px;
+  --button-text: #ffffff;
+
+  /* Tarjetas */
+  --card-bg: #ffffff; /* Fondo limpio */
+  --card-text: #0f172a; /* Texto oscuro, más fuerte */
+  --card-shadow: rgba(38, 45, 224, 0.15); /* Sombra con tinte azul (brand) */
+
+  /* Secciones */
   --section-orange: #e09a00;
   --section-beige: #f5bf82;
   --section-blue: #8ac6f2;
   --section-light-blue: #d0e6f4;
   --section-dark-blue: #123c78;
 
-  --table-white: #f0f0f0;
-  /* Transiciones */
-  --transition-speed: 0.3s;
+  /* 🎨 Secciones más armónicas (modo claro) */
+  --section-primary: #49aee0; /* Azul claro vibrante */
+  --section-secondary: #89cff0; /* Azul pastel */
+  --section-accent: #b3e5fc; /* Celeste suave */
+  --section-contrast: #1d3a8a; /* Azul marino */
+  --section-highlight: #262de0; /* Azul intenso de marca */
 
+  /* Tablas */
+  --table-white: #f0f0f0;
+  --table-border: #e2e8f0;
+
+  /* Estados */
+  --success: #16a34a;
+  --success-light: #dcfce7;
+  --warning: #f59e0b;
+  --warning-light: #fef3c7;
+  --error: #dc2626;
+  --error-light: #fee2e2;
+  --info: #0ea5e9;
+  --info-light: #e0f2fe;
+
+  /* Extras */
   --text-only-white: #f0f0f0;
+  --header-height: 80px;
+  --transition-speed: 0.3s;
 }
 
 [data-theme='dark'] {
-  /* Modo oscuro */
+  /* 🌙 Modo oscuro */
   --bg-primary: #0a0a0a;
+  --bg-secondary: #1e293b;
   --text-primary: #f0f0f0;
+  --text-secondary: #cbd5e1;
   --header-bg: linear-gradient(90deg, #1a1a2e, #16213e);
   --footer-bg: linear-gradient(90deg, #1a1a2e, #16213e);
+
+  /* Botones */
   --button-primary: #3b82f6;
   --button-hover: #60a5fa;
-  --card-bg: #1e293b;
-  --card-text: #e2e8f0;
-  --section-orange: #9c6d1a;
-  --section-beige: #c49d6d;
+  --button-text: #ffffff;
+
+  /* Tarjetas */
+  --card-bg: #1e293b; /* Azul grisáceo oscuro */
+  --card-text: #e2e8f0; /* Texto claro sobre fondo */
+  --card-shadow: rgba(73, 174, 224, 0.25); /* Sombra azul clara translúcida */
+
+  /* Secciones */
+  --section-orange: #c77d1e;
+  --section-beige: #a47e54;
   --section-blue: #5a8cb5;
-  --section-light-blue: #8fb3d1;
+  --section-light-blue: #7aa5c8;
   --section-dark-blue: #1e4a8e;
+
+  /* 🌙 Secciones más armónicas (modo oscuro) */
+  --section-primary: #3b82f6; /* Azul brillante */
+  --section-secondary: #2563eb; /* Azul medio */
+  --section-accent: #1e40af; /* Azul oscuro suave */
+  --section-contrast: #16213e; /* Azul muy profundo */
+  --section-highlight: #49aee0; /* Azul claro para resaltar */
+
+  /* Tablas */
   --table-white: #0a0a0a;
+  --table-border: #334155;
+
+  /* Estados */
+  --success: #22c55e;
+  --success-light: #14532d;
+  --warning: #fbbf24;
+  --warning-light: #78350f;
+  --error: #ef4444;
+  --error-light: #7f1d1d;
+  --info: #38bdf8;
+  --info-light: #0c4a6e;
+
+  /* Extras */
   --text-only-white: #f0f0f0;
 }
 
@@ -256,7 +317,7 @@ main {
 /* ============================================= */
 /* === BOTONES ================================ */
 /* ============================================= */
-#ButtonBanner,
+/*#ButtonBanner,*/
 header nav ul li,
 input,
 button {
@@ -265,7 +326,7 @@ button {
   transition: background-color 0.3s ease;
   border: none;
 }
-
+/*
 #ButtonBanner {
   color: #f0f0f0;
   font-family: 'Inter';
@@ -276,9 +337,13 @@ button {
   transition: background-color 0.3s ease;
   background-color: var(--button-primary);
 }
+  */
+#ButtonBanner {
+  font-size: 1.5em;
+}
 
-button:hover,
-#ButtonBanner:hover {
+button:hover
+/*,#ButtonBanner:hover*/ {
   background-color: var(--button-hover);
 }
 

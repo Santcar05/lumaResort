@@ -1,3 +1,49 @@
+/* ============================================= */
+/* === VARIABLES DE TEMA Y ESTILOS BASE ======= */
+/* ============================================= */
+:root {
+  /* Modo claro (valores actuales) */
+  --bg-primary: #111111;
+  --text-primary: #e0e1dd;
+  --header-bg: linear-gradient(90deg, #262de0, #49aee0);
+  --footer-bg: linear-gradient(90deg, #262de0, #49aee0);
+  --button-primary: #1d3a8a;
+  --button-hover: #4aa7df;
+  --card-bg: #ffffff;
+  --card-text: #333;
+  --header-height: 80px;
+  --section-orange: #e09a00;
+  --section-beige: #f5bf82;
+  --section-blue: #8ac6f2;
+  --section-light-blue: #d0e6f4;
+  --section-dark-blue: #123c78;
+
+  --table-white: #f0f0f0;
+  /* Transiciones */
+  --transition-speed: 0.3s;
+
+  --text-only-white: #f0f0f0;
+}
+
+[data-theme='dark'] {
+  /* Modo oscuro */
+  --bg-primary: #0a0a0a;
+  --text-primary: #f0f0f0;
+  --header-bg: linear-gradient(90deg, #1a1a2e, #16213e);
+  --footer-bg: linear-gradient(90deg, #1a1a2e, #16213e);
+  --button-primary: #3b82f6;
+  --button-hover: #60a5fa;
+  --card-bg: #1e293b;
+  --card-text: #e2e8f0;
+  --section-orange: #9c6d1a;
+  --section-beige: #c49d6d;
+  --section-blue: #5a8cb5;
+  --section-light-blue: #8fb3d1;
+  --section-dark-blue: #1e4a8e;
+  --table-white: #0a0a0a;
+  --text-only-white: #f0f0f0;
+}
+
 /* ---------------------- Colores de la paleta ---------------------- */
 :root {
   --azul-electrico: #262de0;
@@ -12,29 +58,27 @@
 /* ---------------------- Estilos generales ---------------------- */
 body {
   margin: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   background: var(--blanco);
   overflow-x: hidden; /* evitar scroll horizontal */
 }
 
 h1,
 h2 {
-  font-family: "Rubik Mono One", sans-serif;
+  font-family: 'Rubik Mono One', sans-serif;
   text-align: center;
 }
 
 h3 {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 /* ---------------------- Secciones de pantalla completa según contenido ---------------------- */
 .seccion {
-  height: 69vh;
+  height: 70vh;
   display: flex;
   justify-content: center;
   align-items: center; /* ahora centra verticalmente el contenido */
-  /*padding: 60px 0; */ /* espacio alrededor */
-  box-sizing: border-box;
   color: var(--blanco);
 }
 
@@ -51,7 +95,7 @@ h3 {
 }
 .seccion-azul .contenido-seccion {
   background: var(--section-blue);
-  padding: 40px 20px;
+  padding: 0 20px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
@@ -106,11 +150,18 @@ h3 {
 }
 
 .seccion-ambar {
-  background-color: var(--ambar-dorado);
-  color: #111; /* contraste con ámbar */
-  padding: 40px 20px;
+  height: 70vh;
+  background-color: var(--section-beige);
+  padding: 0 20px;
   box-sizing: border-box;
   overflow: hidden;
+}
+
+.seccion-ambar h2 {
+  font-size: 2em;
+  margin-bottom: 25px;
+  color: var(--card-text); /* contraste con ámbar */
+  text-align: center;
 }
 
 /* ---------------------- Productos / Tarjetas ---------------------- */
@@ -132,7 +183,8 @@ h3 {
   height: 400px;
   padding: 15px;
   box-sizing: border-box;
-  background: white;
+  background: var(--section-blue);
+  color: var(--card-text);
   border: 2px solid #ccc;
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
 }
@@ -241,7 +293,7 @@ form button:hover {
 /* Slider contenedor */
 
 .Slider {
-  overflow: hidden;
+  /*overflow: hidden;*/
   width: 100%;
   display: flex;
   align-items: center; /* centra verticalmente si es necesario */
@@ -352,7 +404,7 @@ form button:hover {
 }
 
 .hero-texto h1 {
-  font-family: "Rubik Mono One", sans-serif;
+  font-family: 'Rubik Mono One', sans-serif;
   font-size: 3em;
   margin-bottom: 20px;
 }
@@ -364,16 +416,15 @@ form button:hover {
 }
 
 .hero-imagen {
-  flex: 1;
-  min-width: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /*50% porciento cada hijo*/
+  width: 50%;
+  height: 100%;
 }
 
 .hero-imagen img {
-  max-width: 100%;
-  border-radius: 15px;
+  /*max-width: 100%;*/
+  height: 100%;
+  /*border-radius: 15px;*/
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 

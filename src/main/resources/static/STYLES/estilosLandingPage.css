@@ -16,12 +16,11 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: var(--text-only-white);
   text-align: center;
   background-size: cover;
   background-position: center;
   overflow: hidden;
-  background-color: #e09a00;
   height: calc(72.4vh);
   width: 100%;
   flex: 1 0 50%;
@@ -36,7 +35,7 @@
   font-size: 3rem;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   margin-bottom: 40px;
-  color: rgb(78, 58, 41);
+  color: var(--text-only-white);
   text-align: center;
   align-items: center;
   justify-content: center;
@@ -47,12 +46,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: rgb(82, 62, 43);
+  color: var(--text-only-white);
   text-align: center;
   background-size: cover;
   background-position: center;
   overflow: hidden;
-  background-color: var(--section-beige);
+  background-color: var(--section-contrast);
   height: calc(72.4vh);
   width: 100%;
   flex: 1 0 50%;
@@ -68,14 +67,14 @@
   font-size: 1.5rem;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   margin-bottom: 40px;
-  color: rgb(78, 58, 41);
+  color: var(--text-only-white);
   text-align: center;
 }
 
 .BtnContainer button,
 .BtnPrincipalOfertas {
   background-color: var(--button-primary);
-  color: white;
+  color: var(--text-only-white);
   padding: 12px 25px;
   border: none;
   border-radius: 50px;
@@ -104,7 +103,7 @@
 /* === SECCIÓN SERVICIOS ======================= */
 /* ============================================= */
 #Servicios {
-  background-color: var(--section-blue);
+  background-color: var(--section-primary);
   padding: 50px 20px;
   height: calc(72.4vh);
   display: flex;
@@ -153,7 +152,7 @@
   padding: 15px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
-  border: 2px solid #f58220;
+  border: 2px solid var(--button-primary);
   transition: transform 0.3s ease, box-shadow 0.3s ease, color var(--transition-speed) ease;
 }
 
@@ -190,14 +189,14 @@
 .ServiciosInfo h2 {
   font-size: 2.5rem;
   font-weight: bold;
-  color: var(--card-text);
+  color: var(--text-only-white);
   transition: color var(--transition-speed) ease;
 }
 
 .ServiciosInfo .Subtitulo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: var(--card-text);
+  color: var(--text-only-white);
   margin-top: 10px;
   transition: color var(--transition-speed) ease;
 }
@@ -205,7 +204,7 @@
 .ServiciosInfo .Descripcion {
   max-width: 500px;
   font-size: 1rem;
-  color: var(--card-text);
+  color: var(--text-only-white);
   margin: 20px auto;
   line-height: 1.5;
   transition: color var(--transition-speed) ease;
@@ -229,11 +228,11 @@
 /* === SECCIÓN TESTIMONIOS ===================== */
 /* ============================================= */
 #Testimonios {
-  background: var(--section-beige);
+  background: var(--section-contrast);
   padding: 50px 0;
   text-align: center;
   height: calc(72.4vh);
-  color: var(--card-text);
+  color: var(--text-only-white);
   transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
@@ -248,7 +247,7 @@
 
 #Testimonios h2 {
   font-size: 2.5rem;
-  color: var(--card-text);
+  color: var(--text-only-white);
   transition: color var(--transition-speed) ease;
 }
 
@@ -256,18 +255,18 @@
   max-width: 800px;
   margin: 15px auto 30px;
   font-size: 1rem;
-  color: var(--section-beige);
+  color: var(--section-contrast);
   transition: color var(--transition-speed) ease;
 }
 
 .Rating {
   display: inline-flex;
   align-items: center;
-  background: var(--section-beige);
+  background: var(--section-contrast);
   padding: 5px 10px;
   border-radius: 10px;
   font-weight: bold;
-  color: var(--card-text);
+  color: var(--text-only-white);
   margin-bottom: 30px;
   transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
@@ -282,7 +281,7 @@
   gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
-  background: var(--section-beige);
+  background: var(--section-contrast);
   padding: 20px;
   width: 100%;
   margin: 0;
@@ -313,7 +312,7 @@
 
 .Tarjeta .Comentario {
   font-style: italic;
-  color: var(--card-text);
+  color: var(--text-only-white);
   padding-left: 5%;
   transition: color var(--transition-speed) ease;
 }
@@ -321,7 +320,7 @@
 .Tarjeta .Autor {
   font-weight: bold;
   margin-top: 5px;
-  color: var(--card-text);
+  color: var(--text-only-white);
   padding-left: 5%;
   transition: color var(--transition-speed) ease;
 }
@@ -334,10 +333,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: var(--section-blue);
+  background: var(--section-primary);
   padding: 50px 20px;
   text-align: center;
-  color: var(--card-text);
+  color: var(--text-only-white);
   height: calc(72.4vh);
   transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
@@ -345,7 +344,7 @@
 #PorqueReservar h3 {
   font-size: 3rem;
   font-weight: bold;
-  color: var(--card-text);
+  color: var(--text-only-white);
   margin-bottom: 70px;
   transition: color var(--transition-speed) ease;
 }
@@ -372,13 +371,13 @@
 .Beneficio h4 {
   font-size: 1.2rem;
   margin: 0;
-  color: var(--card-text);
+  color: var(--text-only-white);
   transition: color var(--transition-speed) ease;
 }
 
 .Beneficio p {
   font-size: 0.9rem;
-  color: var(--card-text);
+  color: var(--text-only-white);
   transition: color var(--transition-speed) ease;
 }
 
@@ -394,7 +393,7 @@
   flex: 1 0 50%;
   max-width: 100%;
   height: calc(72.4vh);
-  background-color: var(--section-beige);
+  background-color: var(--section-contrast);
   transition: background-color var(--transition-speed) ease;
 }
 
@@ -411,7 +410,7 @@
   font-size: 3rem;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   margin-bottom: 40px;
-  color: var(--card-text);
+  color: var(--text-only-white);
   text-align: center;
   align-items: center;
   justify-content: center;
@@ -422,7 +421,7 @@
   font-size: 1.5rem;
   text-align: justify;
   padding: 20px 30px;
-  color: var(--card-text);
+  color: var(--text-only-white);
   transition: color var(--transition-speed) ease;
 }
 
@@ -457,7 +456,7 @@
   font-size: 3rem;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   margin-bottom: 40px;
-  color: var(--card-text);
+  color: var(--text-only-white);
   text-align: center;
   align-items: center;
   justify-content: center;
@@ -476,7 +475,7 @@
 .Planifica {
   text-align: center;
   padding: 0px 20px;
-  background-color: var(--section-blue);
+  background-color: var(--section-primary);
   height: calc(72.4vh);
   display: flex;
   flex-direction: row;
@@ -498,7 +497,7 @@
 
 .Planifica h2 {
   font-weight: bold;
-  color: var(--card-text);
+  color: var(--text-only-white);
   font-size: 3rem;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   margin-bottom: 40px;
@@ -512,7 +511,7 @@
   font-size: 1.5rem;
   max-width: 700px;
   margin: 10px auto 30px;
-  color: var(--card-text);
+  color: var(--text-only-white);
   transition: color var(--transition-speed) ease;
 }
 

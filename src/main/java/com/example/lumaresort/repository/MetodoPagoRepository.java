@@ -42,4 +42,8 @@ public class MetodoPagoRepository {
         metodos.remove(id);
     }
 
+    public void update(MetodoPago metodo) {
+        metodos.put(metodo.getIdMetodo(), metodo);
+    }
+
 }

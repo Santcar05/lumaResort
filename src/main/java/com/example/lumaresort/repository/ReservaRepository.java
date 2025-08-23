@@ -32,4 +32,5 @@ public class ReservaRepository {
         reservas.put(4, new Reserva(4, new Date(), new Date(), 8, "Confirmada", null));
         reservas.put(5, new Reserva(5, new Date(), new Date(), 10, "Confirmada", null));
     }
+
 }

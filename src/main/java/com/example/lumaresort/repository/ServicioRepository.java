@@ -88,4 +88,8 @@ public class ServicioRepository {
     public void delete(int id) {
         servicios.remove(id);
     }
+
+    public void update(Servicio servicio) {
+        servicios.put(servicio.getIdServicio(), servicio);
+    }
 }

@@ -20,13 +20,6 @@
   --card-text: #0f172a; /* Texto oscuro, más fuerte */
   --card-shadow: rgba(38, 45, 224, 0.15); /* Sombra con tinte azul (brand) */
 
-  /* Secciones */
-  --section-orange: #e09a00;
-  --section-beige: #f5bf82;
-  --section-blue: #8ac6f2;
-  --section-light-blue: #d0e6f4;
-  --section-dark-blue: #123c78;
-
   /* 🎨 Secciones más armónicas (modo claro) */
   --section-primary: #49aee0; /* Azul claro vibrante */
   --section-secondary: #89cff0; /* Azul pastel */
@@ -72,13 +65,6 @@
   --card-bg: #1e293b; /* Azul grisáceo oscuro */
   --card-text: #e2e8f0; /* Texto claro sobre fondo */
   --card-shadow: rgba(73, 174, 224, 0.25); /* Sombra azul clara translúcida */
-
-  /* Secciones */
-  --section-orange: #c77d1e;
-  --section-beige: #a47e54;
-  --section-blue: #5a8cb5;
-  --section-light-blue: #7aa5c8;
-  --section-dark-blue: #1e4a8e;
 
   /* 🌙 Secciones más armónicas (modo oscuro) */
   --section-primary: #3b82f6; /* Azul brillante */

@@ -41,4 +41,8 @@ public class CuentaHabitacionRepository {
         cuentas.remove(id);
     }
 
+    public void update(CuentaHabitacion cuenta) {
+        cuentas.put(cuenta.getIdCuentaHabitacion(), cuenta);
+    }
+
 }

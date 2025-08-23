@@ -47,4 +47,8 @@ public class ConfiguracionRepository {
         configuraciones.remove(id);
     }
 
+    public void update(Configuracion configuracion) {
+        configuraciones.put(configuracion.getId(), configuracion);
+    }
+
 }

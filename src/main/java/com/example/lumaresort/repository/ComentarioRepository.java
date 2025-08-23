@@ -41,4 +41,8 @@ public class ComentarioRepository {
         comentarios.remove(id);
     }
 
+    public void update(Comentario comentario) {
+        comentarios.put(comentario.getIdComentario(), comentario);
+    }
+
 }

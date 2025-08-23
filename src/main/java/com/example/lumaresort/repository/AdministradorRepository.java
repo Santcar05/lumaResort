@@ -38,4 +38,8 @@ public class AdministradorRepository {
         return administradores.remove(id);
     }
 
+    public void update(Administrador a) {
+        administradores.put(a.getIdAdministrador(), a);
+    }
+
 }

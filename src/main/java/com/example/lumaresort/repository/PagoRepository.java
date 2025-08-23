@@ -45,4 +45,8 @@ public class PagoRepository {
         pagos.remove(id);
     }
 
+    public void update(Pago pago) {
+        pagos.put(pago.getIdPago(), pago);
+    }
+
 }

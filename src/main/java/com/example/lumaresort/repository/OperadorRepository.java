@@ -42,4 +42,8 @@ public class OperadorRepository {
         operadores.remove(id);
     }
 
+    public void update(Operador operador) {
+        operadores.put(operador.getIdOperador(), operador);
+    }
+
 }

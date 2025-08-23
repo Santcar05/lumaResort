@@ -42,4 +42,9 @@ public class TipoHabitacionRepository {
     public void delete(int id) {
         tipos.remove(id);
     }
+
+    public void update(TipoHabitacion tipo) {
+        tipos.put(tipo.getIdTipo(), tipo);
+    }
+
 }

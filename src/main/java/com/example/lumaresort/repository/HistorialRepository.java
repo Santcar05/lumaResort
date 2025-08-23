@@ -43,4 +43,9 @@ public class HistorialRepository {
     public void delete(int id) {
         historiales.remove(id);
     }
+
+    public void update(Historial historial) {
+        historiales.put(historial.getIdHistorial(), historial);
+    }
+
 }

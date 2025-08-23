@@ -46,4 +46,9 @@ public final class HabitacionRepository {
     public void save(Habitacion h) {
         habitaciones.put(h.getIdHabitacion(), h);
     }
+
+    public void update(Habitacion h) {
+        habitaciones.put(h.getIdHabitacion(), h);
+    }
+
 }

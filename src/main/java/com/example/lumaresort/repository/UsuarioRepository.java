@@ -40,4 +40,8 @@ public class UsuarioRepository {
         usuarios.remove(id);
     }
 
+    public void update(Usuario u) {
+        usuarios.put(u.getIdUsuario(), u);
+    }
+
 }

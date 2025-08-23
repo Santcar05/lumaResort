@@ -42,4 +42,8 @@ public class ClienteRepository {
         clientes.remove(c.getIdCliente());
     }
 
+    public void update(Cliente c) {
+        clientes.put(c.getIdCliente(), c);
+    }
+
 }

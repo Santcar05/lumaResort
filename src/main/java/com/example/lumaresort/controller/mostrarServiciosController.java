@@ -1,10 +1,12 @@
 package com.example.lumaresort.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.lumaresort.entities.Usuario;
 import com.example.lumaresort.repository.ServicioRepository;
 import com.example.lumaresort.service.ServicioService;
 
@@ -12,12 +14,16 @@ import com.example.lumaresort.service.ServicioService;
 @Controller
 public class mostrarServiciosController {
 
+    @Autowired
+    private Usuario usuario;
+
     private ServicioService servicioService;
 
     //http://localhost:8090/servicios
     @GetMapping()
     public String servicios(Model model) {
         servicioService = new ServicioService(new ServicioRepository());
+        model.addAttribute("usuario", usuario);
 
         model.addAttribute("servicios", servicioService.findAll());
 
@@ -33,6 +39,8 @@ public class mostrarServiciosController {
 
     @GetMapping("/tabla")
     public String tabla(Model model) {
+        model.addAttribute("usuario", usuario);
+
         servicioService = new ServicioService(new ServicioRepository());
 
         model.addAttribute("servicios", servicioService.findAll());
@@ -42,6 +50,8 @@ public class mostrarServiciosController {
 
     @GetMapping("/tarjetas")
     public String tarjetas(Model model) {
+
+        model.addAttribute("usuario", usuario);
         servicioService = new ServicioService(new ServicioRepository());
 
         model.addAttribute("servicios", servicioService.findAll());

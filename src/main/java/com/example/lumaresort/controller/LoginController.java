@@ -1,6 +1,6 @@
 package com.example.lumaresort.controller;
 
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,26 +14,25 @@ import com.example.lumaresort.entities.Usuario;
 @RequestMapping("/login")
 public class LoginController {
 
-    //Crear bean
-    @Bean
-    public Usuario usuario() {
-        return new Usuario();
-    }
+    @Autowired
+    private Usuario usuario;
 
     @GetMapping()
     public String login(Model model) {
-        model.addAttribute("usuario", usuario());
+        model.addAttribute("usuario", usuario);
         return "login";
     }
 
     @PostMapping()
-    public String login(@ModelAttribute("usuario") Usuario usuario) {
+    public String login(@ModelAttribute("usuario") Usuario usuarioF) {
         //Buscar en la BD si esta en el sistema
         Usuario usuarioEncontrado = new Usuario("abc@gmail.com", "123");//usuarioRepository.findByCorreoAndContrasena(usuario.getCorreo(), usuario.getContrasena());
         //Validar los datos
         //Redireccionar
-        if (usuarioEncontrado.getCorreo().equals(usuario.getCorreo()) && usuarioEncontrado.getContrasena().equals(usuario.getContrasena())) {
-            return "redirect:/inicioUsuario";
+        if (usuarioEncontrado.getCorreo().equals(usuarioF.getCorreo()) && usuarioEncontrado.getContrasena().equals(usuarioF.getContrasena())) {
+            usuario.setCorreo(usuarioF.getCorreo());
+            usuario.setContrasena(usuarioF.getContrasena());
+            return "index";
         } else {
             return "redirect:/login";
         }

@@ -31,12 +31,28 @@
 #btn-login {
   text-align: center;
 }
-#olvidaste {
+#olvidaste,
+#registrate {
   text-decoration: none;
   margin-top: 20px;
   margin-bottom: 20px;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   color: var(--card-text);
   transition: color var(--transition-speed) ease;
+}
+#olvidaste a {
+  text-decoration: none;
+  color: var(--card-text);
+  transition: color var(--transition-speed) ease;
+}
+#olvidaste a:hover {
+  transition: color var(--transition-speed) ease;
+}
+#enlaces {
+  display: flex;
+  gap: 30px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }

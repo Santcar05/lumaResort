@@ -63,10 +63,12 @@
           <input type="text" placeholder="Buscar..." aria-label="Buscar en el sitio" />
         </form>
         <div id="contenedor-login">
-          <button class="btn-detalle"><a th:href="@{/login}">Iniciar Sesión</a></button>
-          <div class="LogoContainer">
+          <button class="btn-detalle" th:if="${usuario == null or usuario.correo == ''}">
+            <a th:href="@{/login}">Iniciar Sesión</a>
+          </button>
+          <div class="LogoContainer" th:if="${usuario != null and usuario.correo != ''}">
             <img
-              src="/IMAGES/luma_Corregido.jpg"
+              src="/IMAGES/logoSurf.jpeg"
               alt="Luma Resort Logo"
               class="LogoImg"
               loading="lazy"

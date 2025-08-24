@@ -221,33 +221,37 @@ document.addEventListener('DOMContentLoaded', function () {
   const logo = document.querySelector('.LogoImg');
   const themeDuration = 700;
 
+  // Aplicar tema guardado o por defecto
   const savedTheme = localStorage.getItem('theme') || 'light';
   document.documentElement.setAttribute('data-theme', savedTheme);
 
+  // -------- Cambio de tema con el logo --------
   logo.addEventListener('click', function () {
     if (logo.classList.contains('theme-changing')) return;
-    logo.classList.add('theme-changing', 'logo-active');
-    logo.classList.add('logo-click-animation');
+    logo.classList.add('theme-changing', 'logo-active', 'logo-click-animation');
     createRippleEffect(logo);
 
     setTimeout(() => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
 
-      document.body.classList.add('theme-transition-active');
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-
-      setTimeout(() => {
-        logo.classList.remove('logo-click-animation', 'theme-changing');
-        document.body.classList.remove('theme-transition-active');
-        setTimeout(() => {
-          logo.classList.remove('logo-active');
-        }, 100);
-      }, themeDuration);
+      applyTheme(newTheme);
     }, 150);
   });
 
+  // -------- Cambio de tema desde el submenu --------
+  window.changeTheme = function (theme) {
+    // Evita conflictos si ya está animando
+    if (logo.classList.contains('theme-changing')) return;
+    logo.classList.add('theme-changing', 'logo-active', 'logo-click-animation');
+    createRippleEffect(logo);
+
+    setTimeout(() => {
+      applyTheme(theme);
+    }, 150);
+  };
+
+  // -------- Detectar preferencias del sistema --------
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
   if (prefersDark.matches && !localStorage.getItem('theme')) {
     document.documentElement.setAttribute('data-theme', 'dark');
@@ -259,6 +263,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  // -------- Función genérica para aplicar tema --------
+  function applyTheme(newTheme) {
+    document.body.classList.add('theme-transition-active');
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+
+    setTimeout(() => {
+      logo.classList.remove('logo-click-animation', 'theme-changing');
+      document.body.classList.remove('theme-transition-active');
+      setTimeout(() => logo.classList.remove('logo-active'), 100);
+    }, themeDuration);
+  }
+
+  // -------- Efecto visual de ripple --------
   function createRippleEffect(element) {
     const ripple = document.createElement('div');
     ripple.className = 'theme-ripple-effect';

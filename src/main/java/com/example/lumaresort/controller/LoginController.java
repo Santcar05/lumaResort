@@ -29,7 +29,7 @@ public class LoginController {
     @PostMapping()
     public String login(@ModelAttribute("usuario") Usuario usuario) {
         //Buscar en la BD si esta en el sistema
-        Usuario usuarioEncontrado = new Usuario();//usuarioRepository.findByCorreoAndContrasena(usuario.getCorreo(), usuario.getContrasena());
+        Usuario usuarioEncontrado = new Usuario("abc@gmail.com", "123");//usuarioRepository.findByCorreoAndContrasena(usuario.getCorreo(), usuario.getContrasena());
         //Validar los datos
         //Redireccionar
         if (usuarioEncontrado.getCorreo().equals(usuario.getCorreo()) && usuarioEncontrado.getContrasena().equals(usuario.getContrasena())) {

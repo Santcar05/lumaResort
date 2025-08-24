@@ -30,4 +30,9 @@ public class Usuario {
     private Configuracion configuracion;
     private List<Historial> historial;
 
+    public Usuario(String correo, String contrasena) {
+        this.correo = correo;
+        this.contrasena = contrasena;
+    }
+
 }

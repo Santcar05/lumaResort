@@ -458,6 +458,67 @@ button:hover
   transform: scale(1.2);
 }
 
+/* Contenedor del menú */
+.dropdown-menu {
+  position: absolute;
+  top: calc(var(--header-height, 80px));
+  background: var(--header-bg);
+
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: none;
+  flex-direction: column;
+  min-width: 200px;
+  padding: 10px 0;
+  z-index: 2000;
+}
+
+.LogoContainer:hover .dropdown-menu {
+  display: flex;
+}
+
+.dropdown-item {
+  position: relative;
+  padding: 10px 15px;
+  cursor: pointer;
+  color: var(--text-only-white);
+}
+
+.dropdown-item:hover {
+  background: var(--section-primary, #e2e8f0);
+}
+
+/* Submenú lateral */
+.submenu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%; /* aparece a la derecha */
+  background: var(--header-bg);
+  min-width: 160px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  flex-direction: column;
+  padding: 5px 0;
+}
+
+.submenu a {
+  padding: 8px 12px;
+  display: block;
+  color: var(--text-only-white);
+  text-decoration: none;
+}
+
+.submenu a:hover {
+  background: var(--section-primary, #cbd5e1);
+  color: #fff;
+}
+
+/* Mostrar submenú al hacer hover */
+.dropdown-item:hover .submenu {
+  display: flex;
+}
+
 /* ============================================= */
 /* === MEDIA QUERIES =========================== */
 /* ============================================= */

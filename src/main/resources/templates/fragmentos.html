@@ -35,19 +35,42 @@
   <body>
     <th:block th:fragment="header_f">
       <header class="MainHeader">
+        <!-- Logo con menú -->
         <div class="LogoContainer">
           <img
             src="/IMAGES/luma_Corregido.jpg"
             alt="Luma Resort Logo"
-            class="LogoImg"
+            class="LogoImg menu-hover"
             loading="lazy"
           />
           <h1 class="LogoTitle">LUMA RESORT</h1>
+
+          <!-- Menú oculto que aparece al hover -->
+          <div class="dropdown-menu left-menu">
+            <!-- Opción con submenú -->
+            <div class="dropdown-item">
+              🌐 Cambiar idioma
+              <div class="submenu">
+                <a href="#" onclick="changeLanguage('es')">Español</a>
+                <a href="#" onclick="changeLanguage('en')">Inglés</a>
+                <a href="#" onclick="changeLanguage('fr')">Francés</a>
+                <a href="#" onclick="changeLanguage('de')">Alemán</a>
+              </div>
+            </div>
+
+            <!-- Opción con submenú -->
+            <div class="dropdown-item">
+              🎨 Cambiar tema
+              <div class="submenu">
+                <a href="#" onclick="changeTheme('light')">Tema Claro</a>
+                <a href="#" onclick="changeTheme('dark')">Tema Oscuro</a>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Navegación principal -->
         <nav class="MainNav" aria-label="Navegación principal">
-          <!-- Mejora de accesibilidad -->
           <ul>
             <li><a th:href="@{/}">Inicio</a></li>
             <li><a href="#">Habitaciones</a></li>
@@ -59,20 +82,29 @@
 
         <!-- Barra de búsqueda -->
         <form class="SearchForm" role="search">
-          <!-- Mejora de semántica -->
           <input type="text" placeholder="Buscar..." aria-label="Buscar en el sitio" />
         </form>
+
+        <!-- Avatar de usuario con menú -->
         <div id="contenedor-login">
           <button class="btn-detalle" th:if="${usuario == null or usuario.correo == ''}">
             <a th:href="@{/login}">Iniciar Sesión</a>
           </button>
-          <div class="LogoContainer" th:if="${usuario != null and usuario.correo != ''}">
+          <div class="LogoContainer user-menu" th:if="${usuario != null and usuario.correo != ''}">
             <img
               src="/IMAGES/logoSurf.jpeg"
-              alt="Luma Resort Logo"
-              class="LogoImg"
+              alt="User Avatar"
+              class="LogoImg menu-hover"
               loading="lazy"
             />
+
+            <!-- Menú oculto que aparece al hover -->
+            <div class="dropdown-menu right-menu">
+              <a href="#">🏠 Inicio</a>
+              <a href="#">⚙️ Configuración</a>
+              <a href="#">📅 Realiza una reserva</a>
+              <a href="#">🚪 Cerrar sesión</a>
+            </div>
           </div>
         </div>
       </header>

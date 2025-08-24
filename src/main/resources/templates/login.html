@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/STYLES/estilosLandingPage.css" />
     <link rel="stylesheet" href="/STYLES/generales.css" />
     <link rel="stylesheet" href="/STYLES/plantillas.css" />
-    <link rel="stylesheet" href="/STYLES/serviciosTarjeta.css" />
+    <link rel="stylesheet" href="/STYLES/login.css" />
 
     <!-- Fuentes de Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -41,7 +41,37 @@
     <!-- Header -->
     <th:block th:replace="~{fragmentos :: header_f}"></th:block>
 
+    <section id="seccion_login">
+      <section id="fondo" aria-labelledby="fondoHeading">
+        <!-- Mejora de accesibilidad -->
+        <div class="Carousel">
+          <h1 id="fondoHeading">Iniciar sesion</h1>
+
+          <div id="contenedorForm">
+            <!--Informacion del formulario de inicio de sesion-->
+            <form class="Formulario" th:action="@{/login} " th:object="${usuario}" method="post">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" th:field="*{correo}" required />
+              <br />
+              <label for="password">Contraseña:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                th:field="*{contrasena}"
+                required
+              />
+              <br />
+              <button type="submit" class="btn-detalle" id="btn-login">Iniciar sesión</button>
+              <a id="olvidaste" href="#">Olvidaste tu contraseña?</a>
+            </form>
+          </div>
+        </div>
+      </section>
+    </section>
+
     <!-- Footer -->
-    <div th:replace="~{fragmentos :: footer_f}"></div>
+    <!--<div th:replace="~{fragmentos :: footer_f}"></div>  -->
   </body>
+  <script src="/SCRIPT/script.js" defer></script>
 </html>

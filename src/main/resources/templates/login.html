@@ -3,14 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title th:text="#{site.title}">LUMA RESORT - Paraíso de Lujo y Relax</title>
 
-    <!-- Metadatos básicos -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LUMA RESORT - Paraíso de Lujo y Relax</title>
-
-    <!-- Favicon (agregado como mejora) -->
+    <!-- Favicon -->
     <link rel="icon" href="/IMAGES/favicon.ico" type="image/x-icon" />
 
     <!-- Hojas de estilo -->
@@ -43,29 +38,42 @@
 
     <section id="seccion_login">
       <section id="fondo" aria-labelledby="fondoHeading">
-        <!-- Mejora de accesibilidad -->
         <div class="Carousel">
-          <h1 id="fondoHeading">Iniciar sesion</h1>
+          <!-- Título principal -->
+          <h1 id="fondoHeading" th:text="#{login.title}">Iniciar sesión</h1>
 
           <div id="contenedorForm">
-            <!--Informacion del formulario de inicio de sesion-->
-            <form class="Formulario" th:action="@{/login} " th:object="${usuario}" method="post">
-              <label for="email">Email:</label>
-              <input type="email" id="email" name="email" th:field="*{correo}" required />
+            <!-- Formulario -->
+            <form class="Formulario" th:action="@{/login}" th:object="${usuario}" method="post">
+              <label for="email" th:text="#{login.email}">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                th:field="*{correo}"
+                th:placeholder="#{login.email.placeholder}"
+                required
+              />
               <br />
-              <label for="password">Contraseña:</label>
+
+              <label for="password" th:text="#{login.password}">Contraseña:</label>
               <input
                 type="password"
                 id="password"
                 name="password"
                 th:field="*{contrasena}"
+                th:placeholder="#{login.password.placeholder}"
                 required
               />
               <br />
-              <button type="submit" class="btn-detalle" id="btn-login">Iniciar sesión</button>
+
+              <button type="submit" class="btn-detalle" id="btn-login" th:text="#{login.button}">
+                Iniciar sesión
+              </button>
+
               <div id="enlaces">
-                <a id="olvidaste" href="#">Olvidaste tu contraseña?</a>
-                <a id="registrate" href="#">Registrate</a>
+                <a id="olvidaste" href="#" th:text="#{login.forgot}">¿Olvidaste tu contraseña?</a>
+                <a id="registrate" href="#" th:text="#{login.register}">Regístrate</a>
               </div>
             </form>
           </div>
@@ -73,8 +81,9 @@
       </section>
     </section>
 
-    <!-- Footer -->
-    <!--<div th:replace="~{fragmentos :: footer_f}"></div>  -->
+    <!-- Footer (lo puedes activar si quieres internacionalizarlo también) -->
+    <div th:replace="~{fragmentos :: footer_f}"></div>
+
+    <script src="/SCRIPT/script.js" defer></script>
   </body>
-  <script src="/SCRIPT/script.js" defer></script>
 </html>

@@ -3,14 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title th:text="#{site.title}">LUMA RESORT - Paraíso de Lujo y Relax</title>
 
-    <!-- Metadatos básicos -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LUMA RESORT - Paraíso de Lujo y Relax</title>
-
-    <!-- Favicon (agregado como mejora) -->
+    <!-- Favicon -->
     <link rel="icon" href="/IMAGES/favicon.ico" type="image/x-icon" />
 
     <!-- Hojas de estilo -->
@@ -42,18 +37,18 @@
 
     <!-- Contenido principal -->
     <main>
-      <!-- Sección 1: Azul eléctrico con diseño llamativo -->
+      <!-- Sección 1: Hero -->
       <section class="seccion seccion-azul hero-section">
         <div class="contenido-seccion hero-content">
           <div class="hero-texto">
-            <h1>¡Bienvenido a la experiencia LUMA Resort!</h1>
-            <p>
+            <h1 th:text="#{hero.title}">¡Bienvenido a la experiencia LUMA Resort!</h1>
+            <p th:text="#{hero.description}">
               Vive momentos únicos en nuestro paraíso de lujo y relax. Desde spa de alta gama hasta
               restaurantes gourmet y excursiones inolvidables, tenemos todo preparado para tu
               bienestar.
             </p>
             <a th:href="@{/servicios/tabla}">
-              <button class="btn-detalle">
+              <button class="btn-detalle" th:text="#{hero.button}">
                 ¡Da click aquí para descubrir todos nuestros servicios!
               </button>
             </a>
@@ -67,27 +62,27 @@
         </div>
       </section>
 
-      <!-- Sección 2: Ámbar dorado -->
+      <!-- Sección 2: Servicios -->
       <section class="seccion seccion-ambar">
         <div class="contenido-seccion">
-          <h2>Catálogo de Servicios</h2>
+          <h2 th:text="#{services.title}">Catálogo de Servicios</h2>
 
           <!-- Carrusel infinito -->
           <div class="Slider">
             <div class="SliderTrack">
-              <!-- Tarjetas originales -->
+              <!-- Tarjetas -->
               <div class="SlideContainer" th:each="servicio : ${servicios}">
                 <div class="tarjeta">
                   <img th:src="${servicio.imagenURL}" th:alt="${servicio.nombre}" />
                   <h3 th:text="${servicio.nombre}"></h3>
                   <p th:text="${servicio.descripcion}"></p>
                   <p>
-                    <strong>Precio:</strong>
+                    <strong th:text="#{services.price}">Precio:</strong>
                     <span th:text="${servicio.precio}"></span>
-                    USD
+                    <span th:text="#{services.currency}">USD</span>
                   </p>
                   <a th:href="@{/servicios(id=${servicio.idServicio})}">
-                    <button class="btn-principal">Detalles</button>
+                    <button class="btn-principal" th:text="#{services.details}">Detalles</button>
                   </a>
                 </div>
               </div>
@@ -99,12 +94,12 @@
                   <h3 th:text="${servicio.nombre}"></h3>
                   <p th:text="${servicio.descripcion}"></p>
                   <p>
-                    <strong>Precio:</strong>
+                    <strong th:text="#{services.price}">Precio:</strong>
                     <span th:text="${servicio.precio}"></span>
-                    USD
+                    <span th:text="#{services.currency}">USD</span>
                   </p>
                   <a th:href="@{/servicios(id=${servicio.idServicio})}">
-                    <button class="btn-principal">Detalles</button>
+                    <button class="btn-principal" th:text="#{services.details}">Detalles</button>
                   </a>
                 </div>
               </div>

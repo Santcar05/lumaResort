@@ -4,9 +4,9 @@
     <!-- Metadatos básicos -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LUMA RESORT - Paraíso de Lujo y Relax</title>
+    <title th:text="#{site.title}">LUMA RESORT - Paraíso de Lujo y Relax</title>
 
-    <!-- Favicon (agregado como mejora) -->
+    <!-- Favicon -->
     <link rel="icon" href="/IMAGES/favicon.ico" type="image/x-icon" />
 
     <!-- Hojas de estilo -->
@@ -43,27 +43,42 @@
             class="LogoImg menu-hover"
             loading="lazy"
           />
-          <h1 class="LogoTitle">LUMA RESORT</h1>
+          <h1 class="LogoTitle" th:text="#{site.name}">LUMA RESORT</h1>
 
           <!-- Menú oculto que aparece al hover -->
           <div class="dropdown-menu left-menu">
             <!-- Opción con submenú -->
             <div class="dropdown-item">
-              🌐 Cambiar idioma
+              🌐
+              <span th:text="#{menu.language}">Cambiar idioma</span>
               <div class="submenu">
-                <a id="es" href="#" onclick="changeLanguage('es')">Español</a>
-                <a id="en" href="#" onclick="changeLanguage('en')">Inglés</a>
-                <a id="fr" href="#" onclick="changeLanguage('fr')">Francés</a>
-                <a id="de" href="#" onclick="changeLanguage('de')">Alemán</a>
+                <a class="dropdown-item" th:href="@{/?lang=es}" th:text="#{lang.spanish}">
+                  Español
+                </a>
+
+                <a class="dropdown-item" th:href="@{/?lang=en}" th:text="#{lang.english}">
+                  English
+                </a>
+
+                <a class="dropdown-item" th:href="@{/?lang=fr}" th:text="#{lang.french}">
+                  Français
+                </a>
+
+                <a class="dropdown-item" th:href="@{/?lang=de}" th:text="#{lang.german}">Deutsch</a>
               </div>
             </div>
 
             <!-- Opción con submenú -->
             <div class="dropdown-item">
-              🎨 Cambiar tema
+              🎨
+              <span th:text="#{menu.theme}">Cambiar tema</span>
               <div class="submenu">
-                <a id="light" href="#" onclick="changeTheme('light')">Tema Claro</a>
-                <a id="dark" href="#" onclick="changeTheme('dark')">Tema Oscuro</a>
+                <a id="light" href="#" onclick="changeTheme('light')" th:text="#{theme.light}">
+                  Tema Claro
+                </a>
+                <a id="dark" href="#" onclick="changeTheme('dark')" th:text="#{theme.dark}">
+                  Tema Oscuro
+                </a>
               </div>
             </div>
           </div>
@@ -72,23 +87,27 @@
         <!-- Navegación principal -->
         <nav class="MainNav" aria-label="Navegación principal">
           <ul>
-            <li><a th:href="@{/}">Inicio</a></li>
-            <li><a href="#">Habitaciones</a></li>
-            <li><a th:href="@{/servicios}">Servicios</a></li>
-            <li><a href="#">Reservas</a></li>
-            <li><a href="#">Contacto</a></li>
+            <li><a th:href="@{/}" th:text="#{nav.home}">Inicio</a></li>
+            <li><a href="#" th:text="#{nav.rooms}">Habitaciones</a></li>
+            <li><a th:href="@{/servicios}" th:text="#{nav.services}">Servicios</a></li>
+            <li><a href="#" th:text="#{nav.booking}">Reservas</a></li>
+            <li><a href="#" th:text="#{nav.contact}">Contacto</a></li>
           </ul>
         </nav>
 
         <!-- Barra de búsqueda -->
         <form class="SearchForm" role="search">
-          <input type="text" placeholder="Buscar..." aria-label="Buscar en el sitio" />
+          <input
+            type="text"
+            th:placeholder="#{search.placeholder}"
+            aria-label="Buscar en el sitio"
+          />
         </form>
 
         <!-- Avatar de usuario con menú -->
         <div id="contenedor-login">
           <button class="btn-detalle" th:if="${usuario == null or usuario.correo == ''}">
-            <a th:href="@{/login}">Iniciar Sesión</a>
+            <a th:href="@{/login}" th:text="#{login.button}">Iniciar Sesión</a>
           </button>
           <div class="LogoContainer user-menu" th:if="${usuario != null and usuario.correo != ''}">
             <img
@@ -100,10 +119,10 @@
 
             <!-- Menú oculto que aparece al hover -->
             <div class="dropdown-menu right-menu">
-              <a href="#">🏠 Inicio</a>
-              <a href="#">⚙️ Configuración</a>
-              <a href="#">📅 Realiza una reserva</a>
-              <a href="#">🚪 Cerrar sesión</a>
+              <a href="#" th:text="#{menu.home}">🏠 Inicio</a>
+              <a href="#" th:text="#{menu.settings}">⚙️ Configuración</a>
+              <a href="#" th:text="#{menu.booking}">📅 Realiza una reserva</a>
+              <a href="#" th:text="#{menu.logout}">🚪 Cerrar sesión</a>
             </div>
           </div>
         </div>
@@ -115,7 +134,7 @@
         <div class="FooterContent">
           <!-- Redes Sociales -->
           <div class="FooterSection RedesSociales">
-            <p>Síguenos en redes sociales:</p>
+            <p th:text="#{footer.follow}">Síguenos en redes sociales:</p>
             <a
               href="https://www.facebook.com"
               target="_blank"
@@ -161,7 +180,7 @@
           <!-- Logo y Copyright -->
           <div class="FooterLogo">
             <img src="/IMAGES/logoSurf.jpeg" alt="Luma Resort" loading="lazy" />
-            <p>© 2025 Luma Resort. Todos los derechos reservados</p>
+            <p th:text="#{footer.copy}">© 2025 Luma Resort. Todos los derechos reservados</p>
           </div>
 
           <!-- Información de Contacto -->
@@ -170,15 +189,15 @@
               <a href="mailto:HotelLumaResort@gmail.com" aria-label="Enviar correo">
                 <i class="fas fa-envelope"></i>
               </a>
-              <span>Contáctanos:</span>
+              <span th:text="#{footer.contact}">Contáctanos:</span>
             </div>
             <div class="ContactInfo">
               <p>
-                Teléfono:
+                <span th:text="#{footer.phone}">Teléfono:</span>
                 <a href="tel:+573158278278">315 827 8278</a>
               </p>
               <p>
-                Correo:
+                <span th:text="#{footer.email}">Correo:</span>
                 <a href="mailto:HotelLumaResort@gmail.com">HotelLumaResort@gmail.com</a>
               </p>
             </div>

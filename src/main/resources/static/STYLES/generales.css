@@ -233,6 +233,23 @@ main {
   max-width: 100px;
 }
 
+#contenedor-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-left: 10px;
+}
+#contenedor-login a {
+  display: block;
+
+  height: 100%;
+  width: 100%;
+  text-decoration: none;
+  color: var(--text-only-white);
+  font-weight: 500;
+}
+
 /* ============================================= */
 /* === NAVEGACIÓN Y BÚSQUEDA ================== */
 /* ============================================= */

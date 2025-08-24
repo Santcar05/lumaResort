@@ -61,8 +61,18 @@
         <form class="SearchForm" role="search">
           <!-- Mejora de semántica -->
           <input type="text" placeholder="Buscar..." aria-label="Buscar en el sitio" />
-          <button type="submit">Buscar</button>
         </form>
+        <div id="contenedor-login">
+          <button class="btn-detalle"><a th:href="@{/login}">Iniciar Sesión</a></button>
+          <div class="LogoContainer">
+            <img
+              src="/IMAGES/luma_Corregido.jpg"
+              alt="Luma Resort Logo"
+              class="LogoImg"
+              loading="lazy"
+            />
+          </div>
+        </div>
       </header>
     </th:block>
 

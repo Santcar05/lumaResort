@@ -17,7 +17,9 @@
   --section-blue: #8ac6f2;
   --section-light-blue: #d0e6f4;
   --section-dark-blue: #123c78;
-
+  --color-boton: #262de0; /* azul eléctrico */
+  --color-boton-hover: #e09a00; /* ámbar dorado */
+  --color-texto: #fff;
   --table-white: #f0f0f0;
   /* Transiciones */
   --transition-speed: 0.3s;
@@ -36,8 +38,8 @@
   --card-bg: #1e293b;
   --card-text: #e2e8f0;
   --section-orange: #9c6d1a;
-  --section-beige: #c49d6d;
-  --section-blue: #5a8cb5;
+  --section-beige: #d77804;
+  --section-blue: #3b82f6;
   --section-light-blue: #8fb3d1;
   --section-dark-blue: #1e4a8e;
   --table-white: #0a0a0a;
@@ -59,7 +61,8 @@
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  background: var(--blanco);
+  background: var(--color-fondo);
+  color: var(--color-texto);
   overflow-x: hidden; /* evitar scroll horizontal */
 }
 
@@ -394,8 +397,8 @@ form button:hover {
 
 /* Botón principal destacado */
 .btn-principal {
-  background: #262de0 !important; /* azul eléctrico */
-  color: #fff !important;
+  background: var(--color-boton);
+  color: var(--color-texto);
   border: none !important;
   padding: 15px 25px !important;
   font-size: 1.1em !important;
@@ -406,10 +409,55 @@ form button:hover {
   box-shadow: 0 4px 16px rgba(38, 45, 224, 0.2) !important;
 }
 .btn-principal:hover {
-  background: #e09a00 !important; /* ámbar dorado */
+  background: var(--color-boton-hover);
   color: #111 !important;
   transform: scale(1.07) !important;
-  box-shadow: 0 8px 24px rgba(224, 154, 0, 0.3) !important;
+  box-shadow: 0 8px 24px rgba(218, 180, 11, 0.3) !important;
+}
+
+/* Botón Detalles con colores y animación del principal, pero con sus propias propiedades */
+.btn-detalle {
+  background: linear-gradient(90deg, #49aee0, #262de0);
+  color: #fff;
+  font-size: 0.5em;
+  font-weight: 600;
+  padding: 10x 20px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.4s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-detalle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: skewX(-25deg);
+  transition: left 0.7s ease;
+}
+
+.btn-detalle:hover::before {
+  left: 200%;
+}
+
+.btn-detalle:hover {
+  background: linear-gradient(90deg, #e09a00, #ffb733);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 183, 51, 0.7);
+}
+
+.btn-detalle:hover {
+  background: linear-gradient(90deg, #e09a00, #ffb733);
+  transform: translateY(-2px);
 }
 
 /* Responsive: Se ajusta en pantallas pequeñas */

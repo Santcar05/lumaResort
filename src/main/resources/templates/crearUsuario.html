@@ -52,25 +52,25 @@
             >
               <div class="DuoFormulario">
                 <!-- Nombre -->
-                <label for="nombre">Nombre:</label>
+                <label for="nombre" th:text="#{createAccount.name}">Nombre:</label>
                 <input
                   type="text"
                   id="nombre"
                   name="nombre"
                   th:field="*{nombre}"
-                  placeholder="Ingresa tu nombre"
+                  th:placeholder="#{createAccount.name.placeholder}"
                   required
                 />
                 <br />
 
                 <!-- Apellido -->
-                <label for="apellido">Apellido:</label>
+                <label for="apellido" th:text="#{createAccount.lastname}">Apellido:</label>
                 <input
                   type="text"
                   id="apellido"
                   name="apellido"
                   th:field="*{apellido}"
-                  placeholder="Ingresa tu apellido"
+                  th:placeholder="#{createAccount.lastname.placeholder}"
                   required
                 />
                 <br />
@@ -104,25 +104,26 @@
               <br />
               <div class="DuoFormulario">
                 <!-- Cédula -->
-                <label for="cedula">Cédula:</label>
+                <label for="cedula" th:text="#{createAccount.cedula}">Cédula:</label>
                 <input
                   type="text"
                   id="cedula"
                   name="cedula"
                   th:field="*{cedula}"
-                  placeholder="Ingresa tu cédula"
+                  th:placeholder="#{createAccount.cedula.placeholder}"
                   required
                 />
                 <br />
 
                 <!-- Teléfono -->
-                <label for="telefono">Teléfono:</label>
+                <label for="telefono" th:text="#{createAccount.phone}">Teléfono:</label>
                 <input
                   type="tel"
                   id="telefono"
                   name="telefono"
                   th:field="*{telefono}"
-                  placeholder="Ingresa tu teléfono"
+                  th:placeholder="#{createAccount.phone.placeholder}"
+                  required
                 />
                 <br />
               </div>

@@ -8,4 +8,6 @@ import com.example.lumaresort.entities.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
+    Usuario findByCorreoAndContrasena(String correo, String contrasena);
+
 }

@@ -1,39 +1,81 @@
 package com.example.lumaresort.entities;
 
-import java.util.List;
+import java.time.LocalDate;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
-@Table(name = "clientes")
+@Getter
+@Setter
 public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idCliente;
+    private Long idCliente;
 
-    // Relación con Usuario: muchos clientes pueden ser usuarios distintos
+    private String nombre;
+
+    private LocalDate checkIn;
+
+    private LocalDate checkOut;
+
+    private String tipoHabitacion;
+
+    private String estadoReserva; // En uso, Paga, Pendiente
+
     @OneToOne
-    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario") // FK a Usuario
+    @JoinColumn(name = "idUsuario") // FK en tabla Cliente
     private Usuario usuario;
 
-    // Relación con Reserva: un cliente puede tener muchas reservas
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reserva> reservas;
+    public Cliente() {
+
+    }
+
+    //Todos los parametros menos id
+    public Cliente(String nombre, LocalDate checkIn, LocalDate checkOut, String tipoHabitacion) {
+        this.nombre = nombre;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.tipoHabitacion = tipoHabitacion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public LocalDate getCheckIn() {
+        return checkIn;
+    }
+
+    public void setCheckIn(LocalDate checkIn) {
+        this.checkIn = checkIn;
+    }
+
+    public LocalDate getCheckOut() {
+        return checkOut;
+    }
+
+    public void setCheckOut(LocalDate checkOut) {
+        this.checkOut = checkOut;
+    }
+
+    public String getTipoHabitacion() {
+        return tipoHabitacion;
+    }
+
+    public void setTipoHabitacion(String tipoHabitacion) {
+        this.tipoHabitacion = tipoHabitacion;
+    }
+
 }

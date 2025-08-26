@@ -15,7 +15,7 @@ public class Administrador {
     private Integer idAdministrador;
 
     @OneToOne
-    @JoinColumn(name = "id_Usuario", referencedColumnName = "idUsuario") // FK a usuarios.id
+    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario") // FK a 
     private Usuario usuario;
 
     // Getters y setters

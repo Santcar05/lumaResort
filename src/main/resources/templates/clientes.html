@@ -243,7 +243,10 @@
             <p class="name">María Fernanda</p>
             <p class="role">Gerente</p>
           </div>
-          <img th:src="@{/images/maria.jpg}" alt="Perfil" />
+          <img
+            src="https://static.wikia.nocookie.net/dinosaurkingrockz/images/4/4d/Rica_Matsumoto.jpg/revision/latest/scale-to-width-down/240?cb=20180131212121"
+            alt="Perfil"
+          />
         </div>
       </div>
 
@@ -286,9 +289,8 @@
             <td>
               <span
                 th:text="${cliente.estadoReserva}"
-                th:classappend="${cliente.estadoReserva} == 'En uso' ? 'badge en-uso' :
-                                    ${cliente.estadoReserva} == 'Paga' ? 'badge paga' :
-                                    'badge pendiente'"
+                th:classappend="${cliente.estadoReserva == 'En uso' ? 'badge en-uso' :
+                  (cliente.estadoReserva == 'Paga' ? 'badge paga' : 'badge pendiente')}"
               ></span>
             </td>
             <td>

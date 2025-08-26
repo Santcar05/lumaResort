@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -17,9 +19,9 @@ public class Cliente {
 
     private String nombre;
 
-    private String checkIn;
+    private LocalDate checkIn;
 
-    private String checkOut;
+    private LocalDate checkOut;
 
     private String tipoHabitacion;
 

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editar Habitación - Luna Resort Admin</title>
+    <link rel="stylesheet" href="../CSS/editarhab.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="logo">
+          <div class="logo-icon"></div>
+          Luna Resort Admin
+        </div>
+        <div class="menu-item">Dashboard</div>
+        <div class="menu-item active">Habitaciones</div>
+        <div class="menu-item">Reservas</div>
+        <div class="menu-item">Huéspedes</div>
+        <div class="menu-item">Servicios</div>
+        <div class="menu-item">Pagos</div>
+        <div class="menu-item">Ajustes</div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+          <div class="breadcrumb">
+            Editar Habitación / Habitaciones / Editar
+          </div>
+          <div class="user-info">
+            <span>María Fernández</span>
+            <span class="user-role">Gerente</span>
+            <div class="user-avatar"></div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+          <!-- Form Header -->
+          <div class="form-header">
+            <div class="back-nav">
+              <button class="btn-back" id="btn-back">
+                ← Volver al listado
+              </button>
+              <div class="room-badge">101 • Suite Deluxe</div>
+            </div>
+            <div class="header-actions">
+              <button class="btn-discard" id="btn-discard">
+                Descartar cambios
+              </button>
+                <button class="btn-save" id="btn-save">Guardar cambios</button>
+            </div>
+          </div>
+
+          <!-- Form Container -->
+          <div class="form-container">
+            <form id="edit-room-form">
+              <!-- Basic Info -->
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="numero">Número</label>
+                  <input
+                    type="text"
+                    id="numero"
+                    name="numero"
+                    value="101"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="tipo">Tipo</label>
+                  <select id="tipo" name="tipo" required>
+                    <option value="suite" selected>Suite Deluxe</option>
+                    <option value="doble">Doble</option>
+                    <option value="individual">Individual</option>
+                    <option value="familiar">Familiar</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="precio">Precio por noche</label>
+                  <input
+                    type="number"
+                    id="precio"
+                    name="precio"
+                    value="280"
+                    step="0.01"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="estado">Estado</label>
+                  <select id="estado" name="estado" required>
+                    <option value="disponible" selected>Disponible</option>
+                    <option value="ocupada">Ocupada</option>
+                    <option value="mantenimiento">Mantenimiento</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Capacidad</label>
+                  <div class="capacity-control">
+                    <button
+                      type="button"
+                      class="capacity-btn"
+                      id="decrease-capacity"
+                    >
+                      −
+                    </button>
+                    <div class="capacity-display" id="capacity-display">
+                      2 huéspedes
+                    </div>
+                    <button
+                      type="button"
+                      class="capacity-btn"
+                      id="increase-capacity"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <input
+                    type="hidden"
+                    id="capacidad"
+                    name="capacidad"
+                    value="2"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="piso">Piso</label>
+                  <input
+                    type="number"
+                    id="piso"
+                    name="piso"
+                    value="1"
+                    min="1"
+                  />
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="form-group description-group">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" name="descripcion" rows="3">
+Suite amplia con vista al mar, cama king y balcón privado.</textarea
+                >
+              </div>
+
+              <!-- Services -->
+              <div class="services-section">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label>Servicios</label>
+                    <div class="service-tags">
+                      <span class="service-tag wifi">Wi-Fi</span>
+                      <span class="service-tag minibar">Minibar</span>
+                      <span class="service-tag tv">TV</span>
+                      <span class="service-tag ac">A/C</span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="politica">Política de cancelación</label>
+                    <input
+                      type="text"
+                      id="politica"
+                      name="politica"
+                      value="Flexible"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gallery -->
+              <div class="gallery-section">
+                <div class="gallery-header">
+                  <div class="gallery-title">Galería</div>
+                  <button type="button" class="btn-upload" id="btn-upload">
+                    Subir imágenes
+                  </button>
+                </div>
+                <div class="gallery-grid">
+                  <div class="gallery-item">
+                    <img
+                      src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=200&fit=crop"
+                      alt="Vista de la habitación"
+                    />
+                  </div>
+                  <div class="gallery-item">
+                    <img
+                      src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&h=200&fit=crop"
+                      alt="Baño de la suite"
+                    />
+                  </div>
+                  <div class="gallery-item">
+                    <img
+                      src="https://th.bing.com/th/id/R.eedc075f3e2833fab0f246129848ca21?rik=TPLbwlMpEkv6hQ&pid=ImgRaw&r=0"
+                      alt="Balcón con vista al mar"
+                    />
+                  </div>
+                  <div class="gallery-item">
+                    <img
+                      src="https://tse1.mm.bing.net/th/id/OIP.xzOtUp3yT0zSxKz4J_NLfAHaFC?rs=1&pid=ImgDetMain&o=7&rm=3"
+                      alt="Área de estar"
+                    />
+                  </div>
+                </div>
+              </div>
+
+
+          <!-- Footer -->
+          <div class="form-footer">
+            <div class="auto-save">
+              Último guardado automático: hace 2 minutos
+            </div>
+            <div class="footer-actions">
+              <button class="btn-delete" id="btn-delete">
+                Deshabilitar habitación
+              </button>
+              <button class="btn-save-changes" id="btn-save-changes">
+                Guardar cambios
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <input type="file" id="file-input" multiple accept="image/*" hidden />
+  </body>
+  <script src="../JS/editarhab.js"></script>
+</html>

@@ -1,12 +1,18 @@
 package com.example.lumaresort.service;
 
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.lumaresort.entities.Servicio;
 import com.example.lumaresort.repository.ServicioRepository;
 
+@Service
 public class ServicioService {
 
+    @Autowired
     private ServicioRepository servicioRepository;
 
     public ServicioService(ServicioRepository servicioRepository) {
@@ -17,7 +23,7 @@ public class ServicioService {
         return servicioRepository.findAll();
     }
 
-    public Servicio findById(int id) {
+    public Optional<Servicio> findById(Long id) {
         return servicioRepository.findById(id);
     }
 
@@ -25,8 +31,8 @@ public class ServicioService {
         servicioRepository.save(servicio);
     }
 
-    public void delete(int id) {
-        servicioRepository.delete(id);
+    public void delete(Long id) {
+        servicioRepository.deleteById(id);
     }
 
 }

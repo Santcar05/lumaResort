@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.lumaresort.entities.Usuario;
-import com.example.lumaresort.repository.ServicioRepository;
 import com.example.lumaresort.service.ServicioService;
 
 @RequestMapping("/servicios")
@@ -17,12 +16,12 @@ public class mostrarServiciosController {
     @Autowired
     private Usuario usuario;
 
+    @Autowired
     private ServicioService servicioService;
 
     //http://localhost:8090/servicios
     @GetMapping()
     public String servicios(Model model) {
-        servicioService = new ServicioService(new ServicioRepository());
         model.addAttribute("usuario", usuario);
 
         model.addAttribute("servicios", servicioService.findAll());
@@ -32,8 +31,7 @@ public class mostrarServiciosController {
 
     //http://localhost:8090/servicios?id
     @GetMapping(params = "id")
-    public String verServicio(int id, Model model) {
-        servicioService = new ServicioService(new ServicioRepository());
+    public String verServicio(Long id, Model model) {
         model.addAttribute("servicio", servicioService.findById(id));
         return "verServicio";
     }
@@ -42,8 +40,6 @@ public class mostrarServiciosController {
     @GetMapping("/tabla")
     public String tabla(Model model) {
         model.addAttribute("usuario", usuario);
-
-        servicioService = new ServicioService(new ServicioRepository());
 
         model.addAttribute("servicios", servicioService.findAll());
 
@@ -55,8 +51,6 @@ public class mostrarServiciosController {
     public String tarjetas(Model model) {
 
         model.addAttribute("usuario", usuario);
-        servicioService = new ServicioService(new ServicioRepository());
-
         model.addAttribute("servicios", servicioService.findAll());
 
         return "tarjetas";

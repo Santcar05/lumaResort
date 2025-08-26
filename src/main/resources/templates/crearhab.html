@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crear habitación - Luna Resort Admin</title>
+    <link rel="stylesheet" href="../CSS/crearhab.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="logo">
+          <div class="logo-icon"></div>
+          Luna Resort Admin
+        </div>
+        <div class="menu-item">Dashboard</div>
+        <div class="menu-item active">Habitaciones</div>
+        <div class="menu-item">Reservas</div>
+        <div class="menu-item">Huéspedes</div>
+        <div class="menu-item">Servicios</div>
+        <div class="menu-item">Pagos</div>
+        <div class="menu-item">Ajustes</div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+          <div class="breadcrumb">Crear habitación / Habitaciones / Nueva</div>
+          <div class="user-info">
+            <span>María Fernández</span>
+            <span class="user-role">Gerente</span>
+            <div class="user-avatar"></div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+          <div class="form-header">
+            <div class="form-title">
+              <span class="info-icon">ℹ️</span>
+              Completa los datos de la habitación. Los campos marcados con * son
+              obligatorios.
+            </div>
+            <div class="form-actions">
+              <button class="btn-back">↩️ Volver</button>
+              <button class="btn-save">💾 Guardar habitación</button>
+            </div>
+          </div>
+
+          <div class="form-layout">
+            <!-- Formulario Principal -->
+            <div class="form-section">
+              <div class="section-title">Datos de la habitación</div>
+              <form id="room-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="numero">Número *</label>
+                    <input
+                      type="text"
+                      id="numero"
+                      name="numero"
+                      placeholder="Ej: 205"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="tipo">Tipo *</label>
+                    <select id="tipo" name="tipo" required>
+                      <option value="">Suite / Doble / Individual</option>
+                      <option value="suite">Suite</option>
+                      <option value="doble">Doble</option>
+                      <option value="individual">Individual</option>
+                      <option value="familiar">Familiar</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="precio">Precio por noche (USD) *</label>
+                    <input
+                      type="number"
+                      id="precio"
+                      name="precio"
+                      placeholder="0.00"
+                      step="0.01"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="capacidad">Capacidad (personas) *</label>
+                    <input
+                      type="number"
+                      id="capacidad"
+                      name="capacidad"
+                      placeholder="2"
+                      min="1"
+                      max="10"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="piso">Piso</label>
+                    <input
+                      type="number"
+                      id="piso"
+                      name="piso"
+                      placeholder="3"
+                      min="1"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="estado">Estado *</label>
+                    <select id="estado" name="estado" required>
+                      <option value="disponible">
+                        Disponible / Ocupada / Mantenimiento
+                      </option>
+                      <option value="disponible">Disponible</option>
+                      <option value="ocupada">Ocupada</option>
+                      <option value="mantenimiento">Mantenimiento</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="ocupacion">Ocupación</label>
+                    <input
+                      type="text"
+                      id="ocupacion"
+                      name="ocupacion"
+                      placeholder="0 / 2"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group full-width">
+                  <label for="descripcion">Descripción</label>
+                  <textarea
+                    id="descripcion"
+                    name="descripcion"
+                    rows="4"
+                    placeholder="Breve descripción de la habitación, comodidades y vista..."
+                  ></textarea>
+                  <div class="upload-area" id="upload-area">
+                    <div class="upload-content">
+                      <div class="upload-icon">📷</div>
+                      <div class="upload-text">
+                        Arrastra imágenes aquí o haz clic para seleccionar
+                      </div>
+                    </div>
+                    <input
+                      type="file"
+                      id="file-input"
+                      multiple
+                      accept="image/*"
+                      hidden
+                    />
+                  </div>
+                </div>
+
+                <!-- Comodidades -->
+                <div class="section-title">Comodidades</div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="wifi">Wi-Fi</label>
+                    <input
+                      type="text"
+                      id="wifi"
+                      name="wifi"
+                      placeholder="Disponible"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="aire">Aire acondicionado</label>
+                    <input
+                      type="text"
+                      id="aire"
+                      name="aire"
+                      placeholder="Disponible"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="minibar">Minibar</label>
+                    <input
+                      type="text"
+                      id="minibar"
+                      name="minibar"
+                      placeholder="Disponible"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="caja">Caja fuerte</label>
+                    <input
+                      type="text"
+                      id="caja"
+                      name="caja"
+                      placeholder="Disponible"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="television">Televisión</label>
+                    <input
+                      type="text"
+                      id="television"
+                      name="television"
+                      placeholder="Smart TV 55''"
+                    />
+                  </div>
+                </div>
+
+                <!-- Políticas -->
+                <div class="section-title">Políticas</div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="checkin">Check-in desde</label>
+                    <input
+                      type="time"
+                      id="checkin"
+                      name="checkin"
+                      value="15:00"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="checkout">Check-out hasta</label>
+                    <input
+                      type="time"
+                      id="checkout"
+                      name="checkout"
+                      value="11:00"
+                    />
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Sidebar derecho -->
+            <div class="right-sidebar">
+              <!-- Imágenes -->
+              <div class="images-section">
+                <div class="section-header">
+                  <span>Imágenes</span>
+                </div>
+                <div class="image-grid" id="image-grid">
+                  <div class="image-placeholder">
+                    <span>🖼️</span>
+                  </div>
+                  <div class="image-placeholder">
+                    <span>🖼️</span>
+                  </div>
+                  <div class="image-placeholder">
+                    <span>🖼️</span>
+                  </div>
+                </div>
+                <button class="btn-upload" id="btn-upload">
+                  📤 Subir imágenes
+                </button>
+              </div>
+
+              <!-- Resumen -->
+              <div class="summary-section">
+                <div class="section-header">
+                  <span>Resumen</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Estado</span>
+                  <span class="summary-value" id="summary-estado"
+                    >Disponible</span
+                  >
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Capacidad</span>
+                  <span class="summary-value" id="summary-capacidad"
+                    >2 personas</span
+                  >
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Precio</span>
+                  <span class="summary-value" id="summary-precio"
+                    >$160/noche</span
+                  >
+                </div>
+              </div>
+
+              <!-- Historial -->
+              <div class="history-section">
+                <div class="section-header">
+                  <span>Historial de cambios</span>
+                </div>
+                <div class="history-item">
+                  <div class="history-dot blue"></div>
+                  <div class="history-content">
+                    <div class="history-title">Creación</div>
+                    <div class="history-date">Hoy, 16:24 — por María</div>
+                  </div>
+                </div>
+                <div class="history-item">
+                  <div class="history-dot blue"></div>
+                  <div class="history-content">
+                    <div class="history-title">Precio actualizado</div>
+                    <div class="history-date">—</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer del formulario -->
+          <div class="form-footer">
+            <div class="form-warning">
+              <span class="warning-icon">⚠️</span>
+              Revisa los campos obligatorios antes de guardar.
+            </div>
+            <div class="form-footer-actions">
+              <button class="btn-cancel">Cancelar</button>
+              <button class="btn-draft">Guardar borrador</button>
+              <button class="btn-create">➕ Crear habitación</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../JS/crearhab.js"></script>
+  </body>
+</html>

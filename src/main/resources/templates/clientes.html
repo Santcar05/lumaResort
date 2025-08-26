@@ -252,7 +252,7 @@
 
       <!-- Formulario para nuevo cliente -->
       <form th:action="@{/clientes/guardar}" th:object="${nuevoCliente}" method="post">
-        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{idCliente}" />
         <input type="text" th:field="*{nombre}" placeholder="Nombre completo" required />
         <input type="date" th:field="*{checkIn}" required />
         <input type="date" th:field="*{checkOut}" required />

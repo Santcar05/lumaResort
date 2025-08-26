@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +18,7 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idCliente;
 
     private String nombre;
 
@@ -27,6 +29,10 @@ public class Cliente {
     private String tipoHabitacion;
 
     private String estadoReserva; // En uso, Paga, Pendiente
+
+    @OneToOne
+    @JoinColumn(name = "idUsuario") // FK en tabla Cliente
+    private Usuario usuario;
 
     public Cliente() {
 

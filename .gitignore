@@ -31,3 +31,20 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Archivos de base de datos H2
+*.mv.db
+*.trace.db
+
+# Archivos temporales
+*.log
+*.tmp
+
+# Maven / Gradle
+target/
+build/
+
+# Configuración IDE
+*.iml
+.idea/
+.vscode/

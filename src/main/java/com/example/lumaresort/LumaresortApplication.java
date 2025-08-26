@@ -19,4 +19,9 @@ public class LumaresortApplication {
         return new Usuario("", "");
     }
 
+    @Bean
+    public Usuario usuarioCrearCuenta() {
+        return new Usuario("", "");
+    }
+
 }

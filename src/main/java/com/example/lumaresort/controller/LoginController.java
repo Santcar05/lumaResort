@@ -17,16 +17,18 @@ public class LoginController {
     @Autowired
     private Usuario usuario;
 
+    //http://localhost:8090/login
     @GetMapping()
     public String login(Model model) {
         model.addAttribute("usuario", usuario);
         return "login";
     }
 
+    //http://localhost:8090/login
     @PostMapping()
     public String login(@ModelAttribute("usuario") Usuario usuarioF) {
         //Buscar en la BD si esta en el sistema
-        Usuario usuarioEncontrado = new Usuario("abc@gmail.com", "123");//usuarioRepository.findByCorreoAndContrasena(usuario.getCorreo(), usuario.getContrasena());
+        Usuario usuarioEncontrado = new Usuario("abc@gmail.com", "123");//usuarioService.findByCorreoAndContrasena(usuario.getCorreo(), usuario.getContrasena());
         //Validar los datos
         //Redireccionar
         if (usuarioEncontrado.getCorreo().equals(usuarioF.getCorreo()) && usuarioEncontrado.getContrasena().equals(usuarioF.getContrasena())) {

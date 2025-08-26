@@ -30,6 +30,7 @@ public class mostrarServiciosController {
         return "tarjetas";
     }
 
+    //http://localhost:8090/servicios?id
     @GetMapping(params = "id")
     public String verServicio(int id, Model model) {
         servicioService = new ServicioService(new ServicioRepository());
@@ -37,6 +38,7 @@ public class mostrarServiciosController {
         return "verServicio";
     }
 
+    //http://localhost:8090/servicios/tabla
     @GetMapping("/tabla")
     public String tabla(Model model) {
         model.addAttribute("usuario", usuario);
@@ -48,6 +50,7 @@ public class mostrarServiciosController {
         return "mostrarServicios";
     }
 
+    //http://localhost:8090/servicios/tarjetas
     @GetMapping("/tarjetas")
     public String tarjetas(Model model) {
 

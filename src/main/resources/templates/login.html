@@ -72,8 +72,10 @@
               </button>
 
               <div id="enlaces">
-                <a id="olvidaste" href="#" th:text="#{login.forgot}">¿Olvidaste tu contraseña?</a>
-                <a id="registrate" href="#" th:text="#{login.register}">Regístrate</a>
+                <a id="olvidaste" th:href="@{/login}" th:text="#{login.forgot}">olvidaste</a>
+                <a id="registrate" th:href="@{/crearUsuario}" th:text="#{login.register}">
+                  Regístrate
+                </a>
               </div>
             </form>
           </div>

@@ -1,6 +1,5 @@
 package com.example.lumaresort.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +12,14 @@ import com.example.lumaresort.entities.Cliente;
 import com.example.lumaresort.service.ClienteService;
 
 @Controller
-@RequestMapping("/cliente")
+@RequestMapping("/clientes")
 public class ClienteController {
 
-    @Autowired
-    private ClienteService service;
+    private final ClienteService service;
+
+    public ClienteController(ClienteService service) {
+        this.service = service;
+    }
 
     // Listar clientes
     @GetMapping
@@ -59,5 +61,4 @@ public class ClienteController {
 
         return "clientes";
     }
-
 }

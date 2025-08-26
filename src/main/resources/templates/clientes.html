@@ -228,7 +228,7 @@
       <a href="#">Dashboard</a>
       <a href="#" class="active">Clientes</a>
       <a href="#">Reservas</a>
-      <a href="#">Habitaciones</a>
+      <a th:href="@{/tipos}">Habitaciones</a>
       <a href="#">Servicios</a>
       <a href="#">Pagos</a>
     </div>
@@ -291,10 +291,10 @@
               ></span>
             </td>
             <td>
-              <a th:href="@{/clientes/editar/{id}(id=${cliente.id})}" class="btn btn-edit">
+              <a th:href="@{/clientes/editar/{id}(id=${cliente.idCliente})}" class="btn btn-edit">
                 Editar
               </a>
-              <a th:href="@{/clientes/borrar/{id}(id=${cliente.id})}" class="btn btn-delete">
+              <a th:href="@{/clientes/borrar/{id}(id=${cliente.idCliente})}" class="btn btn-delete">
                 Eliminar
               </a>
             </td>

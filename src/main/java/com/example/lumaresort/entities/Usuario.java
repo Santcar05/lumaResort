@@ -57,4 +57,10 @@ public class Usuario {
         this.correo = correo;
         this.contrasena = contrasena;
     }
+
+    public Usuario(String correo, String contrasena, boolean esAdmin) {
+        this.correo = correo;
+        this.contrasena = contrasena;
+        this.esAdministrador = esAdmin;
+    }
 }

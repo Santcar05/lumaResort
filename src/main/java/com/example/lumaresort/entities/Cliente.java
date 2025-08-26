@@ -1,19 +1,27 @@
 package com.example.lumaresort.entities;
 
-import java.util.List;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Entity
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Cliente {
 
-    private Integer idCliente;
-    private Usuario usuario;
-    private List<Reserva> reservas;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String nombre;
+
+    private String checkIn;
+
+    private String checkOut;
+
+    private String tipoHabitacion;
+
+    private String estadoReserva; // En uso, Paga, Pendiente
 }

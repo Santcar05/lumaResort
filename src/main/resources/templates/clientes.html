@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Luma Resort Admin - Clientes</title>
+    <link rel="stylesheet" href="/STYLES/estilosLandingPage.css" />
+    <link rel="stylesheet" href="/STYLES/generales.css" />
+    <link rel="stylesheet" href="/STYLES/plantillas.css" />
 
     <!-- Google Fonts -->
     <link
@@ -218,8 +221,13 @@
   <body>
     <!-- Sidebar -->
     <div class="sidebar">
-      <div class="logo">
-        <img th:src="@{/images/logoSurf.jpeg}" alt="Logo Luma Resort" />
+      <div>
+        <img
+          src="/IMAGES/luma_Corregido.jpg"
+          alt="Luma Resort Logo"
+          class="LogoImg menu-hover"
+          loading="lazy"
+        />
         <div>
           <h2>Luma Resort</h2>
           <span>admin</span>
@@ -303,4 +311,5 @@
       </table>
     </div>
   </body>
+  <script src="/SCRIPT/script.js" defer></script>
 </html>

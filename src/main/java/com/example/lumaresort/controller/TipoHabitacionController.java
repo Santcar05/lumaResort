@@ -49,4 +49,13 @@ public class TipoHabitacionController {
         service.eliminar(id);
         return "redirect:/tipos";
     }
+
+    @GetMapping("/ver/{id}")
+    public String verDetalle(@PathVariable Long id, Model model) {
+    TipoHabitacion tipo = service.buscarPorId(id).orElseThrow();
+    model.addAttribute("tipo", tipo);
+    model.addAttribute("habitaciones", tipo.getHabitaciones());
+    return "detalle"; // <- este es el nombre de la nueva plantilla detalle.html
+    }
+
 }

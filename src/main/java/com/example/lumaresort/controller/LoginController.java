@@ -37,9 +37,8 @@ public class LoginController {
     @PostMapping()
     public String login(@ModelAttribute("usuario") Usuario usuarioF, Model model) {
         Usuario usuarioEncontrado = usuarioService.findByCorreoAndContrasena(usuarioF.getCorreo(), usuarioF.getContrasena());
-        Usuario admin = new Usuario("admin@correo.com", "123", true);
 
-        if (admin.getCorreo().equals(usuarioF.getCorreo()) && admin.getContrasena().equals(usuarioF.getContrasena()) && admin.isEsAdministrador()) {
+        if (usuarioEncontrado.getCorreo().equals(usuarioF.getCorreo()) && usuarioEncontrado.getContrasena().equals(usuarioF.getContrasena()) && usuarioEncontrado.isEsAdministrador()) {
             // Agregamos el objeto necesario para Thymeleaf
             model.addAttribute("nuevoCliente", new Cliente());
             // También lista de clientes si tu plantilla la necesita

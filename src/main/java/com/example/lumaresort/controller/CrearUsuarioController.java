@@ -44,10 +44,12 @@ public class CrearUsuarioController {
             return "index"; // Redirigir a la página de inicio si el usuario ya existe
         }
 
-        usuarioService.save(usuarioF);
         if (usuarioF.getCorreo() == null || usuarioF.getContrasena() == null) {
             return "index";
         }
+
+        usuarioService.save(usuarioF);
+
         this.usuarioCrearCuenta = usuarioF;
         EmailService emailService = new EmailService(correo, contrasena);
         // Enviar correo de verificación (lógica simplificada)

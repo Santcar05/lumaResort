@@ -23,5 +23,4 @@ public class landingPageController {
         model.addAttribute("usuario", usuario);
         return "index";
     }
-
 }

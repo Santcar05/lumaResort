@@ -27,3 +27,7 @@ public class LumaresortApplication {
     }
 
 }
+
+//Proceso para que a veces funcione si dice que el puerto ya esta en uso
+// Ir a la terminal: tasklist | findstr java
+// Matar todos los proceso java: taskkill /F /PID 19420 

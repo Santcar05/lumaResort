@@ -20,6 +20,10 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
     }
 
+    public Usuario findByCorreo(String correo) {
+        return usuarioRepository.findByCorreo(correo);
+    }
+
     public Usuario findByCorreoAndContrasena(String correo, String contrasena) {
         return usuarioRepository.findByCorreoAndContrasena(correo, contrasena);
     }

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configuración de Usuario - Luma Resort</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary-color: #2c5aa0;
+        --secondary-color: #f8f9fa;
+        --accent-color: #28a745;
+        --danger-color: #dc3545;
+        --warning-color: #ffc107;
+        --border-radius: 12px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
+      }
+
+      body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .settings-container {
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+
+      .settings-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        border: none;
+        backdrop-filter: blur(10px);
+        transition: var(--transition);
+      }
+
+      .settings-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+      }
+
+      .settings-header {
+        background: linear-gradient(135deg, var(--primary-color), #3d6cb9);
+        color: white;
+        padding: 1.5rem;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        text-align: center;
+      }
+
+      .settings-header h2 {
+        margin: 0;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .user-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 2rem;
+        color: white;
+      }
+
+      .nav-tabs .nav-link {
+        border: none;
+        color: var(--primary-color);
+        font-weight: 500;
+        padding: 1rem 1.5rem;
+        margin-right: 0.5rem;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        transition: var(--transition);
+      }
+
+      .nav-tabs .nav-link:hover {
+        background-color: rgba(44, 90, 160, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .nav-tabs .nav-link.active {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+
+      .form-control {
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        transition: var(--transition);
+        font-size: 0.95rem;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.25);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary-color), #3d6cb9);
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem 2rem;
+        font-weight: 500;
+        transition: var(--transition);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
+      }
+
+      .btn-danger {
+        background: linear-gradient(135deg, var(--danger-color), #e85668);
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem 2rem;
+        font-weight: 500;
+        transition: var(--transition);
+      }
+
+      .btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+      }
+
+      .alert {
+        border: none;
+        border-radius: 8px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.5rem;
+        font-weight: 500;
+      }
+
+      .alert-success {
+        background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.05));
+        color: var(--accent-color);
+        border-left: 4px solid var(--accent-color);
+      }
+
+      .alert-danger {
+        background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(220, 53, 69, 0.05));
+        color: var(--danger-color);
+        border-left: 4px solid var(--danger-color);
+      }
+
+      .form-floating label {
+        color: #6c757d;
+        font-weight: 500;
+      }
+
+      .user-info-card {
+        background: linear-gradient(135deg, rgba(44, 90, 160, 0.1), rgba(44, 90, 160, 0.05));
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-left: 4px solid var(--primary-color);
+      }
+
+      .password-strength {
+        margin-top: 0.5rem;
+      }
+
+      .strength-bar {
+        height: 4px;
+        border-radius: 2px;
+        overflow: hidden;
+        background-color: #e9ecef;
+      }
+
+      .strength-fill {
+        height: 100%;
+        transition: var(--transition);
+      }
+
+      .icon-input {
+        position: relative;
+      }
+
+      .icon-input i {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6c757d;
+      }
+
+      .tab-pane {
+        padding: 2rem;
+      }
+
+      @media (max-width: 768px) {
+        .settings-container {
+          margin: 1rem auto;
+          padding: 0 0.5rem;
+        }
+
+        .tab-pane {
+          padding: 1rem;
+        }
+
+        .nav-tabs .nav-link {
+          padding: 0.75rem 1rem;
+          margin-right: 0.25rem;
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div th:replace="~{fragmentos :: header_f}"></div>
+
+    <main class="settings-container">
+      <!-- Información del Usuario -->
+      <div class="user-info-card">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <div class="user-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+          </div>
+          <div class="col">
+            <h4 class="mb-1" th:text="${usuario.nombre + ' ' + usuario.apellido}">
+              Nombre Usuario
+            </h4>
+            <p class="text-muted mb-0" th:text="${usuario.correo}">usuario@email.com</p>
+            <small class="text-muted">
+              <span class="badge bg-primary" th:if="${usuario.esAdministrador}">
+                <i class="fas fa-crown me-1"></i>
+                Administrador
+              </span>
+              <span class="badge bg-success" th:if="${usuario.esOperador}">
+                <i class="fas fa-user-cog me-1"></i>
+                Operador
+              </span>
+              <span
+                class="badge bg-info"
+                th:unless="${usuario.esAdministrador or usuario.esOperador}"
+              >
+                <i class="fas fa-user me-1"></i>
+                Cliente
+              </span>
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Principal -->
+      <div class="card settings-card">
+        <div class="settings-header">
+          <h2>
+            <i class="fas fa-cog"></i>
+            Configuración de Cuenta
+          </h2>
+        </div>
+
+        <!-- Tabs de Navegación -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              data-bs-toggle="tab"
+              data-bs-target="#datos-personales"
+              type="button"
+            >
+              <i class="fas fa-user me-2"></i>
+              Datos Personales
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#seguridad" type="button">
+              <i class="fas fa-lock me-2"></i>
+              Seguridad
+            </button>
+          </li>
+        </ul>
+
+        <!-- Contenido de Tabs -->
+        <div class="tab-content">
+          <!-- Tab: Datos Personales -->
+          <div class="tab-pane fade show active" id="datos-personales">
+            <!-- Alertas -->
+            <div th:if="${success}" class="alert alert-success" role="alert">
+              <i class="fas fa-check-circle me-2"></i>
+              <span th:text="${success}"></span>
+            </div>
+
+            <div th:if="${error}" class="alert alert-danger" role="alert">
+              <i class="fas fa-exclamation-circle me-2"></i>
+              <span th:text="${error}"></span>
+            </div>
+
+            <form th:action="@{/usuario/actualizar-datos}" method="post" th:object="${usuario}">
+              <input type="hidden" th:field="*{idUsuario}" />
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="form-floating icon-input">
+                    <input
+                      type="text"
+                      class="form-control"
+                      th:field="*{nombre}"
+                      placeholder="Nombre"
+                      required
+                      maxlength="50"
+                    />
+                    <label>Nombre</label>
+                    <i class="fas fa-user"></i>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <div class="form-floating icon-input">
+                    <input
+                      type="text"
+                      class="form-control"
+                      th:field="*{apellido}"
+                      placeholder="Apellido"
+                      required
+                      maxlength="50"
+                    />
+                    <label>Apellido</label>
+                    <i class="fas fa-user"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="form-floating icon-input">
+                    <input
+                      type="email"
+                      class="form-control"
+                      th:field="*{correo}"
+                      placeholder="Correo electrónico"
+                      required
+                    />
+                    <label>Correo Electrónico</label>
+                    <i class="fas fa-envelope"></i>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <div class="form-floating icon-input">
+                    <input
+                      type="tel"
+                      class="form-control"
+                      th:field="*{telefono}"
+                      placeholder="Teléfono"
+                      maxlength="15"
+                    />
+                    <label>Teléfono</label>
+                    <i class="fas fa-phone"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <div class="form-floating icon-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    th:field="*{cedula}"
+                    placeholder="Cédula"
+                    maxlength="20"
+                  />
+                  <label>Cédula/Identificación</label>
+                  <i class="fas fa-id-card"></i>
+                </div>
+              </div>
+
+              <div class="d-grid d-md-flex justify-content-md-end">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save me-2"></i>
+                  Guardar Cambios
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Tab: Seguridad -->
+          <div class="tab-pane fade" id="seguridad">
+            <!-- Alertas para contraseña -->
+            <div th:if="${successPassword}" class="alert alert-success" role="alert">
+              <i class="fas fa-check-circle me-2"></i>
+              <span th:text="${successPassword}"></span>
+            </div>
+
+            <div th:if="${errorPassword}" class="alert alert-danger" role="alert">
+              <i class="fas fa-exclamation-circle me-2"></i>
+              <span th:text="${errorPassword}"></span>
+            </div>
+
+            <h5 class="mb-3">
+              <i class="fas fa-key me-2"></i>
+              Cambiar Contraseña
+            </h5>
+
+            <form
+              th:action="@{/usuario/cambiar-password}"
+              method="post"
+              th:object="${cambioPassword}"
+            >
+              <div class="mb-3">
+                <div class="form-floating icon-input">
+                  <input
+                    type="password"
+                    class="form-control"
+                    th:field="*{passwordActual}"
+                    placeholder="Contraseña actual"
+                    required
+                  />
+                  <label>Contraseña Actual</label>
+                  <i class="fas fa-lock"></i>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="form-floating icon-input">
+                  <input
+                    type="password"
+                    class="form-control"
+                    th:field="*{passwordNueva}"
+                    id="nuevaPassword"
+                    placeholder="Nueva contraseña"
+                    required
+                    minlength="6"
+                  />
+                  <label>Nueva Contraseña</label>
+                  <i class="fas fa-key"></i>
+                </div>
+                <div class="password-strength">
+                  <div class="strength-bar">
+                    <div class="strength-fill" id="strengthBar"></div>
+                  </div>
+                  <small class="text-muted" id="strengthText">Mínimo 6 caracteres</small>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <div class="form-floating icon-input">
+                  <input
+                    type="password"
+                    class="form-control"
+                    th:field="*{passwordConfirmacion}"
+                    placeholder="Confirmar nueva contraseña"
+                    required
+                    minlength="6"
+                  />
+                  <label>Confirmar Nueva Contraseña</label>
+                  <i class="fas fa-shield-alt"></i>
+                </div>
+              </div>
+
+              <div class="d-grid d-md-flex justify-content-md-end">
+                <button type="submit" class="btn btn-danger">
+                  <i class="fas fa-key me-2"></i>
+                  Cambiar Contraseña
+                </button>
+              </div>
+            </form>
+
+            <!-- Información de Seguridad -->
+            <hr class="my-4" />
+
+            <h5 class="mb-3">
+              <i class="fas fa-shield-alt me-2"></i>
+              Información de Seguridad
+            </h5>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card bg-light">
+                  <div class="card-body">
+                    <h6 class="card-title">
+                      <i class="fas fa-clock text-primary me-2"></i>
+                      Última Sesión
+                    </h6>
+                    <p class="card-text text-muted">Ahora mismo</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card bg-light">
+                  <div class="card-body">
+                    <h6 class="card-title">
+                      <i class="fas fa-user-shield text-success me-2"></i>
+                      Estado de Cuenta
+                    </h6>
+                    <p class="card-text">
+                      <span class="badge bg-success">Activa</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div th:replace="~{fragmentos :: footer_f}"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="/SCRIPT/script.js" defer></script>
+
+    <script>
+      // Validación de fortaleza de contraseña
+      document.getElementById('nuevaPassword')?.addEventListener('input', function (e) {
+        const password = e.target.value;
+        const strengthBar = document.getElementById('strengthBar');
+        const strengthText = document.getElementById('strengthText');
+
+        let strength = 0;
+        let text = '';
+        let color = '';
+
+        if (password.length >= 6) strength += 25;
+        if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength += 25;
+        if (password.match(/\d/)) strength += 25;
+        if (password.match(/[^a-zA-Z\d]/)) strength += 25;
+
+        if (strength < 25) {
+          text = 'Muy débil';
+          color = '#dc3545';
+        } else if (strength < 50) {
+          text = 'Débil';
+          color = '#fd7e14';
+        } else if (strength < 75) {
+          text = 'Buena';
+          color = '#ffc107';
+        } else {
+          text = 'Muy fuerte';
+          color = '#28a745';
+        }
+
+        strengthBar.style.width = strength + '%';
+        strengthBar.style.backgroundColor = color;
+        strengthText.textContent = text;
+        strengthText.style.color = color;
+      });
+
+      // Auto-hide alerts después de 5 segundos
+      setTimeout(function () {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(function (alert) {
+          const bsAlert = new bootstrap.Alert(alert);
+          bsAlert.close();
+        });
+      }, 5000);
+    </script>
+  </body>
+</html>

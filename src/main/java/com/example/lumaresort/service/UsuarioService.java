@@ -1,5 +1,7 @@
 package com.example.lumaresort.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,24 @@ public class UsuarioService {
 
     public Usuario findByCorreoAndContrasena(String correo, String contrasena) {
         return usuarioRepository.findByCorreoAndContrasena(correo, contrasena);
+    }
+
+    public Usuario buscarPorId(Long id) {
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        return usuario.orElse(null);
+    }
+
+    // Buscar usuario por correo
+    public Usuario buscarPorCorreo(String correo) {
+        return usuarioRepository.findByCorreo(correo);
+    }
+
+    // Actualizar usuario existente
+    public Usuario actualizar(Usuario usuario) {
+        if (usuario.getIdUsuario() != null && usuarioRepository.existsById(usuario.getIdUsuario())) {
+            return usuarioRepository.save(usuario);
+        }
+        throw new RuntimeException("Usuario no encontrado");
     }
 
 }

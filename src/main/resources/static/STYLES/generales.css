@@ -562,3 +562,57 @@ button:hover
     margin: 0px;
   }
 }
+
+/* ============================================= */
+/* === NAV ADMIN ============= */
+/* ============================================= */
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background: var(--azul-nav);
+  color: var(--blanco);
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 20px;
+}
+
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.sidebar .logo img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.sidebar .logo h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.sidebar .logo span {
+  font-size: 0.85rem;
+  color: var(--gris-claro);
+}
+
+.sidebar a {
+  display: block;
+  padding: 12px 15px;
+  margin: 8px 0;
+  text-decoration: none;
+  border-radius: 8px;
+  color: var(--blanco);
+  transition: 0.3s;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+  background: var(--azul-claro);
+}

@@ -85,7 +85,7 @@
         color: white;
         transform: scale(1.05);
       }
-      .sidebar {
+      .sidebar_d {
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -132,6 +132,12 @@
         transform: translateY(-2px) scale(1.02);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       }
+      .action-btn a {
+        text-decoration: none;
+        underline: none;
+        color: white;
+        font-size: 1em;
+      }
       table {
         width: 100%;
         border-collapse: collapse;
@@ -171,10 +177,29 @@
 
       <!-- Galería -->
       <div class="gallery">
-        <img th:src="@{/images/habitacion1.jpg}" alt="foto 1" />
-        <img th:src="@{/images/habitacion2.jpg}" alt="foto 2" />
+        <!--<img th:src="@{/images/habitacion1.jpg}" alt="foto 1" />-->
+        <img
+          src="https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2017/11/24/1240/Grand-Hyatt-Bogota-P001-King-Bedroom-View.jpg/Grand-Hyatt-Bogota-P001-King-Bedroom-View.16x9.jpg?imwidth=1920"
+          alt="foto 1"
+        />
+        <img
+          src="https://i.pinimg.com/474x/0a/0a/16/0a0a16ac750b4835308fbef6b7958ec6.jpg"
+          alt="foto 2"
+        />
+        <img
+          src="https://media.revistaad.es/photos/65c21a5605ba5d3cad2a23ba/16:9/w_2560%2Cc_limit/atr.royalmansion-bedroom2-mr.jpg"
+          alt="foto 3"
+        />
+        <img
+          src="https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/05/20152251/Dorado-Beach-a-Ritz-Carlton-Reserve-3.jpg"
+        />
+        <!--<img
+          th:src="@{/images/habitacion2.jpg}"
+          alt="foto 2"
+        />
         <img th:src="@{/images/habitacion3.jpg}" alt="foto 3" />
         <img th:src="@{/images/habitacion4.jpg}" alt="foto 4" />
+        -->
       </div>
 
       <!-- Contenido principal -->
@@ -185,7 +210,7 @@
             <h3>Descripción</h3>
             <p th:text="${tipo.descripcion}">Aquí va la descripción de la habitación.</p>
             <div class="tags">
-              <span class="tag">Capacidad: 3</span>
+              <span class="tag">Servicio Premiun Integrado</span>
               <span class="tag">Cama King</span>
               <span class="tag">Desayuno incluido</span>
               <span class="tag">WiFi</span>
@@ -202,7 +227,7 @@
               "
             >
               <h3>Habitaciones disponibles</h3>
-              <button class="btn-detalle">
+              <button class="btn-detalle action-btn">
                 <a th:href=" @{/tipos/{id}/crearHabitacion(id=${tipo.id})}">Crear habitación</a>
               </button>
             </div>
@@ -224,17 +249,19 @@
                   <td th:text="${habitacion.precioPorNoche} + ' USD'"></td>
                   <td th:text="${habitacion.estado}"></td>
                   <td>
-                    <button
-                      class="action-btn"
-                      th:href="@{tipos/habitaciones/editar/{id}(id=${habitacion.idHabitacion})}"
-                    >
-                      Editar
+                    <button class="action-btn btn-detalle">
+                      <a
+                        th:href="@{/tipos/{tipoId}/editarHabitacion/{habitacionId}(tipoId=${tipo.id}, habitacionId=${habitacion.idHabitacion})}"
+                      >
+                        Editar
+                      </a>
                     </button>
-                    <button
-                      class="action-btn"
-                      th:href="@{tipos/habitaciones/ver/{id}(id=${habitacion.idHabitacion})}"
-                    >
-                      Ver
+                    <button class="action-btn btn-detalle">
+                      <a
+                        th:href="@{/tipos/habitaciones/ver/{id}/borrar(id=${habitacion.idHabitacion})}"
+                      >
+                        Eliminar
+                      </a>
                     </button>
                   </td>
                 </tr>
@@ -244,7 +271,7 @@
         </div>
 
         <!-- Lado derecho -->
-        <div class="sidebar">
+        <div class="sidebar_d">
           <div class="price-box">
             <p>Desde</p>
             <p class="price">$180/noche</p>

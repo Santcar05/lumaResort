@@ -205,6 +205,30 @@
         </div>
       </footer>
     </div>
+
+    <th:block th:fragment="nav_admin_f">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div>
+          <img
+            src="/IMAGES/luma_Corregido.jpg"
+            alt="Luma Resort Logo"
+            class="LogoImg menu-hover"
+            loading="lazy"
+          />
+          <div>
+            <h2>Luma Resort</h2>
+            <span>admin</span>
+          </div>
+        </div>
+        <a href="#">Dashboard</a>
+        <a href="#" class="active">Clientes</a>
+        <a href="#">Reservas</a>
+        <a th:href="@{/tipos}">Habitaciones</a>
+        <a href="#">Servicios</a>
+        <a href="#">Pagos</a>
+      </div>
+    </th:block>
   </body>
   <script src="/SCRIPT/script.js" defer></script>
 </html>

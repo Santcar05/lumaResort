@@ -3,6 +3,8 @@ package com.example.lumaresort.entities;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,7 +34,11 @@ public class Habitacion {
     private Integer capacidad;
     private String descripcion;
     private List<String> imagenUrl;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date checkinDesde;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date checkoutHasta;
 
     // Muchas habitaciones pueden ser de un tipo

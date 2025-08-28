@@ -3,264 +3,475 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Crear habitación - Luna Resort Admin</title>
-    <link rel="stylesheet" href="/STYLES/estilosLandingPage.css" />
-    <link rel="stylesheet" href="/STYLES/generales.css" />
-    <link rel="stylesheet" href="/STYLES/plantillas.css" />
-    <link rel="stylesheet" th:href="@{/CSS/crearhab.css}" />
+    <title>Crear Habitación - Luma Resort</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+      }
+
+      .sidebar {
+        width: 280px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 30px 20px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .sidebar > div:first-child {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #f0f0f0;
+      }
+
+      .LogoImg {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .menu-hover:hover {
+        transform: scale(1.05);
+      }
+
+      .sidebar h2 {
+        color: #333;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .sidebar span {
+        color: #666;
+        font-size: 14px;
+        background: #e8f4fd;
+        padding: 4px 12px;
+        border-radius: 20px;
+      }
+
+      .sidebar a {
+        text-decoration: none;
+        color: #555;
+        padding: 15px 20px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .sidebar a:hover {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        transform: translateX(5px);
+      }
+
+      .sidebar a.active {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      }
+
+      .main-content {
+        flex: 1;
+        padding: 40px;
+        overflow-y: auto;
+      }
+
+      .form-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .form-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .form-header h1 {
+        color: #333;
+        font-size: 32px;
+        margin-bottom: 10px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .form-header p {
+        color: #666;
+        font-size: 16px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group.full-width {
+        grid-column: 1 / -1;
+      }
+
+      .form-group label {
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        padding: 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background: white;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      .date-inputs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 40px;
+      }
+
+      .btn {
+        padding: 15px 40px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: #f8f9fa;
+        color: #666;
+        border: 2px solid #e0e0e0;
+      }
+
+      .btn-secondary:hover {
+        background: #e9ecef;
+        border-color: #ccc;
+      }
+
+      .info-box {
+        background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+        border-left: 4px solid #667eea;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+      }
+
+      .info-box p {
+        color: #555;
+        margin: 0;
+        font-size: 14px;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          padding: 20px;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .date-inputs {
+          grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+          flex-direction: column;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div class="container">
-      <!-- Sidebar -->
-      <div class="sidebar">
-        <div class="logo">
-          <div class="logo-icon"></div>
-          Luna Resort Admin
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div>
+        <img
+          src="/IMAGES/luma_Corregido.jpg"
+          alt="Luma Resort Logo"
+          class="LogoImg menu-hover"
+          loading="lazy"
+        />
+        <div>
+          <h2>Luma Resort</h2>
+          <span>admin</span>
         </div>
-        <div class="menu-item">Dashboard</div>
-        <div class="menu-item active">Habitaciones</div>
-        <div class="menu-item">Reservas</div>
-        <div class="menu-item">Huéspedes</div>
-        <div class="menu-item">Servicios</div>
-        <div class="menu-item">Pagos</div>
-        <div class="menu-item">Ajustes</div>
       </div>
+      <a href="#">Dashboard</a>
+      <a href="#">Clientes</a>
+      <a href="#">Reservas</a>
+      <a th:href="@{/tipos}" class="active">Habitaciones</a>
+      <a href="#">Servicios</a>
+      <a href="#">Pagos</a>
+    </div>
 
-      <!-- Main Content -->
-      <div class="main-content">
-        <!-- Header -->
-        <div class="header">
-          <div class="breadcrumb">Crear habitación / Habitaciones / Nueva</div>
-          <div class="user-info">
-            <span>María Fernández</span>
-            <span class="user-role">Gerente</span>
-            <div class="user-avatar"></div>
-          </div>
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="form-container">
+        <div class="form-header">
+          <h1>Crear Nueva Habitación</h1>
+          <p>Complete la información para registrar una nueva habitación en el sistema</p>
         </div>
 
-        <!-- Content -->
-        <div class="content">
-          <div class="form-header">
-            <div class="form-title">
-              <span class="info-icon">ℹ️</span>
-              Completa los datos de la habitación. Los campos marcados con * son obligatorios.
-            </div>
-            <div class="form-actions">
-              <button class="btn-back btn-detalle">↩️ Volver</button>
-              <button type="submit" form="room-form" class="btn-save btn-detalle">
-                💾 Guardar habitación
-              </button>
-            </div>
-          </div>
-
-          <div class="form-layout">
-            <!-- Formulario Principal -->
-            <div class="form-section">
-              <div class="section-title">Datos de la habitación</div>
-              <form
-                id="room-form"
-                th:action="@{/habitaciones/crear}"
-                th:object="${nuevaHabitacion}"
-                method="post"
-              >
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="numero">Número *</label>
-                    <input
-                      type="text"
-                      id="numero"
-                      th:field="*{numero}"
-                      placeholder="Ej: 205"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="tipo">Tipo *</label>
-                    <select id="tipo" th:field="*{tipoHabitacion.id}" required>
-                      <option value="">Seleccione un tipo</option>
-                      <option
-                        th:each="tipoItem : ${tipo}"
-                        th:value="${tipoItem.id}"
-                        th:text="${tipoItem.nombre}"
-                      ></option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="precio">Precio por noche (USD) *</label>
-                    <input
-                      type="number"
-                      id="precio"
-                      th:field="*{precioPorNoche}"
-                      placeholder="0.00"
-                      step="0.01"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="capacidad">Capacidad (personas) *</label>
-                    <input
-                      type="number"
-                      id="capacidad"
-                      th:field="*{capacidad}"
-                      placeholder="2"
-                      min="1"
-                      max="10"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="estado">Estado *</label>
-                    <select id="estado" th:field="*{estado}" required>
-                      <option value="">Seleccione un estado</option>
-                      <option value="disponible">Disponible</option>
-                      <option value="ocupada">Ocupada</option>
-                      <option value="mantenimiento">Mantenimiento</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="form-group full-width">
-                  <label for="descripcion">Descripción</label>
-                  <textarea
-                    id="descripcion"
-                    th:field="*{descripcion}"
-                    rows="4"
-                    placeholder="Breve descripción de la habitación, comodidades y vista..."
-                  ></textarea>
-                  <div class="upload-area" id="upload-area">
-                    <div class="upload-content">
-                      <div class="upload-icon">📷</div>
-                      <div class="upload-text">
-                        Arrastra imágenes aquí o haz clic para seleccionar
-                      </div>
-                    </div>
-                    <input type="file" id="file-input" multiple accept="image/*" hidden />
-                  </div>
-                </div>
-
-                <!-- Comodidades -->
-                <div class="section-title">Comodidades</div>
-                <div class="form-row"></div>
-
-                <!-- Políticas -->
-                <div class="section-title">Políticas</div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="checkin">Check-in desde</label>
-                    <input type="time" id="checkin" th:field="*{checkinDesde}" value="15:00" />
-                  </div>
-                  <div class="form-group">
-                    <label for="checkout">Check-out hasta</label>
-                    <input type="time" id="checkout" th:field="*{checkoutHasta}" value="11:00" />
-                  </div>
-                </div>
-              </form>
-            </div>
-
-            <!-- Sidebar derecho -->
-            <div class="right-sidebar">
-              <!-- Imágenes -->
-              <div class="images-section">
-                <div class="section-header">
-                  <span>Imágenes</span>
-                </div>
-                <div class="image-grid" id="image-grid">
-                  <div class="image-placeholder">
-                    <span>🖼️</span>
-                  </div>
-                  <div class="image-placeholder">
-                    <span>🖼️</span>
-                  </div>
-                  <div class="image-placeholder">
-                    <span>🖼️</span>
-                  </div>
-                </div>
-                <button class="btn-upload btn-detalle" id="btn-upload">📤 Subir imágenes</button>
-              </div>
-
-              <!-- Resumen -->
-              <div class="summary-section">
-                <div class="section-header">
-                  <span>Resumen</span>
-                </div>
-                <div class="summary-item">
-                  <span class="summary-label">Estado</span>
-                  <span
-                    class="summary-value"
-                    id="summary-estado"
-                    th:text="${nuevaHabitacion.estado != null} ? ${nuevaHabitacion.estado} : 'Disponible'"
-                  >
-                    Disponible
-                  </span>
-                </div>
-                <div class="summary-item">
-                  <span class="summary-label">Capacidad</span>
-                  <span
-                    class="summary-value"
-                    id="summary-capacidad"
-                    th:text="${nuevaHabitacion.capacidad != null} ? ${nuevaHabitacion.capacidad} + ' personas' : '2 personas'"
-                  >
-                    2 personas
-                  </span>
-                </div>
-                <div class="summary-item">
-                  <span class="summary-label">Precio</span>
-                  <span
-                    class="summary-value"
-                    id="summary-precio"
-                    th:text="${nuevaHabitacion.precioPorNoche != null} ? '$' + ${nuevaHabitacion.precioPorNoche} + '/noche' : '$160/noche'"
-                  >
-                    $160/noche
-                  </span>
-                </div>
-              </div>
-
-              <!-- Historial -->
-              <div class="history-section">
-                <div class="section-header">
-                  <span>Historial de cambios</span>
-                </div>
-                <div class="history-item">
-                  <div class="history-dot blue"></div>
-                  <div class="history-content">
-                    <div class="history-title">Creación</div>
-                    <div class="history-date">Hoy, 16:24 — por María</div>
-                  </div>
-                </div>
-                <div class="history-item">
-                  <div class="history-dot blue"></div>
-                  <div class="history-content">
-                    <div class="history-title">Precio actualizado</div>
-                    <div class="history-date">—</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Footer del formulario -->
-          <div class="form-footer">
-            <div class="form-warning">
-              <span class="warning-icon">⚠️</span>
-              Revisa los campos obligatorios antes de guardar.
-            </div>
-            <div class="form-footer-actions">
-              <button class="btn-cancel btn-detalle">Cancelar</button>
-              <button class="btn-draft btn-detalle">Guardar borrador</button>
-              <button type="submit" form="room-form" class="btn-create btn-detalle">
-                ➕ Crear habitación
-              </button>
-            </div>
-          </div>
+        <div class="info-box">
+          <p>
+            <strong>Nota:</strong>
+            El tipo de habitación se asignará automáticamente según los parámetros del sistema. La
+            cuenta de habitación se configurará posteriormente.
+          </p>
         </div>
+
+        <form
+          th:action="@{/tipos/{id}/crearHabitacion/habitaciones/crear(id=${tipoHabitacionId})}"
+          method="post"
+          th:object="${habitacion}"
+        >
+          <!-- Campo oculto para tipo de habitación (viene como parámetro) -->
+          <input type="hidden" th:field="*{tipoHabitacion}" th:value="${tipoHabitacionId}" />
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="numero">Número de Habitación *</label>
+              <input
+                type="text"
+                id="numero"
+                th:field="*{numero}"
+                placeholder="Ej: 101, 201A"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="precioPorNoche">Precio por Noche *</label>
+              <input
+                type="number"
+                id="precioPorNoche"
+                th:field="*{precioPorNoche}"
+                step="0.01"
+                min="0"
+                placeholder="0.00"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="estado">Estado *</label>
+              <select id="estado" th:field="*{estado}" required>
+                <option value="">Seleccione un estado</option>
+                <option value="DISPONIBLE">Disponible</option>
+                <option value="OCUPADA">Ocupada</option>
+                <option value="MANTENIMIENTO">En Mantenimiento</option>
+                <option value="LIMPIEZA">En Limpieza</option>
+                <option value="FUERA_DE_SERVICIO">Fuera de Servicio</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="capacidad">Capacidad (personas) *</label>
+              <input
+                type="number"
+                id="capacidad"
+                th:field="*{capacidad}"
+                min="1"
+                max="10"
+                placeholder="Número de huéspedes"
+                required
+              />
+            </div>
+
+            <div class="form-group full-width">
+              <label for="descripcion">Descripción</label>
+              <textarea
+                id="descripcion"
+                th:field="*{descripcion}"
+                placeholder="Describa las características y comodidades de la habitación..."
+              ></textarea>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="imagenUrl">URLs de Imágenes (separadas por comas)</label>
+              <textarea
+                id="imagenUrl"
+                name="imagenUrlString"
+                rows="3"
+                placeholder="https://ejemplo.com/imagen1.jpg, https://ejemplo.com/imagen2.jpg"
+              ></textarea>
+            </div>
+
+            <div class="form-group full-width">
+              <label>Fechas de Disponibilidad</label>
+              <div class="date-inputs">
+                <div class="form-group">
+                  <label for="checkinDesde">Check-in Desde</label>
+                  <input type="datetime-local" id="checkinDesde" th:field="*{checkinDesde}" />
+                </div>
+                <div class="form-group">
+                  <label for="checkoutHasta">Check-out Hasta</label>
+                  <input type="datetime-local" id="checkoutHasta" th:field="*{checkoutHasta}" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Crear Habitación</button>
+            <a th:href="@{/tipos/ver/{id}(id=${tipoHabitacionId})}" class="btn btn-secondary">
+              Cancelar
+            </a>
+          </div>
+        </form>
       </div>
     </div>
-    <script th:src="@{/JS/crearhab.js}"></script>
+
+    <script>
+      // Validación del formulario
+      document.querySelector('form').addEventListener('submit', function (e) {
+        const precio = document.getElementById('precioPorNoche').value;
+        const capacidad = document.getElementById('capacidad').value;
+        const numero = document.getElementById('numero').value.trim();
+
+        if (!numero) {
+          alert('El número de habitación es obligatorio');
+          e.preventDefault();
+          return;
+        }
+
+        if (precio <= 0) {
+          alert('El precio por noche debe ser mayor a 0');
+          e.preventDefault();
+          return;
+        }
+
+        if (capacidad < 1) {
+          alert('La capacidad debe ser al menos 1 persona');
+          e.preventDefault();
+          return;
+        }
+
+        // Validar fechas si están presentes
+        const checkin = document.getElementById('checkinDesde').value;
+        const checkout = document.getElementById('checkoutHasta').value;
+
+        if (checkin && checkout && new Date(checkin) >= new Date(checkout)) {
+          alert('La fecha de check-out debe ser posterior a la fecha de check-in');
+          e.preventDefault();
+          return;
+        }
+      });
+
+      // Procesamiento de URLs de imágenes
+      document.querySelector('form').addEventListener('submit', function (e) {
+        const imagenUrlString = document.querySelector('textarea[name="imagenUrlString"]').value;
+        if (imagenUrlString.trim()) {
+          // Crear un campo oculto con el array de URLs
+          const urls = imagenUrlString
+            .split(',')
+            .map(url => url.trim())
+            .filter(url => url);
+
+          // Eliminar el textarea temporal
+          document.querySelector('textarea[name="imagenUrlString"]').remove();
+
+          // Crear campos ocultos para cada URL
+          urls.forEach((url, index) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = `imagenUrl[${index}]`;
+            input.value = url;
+            this.appendChild(input);
+          });
+        } else {
+          document.querySelector('textarea[name="imagenUrlString"]').remove();
+        }
+      });
+
+      // Formateo automático del precio
+      document.getElementById('precioPorNoche').addEventListener('input', function (e) {
+        let value = parseFloat(e.target.value);
+        if (!isNaN(value)) {
+          e.target.value = value.toFixed(2);
+        }
+      });
+
+      // Auto-generar sugerencia de número de habitación
+      document.getElementById('numero').addEventListener('focus', function (e) {
+        if (!e.target.value) {
+          // Aquí podrías implementar lógica para sugerir el siguiente número disponible
+          e.target.placeholder = 'Ej: 101, 201A, Suite-01';
+        }
+      });
+    </script>
   </body>
 </html>

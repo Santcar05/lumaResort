@@ -175,6 +175,8 @@
       }
 
       .btn {
+        text-decoration: none;
+        underline: none;
         border: none;
         padding: 8px 14px;
         border-radius: 8px;
@@ -261,7 +263,8 @@
             <p class="name" th:text="${usuarioRegistrado.nombre}"></p>
             <p class="role" th:text="${usuarioRegistrado.rol}"></p>
           </div>
-          <img th:src="@{/images/maria.jpg}" alt="Perfil" />
+
+          <img src="/IMAGES/logoSurf.jpeg" alt="Perfil" />
         </div>
       </div>
 

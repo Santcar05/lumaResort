@@ -5,6 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crear Habitación - Luma Resort</title>
     <style>
+      :root {
+        --bg-primary: #f7f9fc; /* Fondo base claro */
+        --bg-secondary: #ffffff; /* Fondo tarjetas */
+        --text-primary: #1e293b; /* Texto principal */
+        --text-secondary: #475569; /* Texto secundario */
+        --header-bg: linear-gradient(90deg, #262de0, #49aee0);
+        --footer-bg: linear-gradient(90deg, #262de0, #49aee0);
+
+        /* Botones */
+        --button-primary: #1d3a8a;
+        --button-hover: #4aa7df;
+        --button-text: #ffffff;
+
+        /* Tarjetas */
+        --card-bg: #ffffff;
+        --card-text: #0f172a;
+        --card-shadow: rgba(38, 45, 224, 0.15);
+
+        /* Secciones */
+        --section-primary: #49aee0;
+        --section-secondary: #89cff0;
+        --section-accent: #b3e5fc;
+        --section-contrast: #1d3a8a;
+        --section-highlight: #262de0;
+
+        /* Tablas */
+        --table-white: #f0f0f0;
+        --table-border: #e2e8f0;
+
+        /* Estados */
+        --success: #16a34a;
+        --success-light: #dcfce7;
+        --warning: #f59e0b;
+        --warning-light: #fef3c7;
+        --error: #dc2626;
+        --error-light: #fee2e2;
+        --info: #0ea5e9;
+        --info-light: #e0f2fe;
+
+        /* Extras */
+        --text-only-white: #f0f0f0;
+        --header-height: 80px;
+        --transition-speed: 0.3s;
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -13,17 +58,17 @@
 
       body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: var(--bg-primary);
         min-height: 100vh;
         display: flex;
       }
 
       .sidebar {
         width: 280px;
-        background: rgba(255, 255, 255, 0.95);
+        background: var(--bg-secondary);
         backdrop-filter: blur(10px);
         padding: 30px 20px;
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 30px var(--card-shadow);
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -34,7 +79,7 @@
         align-items: center;
         gap: 15px;
         padding-bottom: 20px;
-        border-bottom: 2px solid #f0f0f0;
+        border-bottom: 2px solid var(--table-border);
       }
 
       .LogoImg {
@@ -50,38 +95,38 @@
       }
 
       .sidebar h2 {
-        color: #333;
+        color: var(--text-primary);
         font-size: 24px;
         font-weight: bold;
       }
 
       .sidebar span {
-        color: #666;
+        color: var(--text-secondary);
         font-size: 14px;
-        background: #e8f4fd;
+        background: var(--section-accent);
         padding: 4px 12px;
         border-radius: 20px;
       }
 
       .sidebar a {
         text-decoration: none;
-        color: #555;
+        color: var(--text-secondary);
         padding: 15px 20px;
         border-radius: 12px;
-        transition: all 0.3s ease;
+        transition: all var(--transition-speed) ease;
         font-weight: 500;
       }
 
       .sidebar a:hover {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
+        background: var(--header-bg);
+        color: var(--button-text);
         transform: translateX(5px);
       }
 
       .sidebar a.active {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        background: var(--header-bg);
+        color: var(--button-text);
+        box-shadow: 0 4px 15px var(--card-shadow);
       }
 
       .main-content {
@@ -91,11 +136,11 @@
       }
 
       .form-container {
-        background: rgba(255, 255, 255, 0.95);
+        background: var(--card-bg);
         backdrop-filter: blur(10px);
         border-radius: 20px;
         padding: 40px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 20px 40px var(--card-shadow);
         max-width: 800px;
         margin: 0 auto;
       }
@@ -106,17 +151,17 @@
       }
 
       .form-header h1 {
-        color: #333;
+        color: var(--text-primary);
         font-size: 32px;
         margin-bottom: 10px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: var(--header-bg);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
       }
 
       .form-header p {
-        color: #666;
+        color: var(--text-secondary);
         font-size: 16px;
       }
 
@@ -137,7 +182,7 @@
       }
 
       .form-group label {
-        color: #333;
+        color: var(--text-primary);
         font-weight: 600;
         margin-bottom: 8px;
         font-size: 14px;
@@ -147,19 +192,20 @@
       .form-group select,
       .form-group textarea {
         padding: 15px;
-        border: 2px solid #e0e0e0;
+        border: 2px solid var(--table-border);
         border-radius: 12px;
         font-size: 16px;
-        transition: all 0.3s ease;
-        background: white;
+        transition: all var(--transition-speed) ease;
+        background: var(--bg-secondary);
+        color: var(--text-primary);
       }
 
       .form-group input:focus,
       .form-group select:focus,
       .form-group textarea:focus {
         outline: none;
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        border-color: var(--section-primary);
+        box-shadow: 0 0 0 3px var(--section-accent);
       }
 
       .form-group textarea {
@@ -187,44 +233,45 @@
         font-size: 16px;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all var(--transition-speed) ease;
         text-decoration: none;
         display: inline-block;
         text-align: center;
       }
 
       .btn-primary {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        background: var(--button-primary);
+        color: var(--button-text);
+        box-shadow: 0 4px 15px var(--card-shadow);
       }
 
       .btn-primary:hover {
+        background: var(--button-hover);
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 8px 25px var(--card-shadow);
       }
 
       .btn-secondary {
-        background: #f8f9fa;
-        color: #666;
-        border: 2px solid #e0e0e0;
+        background: var(--bg-secondary);
+        color: var(--text-secondary);
+        border: 2px solid var(--table-border);
       }
 
       .btn-secondary:hover {
-        background: #e9ecef;
-        border-color: #ccc;
+        background: var(--table-white);
+        border-color: var(--text-secondary);
       }
 
       .info-box {
-        background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
-        border-left: 4px solid #667eea;
+        background: linear-gradient(135deg, var(--section-secondary), var(--section-accent));
+        border-left: 4px solid var(--section-primary);
         padding: 20px;
         border-radius: 12px;
         margin-bottom: 30px;
       }
 
       .info-box p {
-        color: #555;
+        color: var(--text-secondary);
         margin: 0;
         font-size: 14px;
       }
@@ -256,6 +303,7 @@
   </head>
   <body>
     <!-- Sidebar -->
+    <!--
     <div class="sidebar">
       <div>
         <img
@@ -277,6 +325,7 @@
       <a href="#">Pagos</a>
     </div>
 
+  -->
     <!-- Main Content -->
     <div class="main-content">
       <div class="form-container">
@@ -316,10 +365,9 @@
             <div class="form-group">
               <label for="precioPorNoche">Precio por Noche *</label>
               <input
-                type="number"
+                type="text"
                 id="precioPorNoche"
                 th:field="*{precioPorNoche}"
-                step="0.01"
                 min="0"
                 placeholder="0.00"
                 required
@@ -460,9 +508,6 @@
       // Formateo automático del precio
       document.getElementById('precioPorNoche').addEventListener('input', function (e) {
         let value = parseFloat(e.target.value);
-        if (!isNaN(value)) {
-          e.target.value = value.toFixed(2);
-        }
       });
 
       // Auto-generar sugerencia de número de habitación

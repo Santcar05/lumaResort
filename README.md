@@ -1,21 +1,33 @@
-# lumaResort
-# Looksoon – Equipo 5 – *Los Hijos de Chayanne*
+# Hotel Luma Resort
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com/?lines=Computación%20Móvil;Los%20Hijos%20de%20Chayanne;IA;Estudiantes;Computación%20en%20la%20Nube;Compose%20UI&center=true&width=600&height=45">
+  <img src="https://readme-typing-svg.herokuapp.com/?lines=Desarrollo%20Web;Hotel%20Luma%20Resort;http;CSS;JavaScript;JPA%20UI&center=true&width=600&height=45">
 </p>
 
 ## 📌 Descripción del Proyecto
 
-**Looksoon** es una aplicación móvil desarrollada en **Android Studio** con **Kotlin**.  
-La app permite la interacción entre **cuatro tipos de usuarios**:
+**HotelLumaResort** es una aplicación desarrollada en Java 21 con Spring Boot, que tiene como propósito la gestión de un resort/hotel de manera integral. El sistema permite administrar información clave como reservas, clientes, servicios adicionales, empleados y operaciones internas, todo en un solo lugar.
+La app permite la interacción entre **dos tipos de usuarios**:
 
-- **Artista** → Publica obras para que sean vistas y comentadas.  
-- **Fan** → Puede reservar eventos para ver a los artistas.  
-- **Local** → Organiza eventos donde los artistas presentan sus obras.  
-- **Curador** → Emite opiniones y valoraciones sobre las obras.  
+- **Usuario** → Publica obras para que sean vistas y comentadas.  
+- **Administrador** → Puede reservar eventos para ver a los artistas.  
 
-Además, la aplicación incluye funciones como **chats**, **mensajes**, **notificaciones** y gestión de eventos.
+  ✨ Características principales
+📋 Gestión de entidades: clientes, habitaciones, empleados y servicios.
+🗄️ Persistencia de datos con H2 en archivo.
+🔍 Consultas dinámicas gracias a Spring Data JPA.
+🎯 Arquitectura organizada en capas: controladores, servicios, repositorios y entidades.
+⚡ API REST para interacción con el sistema y fácil integración futura.
+
+🚀 Tecnologías usadas
+Java 21
+Spring Boot
+Spring Data JPA
+H2 Database
+Maven
+
+🎯 Objetivo del proyecto
+Este proyecto busca sentar las bases para un sistema de información que pueda crecer hacia un producto completo de gestión hotelera, escalable y adaptable a las necesidades de un resort moderno.
 
 ---
 

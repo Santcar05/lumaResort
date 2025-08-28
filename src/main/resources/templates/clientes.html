@@ -248,8 +248,8 @@
         <h1>Clientes / Gestión de clientes</h1>
         <div class="user-info">
           <div class="details">
-            <p class="name">María Fernanda</p>
-            <p class="role">Gerente</p>
+            <p class="name" th:text="${usuarioRegistrado.nombre}"></p>
+            <p class="role" th:text="${usuarioRegistrado.rol}"></p>
           </div>
           <img th:src="@{/images/maria.jpg}" alt="Perfil" />
         </div>

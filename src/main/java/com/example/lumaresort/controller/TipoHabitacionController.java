@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.lumaresort.entities.TipoHabitacion;
+import com.example.lumaresort.entities.Usuario;
 import com.example.lumaresort.service.TipoHabitacionService;
 
 @Controller
@@ -17,12 +18,15 @@ import com.example.lumaresort.service.TipoHabitacionService;
 public class TipoHabitacionController {
 
     @Autowired
+    private Usuario usuario;
+    @Autowired
     private TipoHabitacionService service;
 
     @GetMapping
     public String listarTodos(Model model) {
         model.addAttribute("tipos", service.listarTodos());
         model.addAttribute("tipoNuevo", new TipoHabitacion());
+        model.addAttribute("usuarioRegistrado", usuario);
         return "lista";
     }
 
@@ -52,10 +56,26 @@ public class TipoHabitacionController {
 
     @GetMapping("/ver/{id}")
     public String verDetalle(@PathVariable Long id, Model model) {
-    TipoHabitacion tipo = service.buscarPorId(id).orElseThrow();
-    model.addAttribute("tipo", tipo);
-    model.addAttribute("habitaciones", tipo.getHabitaciones());
-    return "detalle"; // <- este es el nombre de la nueva plantilla detalle.html
+        TipoHabitacion tipo = service.buscarPorId(id).orElseThrow();
+        model.addAttribute("tipo", tipo);
+        model.addAttribute("habitaciones", tipo.getHabitaciones());
+        return "detalle"; // <- este es el nombre de la nueva plantilla detalle.html
+    }
+
+    //http://localhost:8090/tipos/{id}/crearHabitacion
+    @GetMapping("{id}/crearHabitacion")
+    public String crearHabitacion(@PathVariable Long id, Model model) {
+        TipoHabitacion tipo = service.buscarPorId(id).orElseThrow();
+        model.addAttribute("tipo", tipo);
+        model.addAttribute("nuevaHabitacion", new com.example.lumaresort.entities.Habitacion());
+        return "crearHab";
+    }
+
+    @GetMapping("{id}/editarHabitacion/")
+    public String editarHabitacion(@PathVariable Long id, Model model) {
+        //com.example.lumaresort.entities.Habitacion habitacion = service.buscarHabitacionPorId(id).orElseThrow();
+        // model.addAttribute("nuevaHabitacion", habitacion);
+        return "editarhab";
     }
 
 }

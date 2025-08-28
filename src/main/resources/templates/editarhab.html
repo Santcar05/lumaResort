@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Editar Habitación - Luna Resort Admin</title>
-    <link rel="stylesheet" href="../CSS/editarhab.css" />
+    <link rel="stylesheet" href="/STYLES/estilosLandingPage.css" />
+    <link rel="stylesheet" href="/STYLES/generales.css" />
+    <link rel="stylesheet" href="/STYLES/plantillas.css" />
+    <!--<link rel="stylesheet" th:href="@{/CSS/editarhab.css}" /> -->
   </head>
   <body>
     <div class="container">
@@ -27,9 +30,7 @@
       <div class="main-content">
         <!-- Header -->
         <div class="header">
-          <div class="breadcrumb">
-            Editar Habitación / Habitaciones / Editar
-          </div>
+          <div class="breadcrumb">Editar Habitación / Habitaciones / Editar</div>
           <div class="user-info">
             <span>María Fernández</span>
             <span class="user-role">Gerente</span>
@@ -42,58 +43,60 @@
           <!-- Form Header -->
           <div class="form-header">
             <div class="back-nav">
-              <button class="btn-back" id="btn-back">
-                ← Volver al listado
-              </button>
-              <div class="room-badge">101 • Suite Deluxe</div>
+              <button class="btn-back btn-detalle" id="btn-back">← Volver al listado</button>
+              <div
+                class="room-badge"
+                th:text="${nuevaHabitacion.numero} + ' • ' + ${nuevaHabitacion.tipoHabitacion.nombre}"
+              >
+                101 • Suite Deluxe
+              </div>
             </div>
             <div class="header-actions">
-              <button class="btn-discard" id="btn-discard">
-                Descartar cambios
+              <button class="btn-discard btn-detalle" id="btn-discard">Descartar cambios</button>
+              <button
+                type="submit"
+                form="edit-room-form"
+                class="btn-save btn-detalle"
+                id="btn-save"
+              >
+                Guardar cambios
               </button>
-                <button class="btn-save" id="btn-save">Guardar cambios</button>
             </div>
           </div>
 
           <!-- Form Container -->
           <div class="form-container">
-            <form id="edit-room-form">
+            <form
+              id="edit-room-form"
+              th:action="@{/habitaciones/guardar}"
+              th:object="${nuevaHabitacion}"
+              method="post"
+            >
               <!-- Basic Info -->
               <div class="form-grid">
                 <div class="form-group">
                   <label for="numero">Número</label>
-                  <input
-                    type="text"
-                    id="numero"
-                    name="numero"
-                    value="101"
-                    required
-                  />
+                  <input type="text" id="numero" th:field="*{numero}" required />
                 </div>
                 <div class="form-group">
                   <label for="tipo">Tipo</label>
-                  <select id="tipo" name="tipo" required>
-                    <option value="suite" selected>Suite Deluxe</option>
-                    <option value="doble">Doble</option>
-                    <option value="individual">Individual</option>
-                    <option value="familiar">Familiar</option>
+                  <select id="tipo" th:field="*{tipo.id}" required>
+                    <option
+                      th:each="tipoItem : ${tipo}"
+                      th:value="${tipoItem.id}"
+                      th:text="${tipoItem.nombre}"
+                      th:selected="${nuevaHabitacion.tipo != null and tipoItem.id == nuevaHabitacion.tipo.id}"
+                    ></option>
                   </select>
                 </div>
                 <div class="form-group">
                   <label for="precio">Precio por noche</label>
-                  <input
-                    type="number"
-                    id="precio"
-                    name="precio"
-                    value="280"
-                    step="0.01"
-                    required
-                  />
+                  <input type="number" id="precio" th:field="*{precio}" step="0.01" required />
                 </div>
                 <div class="form-group">
                   <label for="estado">Estado</label>
-                  <select id="estado" name="estado" required>
-                    <option value="disponible" selected>Disponible</option>
+                  <select id="estado" th:field="*{estado}" required>
+                    <option value="disponible">Disponible</option>
                     <option value="ocupada">Ocupada</option>
                     <option value="mantenimiento">Mantenimiento</option>
                   </select>
@@ -101,49 +104,24 @@
                 <div class="form-group">
                   <label>Capacidad</label>
                   <div class="capacity-control">
-                    <button
-                      type="button"
-                      class="capacity-btn"
-                      id="decrease-capacity"
-                    >
-                      −
-                    </button>
+                    <button type="button" class="capacity-btn" id="decrease-capacity">−</button>
                     <div class="capacity-display" id="capacity-display">
-                      2 huéspedes
+                      <span th:text="*{capacidad} + ' huéspedes'">2 huéspedes</span>
                     </div>
-                    <button
-                      type="button"
-                      class="capacity-btn"
-                      id="increase-capacity"
-                    >
-                      +
-                    </button>
+                    <button type="button" class="capacity-btn" id="increase-capacity">+</button>
                   </div>
-                  <input
-                    type="hidden"
-                    id="capacidad"
-                    name="capacidad"
-                    value="2"
-                  />
+                  <input type="hidden" id="capacidad" th:field="*{capacidad}" />
                 </div>
                 <div class="form-group">
                   <label for="piso">Piso</label>
-                  <input
-                    type="number"
-                    id="piso"
-                    name="piso"
-                    value="1"
-                    min="1"
-                  />
+                  <input type="number" id="piso" th:field="*{piso}" min="1" />
                 </div>
               </div>
 
               <!-- Description -->
               <div class="form-group description-group">
                 <label for="descripcion">Descripción</label>
-                <textarea id="descripcion" name="descripcion" rows="3">
-Suite amplia con vista al mar, cama king y balcón privado.</textarea
-                >
+                <textarea id="descripcion" th:field="*{descripcion}" rows="3"></textarea>
               </div>
 
               <!-- Services -->
@@ -160,12 +138,7 @@ Suite amplia con vista al mar, cama king y balcón privado.</textarea
                   </div>
                   <div class="form-group">
                     <label for="politica">Política de cancelación</label>
-                    <input
-                      type="text"
-                      id="politica"
-                      name="politica"
-                      value="Flexible"
-                    />
+                    <input type="text" id="politica" th:field="*{politicaCancelacion}" />
                   </div>
                 </div>
               </div>
@@ -174,7 +147,7 @@ Suite amplia con vista al mar, cama king y balcón privado.</textarea
               <div class="gallery-section">
                 <div class="gallery-header">
                   <div class="gallery-title">Galería</div>
-                  <button type="button" class="btn-upload" id="btn-upload">
+                  <button type="button" class="btn-upload btn-detalle" id="btn-upload">
                     Subir imágenes
                   </button>
                 </div>
@@ -205,20 +178,24 @@ Suite amplia con vista al mar, cama king y balcón privado.</textarea
                   </div>
                 </div>
               </div>
+            </form>
 
-
-          <!-- Footer -->
-          <div class="form-footer">
-            <div class="auto-save">
-              Último guardado automático: hace 2 minutos
-            </div>
-            <div class="footer-actions">
-              <button class="btn-delete" id="btn-delete">
-                Deshabilitar habitación
-              </button>
-              <button class="btn-save-changes" id="btn-save-changes">
-                Guardar cambios
-              </button>
+            <!-- Footer -->
+            <div class="form-footer">
+              <div class="auto-save">Último guardado automático: hace 2 minutos</div>
+              <div class="footer-actions">
+                <button class="btn-delete btn-detalle" id="btn-delete">
+                  Deshabilitar habitación
+                </button>
+                <button
+                  type="submit"
+                  form="edit-room-form"
+                  class="btn-save-changes btn-detalle"
+                  id="btn-save-changes"
+                >
+                  Guardar cambios
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -226,6 +203,6 @@ Suite amplia con vista al mar, cama king y balcón privado.</textarea
     </div>
 
     <input type="file" id="file-input" multiple accept="image/*" hidden />
+    <script th:src="@{/JS/editarhab.js}"></script>
   </body>
-  <script src="../JS/editarhab.js"></script>
 </html>

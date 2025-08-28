@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crear habitación - Luna Resort Admin</title>
-    <link rel="stylesheet" href="../CSS/crearhab.css" />
+    <link rel="stylesheet" href="/STYLES/estilosLandingPage.css" />
+    <link rel="stylesheet" href="/STYLES/generales.css" />
+    <link rel="stylesheet" href="/STYLES/plantillas.css" />
+    <link rel="stylesheet" th:href="@{/CSS/crearhab.css}" />
   </head>
   <body>
     <div class="container">
@@ -40,12 +43,13 @@
           <div class="form-header">
             <div class="form-title">
               <span class="info-icon">ℹ️</span>
-              Completa los datos de la habitación. Los campos marcados con * son
-              obligatorios.
+              Completa los datos de la habitación. Los campos marcados con * son obligatorios.
             </div>
             <div class="form-actions">
-              <button class="btn-back">↩️ Volver</button>
-              <button class="btn-save">💾 Guardar habitación</button>
+              <button class="btn-back btn-detalle">↩️ Volver</button>
+              <button type="submit" form="room-form" class="btn-save btn-detalle">
+                💾 Guardar habitación
+              </button>
             </div>
           </div>
 
@@ -53,26 +57,32 @@
             <!-- Formulario Principal -->
             <div class="form-section">
               <div class="section-title">Datos de la habitación</div>
-              <form id="room-form">
+              <form
+                id="room-form"
+                th:action="@{/habitaciones/crear}"
+                th:object="${nuevaHabitacion}"
+                method="post"
+              >
                 <div class="form-row">
                   <div class="form-group">
                     <label for="numero">Número *</label>
                     <input
                       type="text"
                       id="numero"
-                      name="numero"
+                      th:field="*{numero}"
                       placeholder="Ej: 205"
                       required
                     />
                   </div>
                   <div class="form-group">
                     <label for="tipo">Tipo *</label>
-                    <select id="tipo" name="tipo" required>
-                      <option value="">Suite / Doble / Individual</option>
-                      <option value="suite">Suite</option>
-                      <option value="doble">Doble</option>
-                      <option value="individual">Individual</option>
-                      <option value="familiar">Familiar</option>
+                    <select id="tipo" th:field="*{tipoHabitacion.id}" required>
+                      <option value="">Seleccione un tipo</option>
+                      <option
+                        th:each="tipoItem : ${tipo}"
+                        th:value="${tipoItem.id}"
+                        th:text="${tipoItem.nombre}"
+                      ></option>
                     </select>
                   </div>
                 </div>
@@ -83,7 +93,7 @@
                     <input
                       type="number"
                       id="precio"
-                      name="precio"
+                      th:field="*{precioPorNoche}"
                       placeholder="0.00"
                       step="0.01"
                       required
@@ -94,21 +104,11 @@
                     <input
                       type="number"
                       id="capacidad"
-                      name="capacidad"
+                      th:field="*{capacidad}"
                       placeholder="2"
                       min="1"
                       max="10"
                       required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="piso">Piso</label>
-                    <input
-                      type="number"
-                      id="piso"
-                      name="piso"
-                      placeholder="3"
-                      min="1"
                     />
                   </div>
                 </div>
@@ -116,23 +116,12 @@
                 <div class="form-row">
                   <div class="form-group">
                     <label for="estado">Estado *</label>
-                    <select id="estado" name="estado" required>
-                      <option value="disponible">
-                        Disponible / Ocupada / Mantenimiento
-                      </option>
+                    <select id="estado" th:field="*{estado}" required>
+                      <option value="">Seleccione un estado</option>
                       <option value="disponible">Disponible</option>
                       <option value="ocupada">Ocupada</option>
                       <option value="mantenimiento">Mantenimiento</option>
                     </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="ocupacion">Ocupación</label>
-                    <input
-                      type="text"
-                      id="ocupacion"
-                      name="ocupacion"
-                      placeholder="0 / 2"
-                    />
                   </div>
                 </div>
 
@@ -140,7 +129,7 @@
                   <label for="descripcion">Descripción</label>
                   <textarea
                     id="descripcion"
-                    name="descripcion"
+                    th:field="*{descripcion}"
                     rows="4"
                     placeholder="Breve descripción de la habitación, comodidades y vista..."
                   ></textarea>
@@ -151,89 +140,24 @@
                         Arrastra imágenes aquí o haz clic para seleccionar
                       </div>
                     </div>
-                    <input
-                      type="file"
-                      id="file-input"
-                      multiple
-                      accept="image/*"
-                      hidden
-                    />
+                    <input type="file" id="file-input" multiple accept="image/*" hidden />
                   </div>
                 </div>
 
                 <!-- Comodidades -->
                 <div class="section-title">Comodidades</div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="wifi">Wi-Fi</label>
-                    <input
-                      type="text"
-                      id="wifi"
-                      name="wifi"
-                      placeholder="Disponible"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="aire">Aire acondicionado</label>
-                    <input
-                      type="text"
-                      id="aire"
-                      name="aire"
-                      placeholder="Disponible"
-                    />
-                  </div>
-                </div>
-
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="minibar">Minibar</label>
-                    <input
-                      type="text"
-                      id="minibar"
-                      name="minibar"
-                      placeholder="Disponible"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="caja">Caja fuerte</label>
-                    <input
-                      type="text"
-                      id="caja"
-                      name="caja"
-                      placeholder="Disponible"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="television">Televisión</label>
-                    <input
-                      type="text"
-                      id="television"
-                      name="television"
-                      placeholder="Smart TV 55''"
-                    />
-                  </div>
-                </div>
+                <div class="form-row"></div>
 
                 <!-- Políticas -->
                 <div class="section-title">Políticas</div>
                 <div class="form-row">
                   <div class="form-group">
                     <label for="checkin">Check-in desde</label>
-                    <input
-                      type="time"
-                      id="checkin"
-                      name="checkin"
-                      value="15:00"
-                    />
+                    <input type="time" id="checkin" th:field="*{checkinDesde}" value="15:00" />
                   </div>
                   <div class="form-group">
                     <label for="checkout">Check-out hasta</label>
-                    <input
-                      type="time"
-                      id="checkout"
-                      name="checkout"
-                      value="11:00"
-                    />
+                    <input type="time" id="checkout" th:field="*{checkoutHasta}" value="11:00" />
                   </div>
                 </div>
               </form>
@@ -257,9 +181,7 @@
                     <span>🖼️</span>
                   </div>
                 </div>
-                <button class="btn-upload" id="btn-upload">
-                  📤 Subir imágenes
-                </button>
+                <button class="btn-upload btn-detalle" id="btn-upload">📤 Subir imágenes</button>
               </div>
 
               <!-- Resumen -->
@@ -269,21 +191,33 @@
                 </div>
                 <div class="summary-item">
                   <span class="summary-label">Estado</span>
-                  <span class="summary-value" id="summary-estado"
-                    >Disponible</span
+                  <span
+                    class="summary-value"
+                    id="summary-estado"
+                    th:text="${nuevaHabitacion.estado != null} ? ${nuevaHabitacion.estado} : 'Disponible'"
                   >
+                    Disponible
+                  </span>
                 </div>
                 <div class="summary-item">
                   <span class="summary-label">Capacidad</span>
-                  <span class="summary-value" id="summary-capacidad"
-                    >2 personas</span
+                  <span
+                    class="summary-value"
+                    id="summary-capacidad"
+                    th:text="${nuevaHabitacion.capacidad != null} ? ${nuevaHabitacion.capacidad} + ' personas' : '2 personas'"
                   >
+                    2 personas
+                  </span>
                 </div>
                 <div class="summary-item">
                   <span class="summary-label">Precio</span>
-                  <span class="summary-value" id="summary-precio"
-                    >$160/noche</span
+                  <span
+                    class="summary-value"
+                    id="summary-precio"
+                    th:text="${nuevaHabitacion.precioPorNoche != null} ? '$' + ${nuevaHabitacion.precioPorNoche} + '/noche' : '$160/noche'"
                   >
+                    $160/noche
+                  </span>
                 </div>
               </div>
 
@@ -317,14 +251,16 @@
               Revisa los campos obligatorios antes de guardar.
             </div>
             <div class="form-footer-actions">
-              <button class="btn-cancel">Cancelar</button>
-              <button class="btn-draft">Guardar borrador</button>
-              <button class="btn-create">➕ Crear habitación</button>
+              <button class="btn-cancel btn-detalle">Cancelar</button>
+              <button class="btn-draft btn-detalle">Guardar borrador</button>
+              <button type="submit" form="room-form" class="btn-create btn-detalle">
+                ➕ Crear habitación
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <script src="../JS/crearhab.js"></script>
+    <script th:src="@{/JS/crearhab.js}"></script>
   </body>
 </html>

@@ -43,6 +43,9 @@ public class LoginController {
             model.addAttribute("nuevoCliente", new Cliente());
             // También lista de clientes si tu plantilla la necesita
             model.addAttribute("clientes", service.listarClientes());
+            usuario = usuarioEncontrado;
+            model.addAttribute("usuarioRegistrado", usuario);
+
             return "clientes";
         } else if (usuarioEncontrado.getCorreo().equals(usuarioF.getCorreo()) && usuarioEncontrado.getContrasena().equals(usuarioF.getContrasena())) {
             usuario.setCorreo(usuarioF.getCorreo());

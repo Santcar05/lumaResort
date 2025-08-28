@@ -1,5 +1,8 @@
 package com.example.lumaresort.entities;
 
+import java.util.Date;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +29,11 @@ public class Habitacion {
     private String numero;
     private float precioPorNoche;
     private String estado;
+    private Integer capacidad;
+    private String descripcion;
+    private List<String> imagenUrl;
+    private Date checkinDesde;
+    private Date checkoutHasta;
 
     // Muchas habitaciones pueden ser de un tipo
     @ManyToOne

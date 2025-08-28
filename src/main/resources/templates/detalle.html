@@ -7,9 +7,14 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+
+    <link rel="stylesheet" href="/STYLES/generales.css" />
+    <link rel="stylesheet" href="/STYLES/plantillas.css" />
+    <!--<link rel="stylesheet" href="/STYLES/detalle.css" /> -->
+
     <style>
       body {
-        font-family: "Poppins", sans-serif;
+        font-family: 'Poppins', sans-serif;
         margin: 0;
         background: #e6f0fa;
         color: #2f3640;
@@ -178,9 +183,7 @@
         <div>
           <div class="card">
             <h3>Descripción</h3>
-            <p th:text="${tipo.descripcion}">
-              Aquí va la descripción de la habitación.
-            </p>
+            <p th:text="${tipo.descripcion}">Aquí va la descripción de la habitación.</p>
             <div class="tags">
               <span class="tag">Capacidad: 3</span>
               <span class="tag">Cama King</span>
@@ -190,7 +193,20 @@
           </div>
 
           <div class="card">
-            <h3>Habitaciones disponibles</h3>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-direction: row;
+              "
+            >
+              <h3>Habitaciones disponibles</h3>
+              <button class="btn-detalle">
+                <a th:href=" @{/tipos/{id}/crearHabitacion(id=${tipo.id})}">Crear habitación</a>
+              </button>
+            </div>
+
             <table>
               <thead>
                 <tr>
@@ -198,6 +214,7 @@
                   <th>Número</th>
                   <th>Precio</th>
                   <th>Estado</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -206,6 +223,20 @@
                   <td th:text="${habitacion.numero}"></td>
                   <td th:text="${habitacion.precioPorNoche} + ' USD'"></td>
                   <td th:text="${habitacion.estado}"></td>
+                  <td>
+                    <button
+                      class="action-btn"
+                      th:href="@{tipos/habitaciones/editar/{id}(id=${habitacion.idHabitacion})}"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      class="action-btn"
+                      th:href="@{tipos/habitaciones/ver/{id}(id=${habitacion.idHabitacion})}"
+                    >
+                      Ver
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>

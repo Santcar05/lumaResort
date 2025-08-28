@@ -23,4 +23,10 @@ public class landingPageController {
         model.addAttribute("usuario", usuario);
         return "index";
     }
+
+    @GetMapping("/logout")
+    public String logout() {
+        usuario = null;
+        return "redirect:/";
+    }
 }

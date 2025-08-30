@@ -7,8 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,8 +33,18 @@ public class Servicio {
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comentario> comentarios;
 
-    // Muchos servicios pueden estar asociados a una cuenta de habitación
-    @ManyToOne
-    @JoinColumn(name = "id_cuenta_habitacion", nullable = false)
-    private CuentaHabitacion cuentaHabitacion;
+    public Servicio(String nombre, String descripcion, float precio, String imagenURL) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.imagenURL = imagenURL;
+    }
+
+    public Servicio(String nombre, String descripcion, float precio, String imagenURL, List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.imagenURL = imagenURL;
+    }
 }

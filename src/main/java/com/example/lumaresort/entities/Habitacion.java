@@ -35,11 +35,6 @@ public class Habitacion {
     private String descripcion;
     private List<String> imagenUrl;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private Date checkinDesde;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private Date checkoutHasta;
 
     // Muchas habitaciones pueden ser de un tipo
     @ManyToOne
@@ -50,4 +45,14 @@ public class Habitacion {
     @OneToOne
     @JoinColumn(name = "idCuentaHabitacion") // FK hacia CuentaHabitacion
     private CuentaHabitacion cuentaHabitacion;
+//Constructor sin idHabitacion
+    public Habitacion(String numero, float precioPorNoche, String estado, Integer capacidad, String descripcion, List<String> imagenUrl, TipoHabitacion tipoHabitacion) {
+        this.numero = numero;
+        this.precioPorNoche = precioPorNoche;
+        this.estado = estado;
+        this.capacidad = capacidad;
+        this.descripcion = descripcion;
+        this.imagenUrl = imagenUrl;
+        this.tipoHabitacion = tipoHabitacion;
+    }
 }

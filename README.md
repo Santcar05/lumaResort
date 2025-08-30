@@ -35,11 +35,11 @@ Este proyecto busca sentar las bases para un sistema de información que pueda c
 
 | Foto | Nombre | Mini biografía |
 |------|--------|----------------|
-| ![Foto Katheryn](https://github.com/PUJ-ICM-4013/Looksoon/blob/main/ing.jpg?raw=true) | **Katheryn Sofía Guasca** | Estudiante de Ingeniería de Sistemas en la Pontificia Universidad Javeriana (Colombia). Apasionada por la inteligencia artificial, el machine learning y el desarrollo de software móvil. Manejo de C++, Java, Python, R y SQL. |
+| ![Foto Daniel](https://github.com/PUJ-ICM-4013/Looksoon/blob/main/ing.jpg?raw=true) | **Daniel Felipe Bohorquez Casas** | *(biografía breve)* |
 | ![Foto Santiago](foto_perfil_github.jpeg) | **Santiago Castro Garzón** | *(biografía breve)* |
 | ![Foto Juan Esteban](https://github.com/PUJ-ICM-4013/Looksoon/blob/main/juanes%20(2).jpg) | **Juan Esteban Díaz Toledo** | Estudiante de Ingeniería de Sistemas en la Pontificia Universidad Javeriana de Bogotá. Interesado por profundizar y expandir conocimientos en ciber-seguridad, ingeniería de software e inteligencia artificial. "Despierto todas las mañanas y aunque no sepa lo que tengo que hacer, pongo un pie delante del otro y trato de tomar las mejores decisiones que puedo. Me equivoco muchas veces, pero de eso se trata ser un humano... Y esa es mi mayor fortaleza" |
-| ![Foto Andrés](https://github.com/PUJ-ICM-4013/Looksoon/blob/main/WhatsApp%20Image%202025-08-13%20at%202.26.17%20PM.jpeg) | **Andrés Felipe Torres Monroy** | *(biografía breve)* |
-| ![Foto Juan David](https://github.com/PUJ-ICM-4013/Looksoon/blob/main/IMG_20241112_212030_989.webp) | **Juan David Garrido Ramos** | Estudiante de ingeníeria de sistemas en la Universidad Javeriana. Interesado en temas de gestión y de analisis de datos. Los lenguajes que manejo son C++, Java y SQL. |
+| ![Foto Parrales](https://github.com/PUJ-ICM-4013/Looksoon/blob/main/WhatsApp%20Image%202025-08-13%20at%202.26.17%20PM.jpeg) | **Juan Felipe Parrales Lara** | *(biografía breve)* |
+
 
 
 ---

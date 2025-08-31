@@ -1,0 +1,164 @@
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f6f8;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* HEADER */
+.header {
+  background: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-left h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.header-left p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.member-badge {
+  background: #f0f0f0;
+  border-radius: 15px;
+  padding: 5px 12px;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* MAIN */
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.card {
+  background: #fff;
+  padding: 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.card h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: #222;
+}
+
+.card form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input,
+textarea,
+select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: #fafafa;
+}
+
+/* BOTONES */
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+/* Botón principal azul */
+.btn-primary {
+  background: #007bff;
+  color: white;
+}
+.btn-primary:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Botón gris secundario */
+.btn-secondary {
+  background: #e9ecef;
+  color: #333;
+}
+.btn-secondary:hover {
+  background: #d6d8db;
+  transform: scale(1.05);
+}
+
+/* Botón cancelar */
+.btn-cancel {
+  background: #f8f9fa;
+  color: #333;
+}
+.btn-cancel:hover {
+  background: #e2e6ea;
+  transform: scale(1.05);
+}
+
+/* Botón cerrar sesión */
+.btn-logout {
+  background: #6c757d;
+  color: white;
+}
+.btn-logout:hover {
+  background: #545b62;
+  transform: scale(1.08);
+}
+
+/* Botón eliminar cuenta (rojo) */
+.btn-danger {
+  background: #dc3545;
+  color: white;
+  font-weight: bold;
+}
+.btn-danger:hover {
+  background: #a71d2a;
+  transform: scale(1.1) rotate(-1deg);
+}
+
+/* Footer botones */
+.footer-buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}

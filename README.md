@@ -47,8 +47,8 @@ Este proyecto busca sentar las bases para un sistema de información que pueda c
 | Foto | Nombre | Mini biografía |
 |------|--------|----------------|
 | ![Foto Daniel](https://github.com/Santcar05/lumaResort/blob/main/IMG/Daniel%20Bohorquez-Gerente.png) | **Daniel Felipe Bohorquez Casas** | *(biografía breve)* |
-| ![Foto Santiago](https://github.com/Santcar05/lumaResort/blob/main/IMG/foto_perfil_github.jpeg) | **Santiago Castro Garzón** | *(biografía breve)* |
-| ![Foto Juan Esteban](https://github.com/Santcar05/lumaResort/blob/main/IMG/Juanes%20D%C3%ADaz-Gerente.jpeg)) | **Juan Esteban Díaz Toledo** | Estudiante de Ingeniería de Sistemas en la Pontificia Universidad Javeriana de Bogotá. Interesado por profundizar y expandir conocimientos en ciber-seguridad, ingeniería de software e inteligencia artificial. "Despierto todas las mañanas y aunque no sepa lo que tengo que hacer, pongo un pie delante del otro y trato de tomar las mejores decisiones que puedo. Me equivoco muchas veces, pero de eso se trata ser un humano... Y esa es mi mayor fortaleza" |
+| ![Foto Santiago](https://github.com/Santcar05/lumaResort/blob/main/IMG/Santiago%20Castro-gerente.png) | **Santiago Castro Garzón** | *(biografía breve)* |
+| ![Foto Juan Esteban](https://github.com/Santcar05/lumaResort/blob/main/IMG/Juanes%20D%C3%ADaz-Gerente.jpeg)) | **Juan Esteban Díaz Toledo** | "Despierto todas las mañanas y aunque no sepa lo que tengo que hacer, pongo un pie delante del otro y trato de tomar las mejores decisiones que puedo. Me equivoco muchas veces, pero de eso se trata ser un humano... Y esa es mi mayor fortaleza" |
 | ![Foto Parrales](https://github.com/PUJ-ICM-4013/Looksoon/blob/main/WhatsApp%20Image%202025-08-13%20at%202.26.17%20PM.jpeg) | **Juan Felipe Parrales Lara** | *(biografía breve)* |
 
 

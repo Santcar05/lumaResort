@@ -31,7 +31,7 @@
 
       body {
         margin: 0;
-        font-family: 'Poppins', sans-serif;
+        font-family: "Poppins", sans-serif;
         background: var(--azul-fondo);
         color: var(--blanco);
       }
@@ -248,6 +248,7 @@
       <a th:href="@{/clientes}">Clientes</a>
       <a href="#">Reservas</a>
       <a href="#" class="active">Tipos de Habitación</a>
+      <a th:href="@{/habitaciones}">Habitaciones</a>
       <a href="#">Servicios</a>
       <a href="#">Pagos</a>
       <a href="#">Ajustes</a>
@@ -274,9 +275,22 @@
       <!-- Formulario para crear nuevo tipo -->
       <div class="card">
         <h4>Nuevo Tipo de Habitación</h4>
-        <form th:action="@{/tipos/crear}" th:object="${tipoNuevo}" method="post">
-          <input type="text" th:field="*{nombre}" placeholder="Nombre" required />
-          <textarea th:field="*{descripcion}" placeholder="Descripción" required></textarea>
+        <form
+          th:action="@{/tipos/crear}"
+          th:object="${tipoNuevo}"
+          method="post"
+        >
+          <input
+            type="text"
+            th:field="*{nombre}"
+            placeholder="Nombre"
+            required
+          />
+          <textarea
+            th:field="*{descripcion}"
+            placeholder="Descripción"
+            required
+          ></textarea>
           <button type="submit" class="btn btn-primary">Crear</button>
         </form>
       </div>
@@ -299,7 +313,11 @@
               <td th:text="${tipo.nombre}"></td>
               <td th:text="${tipo.descripcion}"></td>
               <td>
-                <a th:href="@{/tipos/editar/{id}(id=${tipo.id})}" class="btn btn-warning">Editar</a>
+                <a
+                  th:href="@{/tipos/editar/{id}(id=${tipo.id})}"
+                  class="btn btn-warning"
+                  >Editar</a
+                >
                 <a
                   th:href="@{/tipos/eliminar/{id}(id=${tipo.id})}"
                   class="btn btn-danger"
@@ -307,7 +325,11 @@
                 >
                   Eliminar
                 </a>
-                <a th:href="@{/tipos/ver/{id}(id=${tipo.id})}" class="btn btn-info">Ver</a>
+                <a
+                  th:href="@{/tipos/ver/{id}(id=${tipo.id})}"
+                  class="btn btn-info"
+                  >Ver</a
+                >
               </td>
             </tr>
           </tbody>

@@ -1,9 +1,6 @@
 package com.example.lumaresort.entities;
 
-import java.util.Date;
 import java.util.List;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,10 +12,8 @@ import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
@@ -26,7 +21,7 @@ public class Habitacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idHabitacion;
+    private Long idHabitacion;
 
     private String numero;
     private float precioPorNoche;
@@ -34,7 +29,6 @@ public class Habitacion {
     private Integer capacidad;
     private String descripcion;
     private List<String> imagenUrl;
-
 
     // Muchas habitaciones pueden ser de un tipo
     @ManyToOne
@@ -45,7 +39,12 @@ public class Habitacion {
     @OneToOne
     @JoinColumn(name = "idCuentaHabitacion") // FK hacia CuentaHabitacion
     private CuentaHabitacion cuentaHabitacion;
+
+    public Habitacion() {
+
+    }
 //Constructor sin idHabitacion
+
     public Habitacion(String numero, float precioPorNoche, String estado, Integer capacidad, String descripcion, List<String> imagenUrl, TipoHabitacion tipoHabitacion) {
         this.numero = numero;
         this.precioPorNoche = precioPorNoche;

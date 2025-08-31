@@ -30,11 +30,11 @@ La app permite la interacción entre **dos tipos de usuarios**:
 ---
 
 ##  ✨ Características principales
-📋 Gestión de entidades: clientes, habitaciones, empleados y servicios.
-🗄️ Persistencia de datos con H2 en archivo.
-🔍 Consultas dinámicas gracias a Spring Data JPA.
-🎯 Arquitectura organizada en capas: controladores, servicios, repositorios y entidades.
-⚡ API REST para interacción con el sistema y fácil integración futura.
+- 📋 Gestión de entidades: clientes, habitaciones, empleados y servicios.
+- 🗄️ Persistencia de datos con H2 en archivo.
+- 🔍 Consultas dinámicas gracias a Spring Data JPA.
+- 🎯 Arquitectura organizada en capas: controladores, servicios, repositorios y entidades.
+- ⚡ API REST para interacción con el sistema y fácil integración futura.
 
 
 ## 🎯 Objetivo del proyecto

@@ -19,27 +19,7 @@
   </head>
   <body>
     <!-- Sidebar -->
-    <div class="sidebar">
-      <div>
-        <img
-          src="/IMAGES/luma_Corregido.jpg"
-          alt="Luma Resort Logo"
-          class="LogoImg menu-hover"
-          loading="lazy"
-        />
-        <div>
-          <h2>Luma Resort</h2>
-          <span>admin</span>
-        </div>
-      </div>
-      <a href="#">Dashboard</a>
-      <a href="#" class="active">Clientes</a>
-      <a href="#">Reservas</a>
-      <a th:href="@{/tipos}">Tipos deHabitaciones</a>
-      <a th:href="@{/habitaciones}">Habitaciones</a>
-      <a href="#">Servicios</a>
-      <a href="#">Pagos</a>
-    </div>
+    <th:block th:replace="~{fragmentos :: nav_admin_f}"></th:block>
 
     <!-- Main -->
     <div class="main">
@@ -62,26 +42,12 @@
       <button class="btn-back">← Volver</button>
 
       <!-- Formulario para nuevo cliente -->
-      <form
-        th:action="@{/clientes/guardar}"
-        th:object="${nuevoCliente}"
-        method="post"
-      >
+      <form th:action="@{/clientes/guardar}" th:object="${nuevoCliente}" method="post">
         <input type="hidden" th:field="*{idCliente}" />
-        <input
-          type="text"
-          th:field="*{nombre}"
-          placeholder="Nombre completo"
-          required
-        />
+        <input type="text" th:field="*{nombre}" placeholder="Nombre completo" required />
         <input type="date" th:field="*{checkIn}" required />
         <input type="date" th:field="*{checkOut}" required />
-        <input
-          type="text"
-          th:field="*{tipoHabitacion}"
-          placeholder="Tipo de habitación"
-          required
-        />
+        <input type="text" th:field="*{tipoHabitacion}" placeholder="Tipo de habitación" required />
         <select th:field="*{estadoReserva}">
           <option value="En uso">En uso</option>
           <option value="Paga">Paga</option>
@@ -116,16 +82,10 @@
               ></span>
             </td>
             <td>
-              <a
-                th:href="@{/clientes/editar/{id}(id=${cliente.idCliente})}"
-                class="btn btn-edit"
-              >
+              <a th:href="@{/clientes/editar/{id}(id=${cliente.idCliente})}" class="btn btn-edit">
                 Editar
               </a>
-              <a
-                th:href="@{/clientes/borrar/{id}(id=${cliente.idCliente})}"
-                class="btn btn-delete"
-              >
+              <a th:href="@{/clientes/borrar/{id}(id=${cliente.idCliente})}" class="btn btn-delete">
                 Eliminar
               </a>
             </td>

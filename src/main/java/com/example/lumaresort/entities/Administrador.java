@@ -34,4 +34,11 @@ public class Administrador {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public Administrador() {
+    }
+
+    public Administrador(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

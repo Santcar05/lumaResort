@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crear Habitación - Luma Resort</title>
+    <link rel="stylesheet" href="/STYLES/estilosLandingPage.css" />
+    <link rel="stylesheet" href="/STYLES/generales.css" />
+    <link rel="stylesheet" href="/STYLES/plantillas.css" />
+    <link rel="stylesheet" href="/STYLES/crearHabitacion.css" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <!--
+    <div class="sidebar">
+      <div>
+        <img
+          src="/IMAGES/luma_Corregido.jpg"
+          alt="Luma Resort Logo"
+          class="LogoImg menu-hover"
+          loading="lazy"
+        />
+        <div>
+          <h2>Luma Resort</h2>
+          <span>admin</span>
+        </div>
+      </div>
+      <a href="#">Dashboard</a>
+      <a href="#">Clientes</a>
+      <a href="#">Reservas</a>
+      <a th:href="@{/tipos}" class="active">Habitaciones</a>
+      <a href="#">Servicios</a>
+      <a href="#">Pagos</a>
+    </div>
+    -->
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="form-container">
+        <div class="form-header">
+          <h1>Crear Nueva Habitación</h1>
+          <p>
+            Complete la información para registrar una nueva habitación en el
+            sistema
+          </p>
+        </div>
+
+        <div class="info-box">
+          <p>
+            <strong>Nota:</strong>
+            El tipo de habitación se asignará automáticamente según los
+            parámetros del sistema. La cuenta de habitación se configurará
+            posteriormente.
+          </p>
+        </div>
+
+        <form
+          th:action="@{/habitaciones/crear}"
+          method="post"
+          th:object="${habitacion}"
+        >
+          <input
+            type="hidden"
+            th:field="*{tipoHabitacion}"
+            th:value="${tipoHabitacionId}"
+          />
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="numero">Número de Habitación *</label>
+              <input
+                type="text"
+                id="numero"
+                th:field="*{numero}"
+                placeholder="Ej: 101, 201A"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="precioPorNoche">Precio por Noche *</label>
+              <input
+                type="text"
+                id="precioPorNoche"
+                th:field="*{precioPorNoche}"
+                min="0"
+                placeholder="0.00"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="estado">Estado *</label>
+              <select id="estado" th:field="*{estado}" required>
+                <option value="">Seleccione un estado</option>
+                <option value="Disponible">Disponible</option>
+                <option value="Ocupada">Ocupada</option>
+                <option value="En Mantenimiento">En Mantenimiento</option>
+                <option value="En Limpieza">En Limpieza</option>
+                <option value="Fuera_de_Servicio">Fuera de Servicio</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="capacidad">Capacidad (personas) *</label>
+              <input
+                type="number"
+                id="capacidad"
+                th:field="*{capacidad}"
+                min="1"
+                max="10"
+                placeholder="Número de huéspedes"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="tipoHabitacion">🏠 Tipo de Habitación *</label>
+              <select
+                id="tipoHabitacion"
+                th:field="*{tipoHabitacion.id}"
+                required
+              >
+                <option value="">Seleccione un tipo</option>
+                <option
+                  th:each="tipo : ${tiposHabitacion}"
+                  th:value="${tipo.id}"
+                  th:text="${tipo.nombre}"
+                >
+                  Individual
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="descripcion">Descripción</label>
+              <textarea
+                id="descripcion"
+                th:field="*{descripcion}"
+                placeholder="Describa las características y comodidades de la habitación..."
+              ></textarea>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="imagenUrl"
+                >URLs de Imágenes (separadas por comas)</label
+              >
+              <textarea
+                id="imagenUrl"
+                name="imagenUrlString"
+                rows="3"
+                placeholder="https://ejemplo.com/imagen1.jpg, https://ejemplo.com/imagen2.jpg"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              Crear Habitación
+            </button>
+            <a th:href="@{/habitaciones}" class="btn btn-secondary">Cancelar</a>
+          </div>
+        </form>
+      </div>
+
+      <div class="card" th:if="${#lists.isEmpty(habitaciones) == false}">
+        <h4>Lista de Tipos</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>numero</th>
+              <th>Precio por noche</th>
+              <th>Imagenes</th>
+              <th>Estado</th>
+              <th>Capacidad</th>
+              <th>Descripción</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr th:each="habitacion : ${habitaciones}">
+              <td th:text="${habitacion.idHabitacion}"></td>
+              <td th:text="${habitacion.numero}"></td>
+              <td th:text="${habitacion.precioPorNoche}"></td>
+              <td>
+                <ul>
+                  <li
+                    th:each="url : ${habitacion.imagenUrl}"
+                    th:text="${url}"
+                  ></li>
+                </ul>
+              </td>
+              <td th:text="${habitacion.estado}"></td>
+              <td th:text="${habitacion.capacidad}"></td>
+              <td th:text="${habitacion.descripcion}"></td>
+              <td>
+                <a
+                  th:href="@{/habitaciones/editar/{id}(id=${habitacion.idHabitacion})}"
+                  class="btn btn-detalle"
+                >
+                  EDITAR
+                </a>
+                <a
+                  th:href="@{/habitaciones/eliminar/{id}(id=${habitacion.idHabitacion})} "
+                  class="btn btn-detalle"
+                >
+                  ELIMINAR
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      // Validaciones y scripts
+      document.querySelector("form").addEventListener("submit", function (e) {
+        const precio = document.getElementById("precioPorNoche").value;
+        const capacidad = document.getElementById("capacidad").value;
+        const numero = document.getElementById("numero").value.trim();
+
+        if (!numero) {
+          alert("El número de habitación es obligatorio");
+          e.preventDefault();
+          return;
+        }
+
+        if (precio <= 0) {
+          alert("El precio por noche debe ser mayor a 0");
+          e.preventDefault();
+          return;
+        }
+
+        if (capacidad < 1) {
+          alert("La capacidad debe ser al menos 1 persona");
+          e.preventDefault();
+          return;
+        }
+      });
+
+      document.querySelector("form").addEventListener("submit", function (e) {
+        const imagenUrlString = document.querySelector(
+          'textarea[name="imagenUrlString"]'
+        ).value;
+        if (imagenUrlString.trim()) {
+          const urls = imagenUrlString
+            .split(",")
+            .map((url) => url.trim())
+            .filter((url) => url);
+
+          document.querySelector('textarea[name="imagenUrlString"]').remove();
+
+          urls.forEach((url, index) => {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = `imagenUrl[${index}]`;
+            input.value = url;
+            this.appendChild(input);
+          });
+        } else {
+          document.querySelector('textarea[name="imagenUrlString"]').remove();
+        }
+      });
+    </script>
+  </body>
+</html>

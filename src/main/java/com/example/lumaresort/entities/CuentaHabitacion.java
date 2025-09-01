@@ -50,4 +50,15 @@ public class CuentaHabitacion {
     // Una cuenta puede tener varios pagos
     @OneToMany(mappedBy = "cuentaHabitacion", cascade = CascadeType.ALL)
     private List<Pago> pagos;
+
+    public CuentaHabitacion(float total, List<Habitacion> habitaciones, List<Servicio> servicios, List<Pago> pagos) {
+        this.total = total;
+        this.habitaciones = habitaciones;
+        this.servicios = servicios;
+        this.pagos = pagos;
+    }
+
+    public CuentaHabitacion(float total) {
+        this.total = total;
+    }
 }

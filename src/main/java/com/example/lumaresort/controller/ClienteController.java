@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.lumaresort.entities.Cliente;
 import com.example.lumaresort.entities.Usuario;
@@ -41,12 +42,13 @@ public class ClienteController {
     }
 
     // Crear o editar
-    @PostMapping("/guardar")
-    public String guardar(@ModelAttribute Cliente cliente) {
+@PostMapping("/guardar")
+public String guardar(@ModelAttribute Cliente cliente, RedirectAttributes redirectAttrs) {
+    service.guardarCliente(cliente);
+    redirectAttrs.addFlashAttribute("mensaje", "El cliente se actualizó correctamente.");
+    return "redirect:/clientes";
+}
 
-        service.guardarCliente(cliente);
-        return "redirect:/clientes";
-    }
 
     // Borrar
     @GetMapping("/borrar/{id}")

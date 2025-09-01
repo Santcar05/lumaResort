@@ -50,7 +50,7 @@
 }
 
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: var(--bg-primary);
   min-height: 100vh;
   display: flex;
@@ -87,43 +87,8 @@ body {
   transform: scale(1.05);
 }
 
-.sidebar h2 {
-  color: var(--text-primary);
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.sidebar span {
-  color: var(--text-secondary);
-  font-size: 14px;
-  background: var(--section-accent);
-  padding: 4px 12px;
-  border-radius: 20px;
-}
-
-.sidebar a {
-  text-decoration: none;
-  color: var(--text-secondary);
-  padding: 15px 20px;
-  border-radius: 12px;
-  transition: all var(--transition-speed) ease;
-  font-weight: 500;
-}
-
-.sidebar a:hover {
-  background: var(--header-bg);
-  color: var(--button-text);
-  transform: translateX(5px);
-}
-
-.sidebar a.active {
-  background: var(--header-bg);
-  color: var(--button-text);
-  box-shadow: 0 4px 15px var(--card-shadow);
-}
-
 .main-content {
-  flex: 1;
+  justify-content: flex-end;
   padding: 40px;
   overflow-y: auto;
 }
@@ -256,11 +221,7 @@ body {
 }
 
 .info-box {
-  background: linear-gradient(
-    135deg,
-    var(--section-secondary),
-    var(--section-accent)
-  );
+  background: linear-gradient(135deg, var(--section-secondary), var(--section-accent));
   border-left: 4px solid var(--section-primary);
   padding: 20px;
   border-radius: 12px;

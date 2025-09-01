@@ -46,7 +46,7 @@ Este proyecto busca sentar las bases para un sistema de información que pueda c
 
 | Foto | Nombre | Mini biografía |
 |------|--------|----------------|
-| ![Foto Daniel](https://github.com/Santcar05/lumaResort/blob/main/IMG/Daniel%20Bohorquez-Gerente.png) | **Daniel Felipe Bohorquez Casas** | *(biografía breve)* |
+| ![Foto Daniel](https://github.com/Santcar05/lumaResort/blob/main/IMG/Daniel%20Bohorquez-Gerente.png) | **Daniel Felipe Bohorquez Casas** | *Soy Ingeniero de Sistemas de la Universidad Javeriana, con un marcado interés en el desarrollo móvil y web. Me apasiona la creación y el diseño de videojuegos, así como la exploración de nuevas tecnologías en el campo de la inteligencia artificial. Además de mi enfoque profesional, soy un entusiasta del deporte y el entrenamiento, lo que me ha enseñado disciplina, constancia y trabajo en equipo.* |
 | ![Foto Santiago](https://github.com/Santcar05/lumaResort/blob/main/IMG/Santiago%20Castro-gerente.png) | **Santiago Castro Garzón** | Ingeniero de Sistemas en la Universidad Javeriana, apasionado por la IA y computación en la Nube, trato mi trabajo con la música |
 | ![Foto Juan Esteban](https://github.com/Santcar05/lumaResort/blob/main/IMG/Juanes%20D%C3%ADaz-Gerente.jpeg)) | **Juan Esteban Díaz Toledo** | "Despierto todas las mañanas y aunque no sepa lo que tengo que hacer, pongo un pie delante del otro y trato de tomar las mejores decisiones que puedo. Me equivoco muchas veces, pero de eso se trata ser un humano... Y esa es mi mayor fortaleza" |
 | ![Foto Parrales](https://github.com/PUJ-ICM-4013/Looksoon/blob/main/WhatsApp%20Image%202025-08-13%20at%202.26.17%20PM.jpeg) | **Juan Felipe Parrales Lara** | *(biografía breve)* |

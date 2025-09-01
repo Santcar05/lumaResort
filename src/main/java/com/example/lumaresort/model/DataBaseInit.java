@@ -219,16 +219,76 @@ public class DataBaseInit implements ApplicationRunner {
         cuentaHabitacionRepository.save(cuenta10);
          */
         //Crar 50 comentarios
-        Servicio servicio1 = new Servicio("Spa", "Relájate con nuestro servicio de spa", 50.0f, "https://example.com/spa.jpg");
-        Servicio servicio2 = new Servicio("Desayuno Buffet", "Disfruta de un delicioso desayuno buffet", 20.0f, "https://example.com/desayuno.jpg");
-        Servicio servicio3 = new Servicio("Cena Romántica", "Cena especial para parejas", 80.0f, "https://example.com/cena.jpg");
-        Servicio servicio4 = new Servicio("Tour por la Ciudad", "Explora los principales atractivos turísticos", 40.0f, "https://example.com/tour.jpg");
-        Servicio servicio5 = new Servicio("Masaje Relajante", "Alivia el estrés con un masaje profesional", 60.0f, "https://example.com/masaje.jpg");
-        Servicio servicio6 = new Servicio("Clase de Yoga", "Participa en una clase de yoga para principiantes", 30.0f, "https://example.com/yoga.jpg");
-        Servicio servicio7 = new Servicio("Alquiler de Bicicletas", "Recorre la ciudad en bicicleta", 15.0f, "https://example.com/bicicletas.jpg");
-        Servicio servicio8 = new Servicio("Cena de Comida Internacional", "Disfruta de una cena de comida internacional", 100.0f, "https://example.com/comida.jpg");
-        Servicio servicio9 = new Servicio("Cena de Comida Local", "Disfruta de una cena de comida local", 100.0f, "https://example.com/comida.jpg");
-        Servicio servicio10 = new Servicio("Cena de Comida Internacional", "Disfruta de una cena de comida internacional", 100.0f, "https://example.com/comida.jpg");
+        Servicio servicio1 = new Servicio(
+                "Spa",
+                "Relájate con nuestro servicio de spa",
+                50.0f,
+                "https://images.pexels.com/photos/6621436/pexels-photo-6621436.jpeg"
+        );
+
+        Servicio servicio2 = new Servicio(
+                "Desayuno Buffet",
+                "Disfruta de un delicioso desayuno buffet",
+                20.0f,
+                "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg"
+        );
+
+        Servicio servicio3 = new Servicio(
+                "Cena Romántica",
+                "Cena especial para parejas",
+                80.0f,
+                "https://images.pexels.com/photos/169194/pexels-photo-169194.jpeg"
+        );
+
+        Servicio servicio4 = new Servicio(
+                "Tour por la Ciudad",
+                "Explora los principales atractivos turísticos",
+                40.0f,
+                "https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg"
+        );
+
+        Servicio servicio5 = new Servicio(
+                "Masaje Relajante",
+                "Alivia el estrés con un masaje profesional",
+                60.0f,
+                "https://images.pexels.com/photos/161477/massage-relax-relaxing-161477.jpeg"
+        );
+
+        Servicio servicio6 = new Servicio(
+                "Clase de Yoga",
+                "Participa en una clase de yoga para principiantes",
+                30.0f,
+                "https://images.pexels.com/photos/3823039/pexels-photo-3823039.jpeg"
+        );
+
+        Servicio servicio7 = new Servicio(
+                "Alquiler de Bicicletas",
+                "Recorre la ciudad en bicicleta",
+                15.0f,
+                "https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg"
+        );
+
+        Servicio servicio8 = new Servicio(
+                "Cena de Comida Internacional",
+                "Disfruta de una cena de comida internacional",
+                100.0f,
+                "https://images.pexels.com/photos/1640770/pexels-photo-1640770.jpeg"
+        );
+
+        Servicio servicio9 = new Servicio(
+                "Cena de Comida Local",
+                "Disfruta de una cena de comida local",
+                100.0f,
+                "https://images.pexels.com/photos/628776/pexels-photo-628776.jpeg"
+        );
+
+        Servicio servicio10 = new Servicio(
+                "Cena de Comida Internacional",
+                "Disfruta de una cena de comida internacional",
+                100.0f,
+                "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg"
+        );
+
         //Crear 10 servicios
         // public Servicio(String nombre, String descripcion, float precio, String imagenURL, List<Comentario> comentarios, CuentaHabitacion cuentaHabitacion)
         servicioRepository.save(servicio1);

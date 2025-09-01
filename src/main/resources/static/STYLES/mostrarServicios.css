@@ -71,7 +71,7 @@ body {
 }
 
 #tablaServicios {
-  width: 90%;
+  /*width: 90%;*/
   margin: 30px auto;
   border-radius: 12px;
   overflow: hidden;

@@ -35,4 +35,8 @@ public class ServicioService {
         servicioRepository.deleteById(id);
     }
 
+    public List<Servicio> buscarPorNombre(String nombre) {
+        return servicioRepository.findByNombreContainingIgnoreCase(nombre);
+    }
+
 }

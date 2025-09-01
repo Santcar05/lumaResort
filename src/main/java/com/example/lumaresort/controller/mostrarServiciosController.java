@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.lumaresort.entities.Usuario;
 import com.example.lumaresort.service.ServicioService;
@@ -54,5 +56,12 @@ public class mostrarServiciosController {
         model.addAttribute("servicios", servicioService.findAll());
 
         return "tarjetas";
+    }
+
+    @PostMapping("/tabla/buscarPorNombre")
+    public String buscarPorNombre(@RequestParam("buscar") String nombre, Model model) {
+        model.addAttribute("servicios", servicioService.buscarPorNombre(nombre));
+        model.addAttribute("usuario", usuario);
+        return "mostrarServicios";
     }
 }

@@ -51,10 +51,32 @@
           </a>
           <div id="buscar_contenedor">
             <!-- Barra de búsqueda -->
-            <form class="SearchForm" role="search">
+            <form
+              class="SearchForm"
+              role="search"
+              th:action="@{/servicios/tabla/buscarPorNombre}"
+              th:method="post"
+            >
               <!-- Mejora de semántica -->
-              <input type="text" placeholder="Buscar..." aria-label="Buscar en el sitio" />
-              <button type="submit">Buscar</button>
+              <input
+                type="text"
+                placeholder="Buscar..."
+                aria-label="Buscar en el sitio"
+                name="buscar"
+              />
+              <button
+                type="submit"
+                class="btn-detalle"
+                style="
+                  width: 100px;
+                  text-align: center;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+              >
+                Buscar
+              </button>
             </form>
           </div>
         </div>

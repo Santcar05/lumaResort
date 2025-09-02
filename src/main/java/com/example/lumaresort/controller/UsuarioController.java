@@ -16,7 +16,7 @@ import com.example.lumaresort.service.UsuarioService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/Usuario") // Mantener consistencia con mayúscula
+@RequestMapping("/Usuario") 
 public class UsuarioController {
 
     @Autowired
@@ -93,7 +93,7 @@ public class UsuarioController {
             redirectAttributes.addFlashAttribute("error", "Error al actualizar los datos: " + e.getMessage());
         }
 
-        return "redirect:/Usuario/ajustes"; // Consistente con mayúscula
+        return "redirect:/Usuario/ajustes";
     }
 
     // Cambiar contraseña
@@ -118,13 +118,13 @@ public class UsuarioController {
             // Verificar contraseña actual
             if (!usuarioActual.getContrasena().equals(cambioPassword.getPasswordActual())) {
                 redirectAttributes.addFlashAttribute("errorPassword", "La contraseña actual es incorrecta");
-                return "redirect:/Usuario/ajustes"; // Consistente con mayúscula
+                return "redirect:/Usuario/ajustes";
             }
 
             // Verificar que las nuevas contraseñas coincidan
             if (!cambioPassword.getPasswordNueva().equals(cambioPassword.getPasswordConfirmacion())) {
                 redirectAttributes.addFlashAttribute("errorPassword", "Las nuevas contraseñas no coinciden");
-                return "redirect:/Usuario/ajustes"; // Consistente con mayúscula
+                return "redirect:/Usuario/ajustes"; 
             }
 
             // Actualizar contraseña en base de datos
@@ -141,7 +141,7 @@ public class UsuarioController {
             redirectAttributes.addFlashAttribute("errorPassword", "Error al cambiar la contraseña");
         }
 
-        return "redirect:/Usuario/ajustes"; // Consistente con mayúscula
+        return "redirect:/Usuario/ajustes"; 
     }
 
     // DTO para cambio de contraseña

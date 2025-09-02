@@ -38,12 +38,13 @@
 }
 
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: var(--bg-primary);
   min-height: 100vh;
   display: flex;
 }
 
+/* Sidebar fija */
 .sidebar {
   width: 280px;
   background: var(--bg-secondary);
@@ -53,14 +54,14 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
-}
 
-.sidebar > div:first-child {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid var(--table-border);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
 }
 
 .LogoImg {
@@ -110,47 +111,36 @@ body {
   box-shadow: 0 4px 15px var(--card-shadow);
 }
 
+/* Contenido principal */
 .main-content {
   flex: 1;
   padding: 40px;
   overflow-y: auto;
+  margin-left: 280px;
 }
 
-.form-container {
+/* Secciones principales */
+.section {
   background: var(--card-bg);
-  backdrop-filter: blur(10px);
   border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 20px 40px var(--card-shadow);
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.form-header {
-  text-align: center;
+  padding: 30px;
+  box-shadow: 0 10px 30px var(--card-shadow);
   margin-bottom: 40px;
 }
 
-.form-header h1 {
+.section h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
   color: var(--text-primary);
-  font-size: 32px;
-  margin-bottom: 10px;
-  background: var(--header-bg);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  border-bottom: 2px solid var(--section-accent);
+  padding-bottom: 10px;
 }
 
-.form-header p {
-  color: var(--text-secondary);
-  font-size: 16px;
-}
-
+/* Formulario */
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  margin-bottom: 30px;
+  gap: 20px;
 }
 
 .form-group {
@@ -172,10 +162,10 @@ body {
 .form-group input,
 .form-group select,
 .form-group textarea {
-  padding: 15px;
+  padding: 12px;
   border: 2px solid var(--table-border);
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 10px;
+  font-size: 15px;
   transition: all var(--transition-speed) ease;
   background: var(--bg-secondary);
   color: var(--text-primary);
@@ -186,32 +176,27 @@ body {
 .form-group textarea:focus {
   outline: none;
   border-color: var(--section-primary);
-  box-shadow: 0 0 0 3px var(--section-accent);
+  box-shadow: 0 0 0 2px var(--section-accent);
 }
 
 .form-group textarea {
-  min-height: 120px;
+  min-height: 100px;
   resize: vertical;
-}
-
-.date-inputs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
 }
 
 .form-actions {
   display: flex;
-  gap: 20px;
+  gap: 15px;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
+/* Botones */
 .btn {
-  padding: 15px 40px;
+  padding: 10px 24px;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 10px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-speed) ease;
@@ -223,13 +208,11 @@ body {
 .btn-primary {
   background: var(--button-primary);
   color: var(--button-text);
-  box-shadow: 0 4px 15px var(--card-shadow);
 }
 
 .btn-primary:hover {
   background: var(--button-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px var(--card-shadow);
 }
 
 .btn-secondary {
@@ -243,80 +226,92 @@ body {
   border-color: var(--text-secondary);
 }
 
-.info-box {
-  background: linear-gradient(
-    135deg,
-    var(--section-secondary),
-    var(--section-accent)
-  );
-  border-left: 4px solid var(--section-primary);
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 30px;
+.btn-edit {
+  background: var(--info);
+  color: var(--button-text);
+  padding: 6px 14px;
+  font-size: 13px;
 }
 
-.info-box p {
-  color: var(--text-secondary);
-  margin: 0;
-  font-size: 14px;
+.btn-edit:hover {
+  background: #0284c7;
 }
 
-.card {
-  background: var(--blanco);
-  color: var(--negro);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 25px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+.btn-delete {
+  background: var(--error);
+  color: var(--button-text);
+  padding: 6px 14px;
+  font-size: 13px;
 }
 
-.card h4 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  font-weight: 600;
+.btn-delete:hover {
+  background: #b91c1c;
+}
+
+/* Tablas */
+.table-container {
+  overflow-x: auto;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  background: var(--blanco);
+  background: var(--card-bg);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  color: var(--negro);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  color: var(--card-text);
 }
 
 table th,
 table td {
   padding: 12px;
   text-align: left;
-  border-bottom: 1px solid var(--gris-medio);
+  border-bottom: 1px solid var(--table-border);
 }
 
 table th {
-  background: var(--gris-claro);
+  background: var(--table-white);
+  font-weight: 600;
 }
 
+table td .btn {
+  margin-right: 6px;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   body {
     flex-direction: column;
   }
 
   .sidebar {
+    position: relative;
     width: 100%;
+    height: auto;
+  }
+
+  .main-content {
+    margin-left: 0;
     padding: 20px;
   }
 
   .form-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .date-inputs {
-    grid-template-columns: 1fr;
+    gap: 15px;
   }
 
   .form-actions {
     flex-direction: column;
+  }
+
+  table td {
+    font-size: 14px;
+  }
+
+  .btn-edit,
+  .btn-delete {
+    padding: 5px 10px;
+    font-size: 12px;
   }
 }

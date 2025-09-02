@@ -3,43 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Crear Habitación - Luma Resort</title>
+    <title th:text="${habitacion.idHabitacion != null ? 'Editar Habitación' : 'Crear Habitación'} + ' - Luma Resort'">Crear Habitación - Luma Resort</title>
     <link rel="stylesheet" href="/STYLES/estilosLandingPage.css" />
     <link rel="stylesheet" href="/STYLES/generales.css" />
     <link rel="stylesheet" href="/STYLES/plantillas.css" />
     <link rel="stylesheet" href="/STYLES/crearHabitacion.css" />
   </head>
   <body>
-    <!-- Sidebar -->
-    <!--
-    <div class="sidebar">
-      <div>
-        <img
-          src="/IMAGES/luma_Corregido.jpg"
-          alt="Luma Resort Logo"
-          class="LogoImg menu-hover"
-          loading="lazy"
-        />
-        <div>
-          <h2>Luma Resort</h2>
-          <span>admin</span>
-        </div>
-      </div>
-      <a href="#">Dashboard</a>
-      <a href="#">Clientes</a>
-      <a href="#">Reservas</a>
-      <a th:href="@{/tipos}" class="active">Habitaciones</a>
-      <a href="#">Servicios</a>
-      <a href="#">Pagos</a>
-    </div>
-    -->
     <!-- Main Content -->
     <th:block th:replace="~{fragmentos :: nav_admin_f}"></th:block>
     <div class="main-content">
       <div class="form-container">
         <div class="form-header">
-          <h1>Crear Nueva Habitación</h1>
-          <p>Complete la información para registrar una nueva habitación en el sistema</p>
+          <h1 th:text="${habitacion.idHabitacion != null ? 'Editar Habitación' : 'Crear Nueva Habitación'}">Crear Nueva Habitación</h1>
+          <p th:text="${habitacion.idHabitacion != null ? 'Modifique la información de la habitación' : 'Complete la información para registrar una nueva habitación en el sistema'}">Complete la información para registrar una nueva habitación en el sistema</p>
         </div>
 
         <div class="info-box">
@@ -50,9 +27,14 @@
           </p>
         </div>
 
-        <form th:action="@{/habitaciones/crear}" method="post" th:object="${habitacion}">
-          <input type="hidden" th:field="*{tipoHabitacion}" th:value="${tipoHabitacionId}" />
-
+        <!-- Formulario crear,editar -->
+       <form th:action="@{${habitacion.idHabitacion != null ? '/habitaciones/editar/' + habitacion.idHabitacion : '/habitaciones/crear'}}" 
+      method="post" 
+      th:object="${habitacion}">
+          
+          <!-- Campo oculto para ID en caso de edición -->
+          <input type="hidden" th:field="*{idHabitacion}" th:if="${habitacion.idHabitacion != null}" />
+          
           <div class="form-grid">
             <div class="form-group">
               <label for="numero">Número de Habitación *</label>
@@ -68,7 +50,8 @@
             <div class="form-group">
               <label for="precioPorNoche">Precio por Noche *</label>
               <input
-                type="text"
+                type="number"
+                step="0.01"
                 id="precioPorNoche"
                 th:field="*{precioPorNoche}"
                 min="0"
@@ -110,6 +93,7 @@
                   th:each="tipo : ${tiposHabitacion}"
                   th:value="${tipo.id}"
                   th:text="${tipo.nombre}"
+                  th:selected="${habitacion.tipoHabitacion != null and habitacion.tipoHabitacion.id == tipo.id}"
                 >
                   Individual
                 </option>
@@ -132,28 +116,31 @@
                 name="imagenUrlString"
                 rows="3"
                 placeholder="https://ejemplo.com/imagen1.jpg, https://ejemplo.com/imagen2.jpg"
+                th:text="${habitacion.imagenUrl != null ? #strings.listJoin(habitacion.imagenUrl, ', ') : ''}"
               ></textarea>
             </div>
           </div>
 
           <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Crear Habitación</button>
+            <button type="submit" class="btn btn-primary" th:text="${habitacion.idHabitacion != null ? 'Actualizar Habitación' : 'Crear Habitación'}">Crear Habitación</button>
             <a th:href="@{/habitaciones}" class="btn btn-secondary">Cancelar</a>
           </div>
         </form>
       </div>
 
-      <div class="card" th:if="${#lists.isEmpty(habitaciones) == false}">
-        <h4>Lista de Tipos</h4>
+      <!-- Mostrar lista solo si estamos en modo crear (no en editar) -->
+      <div class="card" th:if="${habitacion.idHabitacion == null and #lists.isEmpty(habitaciones) == false}">
+        <h4>Lista de Habitaciones</h4>
         <table>
           <thead>
             <tr>
               <th>ID</th>
-              <th>numero</th>
+              <th>Número</th>
               <th>Precio por noche</th>
-              <th>Imagenes</th>
+              <th>Imágenes</th>
               <th>Estado</th>
               <th>Capacidad</th>
+              <th>Tipo</th>
               <th>Descripción</th>
               <th>Acciones</th>
             </tr>
@@ -163,15 +150,17 @@
             <tr th:each="habitacion : ${habitaciones}">
               <td th:text="${habitacion.idHabitacion}"></td>
               <td th:text="${habitacion.numero}"></td>
-              <td th:text="${habitacion.precioPorNoche}"></td>
+              <td th:text="'$' + ${habitacion.precioPorNoche}"></td>
               <td>
-                <ul>
+                <ul th:if="${habitacion.imagenUrl != null and !#lists.isEmpty(habitacion.imagenUrl)}">
                   <li th:each="url : ${habitacion.imagenUrl}" th:text="${url}"></li>
                 </ul>
+                <span th:if="${habitacion.imagenUrl == null or #lists.isEmpty(habitacion.imagenUrl)}">Sin imágenes</span>
               </td>
               <td th:text="${habitacion.estado}"></td>
-              <td th:text="${habitacion.capacidad}"></td>
-              <td th:text="${habitacion.descripcion}"></td>
+              <td th:text="${habitacion.capacidad} + ' personas'"></td>
+              <td th:text="${habitacion.tipoHabitacion != null ? habitacion.tipoHabitacion.nombre : 'Sin tipo'}"></td>
+              <td th:text="${habitacion.descripcion != null ? habitacion.descripcion : 'Sin descripción'}"></td>
               <td>
                 <a
                   th:href="@{/habitaciones/editar/{id}(id=${habitacion.idHabitacion})}"
@@ -180,8 +169,9 @@
                   EDITAR
                 </a>
                 <a
-                  th:href="@{/habitaciones/eliminar/{id}(id=${habitacion.idHabitacion})} "
+                  th:href="@{/habitaciones/eliminar/{id}(id=${habitacion.idHabitacion})}"
                   class="btn btn-detalle"
+                  onclick="return confirm('¿Está seguro de eliminar esta habitación?')"
                 >
                   ELIMINAR
                 </a>
@@ -218,6 +208,7 @@
         }
       });
 
+      // Procesar URLs de imágenes antes del envío
       document.querySelector('form').addEventListener('submit', function (e) {
         const imagenUrlString = document.querySelector('textarea[name="imagenUrlString"]').value;
         if (imagenUrlString.trim()) {

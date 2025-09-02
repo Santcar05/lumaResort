@@ -105,27 +105,29 @@
         </form>
 
         <!-- Avatar de usuario con menú -->
-        <div id="contenedor-login">
-          <button class="btn-detalle" th:if="${usuario == null or usuario.correo == ''}">
-            <a th:href="@{/login}" th:text="#{login.button}">Iniciar Sesión</a>
-          </button>
-          <div class="LogoContainer user-menu" th:if="${usuario != null and usuario.correo != ''}">
-            <img
-              src="/IMAGES/logoSurf.jpeg"
-              alt="User Avatar"
-              class="LogoImg menu-hover"
-              loading="lazy"
-            />
+<div id="contenedor-login">
+  <!-- Verificar si existe usuarioLogueado en la sesión -->
+  <button class="btn-detalle" th:if="${session.usuarioLogueado == null}">
+    <a th:href="@{/login}" th:text="#{login.button}">Iniciar Sesión</a>
+  </button>
+  
+  <div class="LogoContainer user-menu" th:if="${session.usuarioLogueado != null}">
+    <img
+      src="/IMAGES/logoSurf.jpeg"
+      alt="User Avatar"
+      class="LogoImg menu-hover"
+      loading="lazy"
+    />
 
-            <!-- Menú oculto que aparece al hover -->
-            <div class="dropdown-menu right-menu">
-              <a href="#" th:text="#{menu.home}">🏠 Inicio</a>
-              <a href="#" th:text="#{menu.settings}" th:href="@{/Usuario}">⚙️ Configuración</a>
-              <a href="#" th:text="#{menu.booking}">📅 Realiza una reserva</a>
-              <a href="#" th:text="#{menu.logout}" th:href="@{/logout}">🚪 Cerrar sesión</a>
-            </div>
-          </div>
-        </div>
+    <!-- Menú oculto que aparece al hover -->
+    <div class="dropdown-menu right-menu">
+      <a href="#" th:text="#{menu.home}">🏠 Inicio</a>
+      <a href="#" th:text="#{menu.settings}" th:href="@{/Usuario/ajustes}">⚙️ Configuración</a>
+      <a href="#" th:text="#{menu.booking}">📅 Realiza una reserva</a>
+      <a href="#" th:text="#{menu.logout}" th:href="@{/login/logout}">🚪 Cerrar sesión</a>
+    </div>
+  </div>
+</div>
       </header>
     </th:block>
 

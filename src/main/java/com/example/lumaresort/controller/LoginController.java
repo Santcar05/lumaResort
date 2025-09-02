@@ -13,12 +13,11 @@ import com.example.lumaresort.entities.Usuario;
 import com.example.lumaresort.service.ClienteService;
 import com.example.lumaresort.service.UsuarioService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-
-    @Autowired
-    private Usuario usuario;
 
     @Autowired
     private UsuarioService usuarioService;
@@ -29,32 +28,41 @@ public class LoginController {
     //http://localhost:8090/login
     @GetMapping()
     public String login(Model model) {
-        model.addAttribute("usuario", usuario);
+        model.addAttribute("usuario", new Usuario()); // Crear nueva instancia
         return "login";
     }
 
     //http://localhost:8090/login
     @PostMapping()
-    public String login(@ModelAttribute("usuario") Usuario usuarioF, Model model) {
+    public String login(@ModelAttribute("usuario") Usuario usuarioF, Model model, HttpSession session) {
         Usuario usuarioEncontrado = usuarioService.findByCorreoAndContrasena(usuarioF.getCorreo(), usuarioF.getContrasena());
+        
         if (usuarioEncontrado == null) {
-            return "redirect:/login";
-        } else if (usuarioEncontrado.getCorreo().equals(usuarioF.getCorreo()) && usuarioEncontrado.getContrasena().equals(usuarioF.getContrasena()) && usuarioEncontrado.isEsAdministrador()) {
+            model.addAttribute("error", "Credenciales incorrectas");
+            return "login"; // Mejor mostrar error que redireccionar
+        }
+        
+        // IMPORTANTE: Guardar usuario en la sesión
+        session.setAttribute("usuarioLogueado", usuarioEncontrado);
+        
+        if (usuarioEncontrado.isEsAdministrador()) {
             // Agregamos el objeto necesario para Thymeleaf
             model.addAttribute("nuevoCliente", new Cliente());
-            // También lista de clientes si tu plantilla la necesita
             model.addAttribute("clientes", service.listarClientes());
-            usuario = usuarioEncontrado;
-            model.addAttribute("usuarioRegistrado", usuario);
-
+            model.addAttribute("usuarioRegistrado", usuarioEncontrado);
+            
             return "clientes";
-        } else if (usuarioEncontrado.getCorreo().equals(usuarioF.getCorreo()) && usuarioEncontrado.getContrasena().equals(usuarioF.getContrasena())) {
-            usuario.setCorreo(usuarioF.getCorreo());
-            usuario.setContrasena(usuarioF.getContrasena());
-            return "index";
         } else {
-            return "redirect:/login";
+            // Para usuarios regulares
+            model.addAttribute("usuario", usuarioEncontrado);
+            return "index";
         }
     }
+    
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
+    }
 }

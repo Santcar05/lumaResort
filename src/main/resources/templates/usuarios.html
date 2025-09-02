@@ -1,161 +1,53 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ajustes de la cuenta - Luma Resort</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ajustes de Usuario</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+   <th:block th:replace="~{fragmentos :: header_f}"></th:block>
+    <div class="container mt-5">
+        <h2>Ajustes de Usuario</h2>
+        
+        <!-- Mensajes de éxito o error -->
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
-    <!-- Bootstrap -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/STYLES/usuario.css" />
-    <style></style>
-  </head>
-  <body>
-    <header>
-      <div>
-        <h2>Ajustes de la cuenta</h2>
-        <small
-          >Actualiza tu información para una mejor experiencia en el
-          hotel.</small
-        >
-      </div>
-      <div class="user-info">
-        <span class="badge">Miembro Gold</span>
-        <img src="https://i.pravatar.cc/150?img=3" alt="Foto de perfil" />
-      </div>
-    </header>
+        <!-- Formulario de datos personales -->
+        <form th:action="@{/Usuario/actualizar-datos}" th:object="${usuario}" method="post">
+            <!-- Campo oculto para el ID -->
+            <input type="hidden" th:field="*{idUsuario}" />
+            
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" th:field="*{nombre}" class="form-control"/>
+                <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger"></span>
+            </div>
 
-    <main class="settings-container">
-      <!-- Información personal -->
-      <div class="card-settings">
-        <h5>Información personal</h5>
-        <form>
-          <div class="mb-3">
-            <label>Nombre</label>
-            <input type="text" class="form-control" value="María López" />
-          </div>
-          <div class="mb-3">
-            <label>Correo electrónico</label>
-            <input
-              type="email"
-              class="form-control"
-              value="maria.lopez@example.com"
-            />
-          </div>
-          <div class="mb-3">
-            <label>Teléfono</label>
-            <input type="tel" class="form-control" value="+34 612 345 678" />
-          </div>
-          <div class="mb-3">
-            <label>Documento de identidad</label>
-            <input type="text" class="form-control" value="DNI 12345678X" />
-          </div>
-          <div class="mb-3">
-            <label>Fecha de nacimiento</label>
-            <input type="date" class="form-control" value="1990-05-12" />
-          </div>
-          <div class="mb-3">
-            <label>Dirección</label>
-            <input
-              type="text"
-              class="form-control"
-              value="Calle Mayor 10, Madrid, España"
-            />
-          </div>
-          <div class="d-flex justify-content-between">
-            <button type="reset" class="btn btn-warning">Cancelar</button>
-            <button type="submit" class="btn btn-primary">
-              Guardar cambios
-            </button>
-          </div>
+            <div class="form-group">
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" th:field="*{apellido}" class="form-control"/>
+                <span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="correo">Email:</label>
+                <input type="email" id="correo" th:field="*{correo}" class="form-control"/>
+                <span th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" id="telefono" th:field="*{telefono}" class="form-control"/>
+                <span th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
         </form>
-      </div>
+    </div>
 
-      <!-- Preferencias de estadía -->
-      <div class="card-settings">
-        <h5>Preferencias de estadía</h5>
-        <form>
-          <div class="mb-3">
-            <label>Notas para el hotel</label>
-            <textarea class="form-control" rows="2">
-Alergia a frutos secos. Solicitar almohada extra.</textarea
-            >
-          </div>
-          <div class="mb-3">
-            <label>Tipo de habitación favorito</label>
-            <input type="text" class="form-control" value="Suite Junior" />
-          </div>
-          <div class="mb-3">
-            <label>Hora de llegada habitual</label>
-            <input type="time" class="form-control" value="14:00" />
-          </div>
-          <div class="mb-3">
-            <label>Vista preferida</label>
-            <input type="text" class="form-control" value="Mar" />
-          </div>
-          <div class="form-check form-switch mb-3">
-            <input class="form-check-input" type="checkbox" checked />
-            <label class="form-check-label">Fumador</label>
-          </div>
-          <div class="d-flex justify-content-between">
-            <button type="reset" class="btn btn-warning">Restablecer</button>
-            <button type="submit" class="btn btn-primary">
-              Guardar preferencias
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Métodos de pago -->
-      <div class="card-settings">
-        <h5>Métodos de pago</h5>
-        <div class="mb-3">
-          <label>Tarjeta principal</label>
-          <input type="text" class="form-control" value="•••• 4242" disabled />
-        </div>
-        <div class="mb-3">
-          <label>Dirección de facturación</label>
-          <input
-            type="text"
-            class="form-control"
-            value="Calle Comercio 22, Valencia, España"
-          />
-        </div>
-        <div class="d-flex justify-content-between">
-          <button class="btn btn-warning">Añadir método</button>
-          <button class="btn btn-primary">Guardar</button>
-        </div>
-      </div>
-
-      <!-- Privacidad y seguridad -->
-      <div class="card-settings">
-        <h5>Privacidad y seguridad</h5>
-        <div class="mb-3">
-          <label>Contraseña</label>
-          <input type="password" class="form-control" value="********" />
-        </div>
-        <div class="form-check form-switch mb-3">
-          <input class="form-check-input" type="checkbox" />
-          <label class="form-check-label">Autenticación en dos pasos</label>
-        </div>
-        <div class="form-check form-switch mb-3">
-          <input class="form-check-input" type="checkbox" />
-          <label class="form-check-label">Compartir datos con partners</label>
-        </div>
-        <div class="d-flex justify-content-between">
-          <button class="btn btn-danger">Cerrar sesión</button>
-          <button class="btn btn-warning">Eliminar cuenta</button>
-        </div>
-      </div>
-    </main>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-  </body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>

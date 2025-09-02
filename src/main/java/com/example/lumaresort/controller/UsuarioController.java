@@ -16,24 +16,13 @@ import com.example.lumaresort.service.UsuarioService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/Usuario")
+@RequestMapping("/Usuario") // Mantener consistencia con mayúscula
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
 
-    //@Autowired
-    //private PasswordEncoder passwordEncoder;
     // Mostrar página de ajustes/configuración del usuario
-    @GetMapping
-    public String mostrarAjustes(HttpSession session) {
-        // Obtener usuario actual de la sesión
-        Usuario usuarioActual = (Usuario) session.getAttribute("usuarioLogueado");
-
-        return "usuarios";
-
-    }
-
     @GetMapping("/ajustes")
     public String mostrarAjustes(HttpSession session, Model model) {
         // Obtener usuario actual de la sesión
@@ -49,12 +38,12 @@ public class UsuarioController {
         model.addAttribute("usuario", usuario);
         model.addAttribute("cambioPassword", new CambioPasswordDTO());
 
-        return "Usuario/ajustes";
+        return "usuarios";
     }
 
     // Actualizar información personal
-    @PostMapping("/actualizar-datos")
-    public String actualizarDatos(@ModelAttribute Usuario usuario,
+   @PostMapping("/actualizar-datos")
+    public String actualizarDatos(@ModelAttribute("usuario") Usuario usuarioForm,
             BindingResult result,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
@@ -65,24 +54,38 @@ public class UsuarioController {
             return "redirect:/login";
         }
 
+        // Validaciones personalizadas
+        if (usuarioForm.getNombre() == null || usuarioForm.getNombre().trim().isEmpty()) {
+            result.rejectValue("nombre", "error.nombre", "El nombre es requerido");
+        }
+        if (usuarioForm.getCorreo() == null || usuarioForm.getCorreo().trim().isEmpty()) {
+            result.rejectValue("correo", "error.correo", "El email es requerido"); // Corregido: era "email"
+        }
+
         if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("error", "Por favor corrige los errores en el formulario");
-            return "redirect:/Usuario/ajustes";
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.usuario", result);
+            redirectAttributes.addFlashAttribute("usuario", usuarioForm);
+            return "redirect:/Usuario/ajustes"; // Consistente con mayúscula
         }
 
         try {
-            // Mantener datos sensibles que no deben cambiar
-            usuario.setIdUsuario(usuarioActual.getIdUsuario());
-            usuario.setContrasena(usuarioActual.getContrasena()); // No cambiar password aquí
-            usuario.setEsOperador(usuarioActual.isEsOperador());
-            usuario.setEsAdministrador(usuarioActual.isEsAdministrador());
-            usuario.setRol(usuarioActual.getRol());
+            // Obtener usuario actual de la base de datos
+            Usuario usuarioExistente = usuarioService.buscarPorId(usuarioActual.getIdUsuario());
+            
+            // Actualizar solo los campos permitidos
+            usuarioExistente.setNombre(usuarioForm.getNombre());
+            usuarioExistente.setApellido(usuarioForm.getApellido());
+            usuarioExistente.setCorreo(usuarioForm.getCorreo());
+            usuarioExistente.setTelefono(usuarioForm.getTelefono());
+            
+            // Mantener datos sensibles sin cambios
+            // No se modifican: contraseña, roles, permisos
 
-            // Actualizar usuario
-            Usuario usuarioActualizado = usuarioService.actualizar(usuario);
+            // Guardar cambios
+            Usuario usuarioActualizado = usuarioService.actualizar(usuarioExistente);
 
-            // Actualizar sesión
-            session.setAttribute("UsuarioLogueado", usuarioActualizado);
+            // Actualizar sesión con los nuevos datos
+            session.setAttribute("usuarioLogueado", usuarioActualizado);
 
             redirectAttributes.addFlashAttribute("success", "Datos actualizados correctamente");
 
@@ -90,7 +93,7 @@ public class UsuarioController {
             redirectAttributes.addFlashAttribute("error", "Error al actualizar los datos: " + e.getMessage());
         }
 
-        return "redirect:/Usuario/ajustes";
+        return "redirect:/Usuario/ajustes"; // Consistente con mayúscula
     }
 
     // Cambiar contraseña
@@ -108,25 +111,29 @@ public class UsuarioController {
 
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("errorPassword", "Por favor corrige los errores");
-            return "redirect:/usuario/ajustes";
+            return "redirect:/Usuario/ajustes"; // Consistente con mayúscula
         }
 
         try {
             // Verificar contraseña actual
             if (!usuarioActual.getContrasena().equals(cambioPassword.getPasswordActual())) {
                 redirectAttributes.addFlashAttribute("errorPassword", "La contraseña actual es incorrecta");
-                return "redirect:/usuario/ajustes";
+                return "redirect:/Usuario/ajustes"; // Consistente con mayúscula
             }
 
             // Verificar que las nuevas contraseñas coincidan
             if (!cambioPassword.getPasswordNueva().equals(cambioPassword.getPasswordConfirmacion())) {
                 redirectAttributes.addFlashAttribute("errorPassword", "Las nuevas contraseñas no coinciden");
-                return "redirect:/usuario/ajustes";
+                return "redirect:/Usuario/ajustes"; // Consistente con mayúscula
             }
 
-            // Actualizar contraseña
-            usuarioActual.setContrasena(cambioPassword.getPasswordNueva());
-            usuarioService.actualizar(usuarioActual);
+            // Actualizar contraseña en base de datos
+            Usuario usuarioExistente = usuarioService.buscarPorId(usuarioActual.getIdUsuario());
+            usuarioExistente.setContrasena(cambioPassword.getPasswordNueva());
+            Usuario usuarioActualizado = usuarioService.actualizar(usuarioExistente);
+            
+            // Actualizar sesión
+            session.setAttribute("usuarioLogueado", usuarioActualizado);
 
             redirectAttributes.addFlashAttribute("successPassword", "Contraseña actualizada correctamente");
 
@@ -134,12 +141,11 @@ public class UsuarioController {
             redirectAttributes.addFlashAttribute("errorPassword", "Error al cambiar la contraseña");
         }
 
-        return "redirect:/usuario/ajustes";
+        return "redirect:/Usuario/ajustes"; // Consistente con mayúscula
     }
 
     // DTO para cambio de contraseña
     public static class CambioPasswordDTO {
-
         private String passwordActual;
         private String passwordNueva;
         private String passwordConfirmacion;

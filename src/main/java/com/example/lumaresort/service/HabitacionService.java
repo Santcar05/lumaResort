@@ -53,10 +53,16 @@ public class HabitacionService {
             habitacionExistente.setNumero(habitacion.getNumero());
             habitacionExistente.setPrecioPorNoche(habitacion.getPrecioPorNoche());
             habitacionExistente.setEstado(habitacion.getEstado());
-            habitacionExistente.setTipoHabitacion(tipoHabitacion); // Actualizar el tipo de habitación
+            habitacionExistente.setTipoHabitacion(tipoHabitacion);
+            habitacionExistente.setDescripcion(habitacion.getDescripcion());
+            habitacionExistente.setImagenUrl(habitacion.getImagenUrl()); // Actualizar el tipo de habitación
             habitacionRepository.save(habitacionExistente);
         }
 
+    }
+  public Habitacion buscarPorId(Long id) {
+        return habitacionRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Habitación no encontrada con id: " + id));
     }
 
     public List<Habitacion> listarTodos() {

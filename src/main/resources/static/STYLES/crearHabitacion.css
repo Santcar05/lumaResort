@@ -3,8 +3,8 @@
   --bg-secondary: #ffffff;
   --text-primary: #1e293b;
   --text-secondary: #475569;
-  --header-bg: linear-gradient(90deg, #262de0, #49aee0);
-  --footer-bg: linear-gradient(90deg, #262de0, #49aee0);
+  --header-bg: linear-gradient(90deg, #1d3a8a, #49aee0);
+  --footer-bg: linear-gradient(90deg, #1d3a8a, #49aee0);
   --button-primary: #1d3a8a;
   --button-hover: #4aa7df;
   --button-text: #ffffff;
@@ -47,7 +47,7 @@ body {
 /* Sidebar fija */
 .sidebar {
   width: 280px;
-  background: var(--bg-secondary);
+  background: var(--section-contrast);
   backdrop-filter: blur(10px);
   padding: 30px 20px;
   box-shadow: 0 0 30px var(--card-shadow);
@@ -77,22 +77,22 @@ body {
 }
 
 .sidebar h2 {
-  color: var(--text-primary);
+  color: var(--text-only-white);
   font-size: 24px;
   font-weight: bold;
 }
 
 .sidebar span {
-  color: var(--text-secondary);
+  color: var(--text-only-white);
   font-size: 14px;
-  background: var(--section-accent);
+  background: var(--section-primary);
   padding: 4px 12px;
   border-radius: 20px;
 }
 
 .sidebar a {
   text-decoration: none;
-  color: var(--text-secondary);
+  color: var(--text-only-white);
   padding: 15px 20px;
   border-radius: 12px;
   transition: all var(--transition-speed) ease;
@@ -105,7 +105,8 @@ body {
   transform: translateX(5px);
 }
 
-.sidebar a.active {
+.sidebar a.active,
+.sidebar a[href*='habitaciones'] {
   background: var(--header-bg);
   color: var(--button-text);
   box-shadow: 0 4px 15px var(--card-shadow);
@@ -117,6 +118,7 @@ body {
   padding: 40px;
   overflow-y: auto;
   margin-left: 280px;
+  background: var(--section-secondary);
 }
 
 /* Secciones principales */
@@ -134,6 +136,9 @@ body {
   color: var(--text-primary);
   border-bottom: 2px solid var(--section-accent);
   padding-bottom: 10px;
+  background: var(--header-bg);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Formulario */
@@ -271,8 +276,9 @@ table td {
 }
 
 table th {
-  background: var(--table-white);
+  background: var(--section-accent);
   font-weight: 600;
+  color: var(--section-contrast);
 }
 
 table td .btn {

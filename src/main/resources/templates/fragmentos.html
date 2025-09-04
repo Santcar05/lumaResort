@@ -105,29 +105,31 @@
         </form>
 
         <!-- Avatar de usuario con menú -->
-<div id="contenedor-login">
-  <!-- Verificar si existe usuarioLogueado en la sesión -->
-  <button class="btn-detalle" th:if="${session.usuarioLogueado == null}">
-    <a th:href="@{/login}" th:text="#{login.button}">Iniciar Sesión</a>
-  </button>
-  
-  <div class="LogoContainer user-menu" th:if="${session.usuarioLogueado != null}">
-    <img
-      src="/IMAGES/logoSurf.jpeg"
-      alt="User Avatar"
-      class="LogoImg menu-hover"
-      loading="lazy"
-    />
+        <div id="contenedor-login">
+          <!-- Verificar si existe usuarioLogueado en la sesión -->
+          <button class="btn-detalle" th:if="${session.usuarioLogueado == null}">
+            <a th:href="@{/login}" th:text="#{login.button}">Iniciar Sesión</a>
+          </button>
 
-    <!-- Menú oculto que aparece al hover -->
-    <div class="dropdown-menu right-menu">
-      <a href="#" th:text="#{menu.home}">🏠 Inicio</a>
-      <a href="#" th:text="#{menu.settings}" th:href="@{/Usuario/ajustes}">⚙️ Configuración</a>
-      <a href="#" th:text="#{menu.booking}">📅 Realiza una reserva</a>
-      <a href="#" th:text="#{menu.logout}" th:href="@{/login/logout}">🚪 Cerrar sesión</a>
-    </div>
-  </div>
-</div>
+          <div class="LogoContainer user-menu" th:if="${session.usuarioLogueado != null}">
+            <img
+              src="/IMAGES/logoSurf.jpeg"
+              alt="User Avatar"
+              class="LogoImg menu-hover"
+              loading="lazy"
+            />
+
+            <!-- Menú oculto que aparece al hover -->
+            <div class="dropdown-menu right-menu">
+              <a href="#" th:text="#{menu.home}">🏠 Inicio</a>
+              <a href="#" th:text="#{menu.settings}" th:href="@{/Usuario/ajustes}">
+                ⚙️ Configuración
+              </a>
+              <a href="#" th:text="#{menu.booking}">📅 Realiza una reserva</a>
+              <a href="#" th:text="#{menu.logout}" th:href="@{/login/logout}">🚪 Cerrar sesión</a>
+            </div>
+          </div>
+        </div>
       </header>
     </th:block>
 
@@ -224,7 +226,7 @@
           </div>
         </div>
         <a href="#">Dashboard</a>
-        <a href="#" class="active">Clientes</a>
+        <a th:href="@{/clientes}" class="active">Clientes</a>
         <a href="#">Reservas</a>
         <a th:href="@{/tipos}">Tipos deHabitaciones</a>
         <a th:href="@{/habitaciones}">Habitaciones</a>

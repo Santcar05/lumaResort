@@ -14,7 +14,7 @@
 
 body {
   margin: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   background: var(--azul-fondo);
   color: var(--blanco);
 }
@@ -71,6 +71,15 @@ body {
 
 .alert-success {
   background: var(--verde);
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+.alert-danger {
+  background: var(--rojo);
   color: white;
   padding: 12px;
   border-radius: 8px;

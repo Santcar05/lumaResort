@@ -38,6 +38,11 @@
       <div th:if="${mensaje}" class="alert-success">
         <p th:text="${mensaje}"></p>
       </div>
+      <!-- Aviso de eliminación -->
+      <div th:if="${mensajeEliminado}" class="alert-danger">
+        <p th:text="${mensajeEliminado}"></p>
+      </div>
+
       <!-- Botón volver -->
       <button class="btn-back">← Volver</button>
 

@@ -36,65 +36,224 @@
     <!-- Header -->
     <th:block th:fragment="header_f">
       <header class="MainHeader">
-        <!-- ... (igual que ya tienes, sin cambios) -->
+        <!-- Logo con menú -->
+        <div class="LogoContainer">
+          <img
+            src="/IMAGES/luma_Corregido.jpg"
+            alt="Luma Resort Logo"
+            class="LogoImg menu-hover"
+            loading="lazy"
+          />
+          <h1 class="LogoTitle" th:text="#{site.name}">LUMA RESORT</h1>
+
+          <!-- Menú oculto que aparece al hover -->
+          <div class="dropdown-menu left-menu">
+            <!-- Opción con submenú -->
+            <div class="dropdown-item">
+              🌐
+              <span th:text="#{menu.language}">Cambiar idioma</span>
+              <div class="submenu">
+                <a class="dropdown-item" th:href="@{/?lang=es}" th:text="#{lang.spanish}">
+                  Español
+                </a>
+
+                <a class="dropdown-item" th:href="@{/?lang=en}" th:text="#{lang.english}">
+                  English
+                </a>
+
+                <a class="dropdown-item" th:href="@{/?lang=fr}" th:text="#{lang.french}">
+                  Français
+                </a>
+
+                <a class="dropdown-item" th:href="@{/?lang=de}" th:text="#{lang.german}">Deutsch</a>
+              </div>
+            </div>
+
+            <!-- Opción con submenú -->
+            <div class="dropdown-item">
+              🎨
+              <span th:text="#{menu.theme}">Cambiar tema</span>
+              <div class="submenu">
+                <a id="light" href="#" onclick="changeTheme('light')" th:text="#{theme.light}">
+                  Tema Claro
+                </a>
+                <a id="dark" href="#" onclick="changeTheme('dark')" th:text="#{theme.dark}">
+                  Tema Oscuro
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navegación principal -->
+        <nav class="MainNav" aria-label="Navegación principal">
+          <ul>
+            <li><a th:href="@{/}" th:text="#{nav.home}">Inicio</a></li>
+            <li><a href="#" th:text="#{nav.rooms}">Habitaciones</a></li>
+            <li><a th:href="@{/servicios}" th:text="#{nav.services}">Servicios</a></li>
+            <li><a href="#" th:text="#{nav.booking}">Reservas</a></li>
+            <li><a href="#" th:text="#{nav.contact}">Contacto</a></li>
+          </ul>
+        </nav>
+
+        <!-- Barra de búsqueda -->
+        <form class="SearchForm" role="search">
+          <input
+            type="text"
+            th:placeholder="#{search.placeholder}"
+            aria-label="Buscar en el sitio"
+          />
+        </form>
+
+        <!-- Avatar de usuario con menú -->
+        <div id="contenedor-login">
+          <!-- Verificar si existe usuarioLogueado en la sesión -->
+          <button class="btn-detalle" th:if="${session.usuarioLogueado == null}">
+            <a th:href="@{/login}" th:text="#{login.button}">Iniciar Sesión</a>
+          </button>
+
+          <div class="LogoContainer user-menu" th:if="${session.usuarioLogueado != null}">
+            <img
+              src="/IMAGES/logoSurf.jpeg"
+              alt="User Avatar"
+              class="LogoImg menu-hover"
+              loading="lazy"
+            />
+
+            <!-- Menú oculto que aparece al hover -->
+            <div class="dropdown-menu right-menu">
+              <a href="#" th:text="#{menu.home}">🏠 Inicio</a>
+              <a href="#" th:text="#{menu.settings}" th:href="@{/Usuario/ajustes}">
+                ⚙️ Configuración
+              </a>
+              <a href="#" th:text="#{menu.booking}">📅 Realiza una reserva</a>
+              <a href="#" th:text="#{menu.logout}" th:href="@{/login/logout}">🚪 Cerrar sesión</a>
+            </div>
+          </div>
+        </div>
       </header>
     </th:block>
 
     <!-- Footer -->
     <div th:fragment="footer_f">
       <footer class="Footer">
-        <!-- ... (igual que ya tienes, sin cambios) -->
+        <div class="FooterContent">
+          <!-- Redes Sociales -->
+          <div class="FooterSection RedesSociales">
+            <p th:text="#{footer.follow}">Síguenos en redes sociales:</p>
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+            >
+              <i class="fab fa-x-twitter"></i>
+            </a>
+            <a
+              href="https://www.instagram.com/hotellumaresort/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a
+              href="https://www.tiktok.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="TikTok"
+            >
+              <i class="fab fa-tiktok"></i>
+            </a>
+            <a
+              href="https://www.youtube.com/@HotelLumaResort"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+            >
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
+
+          <!-- Logo y Copyright -->
+          <div class="FooterLogo">
+            <img src="/IMAGES/logoSurf.jpeg" alt="Luma Resort" loading="lazy" />
+            <p th:text="#{footer.copy}">© 2025 Luma Resort. Todos los derechos reservados</p>
+          </div>
+
+          <!-- Información de Contacto -->
+          <div class="FooterSection Contacto">
+            <div class="ContactTitle">
+              <a href="mailto:HotelLumaResort@gmail.com" aria-label="Enviar correo">
+                <i class="fas fa-envelope"></i>
+              </a>
+              <span th:text="#{footer.contact}">Contáctanos:</span>
+            </div>
+            <div class="ContactInfo">
+              <p>
+                <span th:text="#{footer.phone}">Teléfono:</span>
+                <a href="tel:+573158278278">315 827 8278</a>
+              </p>
+              <p>
+                <span th:text="#{footer.email}">Correo:</span>
+                <a href="mailto:HotelLumaResort@gmail.com">HotelLumaResort@gmail.com</a>
+              </p>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
 
-<!-- Sidebar -->
-<div class="sidebar" th:fragment="nav_admin_f">
-  <!-- Encabezado -->
-  <div class="sidebar-header">
-    <img
-      src="/IMAGES/luma_Corregido.jpg"
-      alt="Luma Resort Logo"
-      class="LogoImg menu-hover"
-      loading="lazy"
-    />
-    <div class="sidebar-title">
-      <h2>Luma Resort</h2>
-      <span>Admin</span>
-    </div>
-  </div>
-
-
-
-
-        <!-- Menú -->
-        <nav class="sidebar-menu">
-          <a th:href="@{/dashboard}" th:classappend="${activePage == 'dashboard'} ? ' active' : ''">
-            Dashboard
-          </a>
-          <a th:href="@{/clientes}" th:classappend="${activePage == 'clientes'} ? ' active' : ''">
-            Clientes
-          </a>
-          <a th:href="@{/reservas}" th:classappend="${activePage == 'reservas'} ? ' active' : ''">
-            Reservas
-          </a>
-          <a th:href="@{/tipos}" th:classappend="${activePage == 'tipos'} ? ' active' : ''">
-            Tipos de Habitaciones
-          </a>
-          <a
-            th:href="@{/habitaciones}"
-            th:classappend="${activePage == 'habitaciones'} ? ' active' : ''"
-          >
-            Habitaciones
-          </a>
-          <a th:href="@{/servicios}" th:classappend="${activePage == 'servicios'} ? ' active' : ''">
-            Servicios
-          </a>
-          <a th:href="@{/pagos}" th:classappend="${activePage == 'pagos'} ? ' active' : ''">
-            Pagos
-          </a>
-        </nav>
+    <!-- Sidebar -->
+    <div class="sidebar" th:fragment="nav_admin_f">
+      <!-- Encabezado -->
+      <div class="sidebar-header">
+        <img
+          src="/IMAGES/luma_Corregido.jpg"
+          alt="Luma Resort Logo"
+          class="LogoImg menu-hover"
+          loading="lazy"
+        />
+        <div class="sidebar-title">
+          <h2>Luma Resort</h2>
+          <span>Admin</span>
+        </div>
       </div>
-    </th:block>
+
+      <!-- Menú -->
+      <nav class="sidebar-menu">
+        <a th:href="@{/dashboard}" th:classappend="${activePage == 'dashboard'} ? ' active' : ''">
+          Dashboard
+        </a>
+        <a th:href="@{/clientes}" th:classappend="${activePage == 'clientes'} ? ' active' : ''">
+          Clientes
+        </a>
+        <a th:href="@{/reservas}" th:classappend="${activePage == 'reservas'} ? ' active' : ''">
+          Reservas
+        </a>
+        <a th:href="@{/tipos}" th:classappend="${activePage == 'tipos'} ? ' active' : ''">
+          Tipos de Habitaciones
+        </a>
+        <a
+          th:href="@{/habitaciones}"
+          th:classappend="${activePage == 'habitaciones'} ? ' active' : ''"
+        >
+          Habitaciones
+        </a>
+        <a th:href="@{/servicios}" th:classappend="${activePage == 'servicios'} ? ' active' : ''">
+          Servicios
+        </a>
+        <a th:href="@{/pagos}" th:classappend="${activePage == 'pagos'} ? ' active' : ''">Pagos</a>
+      </nav>
+    </div>
   </body>
   <script src="/SCRIPT/script.js" defer></script>
 </html>

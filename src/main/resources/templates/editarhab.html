@@ -3,206 +3,102 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Editar Habitación - Luna Resort Admin</title>
+    <title>Editar Habitación - Luma Resort</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="/STYLES/estilosLandingPage.css" />
     <link rel="stylesheet" href="/STYLES/generales.css" />
     <link rel="stylesheet" href="/STYLES/plantillas.css" />
-    <!--<link rel="stylesheet" th:href="@{/CSS/editarhab.css}" /> -->
+    <link rel="stylesheet" href="/STYLES/crearHabitacion.css" />
   </head>
   <body>
-    <div class="container">
-      <!-- Sidebar -->
-      <div class="sidebar">
-        <div class="logo">
-          <div class="logo-icon"></div>
-          Luna Resort Admin
-        </div>
-        <div class="menu-item">Dashboard</div>
-        <div class="menu-item active">Habitaciones</div>
-        <div class="menu-item">Reservas</div>
-        <div class="menu-item">Huéspedes</div>
-        <div class="menu-item">Servicios</div>
-        <div class="menu-item">Pagos</div>
-        <div class="menu-item">Ajustes</div>
+    <div th:replace="fragmentos :: nav_admin_f"></div>
+
+    <div class="main">
+      <div class="page-header">
+        <h1>
+          Editar
+          <span>Habitación</span>
+        </h1>
+        <img src="/IMAGES/luma_Corregido.jpg" alt="Logo Luma Resort" class="page-header-logo" />
       </div>
 
-      <!-- Main Content -->
-      <div class="main-content">
-        <!-- Header -->
-        <div class="header">
-          <div class="breadcrumb">Editar Habitación / Habitaciones / Editar</div>
-          <div class="user-info">
-            <span>María Fernández</span>
-            <span class="user-role">Gerente</span>
-            <div class="user-avatar"></div>
-          </div>
-        </div>
+      <div class="card">
+        <h4>Editar Habitación</h4>
+        <form
+          th:action="@{/habitaciones/editar/{id}(id=${habitacion.idHabitacion})}"
+          th:object="${habitacion}"
+          method="post"
+        >
+          <input type="hidden" th:field="*{idHabitacion}" />
 
-        <!-- Content -->
-        <div class="content">
-          <!-- Form Header -->
-          <div class="form-header">
-            <div class="back-nav">
-              <button class="btn-back btn-detalle" id="btn-back">← Volver al listado</button>
-              <div
-                class="room-badge"
-                th:text="${nuevaHabitacion.numero} + ' • ' + ${nuevaHabitacion.tipoHabitacion.nombre}"
-              >
-                101 • Suite Deluxe
-              </div>
-            </div>
-            <div class="header-actions">
-              <button class="btn-discard btn-detalle" id="btn-discard">Descartar cambios</button>
-              <button
-                type="submit"
-                form="edit-room-form"
-                class="btn-save btn-detalle"
-                id="btn-save"
-              >
-                Guardar cambios
-              </button>
-            </div>
+          <div class="form-group">
+            <label for="numero">Número de Habitación *</label>
+            <input type="text" id="numero" th:field="*{numero}" required />
           </div>
 
-          <!-- Form Container -->
-          <div class="form-container">
-            <form
-              id="edit-room-form"
-              th:action="@{/habitaciones/guardar}"
-              th:object="${nuevaHabitacion}"
-              method="post"
-            >
-              <!-- Basic Info -->
-              <div class="form-grid">
-                <div class="form-group">
-                  <label for="numero">Número</label>
-                  <input type="text" id="numero" th:field="*{numero}" required />
-                </div>
-                <div class="form-group">
-                  <label for="tipo">Tipo</label>
-                  <select id="tipo" th:field="*{tipo.id}" required>
-                    <option
-                      th:each="tipoItem : ${tipo}"
-                      th:value="${tipoItem.id}"
-                      th:text="${tipoItem.nombre}"
-                      th:selected="${nuevaHabitacion.tipo != null and tipoItem.id == nuevaHabitacion.tipo.id}"
-                    ></option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="precio">Precio por noche</label>
-                  <input type="number" id="precio" th:field="*{precio}" step="0.01" required />
-                </div>
-                <div class="form-group">
-                  <label for="estado">Estado</label>
-                  <select id="estado" th:field="*{estado}" required>
-                    <option value="disponible">Disponible</option>
-                    <option value="ocupada">Ocupada</option>
-                    <option value="mantenimiento">Mantenimiento</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Capacidad</label>
-                  <div class="capacity-control">
-                    <button type="button" class="capacity-btn" id="decrease-capacity">−</button>
-                    <div class="capacity-display" id="capacity-display">
-                      <span th:text="*{capacidad} + ' huéspedes'">2 huéspedes</span>
-                    </div>
-                    <button type="button" class="capacity-btn" id="increase-capacity">+</button>
-                  </div>
-                  <input type="hidden" id="capacidad" th:field="*{capacidad}" />
-                </div>
-                <div class="form-group">
-                  <label for="piso">Piso</label>
-                  <input type="number" id="piso" th:field="*{piso}" min="1" />
-                </div>
-              </div>
-
-              <!-- Description -->
-              <div class="form-group description-group">
-                <label for="descripcion">Descripción</label>
-                <textarea id="descripcion" th:field="*{descripcion}" rows="3"></textarea>
-              </div>
-
-              <!-- Services -->
-              <div class="services-section">
-                <div class="form-grid">
-                  <div class="form-group">
-                    <label>Servicios</label>
-                    <div class="service-tags">
-                      <span class="service-tag wifi">Wi-Fi</span>
-                      <span class="service-tag minibar">Minibar</span>
-                      <span class="service-tag tv">TV</span>
-                      <span class="service-tag ac">A/C</span>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="politica">Política de cancelación</label>
-                    <input type="text" id="politica" th:field="*{politicaCancelacion}" />
-                  </div>
-                </div>
-              </div>
-
-              <!-- Gallery -->
-              <div class="gallery-section">
-                <div class="gallery-header">
-                  <div class="gallery-title">Galería</div>
-                  <button type="button" class="btn-upload btn-detalle" id="btn-upload">
-                    Subir imágenes
-                  </button>
-                </div>
-                <div class="gallery-grid">
-                  <div class="gallery-item">
-                    <img
-                      src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=200&fit=crop"
-                      alt="Vista de la habitación"
-                    />
-                  </div>
-                  <div class="gallery-item">
-                    <img
-                      src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&h=200&fit=crop"
-                      alt="Baño de la suite"
-                    />
-                  </div>
-                  <div class="gallery-item">
-                    <img
-                      src="https://th.bing.com/th/id/R.eedc075f3e2833fab0f246129848ca21?rik=TPLbwlMpEkv6hQ&pid=ImgRaw&r=0"
-                      alt="Balcón con vista al mar"
-                    />
-                  </div>
-                  <div class="gallery-item">
-                    <img
-                      src="https://tse1.mm.bing.net/th/id/OIP.xzOtUp3yT0zSxKz4J_NLfAHaFC?rs=1&pid=ImgDetMain&o=7&rm=3"
-                      alt="Área de estar"
-                    />
-                  </div>
-                </div>
-              </div>
-            </form>
-
-            <!-- Footer -->
-            <div class="form-footer">
-              <div class="auto-save">Último guardado automático: hace 2 minutos</div>
-              <div class="footer-actions">
-                <button class="btn-delete btn-detalle" id="btn-delete">
-                  Deshabilitar habitación
-                </button>
-                <button
-                  type="submit"
-                  form="edit-room-form"
-                  class="btn-save-changes btn-detalle"
-                  id="btn-save-changes"
-                >
-                  Guardar cambios
-                </button>
-              </div>
-            </div>
+          <div class="form-group">
+            <label for="precioPorNoche">Precio por Noche *</label>
+            <input
+              type="number"
+              step="0.01"
+              id="precioPorNoche"
+              th:field="*{precioPorNoche}"
+              min="0"
+              required
+            />
           </div>
-        </div>
+
+          <div class="form-group">
+            <label for="estado">Estado *</label>
+            <select id="estado" th:field="*{estado}" required>
+              <option value="">Seleccione un estado</option>
+              <option value="Disponible" th:selected="${habitacion.estado == 'Disponible'}">
+                Disponible
+              </option>
+              <option value="Ocupada" th:selected="${habitacion.estado == 'Ocupada'}">
+                Ocupada
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="capacidad">Capacidad *</label>
+            <input type="number" id="capacidad" th:field="*{capacidad}" min="1" max="10" required />
+          </div>
+
+          <div class="form-group">
+            <label for="tipoHabitacion">Tipo *</label>
+            <select id="tipoHabitacion" th:field="*{tipoHabitacion.id}" required>
+              <option value="">Seleccione un tipo</option>
+              <option
+                th:each="tipo : ${tiposHabitacion}"
+                th:value="${tipo.id}"
+                th:text="${tipo.nombre}"
+                th:selected="${habitacion.tipoHabitacion.id == tipo.id}"
+              ></option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" th:field="*{descripcion}"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="imagenUrl">URLs de Imágenes</label>
+            <textarea
+              id="imagenUrl"
+              name="imagenUrlString"
+              rows="3"
+              th:text="${habitacion.imagenUrl != null ? #strings.arrayJoin(habitacion.imagenUrl, '\n') : ''}"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+          <a href="/habitaciones" class="btn btn-secondary">Cancelar</a>
+        </form>
       </div>
     </div>
-
-    <input type="file" id="file-input" multiple accept="image/*" hidden />
-    <script th:src="@{/JS/editarhab.js}"></script>
   </body>
 </html>

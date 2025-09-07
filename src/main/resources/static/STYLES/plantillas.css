@@ -412,3 +412,25 @@ textarea {
   background: linear-gradient(90deg, #e09a00, #ffb733);
   transform: translateY(-2px);
 }
+.sidebar-header {
+  display: flex;
+  align-items: center; /* centra verticalmente */
+  gap: 10px; /* espacio entre logo y texto */
+}
+
+.sidebar-header img {
+  width: 50px; /* ajusta el tamaño del logo si lo quieres más pequeño */
+  height: auto;
+}
+
+.sidebar-title h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.sidebar-title span {
+  display: inline;
+  margin-left: 5px;
+  font-size: 0.9rem;
+  color: #aaa;
+}

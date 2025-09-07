@@ -2,12 +2,13 @@ package com.example.lumaresort.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.ui.Model; 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.lumaresort.entities.Habitacion;
 import com.example.lumaresort.entities.TipoHabitacion;
@@ -27,13 +28,16 @@ public class TipoHabitacionController {
     @Autowired
     private HabitacionService habitacionService;
 
-    @GetMapping
-    public String listarTodos(Model model) {
-        model.addAttribute("tipos", service.listarTodos());
-        model.addAttribute("tipoNuevo", new TipoHabitacion());
-        model.addAttribute("usuarioRegistrado", usuario);
-        return "lista";
-    }
+@GetMapping
+public String listarTodos(Model model) {
+    model.addAttribute("tipos", service.listarTodos());
+    model.addAttribute("tipoNuevo", new TipoHabitacion());
+    model.addAttribute("usuarioRegistrado", usuario);
+    model.addAttribute("activePage", "tipos");
+
+    return "lista";
+}
+
 
     @PostMapping("/crear")
     public String crear(@ModelAttribute TipoHabitacion tipo) {
@@ -68,14 +72,12 @@ public class TipoHabitacionController {
     }
 
     //http://localhost:8090/tipos/{id}/crearHabitacion
-    @GetMapping("{id}/crearHabitacion")
-    public String crearHabitacion(@PathVariable Long id, Model model) {
-        //TipoHabitacion tipo = service.buscarPorId(id).orElseThrow();
-        //model.addAttribute("tipo", tipo);
-        model.addAttribute("tipoHabitacionId", id);
-        model.addAttribute("habitacion", new com.example.lumaresort.entities.Habitacion());
-        return "crearHab";
-    }
+    @GetMapping("/habitaciones/{id}/json")
+@ResponseBody
+public Habitacion getHabitacionJson(@PathVariable Long id) {
+    return habitacionService.buscarHabitacionPorId(id);
+}
+
 
 // Método para mostrar formulario de editar habitación
     @GetMapping("/{tipoId}/editarHabitacion/{habitacionId}")

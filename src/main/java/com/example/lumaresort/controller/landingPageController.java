@@ -29,4 +29,12 @@ public class landingPageController {
         usuario = null;
         return "redirect:/";
     }
+
+    @GetMapping("/salir")
+    public String salir(Model model) {
+        model.addAttribute("usuario", new Usuario());
+
+        return "index";
+    }
+
 }

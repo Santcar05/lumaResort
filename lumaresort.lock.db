@@ -1,6 +1,6 @@
 #FileLock
-#Sun Sep 07 00:11:46 GMT-05:00 2025
-hostName=Juanesdt
-id=199229668f053e2fcef05b67450bba474314740f44b
+#Sun Sep 07 11:26:31 COT 2025
+hostName=DESKTOP-8S4HO4M
+id=199250027773a51167450bef09be45c5f3c315df1a6
 method=file
-server=192.168.10.10\:64902
+server=192.168.1.224\:61220

@@ -84,11 +84,10 @@
                 th:text="${habitacion.descripcion != null ? habitacion.descripcion : 'Sin descripción'}"
               ></td>
               <td>
-                <button
-                  class="btn btn-warning btn-sm"
-                  onclick="openModal('editar', [[${habitacion.idHabitacion}]])"
-                >
-                  Editar
+                <button class="btn btn-warning btn-sm">
+                  <a th:href="@{/habitaciones/editar/{id}(id=${habitacion.idHabitacion})}">
+                    Editar
+                  </a>
                 </button>
                 <a
                   th:href="@{/habitaciones/eliminar/{id}(id=${habitacion.idHabitacion})}"

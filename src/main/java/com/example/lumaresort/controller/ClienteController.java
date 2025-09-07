@@ -29,36 +29,35 @@ public class ClienteController {
 
     // Listar clientes
     // Listar clientes
-@GetMapping
-public String listar(Model model) {
-    model.addAttribute("clientes", service.listarClientes());
-    model.addAttribute("nuevoCliente", new Cliente());
-    model.addAttribute("usuarioRegistrado", usuario);
+    @GetMapping
+    public String listar(Model model) {
+        model.addAttribute("clientes", service.listarClientes());
+        model.addAttribute("nuevoCliente", new Cliente());
+        model.addAttribute("usuarioRegistrado", usuario);
 
-    // Foto de perfil de María Fernanda (Gerente)
-    String fotoPerfil = "https://static.wikia.nocookie.net/dinosaurkingrockz/images/4/4d/Rica_Matsumoto.jpg/revision/latest/scale-to-width-down/240?cb=20180131212121";
-    model.addAttribute("fotoPerfil", fotoPerfil);
+        // Foto de perfil de María Fernanda (Gerente)
+        String fotoPerfil = "https://static.wikia.nocookie.net/dinosaurkingrockz/images/4/4d/Rica_Matsumoto.jpg/revision/latest/scale-to-width-down/240?cb=20180131212121";
+        model.addAttribute("fotoPerfil", fotoPerfil);
 
-    // 🔹 Activa el botón Clientes en la sidebar
-    model.addAttribute("activePage", "clientes");
+        // 🔹 Activa el botón Clientes en la sidebar
+        model.addAttribute("activePage", "clientes");
 
-    return "clientes"; // clientes.html en templates
-}
+        return "clientes"; // clientes.html en templates
+    }
 
 // Editar cliente
-@GetMapping("/editar/{id}")
-public String editar(@PathVariable Long id, Model model) {
-    Cliente cliente = service.buscarPorId(id);
-    model.addAttribute("nuevoCliente", cliente);
-    model.addAttribute("clientes", service.listarClientes());
-    model.addAttribute("usuarioRegistrado", usuario);
-    String fotoPerfil = "https://static.wikia.nocookie.net/dinosaurkingrockz/images/4/4d/Rica_Matsumoto.jpg/revision/latest/scale-to-width-down/240?cb=20180131212121";
-    model.addAttribute("fotoPerfil", fotoPerfil);
-    // Activa el botón Clientes
-    model.addAttribute("activePage", "clientes");
-    return "clientes";
-}
-
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable Long id, Model model) {
+        Cliente cliente = service.buscarPorId(id);
+        model.addAttribute("nuevoCliente", cliente);
+        model.addAttribute("clientes", service.listarClientes());
+        model.addAttribute("usuarioRegistrado", usuario);
+        String fotoPerfil = "https://static.wikia.nocookie.net/dinosaurkingrockz/images/4/4d/Rica_Matsumoto.jpg/revision/latest/scale-to-width-down/240?cb=20180131212121";
+        model.addAttribute("fotoPerfil", fotoPerfil);
+        // Activa el botón Clientes
+        model.addAttribute("activePage", "clientes");
+        return "clientes";
+    }
 
     // Crear o editar
     @PostMapping("/guardar")
@@ -77,6 +76,7 @@ public String editar(@PathVariable Long id, Model model) {
     }
 
     // Editar cliente
+    /* 
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
         Cliente cliente = service.buscarPorId(id);
@@ -90,4 +90,5 @@ public String editar(@PathVariable Long id, Model model) {
 
         return "clientes";
     }
+     */
 }

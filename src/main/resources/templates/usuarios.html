@@ -2,48 +2,67 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Ajustes de Usuario</title>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/STYLES/estilosLandingPage.css}" />
+    <link rel="stylesheet" th:href="@{/STYLES/generales.css}" />
+    <link rel="stylesheet" th:href="@{/STYLES/plantillas.css}" />
+    <link rel="stylesheet" th:href="@{/STYLES/usuario.css}">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
 </head>
 <body>
-   <th:block th:replace="~{fragmentos :: header_f}"></th:block>
-    <div class="container mt-5">
-        <h2>Ajustes de Usuario</h2>
-        
-        <!-- Mensajes de éxito o error -->
-        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
-        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <th:block th:replace="~{fragmentos :: header_f}"></th:block>
+    
+    <!-- Contenedor principal con más espacio superior -->
+    <div class="container py-5 mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-body p-4">
+                        <h2 class="text-center mb-4">Ajustes de Usuario</h2>
+                        
+                        <!-- Mensajes de éxito o error -->
+                        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+                        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
-        <!-- Formulario de datos personales -->
-        <form th:action="@{/Usuario/actualizar-datos}" th:object="${usuario}" method="post">
-            <!-- Campo oculto para el ID -->
-            <input type="hidden" th:field="*{idUsuario}" />
-            
-            <div class="form-group">
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" th:field="*{nombre}" class="form-control"/>
-                <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger"></span>
+                        <!-- Formulario de datos personales -->
+                        <form th:action="@{/Usuario/actualizar-datos}" th:object="${usuario}" method="post">
+                            <input type="hidden" th:field="*{idUsuario}" />
+                            
+                            <div class="form-group">
+                                <label for="nombre">Nombre:</label>
+                                <input type="text" id="nombre" th:field="*{nombre}" class="form-control"/>
+                                <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="apellido">Apellido:</label>
+                                <input type="text" id="apellido" th:field="*{apellido}" class="form-control"/>
+                                <span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="correo">Email:</label>
+                                <input type="email" id="correo" th:field="*{correo}" class="form-control"/>
+                                <span th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="telefono">Teléfono:</label>
+                                <input type="tel" id="telefono" th:field="*{telefono}" class="form-control"/>
+                                <span th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" class="text-danger"></span>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary px-4">Guardar Cambios</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="apellido">Apellido:</label>
-                <input type="text" id="apellido" th:field="*{apellido}" class="form-control"/>
-                <span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="correo">Email:</label>
-                <input type="email" id="correo" th:field="*{correo}" class="form-control"/>
-                <span th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" th:field="*{telefono}" class="form-control"/>
-                <span th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" class="text-danger"></span>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-        </form>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

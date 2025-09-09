@@ -1,114 +1,96 @@
+/* Fondo principal con la imagen del servicio */
 .main_servicio {
-  padding: 2rem;
-  max-width: 400px;
-  margin: 0 auto;
-  background-color: var(--section-blue);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  font-family: 'Poppins', sans-serif;
-  color: var(--card-text);
-  transition: background-color 0.3s ease;
-}
-
-.servicio-container {
-  width: auto;
+  position: relative;
+  min-height: calc(72vh);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 60px 20px;
   display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
 }
 
-.servicio-info {
-  flex: 1;
-  max-width: 60%;
-}
-
-.servicio-titulo {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-  color: #fff;
-  text-align: center;
-}
-
-.servicio-imagen {
-  object-fit: cover;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(219, 17, 17, 0.1);
-  margin-bottom: 1.5rem;
+/* Capa oscura para mejorar la legibilidad del texto */
+.main_servicio .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 500px;
-  border: #000000;
-  border-radius: 8px;
+  height: 100%;
+  background: rgba(20, 20, 20, 0.55);
+  z-index: 1;
 }
 
-.servicio-detalles {
-  padding: 1.5rem;
-  border-radius: 8px;
+/* Contenido sobre la imagen */
+.contenido-servicio {
+  position: relative;
+  z-index: 2;
+  max-width: 1600px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  font-family: 'Inter', sans-serif;
+  color: #1c1c1c;
 }
 
+/* Título */
+.servicio-titulo {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Descripción */
 .servicio-descripcion {
-  font-size: 1rem;
-  color: var(--card-text);
-  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
   line-height: 1.6;
 }
 
+/* Precio */
 .servicio-precio {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.servicio-precio-valor {
   font-weight: bold;
-  color: #ffffff;
+  color: #0077cc;
 }
 
-.comentarios-section {
-  flex: 1;
-  max-width: 40%;
-  background-color: var(--section-beige);
-  border-radius: 8px;
-  padding: 1.5rem;
-}
-
-.comentarios-section h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-  color: var(--card-text);
-}
-
+/* Comentarios */
 .comentarios-lista {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .comentario-item {
-  border-bottom: 1px solid #020101;
-  padding: 1rem 0;
-}
-
-.comentario-item:last-child {
-  border-bottom: none;
-}
-
-.comentario-contenido {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  background: #f7f7f7;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
 }
 
 .comentario-texto {
-  line-height: 1.5;
-  color: #ffffff;
+  font-size: 1rem;
+  margin-bottom: 8px;
 }
 
 .comentario-meta {
+  font-size: 0.9rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  font-size: 0.9rem;
-  color: #020202;
+  color: #666;
 }
 
 .estrellas {
-  color: #f0b429;
+  color: gold;
+  font-size: 1.1rem;
 }
 
 @media (max-width: 768px) {

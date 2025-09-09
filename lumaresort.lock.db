@@ -1,6 +1,6 @@
 #FileLock
-#Mon Sep 08 19:53:00 COT 2025
+#Mon Sep 08 21:24:08 COT 2025
 hostName=DESKTOP-8S4HO4M
-id=1992bf62eefc1adbffcf8742ed363955af5d193bbea
+id=1992c499d5e7ff45be3e5695e64266068b24c22e99b
 method=file
-server=192.168.1.224\:60992
+server=192.168.1.224\:64420

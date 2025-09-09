@@ -337,3 +337,155 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('mouseleave', resumeCarousel);
   });
 });
+
+//_--------------------DURACION DEL MENU DERECHO---------------------
+// delayed-dropdown.js
+document.addEventListener('DOMContentLoaded', () => {
+  const menus = document.querySelectorAll('.dropdown-menu.right-menu');
+
+  menus.forEach(menu => {
+    // 0) Ajustes de transición y estado (sin tocar tu CSS fuente)
+    menu.style.setProperty('transition', 'opacity 0.8s ease', 'important');
+    // No forzamos estado inicial; dejemos que tu CSS lo tenga oculto
+
+    let hideTimer = null;
+    let isHiding = false;
+
+    const showMenu = () => {
+      isHiding = false;
+      clearTimeout(hideTimer);
+
+      // Si tu CSS usa display:none/visibility:hidden, lo anulamos en línea
+      menu.style.setProperty('display', 'block', 'important');
+      menu.style.setProperty('visibility', 'visible', 'important');
+      menu.style.setProperty('pointer-events', 'auto', 'important');
+
+      // Forzar que la transición se aplique correctamente (fade-in si estaba en 0)
+      // requestAnimationFrame asegura que el cambio a opacity=1 sea transicionable
+      requestAnimationFrame(() => {
+        menu.style.setProperty('opacity', '1', 'important');
+      });
+    };
+
+    const startHideAfterDelay = () => {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        isHiding = true;
+        // Inicia fade-out (0.8s)
+        menu.style.setProperty('opacity', '0', 'important');
+
+        // Cuando acabe el fade, si nadie interrumpió, ocultamos del todo
+        const onEnd = e => {
+          if (e.propertyName === 'opacity' && isHiding) {
+            menu.style.setProperty('visibility', 'hidden', 'important');
+            menu.style.setProperty('pointer-events', 'none', 'important');
+            // Si tu layout lo requiere, puedes descomentar la siguiente línea:
+            // menu.style.setProperty("display", "none", "important");
+          }
+        };
+        menu.addEventListener('transitionend', onEnd, { once: true });
+
+        // Fallback por si transitionend no dispara (Safari/condiciones extrañas)
+        setTimeout(() => {
+          if (isHiding) {
+            menu.style.setProperty('visibility', 'hidden', 'important');
+            menu.style.setProperty('pointer-events', 'none', 'important');
+            // menu.style.setProperty("display", "none", "important");
+          }
+        }, 820);
+      }, 2000); // <-- 2 segundos antes de empezar el fade-out
+    };
+
+    // 1) Definimos un "área de activación": el propio menú + su contenedor y el img más cercano.
+    const container = menu.parentElement;
+    const triggers = new Set([menu, container, menu.previousElementSibling].filter(Boolean));
+
+    // Si hay una imagen dentro del contenedor (típico caso), la añadimos como trigger
+    if (container) {
+      const img = container.querySelector('img');
+      if (img) triggers.add(img);
+    }
+
+    // 2) Eventos: entrar muestra; salir programa ocultado
+    triggers.forEach(el => {
+      el.addEventListener('mouseenter', showMenu);
+      el.addEventListener('mouseleave', startHideAfterDelay);
+    });
+  });
+});
+//------------------------------------------------------------------------
+// ---------------------- DURACION DEL MENU IZQUIERDO ----------------------
+// delayed-dropdown.js
+document.addEventListener('DOMContentLoaded', () => {
+  const menus = document.querySelectorAll('.dropdown-menu.left-menu');
+
+  menus.forEach(menu => {
+    // 0) Ajustes de transición y estado (sin tocar tu CSS fuente)
+    menu.style.setProperty('transition', 'opacity 0.8s ease', 'important');
+    // No forzamos estado inicial; dejemos que tu CSS lo tenga oculto
+
+    let hideTimer = null;
+    let isHiding = false;
+
+    const showMenu = () => {
+      isHiding = false;
+      clearTimeout(hideTimer);
+
+      // Si tu CSS usa display:none/visibility:hidden, lo anulamos en línea
+      menu.style.setProperty('display', 'block', 'important');
+      menu.style.setProperty('visibility', 'visible', 'important');
+      menu.style.setProperty('pointer-events', 'auto', 'important');
+
+      // Forzar que la transición se aplique correctamente (fade-in si estaba en 0)
+      // requestAnimationFrame asegura que el cambio a opacity=1 sea transicionable
+      requestAnimationFrame(() => {
+        menu.style.setProperty('opacity', '1', 'important');
+      });
+    };
+
+    const startHideAfterDelay = () => {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        isHiding = true;
+        // Inicia fade-out (0.8s)
+        menu.style.setProperty('opacity', '0', 'important');
+
+        // Cuando acabe el fade, si nadie interrumpió, ocultamos del todo
+        const onEnd = e => {
+          if (e.propertyName === 'opacity' && isHiding) {
+            menu.style.setProperty('visibility', 'hidden', 'important');
+            menu.style.setProperty('pointer-events', 'none', 'important');
+            // Si tu layout lo requiere, puedes descomentar la siguiente línea:
+            // menu.style.setProperty("display", "none", "important");
+          }
+        };
+        menu.addEventListener('transitionend', onEnd, { once: true });
+
+        // Fallback por si transitionend no dispara (Safari/condiciones extrañas)
+        setTimeout(() => {
+          if (isHiding) {
+            menu.style.setProperty('visibility', 'hidden', 'important');
+            menu.style.setProperty('pointer-events', 'none', 'important');
+            // menu.style.setProperty("display", "none", "important");
+          }
+        }, 820);
+      }, 2000); // <-- 2 segundos antes de empezar el fade-out
+    };
+
+    // 1) Definimos un "área de activación": el propio menú + su contenedor y el img más cercano.
+    const container = menu.parentElement;
+    const triggers = new Set([menu, container, menu.previousElementSibling].filter(Boolean));
+
+    // Si hay una imagen dentro del contenedor (típico caso), la añadimos como trigger
+    if (container) {
+      const img = container.querySelector('img');
+      if (img) triggers.add(img);
+    }
+
+    // 2) Eventos: entrar muestra; salir programa ocultado
+    triggers.forEach(el => {
+      el.addEventListener('mouseenter', showMenu);
+      el.addEventListener('mouseleave', startHideAfterDelay);
+    });
+  });
+});

@@ -265,7 +265,7 @@ main {
   background: var(--bg-color);
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   display: none;
   z-index: 1000;
   min-width: 200px;
@@ -456,7 +456,6 @@ button:hover
 
 .FooterSection a {
   margin: 0 8px;
-  font-size: 2em;
   color: white;
   text-decoration: none;
   transition: transform 0.3s ease, color 0.3s ease;

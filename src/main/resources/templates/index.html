@@ -249,9 +249,11 @@
               nuestro servicio personalizado. ¡Tu escape perfecto comienza aquí!
             </p>
             <div class="BtnContainer">
-              <button class="btn-detalle" th:text="#{services.button}">
-                VER TODOS LOS SERVICIOS
-              </button>
+              <form th:action="@{/servicios}" method="get">
+                <button type="submit" class="btn-detalle" th:text="#{services.button}">
+                  VER TODOS LOS SERVICIOS
+                </button>
+              </form>
             </div>
           </div>
         </div>

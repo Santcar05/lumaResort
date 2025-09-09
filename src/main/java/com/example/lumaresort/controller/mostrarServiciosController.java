@@ -59,8 +59,13 @@ public class mostrarServiciosController {
     }
 
     @PostMapping("/tabla/buscarPorNombre")
-    public String buscarPorNombre(@RequestParam("buscar") String nombre, Model model) {
-        model.addAttribute("servicios", servicioService.buscarPorNombre(nombre));
+    public String buscarPorNombre(@RequestParam("buscar") String nombre, @RequestParam String accion, Model model) {
+        if ("limpiar".equals(accion)) {
+            model.addAttribute("servicios", servicioService.findAll());
+        } else {
+            model.addAttribute("servicios", servicioService.buscarPorNombre(nombre));
+        }
+
         model.addAttribute("usuario", usuario);
         return "mostrarServicios";
     }

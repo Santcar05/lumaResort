@@ -326,6 +326,7 @@ main {
 }
 
 .MainNav a,
+.SearchFormHeader button,
 .SearchForm button {
   display: flex;
   align-items: center;
@@ -340,17 +341,29 @@ main {
 }
 
 .MainNav a:hover,
+.SearchFormHeader button:hover,
 .SearchForm button:hover {
   transform: translateY(-2px);
   color: #ffd700;
 }
 
+.SearchFormHeader {
+  opacity: 0;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
 .SearchForm {
   display: flex;
   gap: 10px;
   align-items: center;
+  transition: opacity 0.3s ease;
+  pointer-events: auto;
 }
 
+.SearchFormHeader input,
 .SearchForm input {
   padding: 7px 10px;
   border: none;
@@ -360,14 +373,28 @@ main {
   transition: box-shadow 0.3s;
 }
 
+.SearchFormHeader input:focus,
 .SearchForm input:focus {
   box-shadow: 0 0 5px white;
 }
 
+.SearchFormHeader button,
 .SearchForm button {
+  cursor: pointer;
   background: none;
   text-align: center;
   border: none;
+}
+
+.search-icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+#toggle-search:checked ~ .SearchFormHeader {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* ============================================= */
@@ -602,6 +629,24 @@ button:hover
   }
 
   .SearchForm button {
+    padding: 2px;
+    max-width: 60px;
+    max-height: 30px;
+  }
+
+  .SearchFormHeader {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+  }
+
+  .SearchFormHeader input {
+    padding: 2px;
+  }
+
+  .SearchFormHeader button {
     padding: 2px;
     max-width: 60px;
     max-height: 30px;

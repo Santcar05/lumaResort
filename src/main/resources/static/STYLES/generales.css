@@ -211,9 +211,7 @@ main {
 .LogoImg {
   width: 60px;
   height: 60px;
-  border-radius: 50%;
   object-fit: cover;
-  border: 2px solid white;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }

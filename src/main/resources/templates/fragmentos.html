@@ -96,8 +96,16 @@
           </ul>
         </nav>
 
+        <!-- Checkbox oculto -->
+        <input type="checkbox" id="toggle-search" hidden />
+
+        <!-- Icono lupa que actúa como label -->
+        <label for="toggle-search">
+          <img src="/IMAGES/lupa.png" alt="Buscar" class="search-icon" />
+        </label>
+
         <!-- Barra de búsqueda -->
-        <form class="SearchForm" role="search">
+        <form class="SearchFormHeader" role="search">
           <input
             type="text"
             th:placeholder="#{search.placeholder}"

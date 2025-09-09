@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.lumaresort.entities.Habitacion;
 import com.example.lumaresort.entities.TipoHabitacion;
@@ -22,26 +23,26 @@ public class TipoHabitacionController {
 
     @Autowired
     private Usuario usuario;
+
     @Autowired
     private TipoHabitacionService service;
 
     @Autowired
     private HabitacionService habitacionService;
 
-@GetMapping
-public String listarTodos(Model model) {
-    model.addAttribute("tipos", service.listarTodos());
-    model.addAttribute("tipoNuevo", new TipoHabitacion());
-    model.addAttribute("usuarioRegistrado", usuario);
-    model.addAttribute("activePage", "tipos");
-
-    return "lista";
-}
-
+    @GetMapping
+    public String listarTodos(Model model) {
+        model.addAttribute("tipos", service.listarTodos());
+        model.addAttribute("tipoNuevo", new TipoHabitacion());
+        model.addAttribute("usuarioRegistrado", usuario);
+        model.addAttribute("activePage", "tipos");
+        return "lista";
+    }
 
     @PostMapping("/crear")
-    public String crear(@ModelAttribute TipoHabitacion tipo) {
+    public String crear(@ModelAttribute TipoHabitacion tipo, RedirectAttributes redirectAttributes) {
         service.crear(tipo);
+        redirectAttributes.addFlashAttribute("successMessage", "✅ Tipo de habitación agregado correctamente.");
         return "redirect:/tipos";
     }
 
@@ -52,73 +53,76 @@ public String listarTodos(Model model) {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String actualizar(@PathVariable Long id, @ModelAttribute TipoHabitacion tipo) {
+    public String actualizar(@PathVariable Long id, @ModelAttribute TipoHabitacion tipo, RedirectAttributes redirectAttributes) {
         service.actualizar(id, tipo);
+        redirectAttributes.addFlashAttribute("successMessage", "✅ Tipo de habitación editado correctamente.");
         return "redirect:/tipos";
     }
 
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Long id) {
-        service.eliminar(id);
-        return "redirect:/tipos";
+    public String eliminar(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            service.eliminar(id);
+            redirectAttributes.addFlashAttribute("successMessage", "✅ El tipo de habitación se eliminó correctamente.");
+            return "redirect:/tipos";
+        } catch (IllegalStateException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("tipos", service.listarTodos());
+            model.addAttribute("tipoNuevo", new TipoHabitacion());
+            model.addAttribute("usuarioRegistrado", usuario);
+            model.addAttribute("activePage", "tipos");
+            return "lista"; 
+        }
     }
 
     @GetMapping("/ver/{id}")
     public String verDetalle(@PathVariable Long id, Model model) {
-        TipoHabitacion tipo = service.buscarPorId(id).orElseThrow();
-        model.addAttribute("tipo", tipo);
-        model.addAttribute("habitaciones", tipo.getHabitaciones());
-        return "detalle"; // <- este es el nombre de la nueva plantilla detalle.html
+        TipoHabitacion tipoHabitacion = service.buscarPorId(id).orElseThrow();
+        model.addAttribute("tipoHabitacion", tipoHabitacion); // 🔹 corregido el nombre
+        model.addAttribute("habitaciones", tipoHabitacion.getHabitaciones());
+        return "detalle";
     }
 
-    //http://localhost:8090/tipos/{id}/crearHabitacion
     @GetMapping("/habitaciones/{id}/json")
-@ResponseBody
-public Habitacion getHabitacionJson(@PathVariable Long id) {
-    return habitacionService.buscarHabitacionPorId(id);
-}
+    @ResponseBody
+    public Habitacion getHabitacionJson(@PathVariable Long id) {
+        return habitacionService.buscarHabitacionPorId(id);
+    }
 
-
-// Método para mostrar formulario de editar habitación
     @GetMapping("/{tipoId}/editarHabitacion/{habitacionId}")
     public String mostrarFormularioEditarHabitacion(@PathVariable Long tipoId,
-            @PathVariable Long habitacionId,
-            Model model) {
+                                                    @PathVariable Long habitacionId,
+                                                    Model model) {
         Habitacion habitacion = habitacionService.buscarHabitacionPorId(habitacionId);
         model.addAttribute("habitacion", habitacion);
         model.addAttribute("tipoHabitacionId", tipoId);
-        model.addAttribute("modoEdicion", true); // Para diferenciar entre crear y editar
-        return "crearHab"; // Reutilizar la misma plantilla
+        model.addAttribute("modoEdicion", true);
+        return "crearHab"; 
     }
 
-// Método para procesar la actualización
     @PostMapping("/{tipoId}/editarHabitacion/{habitacionId}/actualizar")
     public String actualizarHabitacion(@ModelAttribute("habitacion") Habitacion habitacion,
-            @PathVariable Long tipoId,
-            @PathVariable Long habitacionId) {
+                                       @PathVariable Long tipoId,
+                                       @PathVariable Long habitacionId,
+                                       RedirectAttributes redirectAttributes) {
         habitacionService.actualizarHabitacion(habitacionId, habitacion, tipoId);
-        return "redirect:/tipos/ver/" + tipoId; // Regresar al detalle del tipo
+        redirectAttributes.addFlashAttribute("successMessage", "✅ Habitación actualizada correctamente.");
+        return "redirect:/tipos/ver/" + tipoId;
     }
 
     @GetMapping("/habitaciones/ver/{id}/borrar")
-    public String borrarHabitacion(@PathVariable Long id) {
+    public String borrarHabitacion(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         habitacionService.eliminarHabitacion(id);
+        redirectAttributes.addFlashAttribute("successMessage", "✅ Habitación eliminada correctamente.");
         return "redirect:/tipos";
     }
 
     @PostMapping("/{id}/crearHabitacion/habitaciones/crear")
-    public String crearHabitacion(@ModelAttribute("habitacion") Habitacion habitacion, @PathVariable Long id) {
-        // Lógica para crear la habitación
+    public String crearHabitacion(@ModelAttribute("habitacion") Habitacion habitacion,
+                                  @PathVariable Long id,
+                                  RedirectAttributes redirectAttributes) {
         habitacionService.crearHabitacion(habitacion, id);
-
-        return "redirect:/tipos"; // Redirigir a la lista de tipos de habitación
+        redirectAttributes.addFlashAttribute("successMessage", "✅ Habitación creada correctamente.");
+        return "redirect:/tipos/ver/" + id; 
     }
-
-    @GetMapping("tipos/{id}/editar")
-    public String editarTipoHabitacion(@PathVariable Long id, Model model) {
-        TipoHabitacion tipo = service.buscarPorId(id).orElseThrow();
-        model.addAttribute("tipo", tipo);
-        return "editar";
-    }
-
 }

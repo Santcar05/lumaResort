@@ -12,26 +12,21 @@
     <div class="container mt-4">
       <h2>Tipos de Habitación</h2>
 
+      <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span th:text="${errorMessage}"></span>
+      </div>
+
       <!-- Formulario para crear nuevo tipo -->
       <div class="card mb-4">
         <div class="card-header">
           <h4>Nuevo Tipo de Habitación</h4>
         </div>
         <div class="card-body">
-          <form
-            th:action="@{/tipos/crear}"
-            th:object="${tipoNuevo}"
-            method="post"
-          >
+          <form th:action="@{/tipos/crear}" th:object="${tipoNuevo}" method="post">
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="nombre"
-                th:field="*{nombre}"
-                required
-              />
+              <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required />
             </div>
             <div class="mb-3">
               <label for="descripcion" class="form-label">Descripción:</label>
@@ -68,17 +63,16 @@
                 <td th:text="${tipo.nombre}"></td>
                 <td th:text="${tipo.descripcion}"></td>
                 <td>
-                  <a
-                    th:href="@{/tipos/editar/{id}(id=${tipo.id})}"
-                    class="btn btn-warning btn-sm"
-                    >Editar</a
-                  >
+                  <a th:href="@{/tipos/editar/{id}(id=${tipo.id})}" class="btn btn-warning btn-sm">
+                    Editar
+                  </a>
                   <a
                     th:href="@{/tipos/eliminar/{id}(id=${tipo.id})}"
                     class="btn btn-danger btn-sm"
                     onclick="return confirm('¿Estás seguro de eliminar este tipo?')"
-                    >Eliminar</a
                   >
+                    Eliminar
+                  </a>
                 </td>
               </tr>
             </tbody>

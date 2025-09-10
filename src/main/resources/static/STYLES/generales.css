@@ -225,6 +225,7 @@ main {
 }
 
 .LogoTitle {
+  font-family: 'Lobster', cursive;
   font-size: 1.5rem;
   letter-spacing: 2px;
   animation: FadeIn 1.2s ease-out;

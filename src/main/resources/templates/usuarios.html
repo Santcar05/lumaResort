@@ -77,6 +77,22 @@
                   ></span>
                 </div>
 
+                <div class="form-group">
+                  <label for="contrasena">Contrasena:</label>
+                  <input
+                    id="contrasena"
+                    th:field="*{contrasena}"
+                    class="form-control"
+                    type="text"
+                    th:value="${contrasena}"
+                  />
+                  <span
+                    th:if="${#fields.hasErrors('contrasena')}"
+                    th:errors="*{contrasena}"
+                    class="text-danger"
+                  ></span>
+                </div>
+
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary px-4">Guardar Cambios</button>
                 </div>

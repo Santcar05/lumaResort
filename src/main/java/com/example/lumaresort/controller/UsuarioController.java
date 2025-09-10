@@ -96,6 +96,30 @@ public class UsuarioController {
         return "redirect:/Usuario/ajustes";
     }
 
+    // Eliminar cuenta de usuario
+    @PostMapping("/eliminar-cuenta")
+    public String eliminarCuenta(HttpSession session, RedirectAttributes redirectAttributes) {
+        Usuario usuarioActual = (Usuario) session.getAttribute("usuarioLogueado");
+
+        if (usuarioActual == null) {
+            // Si no hay usuario en sesión, redirigir al login
+            return "redirect:/login";
+        }
+
+        try {
+            // Eliminar el usuario de la base de datos
+            usuarioService.eliminar(usuarioActual.getIdUsuario());
+            session.invalidate();
+            redirectAttributes.addFlashAttribute("success", "Tu cuenta ha sido eliminada correctamente.");
+            return "redirect:/";
+
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error al eliminar la cuenta: " + e.getMessage());
+            return "redirect:/Usuario/ajustes";
+        }
+    }
+
+
     // Cambiar contraseña
     @PostMapping("/cambiar-password")
     public String cambiarPassword(@ModelAttribute CambioPasswordDTO cambioPassword,

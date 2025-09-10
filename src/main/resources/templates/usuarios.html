@@ -87,6 +87,25 @@
       </div>
     </div>
 
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-8">
+        <div class="card shadow border-danger">
+          <div class="card-body p-4">
+            <h3 class="text-danger text-center mb-4">Eliminar Cuenta</h3>
+            <p class="text-center mb-4">Una vez eliminada la cuenta, no podrás recuperar tu información.</p>
+            
+            <form th:action="@{/Usuario/eliminar-cuenta}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.');">
+              <div class="text-center">
+                <button type="submit" class="btn btn-danger px-4">
+                  Eliminar Cuenta
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

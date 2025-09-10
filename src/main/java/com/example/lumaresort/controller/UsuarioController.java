@@ -16,7 +16,7 @@ import com.example.lumaresort.service.UsuarioService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/Usuario") 
+@RequestMapping("/Usuario")
 public class UsuarioController {
 
     @Autowired
@@ -42,7 +42,7 @@ public class UsuarioController {
     }
 
     // Actualizar información personal
-   @PostMapping("/actualizar-datos")
+    @PostMapping("/actualizar-datos")
     public String actualizarDatos(@ModelAttribute("usuario") Usuario usuarioForm,
             BindingResult result,
             HttpSession session,
@@ -71,16 +71,16 @@ public class UsuarioController {
         try {
             // Obtener usuario actual de la base de datos
             Usuario usuarioExistente = usuarioService.buscarPorId(usuarioActual.getIdUsuario());
-            
+
             // Actualizar solo los campos permitidos
             usuarioExistente.setNombre(usuarioForm.getNombre());
             usuarioExistente.setApellido(usuarioForm.getApellido());
             usuarioExistente.setCorreo(usuarioForm.getCorreo());
             usuarioExistente.setTelefono(usuarioForm.getTelefono());
-            
+            usuarioExistente.setContrasena(usuarioForm.getContrasena());
+
             // Mantener datos sensibles sin cambios
             // No se modifican: contraseña, roles, permisos
-
             // Guardar cambios
             Usuario usuarioActualizado = usuarioService.actualizar(usuarioExistente);
 
@@ -124,14 +124,14 @@ public class UsuarioController {
             // Verificar que las nuevas contraseñas coincidan
             if (!cambioPassword.getPasswordNueva().equals(cambioPassword.getPasswordConfirmacion())) {
                 redirectAttributes.addFlashAttribute("errorPassword", "Las nuevas contraseñas no coinciden");
-                return "redirect:/Usuario/ajustes"; 
+                return "redirect:/Usuario/ajustes";
             }
 
             // Actualizar contraseña en base de datos
             Usuario usuarioExistente = usuarioService.buscarPorId(usuarioActual.getIdUsuario());
             usuarioExistente.setContrasena(cambioPassword.getPasswordNueva());
             Usuario usuarioActualizado = usuarioService.actualizar(usuarioExistente);
-            
+
             // Actualizar sesión
             session.setAttribute("usuarioLogueado", usuarioActualizado);
 
@@ -141,11 +141,12 @@ public class UsuarioController {
             redirectAttributes.addFlashAttribute("errorPassword", "Error al cambiar la contraseña");
         }
 
-        return "redirect:/Usuario/ajustes"; 
+        return "redirect:/Usuario/ajustes";
     }
 
     // DTO para cambio de contraseña
     public static class CambioPasswordDTO {
+
         private String passwordActual;
         private String passwordNueva;
         private String passwordConfirmacion;

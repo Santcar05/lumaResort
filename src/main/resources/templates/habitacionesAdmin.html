@@ -66,11 +66,19 @@
                 th:text="${habitacion.descripcion != null ? habitacion.descripcion : 'Sin descripción'}"
               ></td>
               <td>
-                <button class="btn btn-warning btn-sm">
-                  <a th:href="@{/habitaciones/editar/{id}(id=${habitacion.idHabitacion})}">
+                <form
+                  th:action="@{/habitaciones/editar/{id}(id=${habitacion.idHabitacion})}"
+                  method="get"
+                >
+                  <button
+                    type="submit"
+                    onclick="openModal('editar', [[${habitacion.idHabitacion}]])"
+                    class="btn btn-warning btn-sm"
+                  >
                     Editar
-                  </a>
-                </button>
+                  </button>
+                </form>
+
                 <a
                   th:href="@{/habitaciones/eliminar/{id}(id=${habitacion.idHabitacion})}"
                   class="btn btn-danger btn-sm"

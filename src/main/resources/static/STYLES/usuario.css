@@ -11,49 +11,6 @@
   --radius: 12px;
 }
 
-body {
-  background: var(--gris-claro);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: var(--blanco);
-  border-bottom: 1px solid #ddd;
-}
-
-header h2 {
-  margin: 0;
-  font-weight: 600;
-  color: var(--azul-nocturno);
-}
-
-header small {
-  color: #666;
-}
-
-header .user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-header .user-info img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-header .badge {
-  background: var(--ambar);
-  color: var(--blanco);
-  font-weight: 600;
-}
-
 /* CONTENEDORES */
 .settings-container {
   max-width: 1200px;

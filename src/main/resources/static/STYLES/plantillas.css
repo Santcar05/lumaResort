@@ -371,7 +371,7 @@ textarea {
 .btn-detalle {
   background: linear-gradient(90deg, #49aee0, #262de0);
   color: #fff;
-  font-size: 0.5em;
+  font-size: 1em;
   font-weight: 600;
   padding: 10x 20px;
   border: none;

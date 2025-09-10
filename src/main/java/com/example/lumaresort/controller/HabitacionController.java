@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.lumaresort.entities.Habitacion;
 import com.example.lumaresort.entities.TipoHabitacion;
@@ -57,7 +57,7 @@ public class HabitacionController {
     // Crear habitación
     @PostMapping("/crear")
     public String crearHabitacion(@ModelAttribute Habitacion habitacion,
-                                  RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes) {
         try {
             habitacionService.crearHabitacion(habitacion, habitacion.getTipoHabitacion().getId());
             redirectAttributes.addFlashAttribute("mensaje", "Habitación creada exitosamente");
@@ -70,8 +70,8 @@ public class HabitacionController {
     // Editar habitación
     @PostMapping("/editar/{id}")
     public String editarHabitacion(@PathVariable Long id,
-                                   @ModelAttribute Habitacion habitacion,
-                                   RedirectAttributes redirectAttributes) {
+            @ModelAttribute Habitacion habitacion,
+            RedirectAttributes redirectAttributes) {
         try {
             habitacionService.actualizarHabitacion(id, habitacion, habitacion.getTipoHabitacion().getId());
             redirectAttributes.addFlashAttribute("mensaje", "Habitación actualizada exitosamente");
@@ -79,6 +79,13 @@ public class HabitacionController {
             redirectAttributes.addFlashAttribute("error", "Error al actualizar la habitación: " + e.getMessage());
         }
         return "redirect:/habitaciones";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String mostrarEditarHabitacion(@PathVariable Long id, Model model) {
+        model.addAttribute("habitacion", habitacionService.buscarPorId(id));
+        model.addAttribute("tiposHabitacion", tipoHabitacionService.listarTodos());
+        return "editarhab";
     }
 
     // Eliminar habitación

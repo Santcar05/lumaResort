@@ -11,7 +11,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background: linear-gradient(135deg, #303261, #1b1c34, #49aee0);
   background-size: 400% 400%;
   animation: fondoAnimado 15s ease infinite;
@@ -72,7 +72,7 @@ body {
 
 #tablaServicios {
   /*width: 90%;*/
-  margin: 30px auto;
+  margin: 2px auto;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
@@ -132,7 +132,7 @@ body {
   align-items: center;
   gap: 15px;
   width: 100%;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 @keyframes translate {

@@ -489,3 +489,118 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+//---------------------------------------------------------------
+//-------------------MANTENER INFO BANNER LANDING-------------------------------
+
+// Función para controlar la visibilidad del botón del banner
+function initBannerButtonVisibility() {
+  const bannerButton = document.getElementById('ButtonBanner');
+
+  // Verificar que el botón existe
+  if (!bannerButton) {
+    console.warn('Elemento #ButtonBanner no encontrado');
+    return;
+  }
+
+  // Función que verifica la posición del scroll
+  function checkScrollPosition() {
+    const scrollY = window.scrollY;
+
+    // Si está 100% arriba (scroll = 0), mostrar el botón
+    if (scrollY === 0) {
+      bannerButton.style.opacity = '1';
+      bannerButton.style.visibility = 'visible';
+      bannerButton.style.transform = 'translateY(0)';
+    } else {
+      // Si no está arriba, ocultar el botón
+      bannerButton.style.opacity = '0';
+      bannerButton.style.visibility = 'hidden';
+      bannerButton.style.transform = 'translateY(-20px)';
+    }
+  }
+
+  // Agregar estilos CSS para la transición suave
+  bannerButton.style.transition = 'opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease';
+
+  // Verificar posición inicial
+  checkScrollPosition();
+
+  // Escuchar el evento de scroll
+  window.addEventListener('scroll', checkScrollPosition);
+
+  // También escuchar resize por si cambia el viewport
+  window.addEventListener('resize', checkScrollPosition);
+}
+
+// Función alternativa más precisa que también considera pequeños movimientos
+function initBannerButtonVisibilityPrecise() {
+  const bannerButton = document.getElementById('ButtonBanner');
+
+  if (!bannerButton) {
+    console.warn('Elemento #ButtonBanner no encontrado');
+    return;
+  }
+
+  // Throttle function para mejorar performance
+  function throttle(func, limit) {
+    let inThrottle;
+    return function () {
+      const args = arguments;
+      const context = this;
+      if (!inThrottle) {
+        func.apply(context, args);
+        inThrottle = true;
+        setTimeout(() => (inThrottle = false), limit);
+      }
+    };
+  }
+
+  function checkScrollPosition() {
+    const scrollY = window.scrollY || window.pageYOffset;
+    const isAtTop = scrollY <= 5; // Tolerancia de 5px para pequeños movimientos
+
+    if (isAtTop) {
+      // Mostrar botón con animación
+      bannerButton.style.opacity = '1';
+      bannerButton.style.visibility = 'visible';
+      bannerButton.style.transform = 'translateY(0) scale(1)';
+      bannerButton.style.pointerEvents = 'auto';
+    } else {
+      // Ocultar botón con animación
+      bannerButton.style.opacity = '0';
+      bannerButton.style.visibility = 'hidden';
+      bannerButton.style.transform = 'translateY(-30px) scale(0.9)';
+      bannerButton.style.pointerEvents = 'none';
+    }
+  }
+
+  // Estilos para transición suave
+  bannerButton.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+
+  // Verificar posición inicial
+  checkScrollPosition();
+
+  // Usar throttle para mejorar performance
+  const throttledCheck = throttle(checkScrollPosition, 16); // ~60fps
+
+  // Event listeners
+  window.addEventListener('scroll', throttledCheck, { passive: true });
+  window.addEventListener('resize', checkScrollPosition);
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function () {
+  // Usar la versión precisa (recomendada)
+  initBannerButtonVisibilityPrecise();
+
+  // O usar la versión básica si prefieres:
+  // initBannerButtonVisibility();
+});
+
+// Función adicional para debugging (opcional)
+function debugScrollPosition() {
+  window.addEventListener('scroll', function () {
+    console.log('Scroll Y:', window.scrollY);
+  });
+}

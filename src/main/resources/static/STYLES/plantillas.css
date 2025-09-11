@@ -182,6 +182,7 @@ textarea {
   flex: 1 0 100%;
   scroll-snap-align: start;
   width: 100%;
+  border-radius: 12%;
 }
 
 .SlideContainer img {

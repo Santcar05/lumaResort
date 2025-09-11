@@ -1,96 +1,3 @@
-/* ============================================= */
-/* === VARIABLES DE TEMA Y ESTILOS BASE ======= */
-/* ============================================= */
-:root {
-  /* 🌞 Modo claro */
-  --bg-primary: #f7f9fc; /* Fondo base claro */
-  --bg-secondary: #ffffff; /* Fondo tarjetas */
-  --text-primary: #1e293b; /* Texto principal */
-  --text-secondary: #475569; /* Texto secundario */
-  --header-bg: linear-gradient(90deg, #262de0, #49aee0);
-  --footer-bg: linear-gradient(90deg, #262de0, #49aee0);
-
-  /* Botones */
-  --button-primary: #1d3a8a;
-  --button-hover: #4aa7df;
-  --button-text: #ffffff;
-
-  /* Tarjetas */
-  --card-bg: #ffffff; /* Fondo limpio */
-  --card-text: #0f172a; /* Texto oscuro, más fuerte */
-  --card-shadow: rgba(38, 45, 224, 0.15); /* Sombra con tinte azul (brand) */
-
-  /* 🎨 Secciones más armónicas (modo claro) */
-  --section-primary: #49aee0; /* Azul claro vibrante */
-  --section-secondary: #89cff0; /* Azul pastel */
-  --section-accent: #b3e5fc; /* Celeste suave */
-  --section-contrast: #1d3a8a; /* Azul marino */
-  --section-highlight: #262de0; /* Azul intenso de marca */
-
-  /* Tablas */
-  --table-white: #f0f0f0;
-  --table-border: #e2e8f0;
-
-  /* Estados */
-  --success: #16a34a;
-  --success-light: #dcfce7;
-  --warning: #f59e0b;
-  --warning-light: #fef3c7;
-  --error: #dc2626;
-  --error-light: #fee2e2;
-  --info: #0ea5e9;
-  --info-light: #e0f2fe;
-
-  /* Extras */
-  --text-only-white: #f0f0f0;
-  --header-height: 80px;
-  --transition-speed: 0.3s;
-}
-
-[data-theme='dark'] {
-  /* 🌙 Modo oscuro */
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #1e293b;
-  --text-primary: #f0f0f0;
-  --text-secondary: #cbd5e1;
-  --header-bg: linear-gradient(90deg, #1a1a2e, #16213e);
-  --footer-bg: linear-gradient(90deg, #1a1a2e, #16213e);
-
-  /* Botones */
-  --button-primary: #3b82f6;
-  --button-hover: #60a5fa;
-  --button-text: #ffffff;
-
-  /* Tarjetas */
-  --card-bg: #1e293b; /* Azul grisáceo oscuro */
-  --card-text: #e2e8f0; /* Texto claro sobre fondo */
-  --card-shadow: rgba(73, 174, 224, 0.25); /* Sombra azul clara translúcida */
-
-  /* 🌙 Secciones más armónicas (modo oscuro) */
-  --section-primary: #3b82f6; /* Azul brillante */
-  --section-secondary: #2563eb; /* Azul medio */
-  --section-accent: #1e40af; /* Azul oscuro suave */
-  --section-contrast: #16213e; /* Azul muy profundo */
-  --section-highlight: #49aee0; /* Azul claro para resaltar */
-
-  /* Tablas */
-  --table-white: #0a0a0a;
-  --table-border: #334155;
-
-  /* Estados */
-  --success: #22c55e;
-  --success-light: #14532d;
-  --warning: #fbbf24;
-  --warning-light: #78350f;
-  --error: #ef4444;
-  --error-light: #7f1d1d;
-  --info: #38bdf8;
-  --info-light: #0c4a6e;
-
-  /* Extras */
-  --text-only-white: #f0f0f0;
-}
-
 /* ---------------------- Estilos generales ---------------------- */
 body {
   margin: 0;
@@ -199,7 +106,9 @@ h3 {
   height: 400px;
   padding: 15px;
   box-sizing: border-box;
-  background: var(--section-primary);
+  background: #4361ee;
+  border: 2px solid var(--info-light);
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
   color: var(--info-light);
   /*border: 2px solid #ccc;*/
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
@@ -291,13 +200,13 @@ form button:hover {
 /* ---------------------- Botones de secciones ---------------------- */
 .seccion-ambar button,
 .seccion-ambar a button {
-  background-color: var(--azul-nocturno);
+  background-color: var(--section-primary);
   color: var(--blanco);
 }
 
 .seccion-ambar button:hover,
 .seccion-ambar a button:hover {
-  background-color: var(--marron-oscuro);
+  background-color: var(--section-secondary);
 }
 
 /* ---------------------- Responsividad ---------------------- */

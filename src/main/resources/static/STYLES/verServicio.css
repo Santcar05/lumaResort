@@ -26,12 +26,12 @@
 .contenido-servicio {
   position: relative;
   z-index: 2;
-  max-width: 1600px;
+  max-width: 900px;
   background: rgba(255, 255, 255, 0.9);
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   color: #1c1c1c;
 }
 

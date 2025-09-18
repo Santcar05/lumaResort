@@ -1,0 +1,351 @@
+/* activities.component.css */
+.activities-section {
+  background-color: #0a1a2f;
+  padding: 7rem 0;
+  color: white;
+  font-family: 'Arial', sans-serif;
+}
+
+.activities-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding: 0 2rem;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  color: #5aa8ff;
+  font-weight: 600;
+}
+
+.section-subtitle {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 0;
+}
+
+.section-subtitle span {
+  font-weight: 700;
+  color: #5aa8ff;
+}
+
+.activities-container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.activities-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0 2rem;
+}
+
+.nav-item {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #5aa8ff;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-item:hover {
+  color: white;
+}
+
+.nav-item:hover::after {
+  width: 70%;
+}
+
+.nav-item.active {
+  color: white;
+}
+
+.nav-item.active::after {
+  width: 100%;
+  background-color: #5aa8ff;
+}
+
+/* Carrusel */
+.carousel-container {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.main-carousel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-image-container {
+  width: 100%;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.main-image-container:hover .main-image {
+  transform: scale(1.02);
+}
+
+/* Información superpuesta en la imagen */
+.image-info-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.image-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.explore-image-btn {
+  background: white;
+  color: #0a1a2f;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+.explore-image-btn:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+/* Miniaturas */
+.thumbnail-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  background: rgba(0, 0, 0, 0.3);
+  overflow-x: auto;
+}
+
+.thumbnail-item {
+  width: 120px;
+  height: 80px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 3px solid transparent;
+  flex-shrink: 0;
+}
+
+.thumbnail-item.active {
+  border-color: #5aa8ff;
+  transform: scale(1.1);
+}
+
+.thumbnail-item:hover {
+  transform: scale(1.05);
+}
+
+.thumbnail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Panel de información */
+
+.explore-btn {
+  display: inline-block;
+  background: linear-gradient(90deg, #4a90e2, #5aa8ff);
+  color: white;
+  padding: 0.8rem 1.8rem;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+}
+
+.explore-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+}
+
+.btn {
+  display: inline-block;
+  background: #ffffff; /* blanco base */
+  color: #000000; /* texto oscuro para contraste */
+  padding: 0.8rem 1.8rem;
+  font-size: 1.6rem;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+
+  /* animaciones por defecto */
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.4), 0 0 10px rgba(255, 255, 255, 0.3) inset;
+  transform: translateY(0) scale(1);
+
+  /* transición suave en ambas direcciones */
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.5s ease,
+    background-color 0.6s ease;
+}
+
+/* efecto hover */
+.btn:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(240, 240, 240, 1) 50%,
+    rgba(220, 220, 220, 1) 100%
+  );
+  color: #000000;
+
+  transform: translateY(-6px) scale(1.08) rotate(-0.5deg);
+
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.6), 0 0 25px rgba(255, 255, 255, 0.7),
+    0 0 40px rgba(255, 255, 255, 0.5);
+
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.8), 0 0 12px rgba(255, 255, 255, 0.6);
+}
+
+/* Efecto extra dinámico con brillo en movimiento */
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  transform: skewX(-25deg);
+}
+
+.btn:hover::after {
+  animation: shine 1s forwards;
+}
+/* Responsive */
+@media (max-width: 968px) {
+  .main-image-container {
+    height: 400px;
+  }
+
+  .thumbnail-item {
+    width: 100px;
+    height: 70px;
+  }
+}
+
+@media (max-width: 768px) {
+  .activities-section {
+    padding: 3rem 0;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 2rem;
+  }
+
+  .activities-nav {
+    gap: 1rem;
+  }
+
+  .nav-item {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+  }
+
+  .main-image-container {
+    height: 350px;
+  }
+
+  .image-info-overlay {
+    padding: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .explore-image-btn {
+    align-self: flex-end;
+  }
+
+  .thumbnail-container {
+    padding: 1rem;
+  }
+
+  .thumbnail-item {
+    width: 80px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .activities-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-item {
+    width: 200px;
+    text-align: center;
+  }
+
+  .section-subtitle {
+    font-size: 1.8rem;
+  }
+
+  .main-image-container {
+    height: 300px;
+  }
+
+  .thumbnail-item {
+    width: 70px;
+    height: 50px;
+  }
+}

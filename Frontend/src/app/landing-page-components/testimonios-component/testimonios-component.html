@@ -1,0 +1,85 @@
+<section class="testimonials-section">
+  <div class="testimonials-container">
+    <div class="testimonials-header">
+      <h2 class="section-title">TESTIMONIOS</h2>
+      <h3 class="section-subtitle">Lo que nuestros huéspedes <span>dicen de nosotros</span></h3>
+      <div class="title-divider"></div>
+    </div>
+
+    <div class="testimonials-carousel">
+      <div class="carousel-wrapper">
+        <button
+          class="control-btn prev"
+          (click)="prevTestimonial()"
+          [disabled]="currentIndex === 0"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M15 18L9 12L15 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+
+        <div class="carousel-viewport">
+          <div class="testimonials-track" [style.transform]="getTransformValue()">
+            <div
+              *ngFor="let testimonial of testimonials; let i = index"
+              class="testimonial-card"
+              [class.active]="isTestimonialVisible(i)"
+              [class.focused]="getTestimonialPosition(i) === 0 && isTestimonialVisible(i)"
+              (click)="selectTestimonial(i)"
+            >
+              <div class="testimonial-content">
+                <div class="quote-icon">“</div>
+                <p class="testimonial-text">{{ testimonial.text }}</p>
+                <div class="testimonial-author">
+                  <img [src]="testimonial.avatar" [alt]="testimonial.name" class="author-avatar" />
+                  <div class="author-info">
+                    <h4 class="author-name">{{ testimonial.name }}</h4>
+                    <p class="author-title">{{ testimonial.title }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="control-btn next"
+          (click)="nextTestimonial()"
+          [disabled]="currentIndex + visibleCards >= testimonials.length"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M9 18L15 12L9 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div class="carousel-indicators">
+        <div
+          *ngFor="let item of testimonials; let i = index"
+          class="indicator"
+          [class.active]="isTestimonialVisible(i)"
+          (click)="goToTestimonial(i)"
+        ></div>
+      </div>
+    </div>
+
+    <div class="floating-elements">
+      <div class="floating-element element-1">⭐</div>
+      <div class="floating-element element-2">💫</div>
+      <div class="floating-element element-3">✨</div>
+      <div class="floating-element element-4">🌟</div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,87 @@
+<!-- room-types.component.html -->
+<section class="room-types-section">
+  <div class="background-overlay">
+    <div class="container">
+      <h2 class="section-title">Tipos de Habitaciones</h2>
+
+      <div class="rooms-carousel">
+        <!-- Contenedor principal del carrusel -->
+        <div class="carousel-container">
+          <!-- Botones de navegación -->
+          <button class="carousel-nav prev" (click)="prevRoom()">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+
+          <button class="carousel-nav next" (click)="nextRoom()">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9 18L15 12L9 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+
+          <!-- Slides del carrusel -->
+          <div
+            class="carousel-slides"
+            [style.transform]="'translateX(-' + currentIndex * 100 + '%)'"
+          >
+            <div class="carousel-slide" *ngFor="let room of rooms">
+              <div class="room-card">
+                <div class="room-image">
+                  <img [src]="room.image" [alt]="room.name" />
+                  <div class="room-overlay">
+                    <h3 class="room-name">{{ room.name }}</h3>
+                    <p class="room-description">{{ room.description }}</p>
+                    <div class="room-features">
+                      <span class="feature" *ngFor="let feature of room.features">{{
+                        feature
+                      }}</span>
+                    </div>
+                    <div class="room-price">
+                      <span class="price">Desde {{ room.price }}/noche</span>
+                      <button class="book-btn">Reservar ahora</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Indicadores del carrusel -->
+        <div class="carousel-indicators">
+          <div
+            *ngFor="let room of rooms; let i = index"
+            class="indicator"
+            [class.active]="i === currentIndex"
+            (click)="goToRoom(i)"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -32,20 +32,20 @@
             <div class="image-title">{{ getCurrentCategory().imageNames[selectedImageIndex] }}</div>
             <button class="btn">EXPLORAR</button>
           </div>
-        </div>
 
-        <div class="thumbnail-container">
-          <div
-            *ngFor="let image of getCurrentCategory().images; let i = index"
-            class="thumbnail-item"
-            [class.active]="selectedImageIndex === i"
-            (click)="selectImage(i)"
-          >
-            <img
-              [src]="image"
-              [alt]="getCurrentCategory().title + ' ' + (i + 1)"
-              class="thumbnail-image"
-            />
+          <div class="thumbnail-container">
+            <div
+              *ngFor="let image of getCurrentCategory().images; let i = index"
+              class="thumbnail-item"
+              [class.active]="selectedImageIndex === i"
+              (click)="selectImage(i)"
+            >
+              <img
+                [src]="image"
+                [alt]="getCurrentCategory().title + ' ' + (i + 1)"
+                class="thumbnail-image"
+              />
+            </div>
           </div>
         </div>
       </div>

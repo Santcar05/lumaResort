@@ -74,21 +74,6 @@
             </div>
           </div>
 
-          <div class="form-group full-width" [class.focused]="contactForm.interest !== 'general'">
-            <label class="select-label">Tipo de Consulta</label>
-            <select
-              id="interest"
-              name="interest"
-              [(ngModel)]="contactForm.interest"
-              class="custom-select"
-            >
-              <option *ngFor="let interest of interests" [value]="interest.value">
-                {{ interest.label }}
-              </option>
-            </select>
-            <div class="select-arrow">▼</div>
-          </div>
-
           <div class="form-group full-width" [class.focused]="contactForm.message.length > 0">
             <textarea
               id="message"
@@ -194,29 +179,6 @@
           </div>
           <h4>Teléfono</h4>
           <p>+52 (322) 123-4567<br />+52 (322) 987-6543</p>
-        </div>
-
-        <div class="info-card">
-          <div class="info-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M22 6L12 13L2 6"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </div>
-          <h4>Email</h4>
-          <p>info@lumaresort.com<br />reservaciones@lumaresort.com</p>
         </div>
 
         <div class="info-card">

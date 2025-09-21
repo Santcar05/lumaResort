@@ -1,7 +1,7 @@
 /* activities.component.css */
 .activities-section {
   background-color: #0a1a2f;
-  padding: 7rem 0;
+  padding-top: 6em;
   color: white;
   font-family: 'Arial', sans-serif;
 }
@@ -92,7 +92,6 @@
 /* Carrusel */
 .carousel-container {
   width: 100%;
-  margin-bottom: 2rem;
 }
 
 .main-carousel {
@@ -103,7 +102,7 @@
 
 .main-image-container {
   width: 100%;
-  height: 500px;
+  height: 620px;
   position: relative;
   overflow: hidden;
 }
@@ -158,20 +157,24 @@
 
 /* Miniaturas */
 .thumbnail-container {
+  position: absolute;
+  bottom: 10px; /* se ajusta la distancia desde el borde inferior */
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   gap: 1rem;
-  padding: 1.5rem 2rem;
-  background: rgba(0, 0, 0, 0.3);
-  overflow-x: auto;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.4); /* opcional: da contraste */
+  border-radius: 10px;
 }
 
 .thumbnail-item {
-  width: 120px;
-  height: 80px;
+  width: 90px;
+  height: 60px;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 3px solid transparent;
+  border: 2px solid transparent;
   flex-shrink: 0;
 }
 

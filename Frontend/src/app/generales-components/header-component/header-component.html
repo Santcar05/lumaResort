@@ -1,20 +1,31 @@
 <header>
   <nav>
-    <!-- Menu E idiomas-->
-    <div>
+    <!-- Menú -->
+    <div class="menu-container" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
       <ul>
-        <li class="PrimerLi"><a href="#">Menu</a></li>
-        <li><a href="#">Idiomas</a></li>
+        <li class="PrimerLi">
+          <a (click)="toggleMenu()">Menu</a>
+          <ul class="dropdown" [class.show]="menuVisible">
+            <li><a href="#">Idiomas</a></li>
+            <li><a href="#">Tema Visual</a></li>
+            <li><a href="#">Habitaciones</a></li>
+            <li><a href="#">Restaurantes</a></li>
+            <li><a href="#">Spa & Wellness</a></li>
+          </ul>
+        </li>
+        <li><a routerLink="/">Inicio</a></li>
       </ul>
     </div>
-    <!--Nombre-->
+
+    <!-- Nombre -->
     <div><h1 id="lumaResort">Luma Resort</h1></div>
-    <!--Contacto y Reservas-->
+
+    <!-- Contacto y Reservas -->
     <div>
       <ul>
         <li class="PrimerLi"><a href="#">Contacto</a></li>
         <li class="PrimerLi"><a href="#">Reservas</a></li>
-        <li><a href="#">Login</a></li>
+        <li><a [routerLink]="['/login']">Login</a></li>
       </ul>
     </div>
   </nav>

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TarjetaDescubrimientoComponent } from '../../tarjetas-descubrimiento-component/tarjetas-descubrimiento-component.component';
 
 @Component({
   selector: 'app-descubrimiento-component',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, TarjetaDescubrimientoComponent],
   templateUrl: './descubrimiento-component.html',
-  styleUrl: './descubrimiento-component.css'
+  styleUrl: './descubrimiento-component.css',
 })
-export class DescubrimientoComponent {
-
-}
+export class DescubrimientoComponent {}

@@ -9,6 +9,16 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './contacto-form-component.css',
 })
 export class ContactoFormComponent {
+  interests = [
+    { value: 'reservation', label: 'Reserva de Habitación' },
+    { value: 'events', label: 'Organización de Eventos' },
+    { value: 'spa', label: 'Servicios de Spa' },
+    { value: 'dining', label: 'Reserva en Restaurante' },
+    { value: 'meeting', label: 'Sala de Reuniones' },
+    { value: 'general', label: 'Información General' },
+  ];
+  activeView: 'form' | 'map' | 'schedule' = 'form'; // Vista inicial
+
   contactForm = {
     name: '',
     email: '',
@@ -18,27 +28,18 @@ export class ContactoFormComponent {
     interest: 'general',
   };
 
-  interests = [
-    { value: 'reservation', label: 'Reserva de Habitación' },
-    { value: 'events', label: 'Organización de Eventos' },
-    { value: 'spa', label: 'Servicios de Spa' },
-    { value: 'dining', label: 'Reserva en Restaurante' },
-    { value: 'meeting', label: 'Sala de Reuniones' },
-    { value: 'general', label: 'Información General' },
-  ];
-
   submitted = false;
   isLoading = false;
 
+  setActiveView(view: 'form' | 'map' | 'schedule') {
+    this.activeView = view;
+  }
+
   onSubmit() {
     this.isLoading = true;
-
-    // Simular envío del formulario
     setTimeout(() => {
       this.submitted = true;
       this.isLoading = false;
-
-      // Resetear formulario después de 5 segundos
       setTimeout(() => {
         this.submitted = false;
         this.contactForm = {
@@ -53,20 +54,17 @@ export class ContactoFormComponent {
     }, 2000);
   }
 
-  // Animación para el botón de enviar
   getButtonText(): string {
     if (this.isLoading) return 'Enviando...';
     if (this.submitted) return '¡Mensaje Enviado!';
     return 'Enviar Mensaje';
   }
 
-  // Validación básica de email
   isValidEmail(): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(this.contactForm.email);
   }
 
-  // Verificar si el formulario es válido
   isFormValid(): boolean {
     return (
       this.contactForm.name.length > 0 &&
@@ -74,5 +72,23 @@ export class ContactoFormComponent {
       this.isValidEmail() &&
       this.contactForm.message.length > 0
     );
+  }
+
+  selectedDate: Date | null = null;
+
+  // Fechas disponibles (ejemplo)
+  availableDates: string[] = ['2025-09-25', '2025-09-27', '2025-09-29', '2025-10-01'];
+
+  // Permite seleccionar solo fechas disponibles
+  dateFilter = (date: Date | null): boolean => {
+    if (!date) return false;
+    const isoDate = date.toISOString().split('T')[0];
+    return this.availableDates.includes(isoDate);
+  };
+
+  // Verificar si es fin de semana
+  isWeekend(date: Date): boolean {
+    const day = date.getDay();
+    return day === 0 || day === 6;
   }
 }

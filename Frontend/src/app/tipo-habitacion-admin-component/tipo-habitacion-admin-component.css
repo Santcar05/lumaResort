@@ -1,0 +1,110 @@
+.admin-container {
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa, #dfe9f3);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.titulo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #003366;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.card-header {
+  background: #003366;
+  color: #fff;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #003366;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: #0055aa;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #003366;
+}
+
+.btn-warning {
+  background: #ffaa00;
+  color: #fff;
+}
+
+.btn-danger {
+  background: #e63946;
+  color: #fff;
+}
+
+.btn-success {
+  background: #2a9d8f;
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: #fff;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla th,
+.tabla td {
+  padding: 0.8rem;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.tabla th {
+  background: #f0f0f0;
+  font-weight: bold;
+}

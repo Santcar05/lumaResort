@@ -1,0 +1,67 @@
+<div class="admin-container">
+  <h2 class="titulo">Tipos de Habitación</h2>
+
+  <!-- Crear nuevo tipo -->
+  <div class="card">
+    <div class="card-header">Nuevo Tipo de Habitación</div>
+    <div class="card-body">
+      <form (ngSubmit)="crearTipo()">
+        <div class="form-group">
+          <label>Nombre:</label>
+          <input type="text" [(ngModel)]="nuevoTipo.nombre" name="nombre" required />
+        </div>
+        <div class="form-group">
+          <label>Descripción:</label>
+          <textarea [(ngModel)]="nuevoTipo.descripcion" name="descripcion" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Crear</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Lista -->
+  <div class="card mt-4">
+    <div class="card-header">Lista de Tipos</div>
+    <div class="card-body">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tipo of tipos">
+            <td>{{ tipo.id }}</td>
+            <td *ngIf="editando?.id !== tipo.id">{{ tipo.nombre }}</td>
+            <td *ngIf="editando?.id === tipo.id && editando">
+              <input [(ngModel)]="editando!.nombre" name="editNombre{{ tipo.id }}" />
+            </td>
+
+            <td *ngIf="editando?.id !== tipo.id">{{ tipo.descripcion }}</td>
+            <td *ngIf="editando?.id === tipo.id && editando">
+              <input [(ngModel)]="editando!.descripcion" name="editDesc{{ tipo.id }}" />
+            </td>
+
+            <td>
+              <ng-container *ngIf="editando?.id !== tipo.id">
+                <button class="btn btn-warning btn-sm" (click)="editarTipo(tipo)">Editar</button>
+                <button class="btn btn-danger btn-sm" (click)="eliminarTipo(tipo.id)">
+                  Eliminar
+                </button>
+              </ng-container>
+              <ng-container *ngIf="editando?.id === tipo.id">
+                <button class="btn btn-success btn-sm" (click)="guardarEdicion()">Guardar</button>
+                <button class="btn btn-secondary btn-sm" (click)="cancelarEdicion()">
+                  Cancelar
+                </button>
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

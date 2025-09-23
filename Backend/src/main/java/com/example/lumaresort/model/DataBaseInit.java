@@ -6,12 +6,14 @@ import org.springframework.stereotype.Controller;
 
 import com.example.lumaresort.entities.Administrador;
 import com.example.lumaresort.entities.Habitacion;
+import com.example.lumaresort.entities.Operador;
 import com.example.lumaresort.entities.Servicio;
 import com.example.lumaresort.entities.TipoHabitacion;
 import com.example.lumaresort.entities.Usuario;
 import com.example.lumaresort.repository.AdministradorRepository;
 import com.example.lumaresort.repository.CuentaHabitacionRepository;
 import com.example.lumaresort.repository.HabitacionRepository;
+import com.example.lumaresort.repository.OperadorRepository;
 import com.example.lumaresort.repository.ServicioRepository;
 import com.example.lumaresort.repository.TipoHabitacionRepository;
 import com.example.lumaresort.repository.UsuarioRepository;
@@ -34,6 +36,8 @@ public class DataBaseInit implements ApplicationRunner {
     private CuentaHabitacionRepository cuentaHabitacionRepository;
     @Autowired
     private AdministradorRepository administradorRepository;
+    @Autowired
+    private OperadorRepository operadorRepository;
 
     @Override
     public void run(org.springframework.boot.ApplicationArguments args) throws Exception {
@@ -173,6 +177,12 @@ public class DataBaseInit implements ApplicationRunner {
         usuarioRepository.save(new Usuario("Usaurio8@gmail.com", "pass8", false));
         usuarioRepository.save(new Usuario("Usaurio9@gmail.com", "pass9", false));
         usuarioRepository.save(new Usuario("Usaurio10@gmail.com", "pass10", false));
+        //Crear 5 usuarios que serán operadores
+        usuarioRepository.save(new Usuario("Operador1@gmail.com", "op1", false, true));
+        usuarioRepository.save(new Usuario("Operador2@gmail.com", "op2", false, true));
+        usuarioRepository.save(new Usuario("Operador3@gmail.com", "op3", false, true));
+        usuarioRepository.save(new Usuario("Operador4@gmail.com", "op4", false, true));
+        usuarioRepository.save(new Usuario("Operador5@gmail.com", "op5", false, true));
 
         //Crear 5 admins
         usuarioRepository.save(new Usuario("admin1@gmail.com", "admin1", true));
@@ -301,6 +311,50 @@ public class DataBaseInit implements ApplicationRunner {
         servicioRepository.save(servicio8);
         servicioRepository.save(servicio9);
         servicioRepository.save(servicio10);
+
+        //Crear 5 operadores
+        /*
+        @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+public class Operador {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idOperador;
+
+    @OneToOne
+    @JoinColumn(name = "idUsuario", nullable = false, unique = true)
+    private Usuario usuario;
+}
+} */
+        Operador operador1 = new Operador(
+                1, usuarioRepository.findByCorreoAndContrasena("Operador1@gmail.com", "op1")
+        );
+
+        Operador operador2 = new Operador(
+                2, usuarioRepository.findByCorreoAndContrasena("Operador2@gmail.com", "op2")
+        );
+
+        Operador operador3 = new Operador(
+                3, usuarioRepository.findByCorreoAndContrasena("Operador3@gmail.com", "op3")
+        );
+
+        Operador operador4 = new Operador(
+                4, usuarioRepository.findByCorreoAndContrasena("Operador4@gmail.com", "op4")
+        );
+
+        Operador operador5 = new Operador(
+                5, usuarioRepository.findByCorreoAndContrasena("Operador5@gmail.com", "op5")
+        );
+
+        operadorRepository.save(operador1);
+        operadorRepository.save(operador2);
+        operadorRepository.save(operador3);
+        operadorRepository.save(operador4);
+        operadorRepository.save(operador5);
 
     }
 }

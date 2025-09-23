@@ -15,6 +15,8 @@ export class LoginComponent {
 
   onLogin() {
     console.log('Iniciando sesión con:', this.email, this.password);
-    // Aquí puedes conectar tu lógica de autenticación
+    //lógica de autenticación
+    // ir al path de adminTiposHabitacion
+    window.location.href = '/adminTiposHabitacion';
   }
 }

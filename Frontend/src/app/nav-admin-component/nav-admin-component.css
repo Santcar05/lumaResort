@@ -1,0 +1,88 @@
+/* Sidebar general */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 260px;
+  background: linear-gradient(180deg, #1a1a2e, #16213e);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
+  transition: width 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar:hover {
+  width: 280px;
+}
+
+/* Encabezado */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header .logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.sidebar-title h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.sidebar-title span {
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+/* Menú */
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5rem;
+}
+
+.sidebar-menu a {
+  padding: 0.9rem 1.2rem;
+  color: #ddd;
+  text-decoration: none;
+  font-size: 0.95rem;
+  border-left: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.sidebar-menu a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-left: 3px solid #fff;
+  transform: translateX(4px);
+}
+
+.sidebar-menu a.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border-left: 3px solid #ffffff;
+}
+
+.sidebar-menu a.logout {
+  margin-top: auto;
+  color: #ff6b6b;
+  font-weight: 600;
+}
+
+.sidebar-menu a.logout:hover {
+  background: rgba(255, 107, 107, 0.1);
+  border-left: 3px solid #ff6b6b;
+  color: #ff8787;
+}

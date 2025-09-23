@@ -7,13 +7,15 @@
 
 header {
   height: 100px;
-  background: none;
+  background: rgba(25, 25, 25, 0.8); 
+  backdrop-filter: blur(8px); 
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 20000;
+  z-index: 2;
 }
+
 header nav {
   display: flex;
   flex-direction: row;
@@ -109,55 +111,4 @@ header nav div {
 }
 .PrimerLi {
   border-right: 1px solid rgb(186, 186, 186);
-}
-
-/* Contenedor del menú */
-.menu-container {
-  position: relative;
-}
-
-/* Dropdown oculto por defecto */
-.dropdown {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  list-style: none;
-  padding: 1rem;
-  margin: 0;
-  border-radius: 10px;
-  /*box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);*/
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: translateY(-10px);
-  transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s ease;
-
-  z-index: 1000;
-}
-
-/* Mostrar dropdown */
-.dropdown.show {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
-/* Estilo de las opciones */
-.dropdown li {
-  margin: 0.5rem 0;
-}
-
-.dropdown a {
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.dropdown a:hover {
-  color: #333;
-  transform: translateX(5px);
 }

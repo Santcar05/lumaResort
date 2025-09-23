@@ -50,6 +50,9 @@
   padding: 2rem;
   backdrop-filter: blur(10px);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
+  display: flex;
+  flex-direction: column; /* Apila los elementos verticalmente */
+  justify-content: space-between;
 }
 
 .servicio-card:hover {
@@ -82,7 +85,7 @@
   letter-spacing: 1px;
   position: relative;
   overflow: hidden;
-
+  align-items: center;
   box-shadow: 0 4px 15px rgba(255, 255, 255, 0.4), 0 0 10px rgba(255, 255, 255, 0.3) inset;
   transform: translateY(0) scale(1);
 
@@ -90,7 +93,7 @@
     background-color 0.6s ease;
 }
 #ver-mas-servicios {
-  font-size: 2em;
+  color: #031d60;
 }
 
 .btn:hover {

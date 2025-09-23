@@ -1,2 +1,10 @@
-<app-tipo-habitacion-admin-component></app-tipo-habitacion-admin-component>
-<!-- Componente para administrar tipos de habitación -->
+<!-- admin-layout.component.html -->
+<div class="admin-container">
+  <!-- Sidebar -->
+  <app-nav-admin-component></app-nav-admin-component>
+
+  <!-- Contenido dinámico -->
+  <div class="admin-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TipoHabitacion } from '../Models/TipoHabitacion';
-import { Habitacion } from '../Models/Habitacion';
+import { TipoHabitacionService } from '../service/tipo-habitacion';
 
 @Component({
   selector: 'app-tipo-habitacion-admin-component',
@@ -11,21 +11,20 @@ import { Habitacion } from '../Models/Habitacion';
   styleUrl: './tipo-habitacion-admin-component.css',
 })
 export class TipoHabitacionAdminComponent {
-  tipos: TipoHabitacion[] = [
-    { id: 1, nombre: 'Suite Presidencial', descripcion: 'La más exclusiva del resort' },
-    { id: 2, nombre: 'Habitación Doble', descripcion: 'Cómoda y elegante para dos personas' },
-  ];
-
+  tipos: TipoHabitacion[] = [];
   nuevoTipo: TipoHabitacion = { id: 0, nombre: '', descripcion: '' };
   editando: TipoHabitacion | null = null;
 
+  constructor(private tipoHabitacionService: TipoHabitacionService) {}
+
+  ngOnInit(): void {
+    this.tipos = this.tipoHabitacionService.findAll();
+  }
+
   crearTipo() {
     if (!this.nuevoTipo.nombre.trim() || !this.nuevoTipo.descripcion.trim()) return;
-    const nuevo: TipoHabitacion = {
-      ...this.nuevoTipo,
-      id: this.tipos.length ? Math.max(...this.tipos.map((t) => t.id)) + 1 : 1,
-    };
-    this.tipos.push(nuevo);
+    this.tipoHabitacionService.create({ ...this.nuevoTipo });
+    this.tipos = this.tipoHabitacionService.findAll(); // refrescar
     this.nuevoTipo = { id: 0, nombre: '', descripcion: '' };
   }
 
@@ -35,10 +34,8 @@ export class TipoHabitacionAdminComponent {
 
   guardarEdicion() {
     if (!this.editando) return;
-    const index = this.tipos.findIndex((t) => t.id === this.editando!.id);
-    if (index !== -1) {
-      this.tipos[index] = this.editando;
-    }
+    this.tipoHabitacionService.update(this.editando);
+    this.tipos = this.tipoHabitacionService.findAll(); // refrescar
     this.editando = null;
   }
 
@@ -48,7 +45,8 @@ export class TipoHabitacionAdminComponent {
 
   eliminarTipo(id: number) {
     if (confirm('¿Seguro que deseas eliminar este tipo de habitación?')) {
-      this.tipos = this.tipos.filter((t) => t.id !== id);
+      this.tipoHabitacionService.delete(id);
+      this.tipos = this.tipoHabitacionService.findAll();
     }
   }
 }

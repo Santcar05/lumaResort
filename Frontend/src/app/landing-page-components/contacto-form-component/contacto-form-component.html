@@ -12,117 +12,127 @@
 
     <div class="contact-content">
       <div class="form-container" [class.submitted]="submitted">
-        <form (ngSubmit)="onSubmit()" #contactFormRef="ngForm" class="contact-form">
-          <div class="form-row">
-            <div class="form-group" [class.focused]="contactForm.name.length > 0">
-              <input
-                type="text"
-                id="name"
-                name="name"
-                [(ngModel)]="contactForm.name"
-                required
-                #nameInput
-              />
-              <label for="name">Nombre Completo</label>
-              <div class="input-underline"></div>
-            </div>
+        <!-- FORMULARIO -->
+        <form
+          *ngIf="activeView === 'form' && !submitted"
+          (ngSubmit)="onSubmit()"
+          #contactFormRef="ngForm"
+          class="contact-form"
+        >
+          <!--FORMULARIO -->
+          <form (ngSubmit)="onSubmit()" #contactFormRef="ngForm" class="contact-form">
+            <div class="form-row">
+              <div class="form-group" [class.focused]="contactForm.name.length > 0">
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  [(ngModel)]="contactForm.name"
+                  required
+                  #nameInput
+                />
+                <label for="name">Nombre Completo</label>
+                <div class="input-underline"></div>
+              </div>
 
-            <div
-              class="form-group"
-              [class.focused]="contactForm.email.length > 0"
-              [class.invalid]="contactForm.email.length > 0 && !isValidEmail()"
-            >
-              <input
-                type="email"
-                id="email"
-                name="email"
-                [(ngModel)]="contactForm.email"
-                required
-                #emailInput
-              />
-              <label for="email">Correo Electrónico</label>
-              <div class="input-underline"></div>
-              <div class="error-message" *ngIf="contactForm.email.length > 0 && !isValidEmail()">
-                Por favor ingrese un email válido
+              <div
+                class="form-group"
+                [class.focused]="contactForm.email.length > 0"
+                [class.invalid]="contactForm.email.length > 0 && !isValidEmail()"
+              >
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  [(ngModel)]="contactForm.email"
+                  required
+                  #emailInput
+                />
+                <label for="email">Correo Electrónico</label>
+                <div class="input-underline"></div>
+                <div class="error-message" *ngIf="contactForm.email.length > 0 && !isValidEmail()">
+                  Por favor ingrese un email válido
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="form-row">
-            <div class="form-group" [class.focused]="contactForm.phone.length > 0">
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                [(ngModel)]="contactForm.phone"
-                #phoneInput
-              />
-              <label for="phone">Teléfono (Opcional)</label>
+            <div class="form-row">
+              <div class="form-group" [class.focused]="contactForm.phone.length > 0">
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  [(ngModel)]="contactForm.phone"
+                  #phoneInput
+                />
+                <label for="phone">Teléfono (Opcional)</label>
+                <div class="input-underline"></div>
+              </div>
+
+              <div class="form-group" [class.focused]="contactForm.subject.length > 0">
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  [(ngModel)]="contactForm.subject"
+                  #subjectInput
+                />
+                <label for="subject">Asunto</label>
+                <div class="input-underline"></div>
+              </div>
+            </div>
+
+            <div class="form-group full-width" [class.focused]="contactForm.message.length > 0">
+              <textarea
+                id="message"
+                name="message"
+                [(ngModel)]="contactForm.message"
+                required
+                rows="5"
+                #messageInput
+              ></textarea>
+              <label for="message">Mensaje</label>
               <div class="input-underline"></div>
+              <div class="char-counter">{{ contactForm.message.length }}/500</div>
             </div>
 
-            <div class="form-group" [class.focused]="contactForm.subject.length > 0">
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                [(ngModel)]="contactForm.subject"
-                #subjectInput
-              />
-              <label for="subject">Asunto</label>
-              <div class="input-underline"></div>
-            </div>
-          </div>
-
-          <div class="form-group full-width" [class.focused]="contactForm.message.length > 0">
-            <textarea
-              id="message"
-              name="message"
-              [(ngModel)]="contactForm.message"
-              required
-              rows="5"
-              #messageInput
-            ></textarea>
-            <label for="message">Mensaje</label>
-            <div class="input-underline"></div>
-            <div class="char-counter">{{ contactForm.message.length }}/500</div>
-          </div>
-
-          <button
-            type="submit"
-            class="submit-btn"
-            [disabled]="!isFormValid() || isLoading"
-            [class.loading]="isLoading"
-            [class.success]="submitted"
-          >
-            <span class="btn-text">{{ getButtonText() }}</span>
-
-            <div class="btn-loader" *ngIf="isLoading">
-              <div class="loader-dot"></div>
-              <div class="loader-dot"></div>
-              <div class="loader-dot"></div>
-            </div>
-
-            <svg
-              class="success-icon"
-              *ngIf="submitted"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
+            <button
+              type="submit"
+              class="submit-btn"
+              [disabled]="!isFormValid() || isLoading"
+              [class.loading]="isLoading"
+              [class.success]="submitted"
             >
-              <path
-                d="M20 6L9 17L4 12"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
+              <span class="btn-text">{{ getButtonText() }}</span>
+
+              <div class="btn-loader" *ngIf="isLoading">
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+              </div>
+
+              <svg
+                class="success-icon"
+                *ngIf="submitted"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M20 6L9 17L4 12"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </form>
         </form>
 
-        <div class="success-message" *ngIf="submitted">
+        <!-- MENSAJE DE ÉXITO -->
+        <div class="success-message" *ngIf="submitted && activeView === 'form'">
           <div class="success-content">
             <div class="success-icon-large">✓</div>
             <h3>¡Mensaje Enviado Exitosamente!</h3>
@@ -132,74 +142,61 @@
             </p>
           </div>
         </div>
+
+        <!-- MAPA -->
+        <div *ngIf="activeView === 'map'" class="map-container">
+          <iframe
+            width="100%"
+            height="450"
+            style="border: 0; border-radius: 20px"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.6439192794966!2d-75.53173938571776!3d10.391048869896432!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef62f7f6b1e1e4d%3A0x5f2d6b1f0e35af6a!2sCartagena%2C%20Bol%C3%ADvar%2C%20Colombia!5e0!3m2!1ses!2sco!4v1695089292345!5m2!1ses!2sco"
+          ></iframe>
+        </div>
+
+        <!-- CALENDARIO -->
+        <div *ngIf="activeView === 'schedule'" class="calendar-container">
+          <h3 class="calendar-title">Horarios Disponibles</h3>
+          <table class="calendar-table">
+            <thead>
+              <tr>
+                <th>Día</th>
+                <th>Horario</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Lunes - Viernes</td>
+                <td>08:00 - 20:00</td>
+              </tr>
+              <tr>
+                <td>Sábado - Domingo</td>
+                <td>09:00 - 18:00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
+      <!-- INFO CONTACTO -->
       <div class="contact-info">
-        <div class="info-card">
-          <div class="info-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </div>
+        <div class="info-card" (click)="activeView = 'map'">
+          <div class="info-icon">📍</div>
           <h4>Ubicación</h4>
           <p>Av. Costera 123, Bahía Luma<br />Puerto Vallarta, México</p>
         </div>
 
-        <div class="info-card">
-          <div class="info-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M22 16.92V19.92C22 20.47 21.55 20.93 21 20.93H19C18.45 20.93 18 20.47 18 19.92V16.92C18 16.37 18.45 15.92 19 15.92H21C21.55 15.92 22 16.37 22 16.92ZM16 5.92H8C6.34 5.92 5 7.26 5 8.92V19.92C5 21.58 6.34 22.92 8 22.92H16C17.66 22.92 19 21.58 19 19.92V8.92C19 7.26 17.66 5.92 16 5.92Z"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M16 1.92H8C7.45 1.92 7 2.37 7 2.92V4.92C7 5.47 7.45 5.92 8 5.92H16C16.55 5.92 17 5.47 17 4.92V2.92C17 2.37 16.55 1.92 16 1.92Z"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </div>
-          <h4>Teléfono</h4>
-          <p>+52 (322) 123-4567<br />+52 (322) 987-6543</p>
+        <!-- TELÉFONO CAMBIADO A FORMULARIO -->
+        <div class="info-card" (click)="activeView = 'form'">
+          <div class="info-icon">📞</div>
+          <h4>Formulario</h4>
+          <p>Haz clic aquí para enviarnos un mensaje directo</p>
         </div>
 
-        <div class="info-card">
-          <div class="info-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M12 6V12L16 14"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </div>
+        <div class="info-card" (click)="activeView = 'schedule'">
+          <div class="info-icon">⏰</div>
           <h4>Horario</h4>
           <p>Lunes - Viernes: 8:00 - 20:00<br />Sábado - Domingo: 9:00 - 18:00</p>
         </div>

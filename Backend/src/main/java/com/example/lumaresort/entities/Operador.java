@@ -25,4 +25,9 @@ public class Operador {
     @OneToOne
     @JoinColumn(name = "idUsuario", nullable = false, unique = true)
     private Usuario usuario;
+
+    public Operador(int i, Usuario findByCorreoAndContrasena) {
+        this.idOperador = i;
+        this.usuario = findByCorreoAndContrasena;
+    }
 }

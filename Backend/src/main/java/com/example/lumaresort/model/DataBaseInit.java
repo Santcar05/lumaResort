@@ -229,7 +229,9 @@ public class DataBaseInit implements ApplicationRunner {
         cuentaHabitacionRepository.save(cuenta10);
          */
         //Crar 50 comentarios
+        // nombre, tipo, descripcion, precio, imagenURL
         Servicio servicio1 = new Servicio(
+                "Spa",
                 "Spa",
                 "Relájate con nuestro servicio de spa completo que incluye sauna, jacuzzi y aromaterapia",
                 50.0f,
@@ -238,6 +240,7 @@ public class DataBaseInit implements ApplicationRunner {
 
         Servicio servicio2 = new Servicio(
                 "Desayuno Buffet",
+                "Comida",
                 "Comienza tu día con un desayuno buffet internacional ",
                 20.0f,
                 "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg"
@@ -245,6 +248,7 @@ public class DataBaseInit implements ApplicationRunner {
 
         Servicio servicio3 = new Servicio(
                 "Cena Romántica",
+                "Comida",
                 "Vive una cena romántica inolvidable para dos, con un menú gourmet seleccionada por nuestro sommelier",
                 80.0f,
                 "https://images.pexels.com/photos/169194/pexels-photo-169194.jpeg"
@@ -252,6 +256,7 @@ public class DataBaseInit implements ApplicationRunner {
 
         Servicio servicio4 = new Servicio(
                 "Tour por la Ciudad",
+                "Tour",
                 "Explora los atractivos turísticos junto con guías expertos que comparten la historia",
                 40.0f,
                 "https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg"
@@ -259,6 +264,7 @@ public class DataBaseInit implements ApplicationRunner {
 
         Servicio servicio5 = new Servicio(
                 "Masaje Relajante",
+                "Bienestar",
                 "Alivia el estrés y revitaliza tu cuerpo con un masaje profesional en nuestras cabinas privadas",
                 60.0f,
                 "https://images.pexels.com/photos/161477/massage-relax-relaxing-161477.jpeg"
@@ -266,6 +272,7 @@ public class DataBaseInit implements ApplicationRunner {
 
         Servicio servicio6 = new Servicio(
                 "Clase de Yoga",
+                "Bienestar",
                 "Conéctate contigo mismo en nuestras clases de yoga al aire libre, realizadas al amanecer frente al mar.",
                 30.0f,
                 "https://images.pexels.com/photos/3823039/pexels-photo-3823039.jpeg"
@@ -273,6 +280,7 @@ public class DataBaseInit implements ApplicationRunner {
 
         Servicio servicio7 = new Servicio(
                 "Alquiler de Bicicletas",
+                "Transporte",
                 "Descubre la ciudad y sus alrededores a tu propio ritmo con nuestro servicio de bicicletas",
                 15.0f,
                 "https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg"
@@ -280,6 +288,7 @@ public class DataBaseInit implements ApplicationRunner {
 
         Servicio servicio8 = new Servicio(
                 "Cena de Comida Internacional",
+                "Comida",
                 "Disfruta una cena con platillos de distintas culturas preparados por chefs",
                 100.0f,
                 "https://images.pexels.com/photos/1640770/pexels-photo-1640770.jpeg"
@@ -287,6 +296,7 @@ public class DataBaseInit implements ApplicationRunner {
 
         Servicio servicio9 = new Servicio(
                 "Cena de Comida Local",
+                "Comida",
                 "Saborea lo mejor de la gastronomía regional en una cena auténtica que incluye entradas tradicionales",
                 100.0f,
                 "https://images.pexels.com/photos/628776/pexels-photo-628776.jpeg"
@@ -294,6 +304,7 @@ public class DataBaseInit implements ApplicationRunner {
 
         Servicio servicio10 = new Servicio(
                 "Cena de Comida Internacional",
+                "Comida",
                 "Vive una experiencia culinaria sofisticada y una degustación gourmet",
                 100.0f,
                 "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg"

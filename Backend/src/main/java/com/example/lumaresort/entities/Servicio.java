@@ -30,6 +30,7 @@ public class Servicio {
     @Column(columnDefinition = "TEXT")
     private String descripcion;
     private String nombre;
+    private String tipo;
     private float precio;
     private String imagenURL;
 
@@ -37,7 +38,7 @@ public class Servicio {
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comentario> comentarios;
 
-    public Servicio(String nombre, String descripcion, float precio, String imagenURL) {
+    public Servicio(String nombre, String tipo, String descripcion, float precio, String imagenURL) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;

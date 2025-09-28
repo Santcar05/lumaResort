@@ -1,5 +1,7 @@
 package com.example.lumaresort.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +16,7 @@ public class Administrador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAdministrador;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario") // FK a 
     private Usuario usuario;

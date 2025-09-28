@@ -1,5 +1,7 @@
 package com.example.lumaresort.model;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import com.example.lumaresort.entities.Administrador;
 import com.example.lumaresort.entities.Habitacion;
 import com.example.lumaresort.entities.Operador;
+import com.example.lumaresort.entities.Reserva;
 import com.example.lumaresort.entities.Servicio;
 import com.example.lumaresort.entities.TipoHabitacion;
 import com.example.lumaresort.entities.Usuario;
@@ -14,6 +17,7 @@ import com.example.lumaresort.repository.AdministradorRepository;
 import com.example.lumaresort.repository.CuentaHabitacionRepository;
 import com.example.lumaresort.repository.HabitacionRepository;
 import com.example.lumaresort.repository.OperadorRepository;
+import com.example.lumaresort.repository.ReservaRepository;
 import com.example.lumaresort.repository.ServicioRepository;
 import com.example.lumaresort.repository.TipoHabitacionRepository;
 import com.example.lumaresort.repository.UsuarioRepository;
@@ -38,6 +42,8 @@ public class DataBaseInit implements ApplicationRunner {
     private AdministradorRepository administradorRepository;
     @Autowired
     private OperadorRepository operadorRepository;
+    @Autowired
+    private ReservaRepository reservaRepository;
 
     @Override
     public void run(org.springframework.boot.ApplicationArguments args) throws Exception {
@@ -341,6 +347,7 @@ public class Operador {
     private Usuario usuario;
 }
 } */
+/* 
         Operador operador1 = new Operador(
                 1, usuarioRepository.findByCorreoAndContrasena("Operador1@gmail.com", "op1")
         );
@@ -367,5 +374,65 @@ public class Operador {
         operadorRepository.save(operador4);
         operadorRepository.save(operador5);
 
+        */
+        /*
+          @Table(name = "reservas")
+                public class Reserva {
+
+                @Id
+                @GeneratedValue(strategy = GenerationType.IDENTITY)
+                private Integer idReserva;
+
+                @Temporal(TemporalType.DATE) // o TIMESTAMP si quieres fecha y hora
+                private Date fechaInicio;
+
+                @Temporal(TemporalType.DATE)
+                private Date fechaFin;
+
+                private Integer cantidadPersonas;
+
+                private String estado;
+
+                // Relación con Cliente: muchas reservas pueden pertenecer a un cliente
+                @JsonIgnore
+                @ManyToOne
+                @JoinColumn(name = "cliente_id", referencedColumnName = "idCliente")
+                private Cliente cliente;
+                }
+         */
+        //Crear 10 reservas
+        Reserva reserva1 = new Reserva(new Date(2023, 10, 1), new Date(2023, 10, 5), 2, "Confirmada",
+                null);
+        Reserva reserva2 = new Reserva(new Date(2023, 11, 10), new Date(2023, 11, 15), 4, "Pendiente",
+                null);
+        Reserva reserva3 = new Reserva(new Date(2023, 12, 20), new Date(2023, 12, 25), 1, "Cancelada",
+                null);
+        Reserva reserva4 = new Reserva(new Date(2024, 1, 5), new Date(2024, 1, 10), 3, "Confirmada",
+                null);
+        Reserva reserva5 = new Reserva(new Date(2024, 2, 14), new Date(2024, 2, 18), 2, "Pendiente",
+                null);
+        Reserva reserva6 = new Reserva(new Date(2024, 3, 1), new Date(2024, 3, 5), 5, "Confirmada",
+                null);
+        Reserva reserva7 = new Reserva(new Date(2024, 4, 10), new Date(2024, 4, 15), 2, "Cancelada",
+                null);
+        Reserva reserva8 = new Reserva(new Date(2024, 5, 20), new Date(2024, 5, 25), 4, "Confirmada",
+                null);
+        Reserva reserva9 = new Reserva(new Date(2024, 6, 15), new Date(2024, 6, 20), 1, "Pendiente",
+                null);
+        Reserva reserva10 = new Reserva(new Date(2024, 7, 1), new Date(2024, 7, 5), 3, "Confirmada",
+                null);
+        // Aquí puedes guardar las reservas en su repositorio correspondiente si lo tienes
+        reservaRepository.save(reserva1);
+        reservaRepository.save(reserva2);
+        reservaRepository.save(reserva3);
+        reservaRepository.save(reserva4);
+        reservaRepository.save(reserva5);
+        reservaRepository.save(reserva6);
+        reservaRepository.save(reserva7);
+        reservaRepository.save(reserva8);
+        reservaRepository.save(reserva9);
+        reservaRepository.save(reserva10);
+
     }
+
 }

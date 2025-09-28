@@ -2,6 +2,8 @@ package com.example.lumaresort.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -36,23 +38,28 @@ public class Usuario {
     private boolean esAdministrador;
     private String rol;
 
-    // 🔹 Relaciones con otras entidades
+    //Relaciones con otras entidades
+    @JsonIgnore
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Cliente cliente;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Administrador administrador;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Operador operador;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Configuracion configuracion;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Historial> historial;
 
-    // 🔹 Constructor adicional (login)
+    //Constructor adicional (login)
     public Usuario(String correo, String contrasena) {
         this.correo = correo;
         this.contrasena = contrasena;

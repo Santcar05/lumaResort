@@ -2,6 +2,8 @@ package com.example.lumaresort.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,11 +37,13 @@ public class Servicio {
     private String imagenURL;
 
     // Un servicio puede tener varios comentarios
+    @JsonIgnore
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comentario> comentarios;
 
     public Servicio(String nombre, String tipo, String descripcion, float precio, String imagenURL) {
         this.nombre = nombre;
+        this.tipo = tipo;
         this.descripcion = descripcion;
         this.precio = precio;
         this.imagenURL = imagenURL;

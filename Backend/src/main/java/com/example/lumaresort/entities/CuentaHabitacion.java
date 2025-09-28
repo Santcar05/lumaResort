@@ -2,6 +2,8 @@ package com.example.lumaresort.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +32,7 @@ public class CuentaHabitacion {
     private float total;
 
     // Una cuenta puede estar asociada a varias habitaciones
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "cuenta_habitacion_habitacion",
@@ -39,6 +42,7 @@ public class CuentaHabitacion {
     private List<Habitacion> habitaciones;
 
     // Una cuenta puede estar asociada a varios servicios
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "cuenta_habitacion_servicio",
@@ -48,6 +52,7 @@ public class CuentaHabitacion {
     private List<Servicio> servicios;
 
     // Una cuenta puede tener varios pagos
+    @JsonIgnore
     @OneToMany(mappedBy = "cuentaHabitacion", cascade = CascadeType.ALL)
     private List<Pago> pagos;
 

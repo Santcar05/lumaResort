@@ -2,6 +2,8 @@ package com.example.lumaresort.entities;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -39,7 +41,16 @@ public class Reserva {
     private String estado;
 
     // Relación con Cliente: muchas reservas pueden pertenecer a un cliente
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "cliente_id", referencedColumnName = "idCliente")
-    private Cliente cliente;
+    @JoinColumn(name = "cliente_id")
+    private Usuario cliente;
+
+    public Reserva(Date fechaInicio, Date fechaFin, Integer cantidadPersonas, String estado, Usuario cliente) {
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.cantidadPersonas = cantidadPersonas;
+        this.estado = estado;
+        this.cliente = cliente;
+    }
 }

@@ -1,5 +1,7 @@
 package com.example.lumaresort.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,7 +24,13 @@ public class Operador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idOperador;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "idUsuario", nullable = false, unique = true)
     private Usuario usuario;
+
+    public Operador(int i, Usuario findByCorreoAndContrasena) {
+        this.idOperador = i;
+        this.usuario = findByCorreoAndContrasena;
+    }
 }

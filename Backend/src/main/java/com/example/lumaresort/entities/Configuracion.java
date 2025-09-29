@@ -1,5 +1,7 @@
 package com.example.lumaresort.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -31,6 +33,7 @@ public class Configuracion {
     @Enumerated(EnumType.STRING) // Guarda el nombre del enum en lugar del número
     private TemaVisual temaVisual;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "idUsuario") // clave foránea
     private Usuario usuario;

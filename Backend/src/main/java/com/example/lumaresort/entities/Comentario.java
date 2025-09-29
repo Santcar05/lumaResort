@@ -2,6 +2,8 @@ package com.example.lumaresort.entities;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,7 +35,8 @@ public class Comentario {
 
     private float calificacion;
 
-    // 🔹 Relación con Servicio
+    // Relación con Servicio
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "servicio_id", referencedColumnName = "idServicio")
     private Servicio servicio;

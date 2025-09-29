@@ -2,6 +2,8 @@ package com.example.lumaresort.entities;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,9 +29,11 @@ public class Pago {
     private Date fecha;
     private String estado;
 
+    @JsonIgnore
     @ManyToOne
     private CuentaHabitacion cuentaHabitacion;
 
+    @JsonIgnore
     @ManyToOne
     private MetodoPago metodoPago;
 }

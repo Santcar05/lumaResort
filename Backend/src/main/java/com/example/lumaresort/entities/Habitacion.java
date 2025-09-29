@@ -2,6 +2,8 @@ package com.example.lumaresort.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,11 +33,13 @@ public class Habitacion {
     private List<String> imagenUrl;
 
     // Muchas habitaciones pueden ser de un tipo
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idTipoHabitacion") // FK hacia TipoHabitacion
     private TipoHabitacion tipoHabitacion;
 
     // Una habitación está asociada a una sola cuenta
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "idCuentaHabitacion") // FK hacia CuentaHabitacion
     private CuentaHabitacion cuentaHabitacion;

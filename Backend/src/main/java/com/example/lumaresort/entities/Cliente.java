@@ -2,6 +2,8 @@ package com.example.lumaresort.entities;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,6 +32,7 @@ public class Cliente {
 
     private String estadoReserva; // En uso, Paga, Pendiente
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "idUsuario") // FK en tabla Cliente
     private Usuario usuario;

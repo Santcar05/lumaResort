@@ -3,6 +3,8 @@ package com.example.lumaresort.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -18,6 +20,7 @@ public class TipoHabitacion {
     private String nombre;
     private String descripcion;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tipoHabitacion")
     private List<Habitacion> habitaciones = new ArrayList<>();
 

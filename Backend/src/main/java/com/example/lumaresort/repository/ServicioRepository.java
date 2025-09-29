@@ -12,4 +12,5 @@ public interface ServicioRepository extends JpaRepository<Servicio, Long> {
 
     // Método para buscar servicios por nombre (contiene, sin distinguir mayúsculas/minúsculas)
     List<Servicio> findByNombreContainingIgnoreCase(String nombre);
+
 }

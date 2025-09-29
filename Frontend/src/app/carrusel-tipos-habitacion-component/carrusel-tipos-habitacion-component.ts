@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { TipoHabitacionService } from '../service/tipo-habitacion';
+import { TipoHabitacion } from '../Models/TipoHabitacion';
 @Component({
   selector: 'app-carrusel-tipos-habitacion-component',
   imports: [CommonModule],
@@ -9,6 +12,43 @@ import { CommonModule } from '@angular/common';
 export class CarruselTiposHabitacionComponent {
   currentIndex: number = 0;
 
+  rooms: {
+    name: string;
+    description: string;
+    images: string[];
+    price: string;
+    features: string[];
+  }[] = [];
+
+  constructor(private http: HttpClient, private tipoHabitacionService: TipoHabitacionService) {}
+
+  ngOnInit(): void {
+    this.findAll().subscribe((data) => {
+      this.buildRooms(data);
+      console.log(this.rooms);
+    });
+  }
+
+  findAll() {
+    return this.http.get<TipoHabitacion[]>('http://localhost:8080/tiposHabitacion');
+  }
+  buildRooms(tiposHabitacion: any[]): void {
+    this.rooms = tiposHabitacion.map((tipo) => ({
+      name: tipo.nombre,
+      description: tipo.descripcion,
+      images: tipo.imagenesURL
+        ? tipo.imagenesURL
+        : ['https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg'],
+      price: tipo.precio ? `$${tipo.precio}` : 'N/A',
+      features: Array.isArray(tipo.caracteristicas)
+        ? tipo.caracteristicas.flatMap((c: string) => c.split(',').map((f) => f.trim()))
+        : typeof tipo.caracteristicas === 'string'
+        ? tipo.caracteristicas.split(',').map((f: string) => f.trim())
+        : [],
+    }));
+  }
+
+  /*
   rooms = [
     {
       name: 'Habitación Deluxe',
@@ -51,6 +91,7 @@ export class CarruselTiposHabitacionComponent {
       features: ['Cama queen', 'Baño moderno', 'TV por cable', 'Aire acondicionado'],
     },
   ];
+  */
 
   nextRoom(): void {
     this.currentIndex = (this.currentIndex + 1) % this.rooms.length;

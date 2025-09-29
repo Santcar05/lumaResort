@@ -5,11 +5,14 @@ import { TipoHabitacion } from '../Models/TipoHabitacion';
   providedIn: 'root',
 })
 export class TipoHabitacionService {
-  private storageKey = 'tiposHabitacion'; // clave para el localStorage
+  private storageKey = 'tiposHabitacion';
+  private isBrowser: boolean;
 
   constructor() {
-    // si no hay nada en localStorage, inicializamos con datos por defecto
-    if (!localStorage.getItem(this.storageKey)) {
+    // verificamos si estamos en navegador
+    this.isBrowser = typeof window !== 'undefined' && !!window.localStorage;
+
+    if (this.isBrowser && !localStorage.getItem(this.storageKey)) {
       const iniciales: TipoHabitacion[] = [
         { id: 1, nombre: 'Suite Presidencial', descripcion: 'La más exclusiva del resort' },
         { id: 2, nombre: 'Habitación Doble', descripcion: 'Cómoda y elegante para dos personas' },
@@ -19,11 +22,14 @@ export class TipoHabitacionService {
   }
 
   private getData(): TipoHabitacion[] {
+    if (!this.isBrowser) return []; // SSR -> retorna vacío
     return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
   }
 
   private saveData(data: TipoHabitacion[]): void {
-    localStorage.setItem(this.storageKey, JSON.stringify(data));
+    if (this.isBrowser) {
+      localStorage.setItem(this.storageKey, JSON.stringify(data));
+    }
   }
 
   findAll(): TipoHabitacion[] {

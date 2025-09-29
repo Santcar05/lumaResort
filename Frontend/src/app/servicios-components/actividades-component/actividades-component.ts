@@ -44,7 +44,7 @@ export class ActividadesComponent {
   }
 
   findAll(): Observable<Servicio[]> {
-    return this.http.get<Servicio[]>('http://localhost:8080/');
+    return this.http.get<Servicio[]>('http://localhost:8080/actividades');
   }
 
   buildCategories(servicios: Servicio[]): void {

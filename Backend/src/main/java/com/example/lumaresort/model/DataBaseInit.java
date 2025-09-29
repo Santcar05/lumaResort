@@ -21,7 +21,7 @@ import com.example.lumaresort.repository.ReservaRepository;
 import com.example.lumaresort.repository.ServicioRepository;
 import com.example.lumaresort.repository.TipoHabitacionRepository;
 import com.example.lumaresort.repository.UsuarioRepository;
-
+import java.util.List;
 import jakarta.transaction.Transactional;
 
 @Controller
@@ -55,11 +55,11 @@ public class DataBaseInit implements ApplicationRunner {
     public void init() {
         // Lógica de inicialización de la base de datos
         //Crear 50 habitaciones, 5 tipos de habitaciones y 10 usuarios
-        TipoHabitacion tipo1 = new TipoHabitacion("Individual", "Habitación para una persona");
-        TipoHabitacion tipo2 = new TipoHabitacion("Doble", "Habitación para dos personas");
-        TipoHabitacion tipo3 = new TipoHabitacion("Suite", "Habitación de lujo con sala de estar");
-        TipoHabitacion tipo4 = new TipoHabitacion("Familiar", "Habitación para toda la familia");
-        TipoHabitacion tipo5 = new TipoHabitacion("Presidencial", "Habitación de máxima categoría");
+        TipoHabitacion tipo1 = new TipoHabitacion("Individual", "Habitación para una persona", java.util.Arrays.asList("https://example.com/imagen_individual.jpg"), java.util.Arrays.asList("Cama individual, Baño privado, Wi-Fi gratuito"), 50.0);
+        TipoHabitacion tipo2 = new TipoHabitacion("Doble", "Habitación para dos personas", java.util.Arrays.asList("https://example.com/imagen_doble.jpg"), java.util.Arrays.asList("Cama doble, Baño privado, Wi-Fi gratuito, TV por cable", "Cama doble, Baño privado, Wi-Fi gratuito, TV por cable"), 100.0);
+        TipoHabitacion tipo3 = new TipoHabitacion("Suite", "Habitación de lujo con sala de estar", java.util.Arrays.asList("https://example.com/imagen_suite.jpg"), java.util.Arrays.asList("Cama king size, Sala de estar, Baño con jacuzzi, Wi-Fi gratuito, TV por cable", "Cama king size, Sala de estar, Baño con jacuzzi, Wi-Fi gratuito, TV por cable"), 200.0);
+        TipoHabitacion tipo4 = new TipoHabitacion("Familiar", "Habitación para toda la familia", java.util.Arrays.asList("https://example.com/imagen_familiar.jpg"), java.util.Arrays.asList("Dos camas dobles, Sofá cama, Baño privado, Wi-Fi gratuito, TV por cable"), 300.0);
+        TipoHabitacion tipo5 = new TipoHabitacion("Presidencial", "Habitación de máxima categoría", java.util.Arrays.asList("https://example.com/imagen_presidencial.jpg"), java.util.Arrays.asList("Cama king size, Sala de estar, Comedor, Cocina pequeña, Baño con jacuzzi y ducha separada, Wi-Fi gratuito, TV por cable"), 500.0);
 
         tipoHabitacionRepository.save(tipo1);
         tipoHabitacionRepository.save(tipo2);
@@ -347,7 +347,7 @@ public class Operador {
     private Usuario usuario;
 }
 } */
-/* 
+ /* 
         Operador operador1 = new Operador(
                 1, usuarioRepository.findByCorreoAndContrasena("Operador1@gmail.com", "op1")
         );
@@ -374,8 +374,8 @@ public class Operador {
         operadorRepository.save(operador4);
         operadorRepository.save(operador5);
 
-        */
-        /*
+         */
+ /*
           @Table(name = "reservas")
                 public class Reserva {
 

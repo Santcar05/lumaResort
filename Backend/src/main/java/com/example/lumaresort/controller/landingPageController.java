@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.lumaresort.entities.Servicio;
+import com.example.lumaresort.entities.TipoHabitacion;
 import com.example.lumaresort.entities.Usuario;
 import com.example.lumaresort.service.ServicioService;
+import com.example.lumaresort.service.TipoHabitacionService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -22,15 +24,23 @@ public class landingPageController {
     //Atributos de la clase
     @Autowired
     private ServicioService servicioService;
+    @Autowired
+    private TipoHabitacionService tipoHabitacionService;
 
     //http://localhost:8080
-    @GetMapping("/")
+    @GetMapping("/actividades")
     public List<Servicio> actividades(Model model) {
         //model.addAttribute("usuario", usuario);
         //Enviar todos los servicios a la vista de Angular
         //model.addAttribute("servicios", servicioService.findAll());
 
         return servicioService.findAll();
+    }
+
+    @GetMapping("/tiposHabitacion")
+    public List<TipoHabitacion> tiposHabitacion(Model model) {
+
+        return tipoHabitacionService.findAll();
     }
 
     @GetMapping("/logout")

@@ -38,14 +38,18 @@ public class TipoHabitacionService {
     }
 
     public void eliminar(Long id) {
-    TipoHabitacion tipo = repository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Tipo de habitación no encontrado"));
+        TipoHabitacion tipo = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tipo de habitación no encontrado"));
 
-    if (tipo.getHabitaciones() != null && !tipo.getHabitaciones().isEmpty()) {
-        throw new IllegalStateException("No se puede eliminar el tipo de habitación porque tiene habitaciones asociadas.");
+        if (tipo.getHabitaciones() != null && !tipo.getHabitaciones().isEmpty()) {
+            throw new IllegalStateException("No se puede eliminar el tipo de habitación porque tiene habitaciones asociadas.");
+        }
+
+        repository.deleteById(id);
     }
 
-    repository.deleteById(id);
-}
+    public List<TipoHabitacion> findAll() {
+        return repository.findAll();
+    }
 
 }

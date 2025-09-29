@@ -52,7 +52,7 @@
             <div class="carousel-slide" *ngFor="let room of rooms">
               <div class="room-card">
                 <div class="room-image">
-                  <img [src]="room.image" [alt]="room.name" />
+                  <img [src]="room.images[0]" [alt]="room.name" />
                   <div class="room-overlay">
                     <h3 class="room-name">{{ room.name }}</h3>
                     <p class="room-description">{{ room.description }}</p>

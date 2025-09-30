@@ -1,0 +1,89 @@
+<section class="contact-section chatbot-section">
+  <div class="contact-container">
+    <div class="contact-header">
+      <h2 class="section-title">CHATBOT</h2>
+      <h3 class="section-subtitle">Asistente <span>LumaResort</span></h3>
+      <p class="section-description">
+        Habla con el asistente para consultar habitaciones, disponibilidad o iniciar una reserva.
+      </p>
+      <div class="title-divider"></div>
+    </div>
+
+    <div class="contact-content">
+      <div class="form-container chat-container">
+        <div class="chat-window" role="log" aria-live="polite">
+          <div *ngFor="let msg of messages" class="chat-message" [ngClass]="msg.from">
+            <div class="avatar" *ngIf="msg.from === 'bot'">LR</div>
+            <div class="bubble">
+              <div class="bubble-text" [innerHTML]="msg.text | linkify"></div>
+              <div class="meta">{{ msg.time | date : 'shortTime' }}</div>
+            </div>
+          </div>
+
+          <div class="typing-indicator" *ngIf="typing">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+          </div>
+        </div>
+
+        <form (submit)="send()" class="contact-form">
+          <div class="form-row">
+            <div class="form-group full-width">
+              <input
+                type="text"
+                [(ngModel)]="inputText"
+                name="message"
+                placeholder="Escribe un mensaje..."
+                autocomplete="off"
+              />
+              <span class="input-underline"></span>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 1rem; align-items: center">
+            <button class="submit-btn" type="submit" [disabled]="sending || !inputText.trim()">
+              <div *ngIf="!sending">Enviar</div>
+              <div *ngIf="sending" class="btn-loader">
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+              </div>
+            </button>
+
+            <button type="button" class="submit-btn" (click)="quick('mostrar habitaciones')">
+              Ver habitaciones
+            </button>
+            <button type="button" class="submit-btn" (click)="quick('quiero reservar')">
+              Reservar
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <aside class="contact-info">
+        <div class="info-card">
+          <div class="info-icon">🏨</div>
+          <h4>Estado del bot</h4>
+          <p>Conectado al backend. Herramientas: Base de datos, Reserva (placeholder), LLM.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">⚙️</div>
+          <h4>Comandos rápidos</h4>
+          <p>
+            Prueba: "mostrar habitaciones", "disponibilidad suite", "crear reserva para Juan el
+            2025-10-05".
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="floating-elements">
+    <div class="floating-element element-1">✦</div>
+    <div class="floating-element element-2">✹</div>
+    <div class="floating-element element-3">✦</div>
+    <div class="floating-element element-4">✹</div>
+  </div>
+</section>

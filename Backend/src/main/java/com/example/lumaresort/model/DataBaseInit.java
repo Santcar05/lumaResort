@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 
 import com.example.lumaresort.entities.Administrador;
 import com.example.lumaresort.entities.Habitacion;
-import com.example.lumaresort.entities.Operador;
 import com.example.lumaresort.entities.Reserva;
 import com.example.lumaresort.entities.Servicio;
 import com.example.lumaresort.entities.TipoHabitacion;
@@ -21,7 +20,7 @@ import com.example.lumaresort.repository.ReservaRepository;
 import com.example.lumaresort.repository.ServicioRepository;
 import com.example.lumaresort.repository.TipoHabitacionRepository;
 import com.example.lumaresort.repository.UsuarioRepository;
-import java.util.List;
+
 import jakarta.transaction.Transactional;
 
 @Controller
@@ -402,25 +401,25 @@ public class Operador {
          */
         //Crear 10 reservas
         Reserva reserva1 = new Reserva(new Date(2023, 10, 1), new Date(2023, 10, 5), 2, "Confirmada",
-                null);
+                null, habitacion1);
         Reserva reserva2 = new Reserva(new Date(2023, 11, 10), new Date(2023, 11, 15), 4, "Pendiente",
-                null);
+                null, habitacion2);
         Reserva reserva3 = new Reserva(new Date(2023, 12, 20), new Date(2023, 12, 25), 1, "Cancelada",
-                null);
+                null, habitacion3);
         Reserva reserva4 = new Reserva(new Date(2024, 1, 5), new Date(2024, 1, 10), 3, "Confirmada",
-                null);
+                null, habitacion4);
         Reserva reserva5 = new Reserva(new Date(2024, 2, 14), new Date(2024, 2, 18), 2, "Pendiente",
-                null);
+                null, habitacion5);
         Reserva reserva6 = new Reserva(new Date(2024, 3, 1), new Date(2024, 3, 5), 5, "Confirmada",
-                null);
+                null, habitacion6);
         Reserva reserva7 = new Reserva(new Date(2024, 4, 10), new Date(2024, 4, 15), 2, "Cancelada",
-                null);
+                null, habitacion7);
         Reserva reserva8 = new Reserva(new Date(2024, 5, 20), new Date(2024, 5, 25), 4, "Confirmada",
-                null);
+                null, habitacion8);
         Reserva reserva9 = new Reserva(new Date(2024, 6, 15), new Date(2024, 6, 20), 1, "Pendiente",
-                null);
+                null, habitacion9);
         Reserva reserva10 = new Reserva(new Date(2024, 7, 1), new Date(2024, 7, 5), 3, "Confirmada",
-                null);
+                null, habitacion10);
         // Aquí puedes guardar las reservas en su repositorio correspondiente si lo tienes
         reservaRepository.save(reserva1);
         reservaRepository.save(reserva2);

@@ -50,7 +50,6 @@ export class ReservaAdminComponent {
       estado: 'Disponible',
       capacidad: 1,
       descripcion: '',
-      imagenUrl: '',
     },
   };
   editando: Reserva | null = null;
@@ -94,7 +93,6 @@ export class ReservaAdminComponent {
         estado: 'Disponible',
         capacidad: 1,
         descripcion: '',
-        imagenUrl: '',
       },
     };
   }

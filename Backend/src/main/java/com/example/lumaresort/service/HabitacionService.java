@@ -37,31 +37,28 @@ public class HabitacionService {
         return habitacionRepository.findById(id).orElse(null);
     }
 
-
-
     public void eliminarHabitacion(Long id) {
         habitacionRepository.deleteById(id);
     }
 
     public void actualizarHabitacion(Long habitacionId, Habitacion habitacion, Long tipoId) {
-    Habitacion habitacionExistente = buscarHabitacionPorId(habitacionId);
-    TipoHabitacion tipoHabitacion = tipoHabitacionService.buscarPorId(tipoId).orElseThrow();
+        Habitacion habitacionExistente = buscarHabitacionPorId(habitacionId);
+        TipoHabitacion tipoHabitacion = tipoHabitacionService.buscarPorId(tipoId).orElseThrow();
 
-    if (habitacionExistente != null) {
-        habitacionExistente.setNumero(habitacion.getNumero());
-        habitacionExistente.setPrecioPorNoche(habitacion.getPrecioPorNoche());
-        habitacionExistente.setEstado(habitacion.getEstado());
-        habitacionExistente.setCapacidad(habitacion.getCapacidad());
-        habitacionExistente.setTipoHabitacion(tipoHabitacion);
-        habitacionExistente.setDescripcion(habitacion.getDescripcion());
-        habitacionExistente.setImagenUrl(habitacion.getImagenUrl());
-        habitacionRepository.save(habitacionExistente);
+        if (habitacionExistente != null) {
+            habitacionExistente.setNumero(habitacion.getNumero());
+            habitacionExistente.setPrecioPorNoche(habitacion.getPrecioPorNoche());
+            habitacionExistente.setEstado(habitacion.getEstado());
+            habitacionExistente.setCapacidad(habitacion.getCapacidad());
+            habitacionExistente.setTipoHabitacion(tipoHabitacion);
+            habitacionExistente.setDescripcion(habitacion.getDescripcion());
+            habitacionRepository.save(habitacionExistente);
+        }
     }
-}
 
-  public Habitacion buscarPorId(Long id) {
+    public Habitacion buscarPorId(Long id) {
         return habitacionRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Habitación no encontrada con id: " + id));
+                .orElseThrow(() -> new RuntimeException("Habitación no encontrada con id: " + id));
     }
 
     public List<Habitacion> listarTodos() {

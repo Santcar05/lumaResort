@@ -1,29 +1,33 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Habitacion } from '../../Models/Habitacion';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root',
+})
 export class HabitacionService {
-  private habitaciones: Habitacion[] = [];
-  private nextId = 1;
+  private apiUrl = 'http://localhost:8080/habitaciones';
 
-  findAll(): Habitacion[] {
-    return [...this.habitaciones];
+  constructor(private http: HttpClient) {}
+
+  // Obtener todas las habitaciones
+  findAll(): Observable<Habitacion[]> {
+    return this.http.get<Habitacion[]>(this.apiUrl);
   }
 
-  create(habitacion: Habitacion) {
-    habitacion.idHabitacion = this.nextId++;
-    habitacion.imagenUrl = habitacion.imagenUrl || '';
-    this.habitaciones.push({ ...habitacion });
+  // Crear una nueva habitación
+  create(habitacion: Habitacion): Observable<Habitacion> {
+    return this.http.post<Habitacion>(this.apiUrl, habitacion);
   }
 
-  update(habitacionActualizada: Habitacion) {
-    const index = this.habitaciones.findIndex(
-      (h) => h.idHabitacion === habitacionActualizada.idHabitacion
-    );
-    if (index !== -1) this.habitaciones[index] = { ...habitacionActualizada };
+  // Actualizar habitación existente
+  update(habitacion: Habitacion): Observable<Habitacion> {
+    return this.http.put<Habitacion>(`${this.apiUrl}/${habitacion.idHabitacion}`, habitacion);
   }
 
-  delete(id: number) {
-    this.habitaciones = this.habitaciones.filter((h) => h.idHabitacion !== id);
+  // Eliminar una habitación
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

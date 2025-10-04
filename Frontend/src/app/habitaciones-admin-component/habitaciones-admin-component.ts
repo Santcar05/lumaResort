@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Habitacion } from '../Models/Habitacion';
+import { TipoHabitacion } from '../Models/TipoHabitacion';
 import { HabitacionService } from '../service/habitacion/habitacion-service';
+import { TipoHabitacionService } from '../service/tipo-habitacion';
 
 @Component({
   selector: 'app-habitaciones-admin-component',
@@ -13,47 +15,87 @@ import { HabitacionService } from '../service/habitacion/habitacion-service';
 })
 export class HabitacionesAdminComponent {
   habitaciones: Habitacion[] = [];
-  nuevaHabitacion: Habitacion = {
-    idHabitacion: 0,
-    numero: '',
-    precioPorNoche: 0,
-    estado: '',
-    capacidad: 1,
-    descripcion: '',
-    imagenUrl: '',
-  };
+  tiposHabitacion: TipoHabitacion[] = [];
+
+  nuevaHabitacion: Habitacion = this.crearHabitacionVacia();
   editando: Habitacion | null = null;
 
-  constructor(private habitacionService: HabitacionService) {}
+  constructor(
+    private habitacionService: HabitacionService,
+    private tipoHabitacionService: TipoHabitacionService
+  ) {}
 
   ngOnInit(): void {
-    this.habitaciones = this.habitacionService.findAll();
+    this.cargarHabitaciones();
+    this.cargarTiposHabitacion();
   }
 
-  crearHabitacion() {
-    if (!this.nuevaHabitacion.numero.trim() || !this.nuevaHabitacion.estado.trim()) return;
-    this.habitacionService.create({ ...this.nuevaHabitacion });
-    this.habitaciones = this.habitacionService.findAll();
-    this.nuevaHabitacion = {
+  private crearHabitacionVacia(): Habitacion {
+    return {
       idHabitacion: 0,
       numero: '',
       precioPorNoche: 0,
       estado: '',
       capacidad: 1,
       descripcion: '',
-      imagenUrl: '',
+      tipoHabitacion: { id: 0, nombre: '', descripcion: '' },
     };
   }
 
+  cargarHabitaciones() {
+    this.habitacionService.findAll().subscribe({
+      next: (data) => (this.habitaciones = data),
+      error: (err) => console.error('Error al cargar habitaciones:', err),
+    });
+  }
+
+  cargarTiposHabitacion() {
+    this.tipoHabitacionService.findAll().subscribe({
+      next: (data) => (this.tiposHabitacion = data),
+      error: (err) => console.error('Error al cargar tipos de habitación:', err),
+    });
+  }
+
+  crearHabitacion() {
+    if (
+      !this.nuevaHabitacion.numero.trim() ||
+      !this.nuevaHabitacion.estado.trim() ||
+      !this.nuevaHabitacion.tipoHabitacion?.id
+    )
+      return;
+
+    // Clonar sin el idHabitacion antes de enviar
+    const habitacionSinId = { ...this.nuevaHabitacion };
+    delete habitacionSinId.idHabitacion;
+
+    this.habitacionService.create(habitacionSinId).subscribe({
+      next: () => {
+        this.cargarHabitaciones();
+        this.nuevaHabitacion = this.crearHabitacionVacia();
+      },
+      error: (err) => console.error('Error al crear habitación:', err),
+    });
+  }
+
   editarHabitacion(habitacion: Habitacion) {
-    this.editando = { ...habitacion };
+    this.editando = {
+      ...habitacion,
+      tipoHabitacion: habitacion.tipoHabitacion
+        ? { ...habitacion.tipoHabitacion }
+        : { id: 0, nombre: '', descripcion: '' },
+    };
   }
 
   guardarEdicion() {
     if (!this.editando) return;
-    this.habitacionService.update(this.editando);
-    this.habitaciones = this.habitacionService.findAll();
-    this.editando = null;
+
+    this.habitacionService.update(this.editando).subscribe({
+      next: () => {
+        this.cargarHabitaciones();
+        this.editando = null;
+      },
+      error: (err) => console.error('Error al actualizar habitación:', err),
+    });
   }
 
   cancelarEdicion() {
@@ -62,8 +104,10 @@ export class HabitacionesAdminComponent {
 
   eliminarHabitacion(id: number) {
     if (confirm('¿Seguro que deseas eliminar esta habitación?')) {
-      this.habitacionService.delete(id);
-      this.habitaciones = this.habitacionService.findAll();
+      this.habitacionService.delete(id).subscribe({
+        next: () => this.cargarHabitaciones(),
+        error: (err) => console.error('Error al eliminar habitación:', err),
+      });
     }
   }
 }

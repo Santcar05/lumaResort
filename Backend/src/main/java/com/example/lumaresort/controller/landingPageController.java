@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.lumaresort.entities.Habitacion;
 import com.example.lumaresort.entities.Reserva;
 import com.example.lumaresort.entities.Servicio;
 import com.example.lumaresort.entities.TipoHabitacion;
@@ -61,12 +60,6 @@ public class landingPageController {
     public List<Reserva> reservas(Model model) {
 
         return reservaService.findAll();
-    }
-
-    @GetMapping("/habitaciones")
-    public List<Habitacion> habitaciones(Model model) {
-
-        return habitacionService.listarTodos();
     }
 
     @GetMapping("/usuarios")

@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-chatbot-component',
   imports: [],
   templateUrl: './chatbot-component.html',
-  styleUrl: './chatbot-component.css'
+  styleUrl: './chatbot-component.css',
 })
-export class ChatbotComponent {
-
-}
+export class ChatbotComponent {}

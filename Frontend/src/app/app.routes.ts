@@ -3,6 +3,7 @@ import { LandingPageComponent } from './landing-page-components/landing-page-com
 import { LoginComponent } from './login/login-component/login-component';
 import { TipoHabitacionAdminComponent } from './tipo-habitacion-admin-component/tipo-habitacion-admin-component';
 import { AdminComponent } from './admin-component/admin-component';
+import { ClienteAdminComponent } from './cliente-admin-component/cliente-admin-component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // por defecto muestra Landing
@@ -10,7 +11,10 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    children: [{ path: 'tiposHabitacion', component: TipoHabitacionAdminComponent }],
+    children: [
+      { path: 'tiposHabitacion', component: TipoHabitacionAdminComponent },
+      { path: 'clientes', component: ClienteAdminComponent },
+    ],
   },
   { path: '**', redirectTo: '' }, // redirección en caso de ruta no válida COLOCAR SIEMPRE AL FINAL
 ];

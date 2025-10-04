@@ -13,27 +13,17 @@ import { CRUDServiciosService } from '../service/servicios/CRUD/crudservicios-se
 })
 export class ServiciosAdminComponent {
   servicios: Servicio[] = [];
-  nuevoServicio: Servicio = {
-    idServicio: 0,
-    tipo: '',
-    descripcion: '',
-    nombre: '',
-    precio: 0,
-    imagenURL: '',
-  };
+  nuevoServicio: Servicio = this.crearNuevoServicio();
   editando: Servicio | null = null;
 
   constructor(private servicioService: CRUDServiciosService) {}
 
   ngOnInit(): void {
-    this.servicios = this.servicioService.findAll();
+    this.cargarServicios();
   }
 
-  crearServicio() {
-    if (!this.nuevoServicio.nombre.trim() || !this.nuevoServicio.tipo.trim()) return;
-    this.servicioService.create({ ...this.nuevoServicio });
-    this.servicios = this.servicioService.findAll();
-    this.nuevoServicio = {
+  private crearNuevoServicio(): Servicio {
+    return {
       idServicio: 0,
       tipo: '',
       descripcion: '',
@@ -43,25 +33,51 @@ export class ServiciosAdminComponent {
     };
   }
 
-  editarServicio(servicio: Servicio) {
+  cargarServicios(): void {
+    this.servicioService.findAll().subscribe({
+      next: (data) => (this.servicios = data),
+      error: (err) => console.error('Error al cargar servicios:', err),
+    });
+  }
+
+  crearServicio(): void {
+    if (!this.nuevoServicio.nombre.trim() || !this.nuevoServicio.tipo.trim()) return;
+
+    this.servicioService.create(this.nuevoServicio).subscribe({
+      next: () => {
+        this.cargarServicios();
+        this.nuevoServicio = this.crearNuevoServicio();
+      },
+      error: (err) => console.error('Error al crear servicio:', err),
+    });
+  }
+
+  editarServicio(servicio: Servicio): void {
     this.editando = { ...servicio };
   }
 
-  guardarEdicion() {
+  guardarEdicion(): void {
     if (!this.editando) return;
-    this.servicioService.update(this.editando);
-    this.servicios = this.servicioService.findAll();
+
+    this.servicioService.update(this.editando).subscribe({
+      next: () => {
+        this.cargarServicios();
+        this.editando = null;
+      },
+      error: (err) => console.error('Error al actualizar servicio:', err),
+    });
+  }
+
+  cancelarEdicion(): void {
     this.editando = null;
   }
 
-  cancelarEdicion() {
-    this.editando = null;
-  }
-
-  eliminarServicio(id: number) {
+  eliminarServicio(id: number): void {
     if (confirm('¿Seguro que deseas eliminar este servicio?')) {
-      this.servicioService.delete(id);
-      this.servicios = this.servicioService.findAll();
+      this.servicioService.delete(id).subscribe({
+        next: () => this.cargarServicios(),
+        error: (err) => console.error('Error al eliminar servicio:', err),
+      });
     }
   }
 }

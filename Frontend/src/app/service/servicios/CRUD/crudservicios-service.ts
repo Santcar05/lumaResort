@@ -1,28 +1,33 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Servicio } from '../../../Models/Servicio';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CRUDServiciosService {
-  private servicios: Servicio[] = [];
-  private nextId = 1;
+  private apiUrl = 'http://localhost:8080/servicios';
 
-  findAll(): Servicio[] {
-    return [...this.servicios];
+  constructor(private http: HttpClient) {}
+
+  // Obtener todos los servicios
+  findAll(): Observable<Servicio[]> {
+    return this.http.get<Servicio[]>(this.apiUrl);
   }
 
-  create(servicio: Servicio) {
-    servicio.idServicio = this.nextId++;
-    this.servicios.push({ ...servicio });
+  // Crear un servicio nuevo
+  create(servicio: Servicio): Observable<Servicio> {
+    return this.http.post<Servicio>(this.apiUrl, servicio);
   }
 
-  update(servicioActualizado: Servicio) {
-    const index = this.servicios.findIndex((s) => s.idServicio === servicioActualizado.idServicio);
-    if (index !== -1) this.servicios[index] = { ...servicioActualizado };
+  // Actualizar un servicio
+  update(servicio: Servicio): Observable<Servicio> {
+    return this.http.put<Servicio>(`${this.apiUrl}/${servicio.idServicio}`, servicio);
   }
 
-  delete(id: number) {
-    this.servicios = this.servicios.filter((s) => s.idServicio !== id);
+  // Eliminar un servicio por ID
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

@@ -5,6 +5,7 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
+/* Título principal */
 .titulo {
   font-size: 2rem;
   font-weight: bold;
@@ -13,6 +14,7 @@
   text-align: center;
 }
 
+/* Tarjetas */
 .card {
   background: #fff;
   border-radius: 12px;
@@ -37,30 +39,48 @@
   padding: 1.5rem;
 }
 
+/* Formularios */
 .form-group {
   margin-bottom: 1rem;
 }
 
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #003366;
+}
+
+/* Inputs, selects y textarea */
 input,
-textarea {
+textarea,
+select {
   width: 100%;
   padding: 0.6rem;
   border: 1px solid #ccc;
   border-radius: 8px;
-  transition: border 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+  font-size: 0.95rem;
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
   outline: none;
   border-color: #003366;
+  box-shadow: 0 0 5px rgba(0, 51, 102, 0.3);
+  background-color: #fff;
 }
 
+/* Botones */
 .btn {
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 8px;
   font-weight: bold;
   transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
 }
 
 .btn-primary {
@@ -92,9 +112,11 @@ textarea:focus {
   color: #fff;
 }
 
+/* Tabla */
 .tabla {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 1rem;
 }
 
 .tabla th,
@@ -102,9 +124,40 @@ textarea:focus {
   padding: 0.8rem;
   border-bottom: 1px solid #ddd;
   text-align: center;
+  font-size: 0.95rem;
 }
 
 .tabla th {
   background: #f0f0f0;
   font-weight: bold;
+  color: #003366;
+}
+
+/* Hover en filas */
+.tabla tr:hover {
+  background-color: #f5faff;
+  transition: background-color 0.3s ease;
+}
+
+/* Espaciado entre botones */
+.tabla button {
+  margin: 0 0.2rem;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .admin-container {
+    padding: 1rem;
+  }
+
+  .tabla th,
+  .tabla td {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
 }

@@ -1,4 +1,5 @@
-import { Cliente } from './Cliente';
+import { Habitacion } from './Habitacion';
+import { Usuario } from './Usuario';
 
 export interface Reserva {
   idReserva: number;
@@ -6,5 +7,6 @@ export interface Reserva {
   fechaFin: string | Date;
   cantidadPersonas: number;
   estado: string;
-  cliente: Cliente;
+  cliente: Usuario;
+  habitacion: Habitacion;
 }

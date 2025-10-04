@@ -6,6 +6,7 @@ import { AdminComponent } from './admin-component/admin-component';
 import { ClienteAdminComponent } from './cliente-admin-component/cliente-admin-component';
 import { ServiciosAdminComponent } from './servicios-admin-component/servicios-admin-component';
 import { HabitacionesAdminComponent } from './habitaciones-admin-component/habitaciones-admin-component';
+import { ReservaAdminComponent } from './reserva-admin-component/reserva-admin-component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // por defecto muestra Landing
@@ -18,6 +19,7 @@ export const routes: Routes = [
       { path: 'clientes', component: ClienteAdminComponent },
       { path: 'servicios', component: ServiciosAdminComponent },
       { path: 'habitaciones', component: HabitacionesAdminComponent },
+      { path: 'reservas', component: ReservaAdminComponent },
     ],
   },
   { path: '**', redirectTo: '' }, // redirección en caso de ruta no válida COLOCAR SIEMPRE AL FINAL

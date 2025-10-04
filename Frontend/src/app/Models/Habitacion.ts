@@ -8,7 +8,7 @@ export interface Habitacion {
   estado: string;
   capacidad: number;
   descripcion: string;
-  imagenUrl: string[];
+  imagenUrl: string;
   tipoHabitacion?: TipoHabitacion;
-  cuentaHabitacion?: CuentaHabitacion;
+  // Cuenta Habitacion Eliminada
 }

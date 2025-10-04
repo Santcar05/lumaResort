@@ -63,8 +63,6 @@ export class ReservaAdminComponent {
 
   crearReserva() {
     if (!this.nuevaReserva.cliente || !this.nuevaReserva.habitacion) return;
-
-    return;
     this.reservaService.create({ ...this.nuevaReserva });
     this.reservas = this.reservaService.findAll();
     this.resetFormulario();

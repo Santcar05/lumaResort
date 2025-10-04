@@ -1,0 +1,121 @@
+<div class="admin-container">
+  <h2 class="titulo">Gestión de Servicios</h2>
+
+  <!-- Crear nuevo servicio -->
+  <div class="card">
+    <div class="card-header">Nuevo Servicio</div>
+    <div class="card-body">
+      <form (ngSubmit)="crearServicio()">
+        <div class="form-group">
+          <label>Tipo:</label>
+          <input type="text" [(ngModel)]="nuevoServicio.tipo" name="tipo" required />
+        </div>
+        <div class="form-group">
+          <label>Nombre:</label>
+          <input type="text" [(ngModel)]="nuevoServicio.nombre" name="nombre" required />
+        </div>
+        <div class="form-group">
+          <label>Descripción:</label>
+          <textarea [(ngModel)]="nuevoServicio.descripcion" name="descripcion"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Precio:</label>
+          <input type="number" [(ngModel)]="nuevoServicio.precio" name="precio" required />
+        </div>
+        <div class="form-group">
+          <label>Imagen URL:</label>
+          <input type="text" [(ngModel)]="nuevoServicio.imagenURL" name="imagenURL" />
+        </div>
+        <button type="submit" class="btn btn-primary">Crear</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Lista de servicios -->
+  <div class="card mt-4">
+    <div class="card-header">Lista de Servicios</div>
+    <div class="card-body">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Imagen</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let servicio of servicios">
+            <td>{{ servicio.idServicio }}</td>
+
+            <!-- Tipo -->
+            <td *ngIf="editando?.idServicio !== servicio.idServicio">{{ servicio.tipo }}</td>
+            <td *ngIf="editando?.idServicio === servicio.idServicio">
+              <input [(ngModel)]="editando!.tipo" name="editTipo{{ servicio.idServicio }}" />
+            </td>
+
+            <!-- Nombre -->
+            <td *ngIf="editando?.idServicio !== servicio.idServicio">{{ servicio.nombre }}</td>
+            <td *ngIf="editando?.idServicio === servicio.idServicio">
+              <input [(ngModel)]="editando!.nombre" name="editNombre{{ servicio.idServicio }}" />
+            </td>
+
+            <!-- Descripción -->
+            <td *ngIf="editando?.idServicio !== servicio.idServicio">{{ servicio.descripcion }}</td>
+            <td *ngIf="editando?.idServicio === servicio.idServicio">
+              <textarea
+                [(ngModel)]="editando!.descripcion"
+                name="editDescripcion{{ servicio.idServicio }}"
+              ></textarea>
+            </td>
+
+            <!-- Precio -->
+            <td *ngIf="editando?.idServicio !== servicio.idServicio">
+              {{ servicio.precio | currency }}
+            </td>
+            <td *ngIf="editando?.idServicio === servicio.idServicio">
+              <input
+                type="number"
+                [(ngModel)]="editando!.precio"
+                name="editPrecio{{ servicio.idServicio }}"
+              />
+            </td>
+
+            <!-- Imagen -->
+            <td>
+              <img
+                [src]="servicio.imagenURL"
+                alt="Imagen servicio"
+                width="80"
+                *ngIf="servicio.imagenURL"
+              />
+            </td>
+
+            <td>
+              <ng-container *ngIf="editando?.idServicio !== servicio.idServicio">
+                <button class="btn btn-warning btn-sm" (click)="editarServicio(servicio)">
+                  Editar
+                </button>
+                <button
+                  class="btn btn-danger btn-sm"
+                  (click)="eliminarServicio(servicio.idServicio)"
+                >
+                  Eliminar
+                </button>
+              </ng-container>
+              <ng-container *ngIf="editando?.idServicio === servicio.idServicio">
+                <button class="btn btn-success btn-sm" (click)="guardarEdicion()">Guardar</button>
+                <button class="btn btn-secondary btn-sm" (click)="cancelarEdicion()">
+                  Cancelar
+                </button>
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

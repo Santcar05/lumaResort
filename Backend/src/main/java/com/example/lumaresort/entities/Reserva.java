@@ -10,7 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -47,8 +46,9 @@ public class Reserva {
     @JoinColumn(name = "cliente_id")
     private Usuario cliente;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "reserva")
+    @JsonIgnore  
+    @ManyToOne
+    @JoinColumn(name = "habitacion_id")  
     private Habitacion habitacion;
 
     public Reserva(Date fechaInicio, Date fechaFin, Integer cantidadPersonas, String estado, Usuario cliente, Habitacion habitacion) {

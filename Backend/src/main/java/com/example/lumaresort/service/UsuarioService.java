@@ -1,5 +1,6 @@
 package com.example.lumaresort.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,10 @@ public class UsuarioService {
 
     public void eliminar(Long id) {
         usuarioRepository.deleteById(id);
+    }
+
+    public List<Usuario> findAll() {
+        return usuarioRepository.findAll();
     }
 
 }

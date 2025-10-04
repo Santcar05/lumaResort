@@ -13,7 +13,7 @@ export class HabitacionService {
   create(habitacion: Habitacion) {
     habitacion.idHabitacion = this.nextId++;
     habitacion.imagenUrl = habitacion.imagenUrl || '';
-    this.habitaciones.push({ ...habitacion }); // ✅ Ahora sí se agrega
+    this.habitaciones.push({ ...habitacion });
   }
 
   update(habitacionActualizada: Habitacion) {

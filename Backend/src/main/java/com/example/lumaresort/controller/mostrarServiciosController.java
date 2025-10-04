@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.lumaresort.entities.Usuario;
 import com.example.lumaresort.service.ServicioService;
 
-@RequestMapping("/servicios")
+@RequestMapping("/opckesopjkdspcojpovds")
 @Controller
 public class mostrarServiciosController {
 

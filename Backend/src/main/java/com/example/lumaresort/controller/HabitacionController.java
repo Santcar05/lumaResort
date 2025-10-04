@@ -20,7 +20,7 @@ import com.example.lumaresort.service.HabitacionService;
 import com.example.lumaresort.service.TipoHabitacionService;
 
 @Controller
-@RequestMapping("/habitaciones")
+@RequestMapping("/ckdjpocdsjpkcd")
 public class HabitacionController {
 
     @Autowired

@@ -8,13 +8,16 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.lumaresort.entities.Habitacion;
 import com.example.lumaresort.entities.Reserva;
 import com.example.lumaresort.entities.Servicio;
 import com.example.lumaresort.entities.TipoHabitacion;
 import com.example.lumaresort.entities.Usuario;
+import com.example.lumaresort.service.HabitacionService;
 import com.example.lumaresort.service.ReservaService;
 import com.example.lumaresort.service.ServicioService;
 import com.example.lumaresort.service.TipoHabitacionService;
+import com.example.lumaresort.service.UsuarioService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -31,6 +34,12 @@ public class landingPageController {
 
     @Autowired
     private ReservaService reservaService;
+
+    @Autowired
+    private HabitacionService habitacionService;
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     //http://localhost:8080
     @GetMapping("/actividades")
@@ -54,10 +63,28 @@ public class landingPageController {
         return reservaService.findAll();
     }
 
+    @GetMapping("/habitaciones")
+    public List<Habitacion> habitaciones(Model model) {
+
+        return habitacionService.listarTodos();
+    }
+
+    @GetMapping("/usuarios")
+    public List<Usuario> usuarios(Model model) {
+
+        return usuarioService.findAll();
+    }
+
     @GetMapping("/logout")
     public String logout() {
         usuario = null;
         return "redirect:/";
+    }
+
+    @GetMapping("/servicios")
+    public List<Servicio> servicios(Model model) {
+
+        return servicioService.findAll();
     }
 
     @GetMapping("/salir")

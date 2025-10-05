@@ -7,14 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.example.lumaresort.entities.Habitacion;
 import com.example.lumaresort.entities.TipoHabitacion;
-import com.example.lumaresort.entities.Usuario;
 import com.example.lumaresort.repository.HabitacionRepository;
 
 @Service
 public class HabitacionService {
-
-    @Autowired
-    private Usuario usuario;
 
     @Autowired
     private HabitacionRepository habitacionRepository;
@@ -22,47 +18,45 @@ public class HabitacionService {
     @Autowired
     private TipoHabitacionService tipoHabitacionService;
 
-    public Habitacion crearHabitacion(Habitacion habitacion) {
-        return habitacionRepository.save(habitacion);
-    }
-
-    //Crear habitacion con tipoHabitacionId
     public Habitacion crearHabitacion(Habitacion habitacion, Long tipoHabitacionId) {
-        TipoHabitacion tipoHabitacion = tipoHabitacionService.buscarPorId(tipoHabitacionId).orElseThrow();
+        TipoHabitacion tipoHabitacion = tipoHabitacionService.buscarPorId(tipoHabitacionId).orElseThrow(
+                () -> new RuntimeException("TipoHabitacion no encontrado con id: " + tipoHabitacionId)
+        );
         habitacion.setTipoHabitacion(tipoHabitacion);
         return habitacionRepository.save(habitacion);
     }
 
     public Habitacion buscarHabitacionPorId(Long id) {
-        return habitacionRepository.findById(id).orElse(null);
+        return habitacionRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Habitación no encontrada con id: " + id)
+        );
     }
 
     public void eliminarHabitacion(Long id) {
-        habitacionRepository.deleteById(id);
+        Habitacion habitacion = habitacionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Habitación no encontrada con id: " + id));
+
+        // Si necesitas hacer algo antes de borrar, hazlo aquí
+        habitacionRepository.delete(habitacion);
     }
 
     public void actualizarHabitacion(Long habitacionId, Habitacion habitacion, Long tipoId) {
         Habitacion habitacionExistente = buscarHabitacionPorId(habitacionId);
-        TipoHabitacion tipoHabitacion = tipoHabitacionService.buscarPorId(tipoId).orElseThrow();
+        TipoHabitacion tipoHabitacion = tipoHabitacionService.buscarPorId(tipoId).orElseThrow(
+                () -> new RuntimeException("TipoHabitacion no encontrado con id: " + tipoId)
+        );
 
-        if (habitacionExistente != null) {
-            habitacionExistente.setNumero(habitacion.getNumero());
-            habitacionExistente.setPrecioPorNoche(habitacion.getPrecioPorNoche());
-            habitacionExistente.setEstado(habitacion.getEstado());
-            habitacionExistente.setCapacidad(habitacion.getCapacidad());
-            habitacionExistente.setTipoHabitacion(tipoHabitacion);
-            habitacionExistente.setDescripcion(habitacion.getDescripcion());
-            habitacionRepository.save(habitacionExistente);
-        }
-    }
+        habitacionExistente.setNumero(habitacion.getNumero());
+        habitacionExistente.setPrecioPorNoche(habitacion.getPrecioPorNoche());
+        habitacionExistente.setEstado(habitacion.getEstado());
+        habitacionExistente.setCapacidad(habitacion.getCapacidad());
+        habitacionExistente.setDescripcion(habitacion.getDescripcion());
+        habitacionExistente.setTipoHabitacion(tipoHabitacion);
 
-    public Habitacion buscarPorId(Long id) {
-        return habitacionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Habitación no encontrada con id: " + id));
+        habitacionRepository.save(habitacionExistente);
     }
 
     public List<Habitacion> listarTodos() {
         return habitacionRepository.findAll();
     }
-
 }

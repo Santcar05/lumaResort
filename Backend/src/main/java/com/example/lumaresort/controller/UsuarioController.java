@@ -1,203 +1,48 @@
 package com.example.lumaresort.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.example.lumaresort.entities.Usuario;
 import com.example.lumaresort.service.UsuarioService;
 
-import jakarta.servlet.http.HttpSession;
-
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/Usuario")
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
 
-    // Mostrar página de ajustes/configuración del usuario
-    @GetMapping("/ajustes")
-    public String mostrarAjustes(HttpSession session, Model model) {
-        // Obtener usuario actual de la sesión
-        Usuario usuarioActual = (Usuario) session.getAttribute("usuarioLogueado");
-
-        if (usuarioActual == null) {
-            return "redirect:/login";
-        }
-
-        // Recargar datos actualizados desde la base de datos
-        Usuario usuario = usuarioService.buscarPorId(usuarioActual.getIdUsuario());
-
-        model.addAttribute("usuario", usuario);
-        model.addAttribute("cambioPassword", new CambioPasswordDTO());
-
-        return "usuarios";
-    }
-
-    // Actualizar información personal
-    @PostMapping("/actualizar-datos")
-    public String actualizarDatos(@ModelAttribute("usuario") Usuario usuarioForm,
-            BindingResult result,
-            HttpSession session,
-            RedirectAttributes redirectAttributes) {
-
-        Usuario usuarioActual = (Usuario) session.getAttribute("usuarioLogueado");
-
-        if (usuarioActual == null) {
-            return "redirect:/login";
-        }
-
-        // Validaciones personalizadas
-        if (usuarioForm.getNombre() == null || usuarioForm.getNombre().trim().isEmpty()) {
-            result.rejectValue("nombre", "error.nombre", "El nombre es requerido");
-        }
-        if (usuarioForm.getCorreo() == null || usuarioForm.getCorreo().trim().isEmpty()) {
-            result.rejectValue("correo", "error.correo", "El email es requerido"); // Corregido: era "email"
-        }
-
-        if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.usuario", result);
-            redirectAttributes.addFlashAttribute("usuario", usuarioForm);
-            return "redirect:/Usuario/ajustes"; // Consistente con mayúscula
-        }
-
-        try {
-            // Obtener usuario actual de la base de datos
-            Usuario usuarioExistente = usuarioService.buscarPorId(usuarioActual.getIdUsuario());
-
-            // Actualizar solo los campos permitidos
-            usuarioExistente.setNombre(usuarioForm.getNombre());
-            usuarioExistente.setApellido(usuarioForm.getApellido());
-            usuarioExistente.setCorreo(usuarioForm.getCorreo());
-            usuarioExistente.setTelefono(usuarioForm.getTelefono());
-            usuarioExistente.setContrasena(usuarioForm.getContrasena());
-
-            // Mantener datos sensibles sin cambios
-            // No se modifican: contraseña, roles, permisos
-            // Guardar cambios
-            Usuario usuarioActualizado = usuarioService.actualizar(usuarioExistente);
-
-            // Actualizar sesión con los nuevos datos
-            session.setAttribute("usuarioLogueado", usuarioActualizado);
-
-            redirectAttributes.addFlashAttribute("success", "Datos actualizados correctamente");
-
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error al actualizar los datos: " + e.getMessage());
-        }
-
-        return "redirect:/Usuario/ajustes";
-    }
-
-    // Eliminar cuenta de usuario
-    @PostMapping("/eliminar-cuenta")
-    public String eliminarCuenta(HttpSession session, RedirectAttributes redirectAttributes) {
-        Usuario usuarioActual = (Usuario) session.getAttribute("usuarioLogueado");
-
-        if (usuarioActual == null) {
-            // Si no hay usuario en sesión, redirigir al login
-            return "redirect:/login";
-        }
-
-        try {
-            // Eliminar el usuario de la base de datos
-            usuarioService.eliminar(usuarioActual.getIdUsuario());
-            session.invalidate();
-            redirectAttributes.addFlashAttribute("success", "Tu cuenta ha sido eliminada correctamente.");
-            return "redirect:/";
-
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error al eliminar la cuenta: " + e.getMessage());
-            return "redirect:/Usuario/ajustes";
-        }
-    }
-
-
-    // Cambiar contraseña
-    @PostMapping("/cambiar-password")
-    public String cambiarPassword(@ModelAttribute CambioPasswordDTO cambioPassword,
-            BindingResult result,
-            HttpSession session,
-            RedirectAttributes redirectAttributes) {
-
-        Usuario usuarioActual = (Usuario) session.getAttribute("usuarioLogueado");
-
-        if (usuarioActual == null) {
-            return "redirect:/login";
-        }
-
-        if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errorPassword", "Por favor corrige los errores");
-            return "redirect:/Usuario/ajustes"; // Consistente con mayúscula
-        }
-
-        try {
-            // Verificar contraseña actual
-            if (!usuarioActual.getContrasena().equals(cambioPassword.getPasswordActual())) {
-                redirectAttributes.addFlashAttribute("errorPassword", "La contraseña actual es incorrecta");
-                return "redirect:/Usuario/ajustes";
-            }
-
-            // Verificar que las nuevas contraseñas coincidan
-            if (!cambioPassword.getPasswordNueva().equals(cambioPassword.getPasswordConfirmacion())) {
-                redirectAttributes.addFlashAttribute("errorPassword", "Las nuevas contraseñas no coinciden");
-                return "redirect:/Usuario/ajustes";
-            }
-
-            // Actualizar contraseña en base de datos
-            Usuario usuarioExistente = usuarioService.buscarPorId(usuarioActual.getIdUsuario());
-            usuarioExistente.setContrasena(cambioPassword.getPasswordNueva());
-            Usuario usuarioActualizado = usuarioService.actualizar(usuarioExistente);
-
-            // Actualizar sesión
-            session.setAttribute("usuarioLogueado", usuarioActualizado);
-
-            redirectAttributes.addFlashAttribute("successPassword", "Contraseña actualizada correctamente");
-
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorPassword", "Error al cambiar la contraseña");
-        }
-
-        return "redirect:/Usuario/ajustes";
-    }
-
-    // DTO para cambio de contraseña
-    public static class CambioPasswordDTO {
-
-        private String passwordActual;
-        private String passwordNueva;
-        private String passwordConfirmacion;
-
-        // Getters y setters
-        public String getPasswordActual() {
-            return passwordActual;
-        }
-
-        public void setPasswordActual(String passwordActual) {
-            this.passwordActual = passwordActual;
-        }
-
-        public String getPasswordNueva() {
-            return passwordNueva;
-        }
-
-        public void setPasswordNueva(String passwordNueva) {
-            this.passwordNueva = passwordNueva;
-        }
-
-        public String getPasswordConfirmacion() {
-            return passwordConfirmacion;
-        }
-
-        public void setPasswordConfirmacion(String passwordConfirmacion) {
-            this.passwordConfirmacion = passwordConfirmacion;
-        }
-    }
 }
+
+
+/*
+ Paso a paso para hacer un CRUD en angular con springboot sin morir en el intento
+    1.- Crear la entidad en el backend
+    2.- Crear el repositorio en el backend
+    3.- Crear el servicio en el backend
+    (Verificar que para el caso del post el id es null porque si no no funcionará)
+    4.- Crear el controlador en el backend
+    (Utilizar RequestBody en en vez de RequestParam)
+    (Usar el RestController, CrossOrigin y RequestMapping y tener en cuenta las rutas ya que tienen que ser iguales a la del frontend)
+    5.- Crear la entidad en el frontend
+    (Usar los mismos nombres de las variables que en el backend)
+    6.- Crear el servicio en el frontend
+    (Usar HttpClient y Observable para las peticiones, verificar que las rutas sean iguales a las del backend)
+    7.- Crear el controlador en el frontend
+    (Usar el servicio creado en el paso anterior y crear las funciones para cada operación del CRUD)
+    8.- Crear las vistas en el frontend
+    (Crear el HTML y el CSS para mostrar los datos y los formularios para crear y actualizar)
+    9.- Probar el CRUD
+    (Rezar que funcione y si no llamar a Dios)
+
+    #Tips
+    - Si no funciona mirar en la consola de google si aparece un error al hacer la petición
+    - Si sale un error 400 mirar que las rutas sean iguales en el frontend y backend
+    - Si sale un error 500 mirar que el backend esté corriendo y si lo está reiniciarlo por completo (en caso contrario revisar el id null o llamar a Dios de nuevo)
+    - Si sale un error CORS mirar que el CrossOrigin tenga la ruta correcta del frontend
+    - Si no aparecen los datos en el frontend mirar que el servicio esté bien inyectado en el controlador y que las funciones estén bien llamadas en el HTML
+    - Si no se actualizan los datos mirar que el id se esté seteando correctamente en el controlador del frontend
+ */

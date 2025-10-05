@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.lumaresort.entities.Reserva;
 import com.example.lumaresort.entities.Servicio;
-import com.example.lumaresort.entities.TipoHabitacion;
 import com.example.lumaresort.entities.Usuario;
 import com.example.lumaresort.service.HabitacionService;
 import com.example.lumaresort.service.ReservaService;
@@ -50,8 +49,6 @@ public class landingPageController {
         return servicioService.findAll();
     }
 
-
-
     @GetMapping("/Reservas")
     public List<Reserva> reservas(Model model) {
 
@@ -68,12 +65,6 @@ public class landingPageController {
     public String logout() {
         usuario = null;
         return "redirect:/";
-    }
-
-    @GetMapping("/servicios")
-    public List<Servicio> servicios(Model model) {
-
-        return servicioService.findAll();
     }
 
     @GetMapping("/salir")

@@ -59,7 +59,7 @@ export class ServiciosAdminComponent {
   guardarEdicion(): void {
     if (!this.editando) return;
 
-    this.servicioService.update(this.editando).subscribe({
+    this.servicioService.update(this.editando.idServicio, this.editando).subscribe({
       next: () => {
         this.cargarServicios();
         this.editando = null;

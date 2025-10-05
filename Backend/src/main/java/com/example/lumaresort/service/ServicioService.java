@@ -27,16 +27,28 @@ public class ServicioService {
         return servicioRepository.findById(id);
     }
 
-    public void save(Servicio servicio) {
-        servicioRepository.save(servicio);
+    public Servicio save(Servicio servicio) {
+        return servicioRepository.save(servicio);
+    }
+
+    public Servicio update(Long id, Servicio servicio) {
+        Servicio servicioExistente = servicioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Servicio no encontrado con id: " + id));
+
+        servicioExistente.setNombre(servicio.getNombre());
+        servicioExistente.setDescripcion(servicio.getDescripcion());
+        servicioExistente.setTipo(servicio.getTipo());
+        servicioExistente.setPrecio(servicio.getPrecio());
+        servicioExistente.setImagenURL(servicio.getImagenURL());
+
+        return servicioRepository.save(servicioExistente);
     }
 
     public void delete(Long id) {
-        servicioRepository.deleteById(id);
-    }
+        Servicio servicio = servicioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Servicio no encontrado con id: " + id));
 
-    public List<Servicio> buscarPorNombre(String nombre) {
-        return servicioRepository.findByNombreContainingIgnoreCase(nombre);
+        // Borrar dependencias si existen
+        servicioRepository.delete(servicio);
     }
-
 }

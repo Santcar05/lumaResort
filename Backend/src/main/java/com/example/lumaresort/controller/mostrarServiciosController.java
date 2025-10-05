@@ -1,73 +1,53 @@
 package com.example.lumaresort.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import java.util.List;
 
-import com.example.lumaresort.entities.Usuario;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.lumaresort.entities.Servicio;
 import com.example.lumaresort.service.ServicioService;
 
-@RequestMapping("/opckesopjkdspcojpovds")
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/servicios")
 public class mostrarServiciosController {
-
-    @Autowired
-    private Usuario usuario;
 
     @Autowired
     private ServicioService servicioService;
 
-    //http://localhost:8090/servicios
-    @GetMapping()
-    public String servicios(Model model) {
-        model.addAttribute("usuario", usuario);
-
-        model.addAttribute("servicios", servicioService.findAll());
-
-        return "tarjetas";
+    @GetMapping
+    public List<Servicio> listarServicios() {
+        return servicioService.findAll();
     }
 
-    //http://localhost:8090/servicios?id
-    @GetMapping(params = "id")
-    public String verServicio(Long id, Model model) {
-        model.addAttribute("servicio", servicioService.findById(id));
-        return "verServicio";
+    @GetMapping("/{id}")
+    public Servicio obtenerServicio(@PathVariable Long id) {
+        return servicioService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Servicio no encontrado con id: " + id));
     }
 
-    //http://localhost:8090/servicios/tabla
-    @GetMapping("/tabla")
-    public String tabla(Model model) {
-        model.addAttribute("usuario", usuario);
-
-        model.addAttribute("servicios", servicioService.findAll());
-
-        return "mostrarServicios";
+    @PostMapping
+    public Servicio crearServicio(@RequestBody Servicio servicio) {
+        servicio.setIdServicio(null);
+        return servicioService.save(servicio);
     }
 
-    //http://localhost:8090/servicios/tarjetas
-    @GetMapping("/tarjetas")
-    public String tarjetas(Model model) {
-
-        model.addAttribute("usuario", usuario);
-        model.addAttribute("servicios", servicioService.findAll());
-
-        return "tarjetas";
+    @PutMapping("/{id}")
+    public Servicio actualizarServicio(@PathVariable Long id, @RequestBody Servicio servicio) {
+        return servicioService.update(id, servicio);
     }
 
-    @PostMapping("/tabla/buscarPorNombre")
-    public String buscarPorNombre(@RequestParam("buscar") String nombre, @RequestParam String accion, Model model) {
-        if ("limpiar".equals(accion)) {
-            model.addAttribute("servicios", servicioService.findAll());
-        } else {
-            model.addAttribute("servicios", servicioService.buscarPorNombre(nombre));
-        }
-
-        model.addAttribute("usuario", usuario);
-        return "mostrarServicios";
+    @DeleteMapping("/{id}")
+    public void eliminarServicio(@PathVariable Long id) {
+        servicioService.delete(id);
     }
-
 }

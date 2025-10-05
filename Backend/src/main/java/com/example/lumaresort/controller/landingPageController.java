@@ -50,11 +50,7 @@ public class landingPageController {
         return servicioService.findAll();
     }
 
-    @GetMapping("/tiposHabitacion")
-    public List<TipoHabitacion> tiposHabitacion(Model model) {
 
-        return tipoHabitacionService.findAll();
-    }
 
     @GetMapping("/Reservas")
     public List<Reserva> reservas(Model model) {

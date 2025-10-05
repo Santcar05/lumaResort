@@ -24,6 +24,7 @@ public class TipoHabitacionService {
     }
 
     public TipoHabitacion crear(TipoHabitacion tipo) {
+        tipo.setId(null);
         return repository.save(tipo);
     }
 

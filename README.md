@@ -107,5 +107,6 @@ Contraseña: *(vacía)*
    cd lumaresort
 3. Ejecutar con Maven:
    mvn spring-boot:run
-4. Acceder a la aplicación:
+4. Acceder a la aplicación(backend):
    👉 http://localhost:8080
+   Frontend: http://localhost:4200 

@@ -8,6 +8,7 @@ import { ServiciosAdminComponent } from './servicios-admin-component/servicios-a
 import { HabitacionesAdminComponent } from './habitaciones-admin-component/habitaciones-admin-component';
 import { ReservaAdminComponent } from './reserva-admin-component/reserva-admin-component';
 import { DetalleServicioComponent } from './detalle-servicio-component/detalle-servicio-component';
+import { ListaServiciosComponent } from './lista-servicios-component/lista-servicios-component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // por defecto muestra Landing
@@ -23,6 +24,7 @@ export const routes: Routes = [
       { path: 'reservas', component: ReservaAdminComponent },
     ],
   },
+  { path: 'servicios', component: ListaServiciosComponent },
   { path: 'servicios/:id', component: DetalleServicioComponent },
   { path: '**', redirectTo: '' }, // redirección en caso de ruta no válida COLOCAR SIEMPRE AL FINAL
 ];

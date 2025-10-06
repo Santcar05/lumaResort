@@ -10,6 +10,7 @@ import { CarruselTiposHabitacionComponent } from '../../carrusel-tipos-habitacio
 import { TestimoniosComponent } from '../../landing-page-components/testimonios-component/testimonios-component';
 import { ContactoFormComponent } from '../../landing-page-components/contacto-form-component/contacto-form-component';
 import { FooterComponent } from '../../generales-components/footer-component/footer-component';
+import { DetalleServicioComponent } from '../../detalle-servicio-component/detalle-servicio-component';
 
 @Component({
   selector: 'app-landing-page-component',
@@ -25,6 +26,7 @@ import { FooterComponent } from '../../generales-components/footer-component/foo
     TestimoniosComponent,
     ContactoFormComponent,
     FooterComponent,
+    DetalleServicioComponent,
   ],
   templateUrl: './landing-page-component.html',
   styleUrl: './landing-page-component.css',

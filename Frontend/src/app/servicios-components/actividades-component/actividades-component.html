@@ -30,7 +30,7 @@
           <!-- Información superpuesta en la imagen principal -->
           <div class="image-info-overlay">
             <div class="image-title">{{ getCurrentCategory().imageNames[selectedImageIndex] }}</div>
-            <button class="btn">EXPLORAR</button>
+            <button class="btn" (click)="explorarServicio()">EXPLORAR</button>
           </div>
 
           <div class="thumbnail-container">

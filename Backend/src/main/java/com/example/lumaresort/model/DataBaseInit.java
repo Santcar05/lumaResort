@@ -272,7 +272,7 @@ public class DataBaseInit implements ApplicationRunner {
                 "Bienestar",
                 "Alivia el estrés y revitaliza tu cuerpo con un masaje profesional en nuestras cabinas privadas",
                 60.0f,
-                "https://images.pexels.com/photos/161477/massage-relax-relaxing-161477.jpeg"
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYqJtParjn0rPjqKDAFM_sapOMDhaWppczSQ&s"
         );
 
         Servicio servicio6 = new Servicio(

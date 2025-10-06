@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Servicio } from '../../Models/Servicio';
 import { HttpClient } from '@angular/common/http';
 import { ActividadesService } from '../../service/actividades/actividades';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-actividades-component',
@@ -32,7 +33,11 @@ export class ActividadesComponent {
     servicios: Servicio[];
   }[] = [];
 
-  constructor(private http: HttpClient, private servicioService: ActividadesService) {}
+  constructor(
+    private http: HttpClient,
+    private servicioService: ActividadesService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.findAll().subscribe((data) => {
@@ -77,5 +82,13 @@ export class ActividadesComponent {
 
   getCurrentCategory(): any {
     return this.categories.find((cat) => cat.id === this.activeCategory) || this.categories[0];
+  }
+
+  explorarServicio(): void {
+    const categoriaActual = this.getCurrentCategory();
+    const servicio = categoriaActual.servicios[this.selectedImageIndex];
+    if (servicio) {
+      this.router.navigate(['/servicios', servicio.idServicio]);
+    }
   }
 }

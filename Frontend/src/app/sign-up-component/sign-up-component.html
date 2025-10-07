@@ -1,0 +1,86 @@
+<app-header-component></app-header-component>
+
+<div class="login-background">
+  <div class="overlay"></div>
+
+  <div class="login-card animate-fade-in">
+    <h2 class="title">Crear Cuenta</h2>
+    <p class="subtitle">Regístrate para comenzar tu experiencia</p>
+
+    <form (ngSubmit)="onRegister()">
+      <div class="input-group">
+        <input
+          type="text"
+          [(ngModel)]="usuario.nombre"
+          name="nombre"
+          placeholder="Nombre"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <input
+          type="text"
+          [(ngModel)]="usuario.apellido"
+          name="apellido"
+          placeholder="Apellido"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <input
+          type="email"
+          [(ngModel)]="usuario.correo"
+          name="correo"
+          placeholder="Correo electrónico"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <input
+          type="password"
+          [(ngModel)]="usuario.contrasena"
+          name="contrasena"
+          placeholder="Contraseña"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <input type="text" [(ngModel)]="usuario.cedula" name="cedula" placeholder="Cédula" />
+      </div>
+
+      <div class="input-group">
+        <input type="text" [(ngModel)]="usuario.telefono" name="telefono" placeholder="Teléfono" />
+      </div>
+
+      <button type="submit" class="white-btn animate-pulse" [disabled]="loading">
+        {{ loading ? 'Registrando...' : 'Registrarse' }}
+      </button>
+    </form>
+
+    <!-- Mensaje de éxito -->
+    <div *ngIf="successMsg && !loading" class="success-state">
+      <div class="success-content">
+        <h3>✅ Registro exitoso</h3>
+        <p>{{ successMsg }}</p>
+      </div>
+    </div>
+
+    <!-- Estado de error -->
+    <div *ngIf="errorMsg && !loading" class="error-state">
+      <div class="error-content">
+        <div class="error-icon">⚠</div>
+        <h3>Error al registrarse</h3>
+        <p>{{ errorMsg }}</p>
+      </div>
+    </div>
+
+    <p class="footer-text">
+      ¿Ya tienes una cuenta?
+      <a routerLink="/login" class="link">Inicia sesión</a>
+    </p>
+  </div>
+</div>

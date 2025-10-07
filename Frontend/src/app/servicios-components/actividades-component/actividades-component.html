@@ -22,8 +22,8 @@
       <div class="main-carousel">
         <div class="main-image-container">
           <img
-            [src]="getCurrentCategory().images[selectedImageIndex]"
-            [alt]="getCurrentCategory().title"
+            [src]="getCurrentCategory().images?.[selectedImageIndex]"
+            [alt]="getCurrentCategory()?.title"
             class="main-image"
           />
 
@@ -35,7 +35,7 @@
 
           <div class="thumbnail-container">
             <div
-              *ngFor="let image of getCurrentCategory().images; let i = index"
+              *ngFor="let image of getCurrentCategory()?.images; let i = index"
               class="thumbnail-item"
               [class.active]="selectedImageIndex === i"
               (click)="selectImage(i)"

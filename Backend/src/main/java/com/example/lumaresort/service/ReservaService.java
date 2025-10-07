@@ -16,4 +16,16 @@ public class ReservaService {
         return reservaRepository.findAll();
     }
 
+    public Reserva save(Reserva reserva) {
+        return reservaRepository.save(reserva);
+    }
+
+    public void delete(Reserva reserva) {
+        reservaRepository.delete(reserva);
+    }
+
+    public Reserva findById(Long id) {
+        return reservaRepository.findById(id).orElse(null);
+    }
+
 }

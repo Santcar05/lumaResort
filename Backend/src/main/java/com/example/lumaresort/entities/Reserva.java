@@ -32,7 +32,7 @@ public class Reserva {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idReserva;
+    private Long idReserva;
 
     @Temporal(TemporalType.DATE) // o TIMESTAMP si quieres fecha y hora
     private Date fechaInicio;

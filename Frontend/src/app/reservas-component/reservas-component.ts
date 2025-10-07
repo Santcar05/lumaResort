@@ -7,11 +7,12 @@ import { Reserva } from '../Models/Reserva';
 import { Habitacion } from '../Models/Habitacion';
 import { Servicio } from '../Models/Servicio';
 import { Usuario } from '../Models/Usuario';
-
+import { HeaderComponent } from '../generales-components/header-component/header-component';
+import { FooterComponent } from '../generales-components/footer-component/footer-component';
 @Component({
   selector: 'app-reservas',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HeaderComponent],
   templateUrl: './reservas-component.html',
   styleUrls: ['./reservas-component.css'],
 })

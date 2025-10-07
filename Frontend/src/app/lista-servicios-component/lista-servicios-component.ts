@@ -5,11 +5,13 @@ import { catchError, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Servicio } from '../Models/Servicio';
+import { HeaderComponent } from '../generales-components/header-component/header-component';
+import { FooterComponent } from '../generales-components/footer-component/footer-component';
 
 @Component({
   selector: 'app-lista-servicios',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent],
   templateUrl: './lista-servicios-component.html',
   styleUrls: ['./lista-servicios-component.css'],
 })

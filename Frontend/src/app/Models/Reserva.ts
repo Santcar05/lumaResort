@@ -1,4 +1,5 @@
 import { Habitacion } from './Habitacion';
+import { Servicio } from './Servicio';
 import { Usuario } from './Usuario';
 
 export interface Reserva {
@@ -9,4 +10,5 @@ export interface Reserva {
   estado: string;
   cliente: Usuario;
   habitacion: Habitacion;
+  servicios: Servicio[];
 }

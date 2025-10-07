@@ -4,12 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, of } from 'rxjs';
 import { Servicio } from '../Models/Servicio';
 import { CommonModule } from '@angular/common';
+import { HeaderComponent } from '../generales-components/header-component/header-component';
+import { FooterComponent } from '../generales-components/footer-component/footer-component';
 
 @Component({
   selector: 'app-detalle-servicio-component',
   templateUrl: './detalle-servicio-component.html',
   styleUrls: ['./detalle-servicio-component.css'],
-  imports: [CommonModule],
+  imports: [CommonModule, HeaderComponent, FooterComponent],
   standalone: true,
 })
 export class DetalleServicioComponent implements OnInit {

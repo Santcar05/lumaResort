@@ -40,4 +40,11 @@ public class Comentario {
     @ManyToOne
     @JoinColumn(name = "servicio_id", referencedColumnName = "idServicio")
     private Servicio servicio;
+
+    public Comentario(String comentario, Date fecha, float calificacion, Servicio servicio) {
+        this.comentario = comentario;
+        this.fecha = fecha;
+        this.calificacion = calificacion;
+        this.servicio = servicio;
+    }
 }

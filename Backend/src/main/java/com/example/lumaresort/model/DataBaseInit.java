@@ -1,12 +1,14 @@
 package com.example.lumaresort.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
 
 import com.example.lumaresort.entities.Administrador;
+import com.example.lumaresort.entities.Comentario;
 import com.example.lumaresort.entities.Habitacion;
 import com.example.lumaresort.entities.Reserva;
 import com.example.lumaresort.entities.Servicio;
@@ -315,6 +317,255 @@ public class DataBaseInit implements ApplicationRunner {
                 "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg"
         );
 
+        //Crear 5 comentarios por servicio
+        /*
+         public class Comentario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idComentario;
+
+    private String comentario;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecha;
+
+    private float calificacion;
+
+    // Relación con Servicio
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "servicio_id", referencedColumnName = "idServicio")
+    private Servicio servicio;
+}
+
+         */
+        Comentario comentario1Servicio1 = new Comentario(
+                "Excelente servicio, recomendado!",
+                new Date(),
+                5.0f,
+                servicio1
+        );
+
+        Comentario comentario2Servicio1 = new Comentario(
+                "Muy buen servicio, recomendado!",
+                new Date(),
+                4.0f,
+                servicio1
+        );
+
+        Comentario comentario3Servicio1 = new Comentario(
+                "Buen servicio, recomendado!",
+                new Date(),
+                3.0f,
+                servicio1
+        );
+
+        Comentario comentario1Servicio2 = new Comentario(
+                "Excelente servicio, super recomendado!",
+                new Date(),
+                5.0f,
+                servicio2
+        );
+
+        Comentario comentario2Servicio2 = new Comentario(
+                "Muy buen servicio, recomendado!",
+                new Date(),
+                4.0f,
+                servicio2
+        );
+
+        Comentario comentario3Servicio2 = new Comentario(
+                "Buen servicio, recomendado!",
+                new Date(),
+                3.0f,
+                servicio2
+        );
+
+        Comentario comentario1Servicio3 = new Comentario(
+                "Mal servicio, no recomendado!",
+                new Date(),
+                2.0f,
+                servicio3
+        );
+
+        Comentario comentario2Servicio3 = new Comentario(
+                "Muy buen servicio, recomendado!",
+                new Date(),
+                4.0f,
+                servicio3
+        );
+
+        Comentario comentario3Servicio3 = new Comentario(
+                "Buen servicio, recomendado!",
+                new Date(),
+                3.0f,
+                servicio3
+        );
+
+        Comentario comentario1Servicio4 = new Comentario(
+                "Excelente servicio, super recomendado!",
+                new Date(),
+                5.0f,
+                servicio4
+        );
+
+        Comentario comentario2Servicio4 = new Comentario(
+                "Muy buen servicio, recomendado!",
+                new Date(),
+                4.0f,
+                servicio4
+        );
+
+        Comentario comentario3Servicio4 = new Comentario(
+                "Buen servicio, recomendado!",
+                new Date(),
+                3.0f,
+                servicio4
+        );
+
+        Comentario comentario1Servicio5 = new Comentario(
+                "Excelente servicio, super recomendado!",
+                new Date(),
+                5.0f,
+                servicio5
+        );
+
+        Comentario comentario2Servicio5 = new Comentario(
+                "Muy buen servicio, recomendado!",
+                new Date(),
+                4.0f,
+                servicio5
+        );
+
+        Comentario comentario3Servicio5 = new Comentario(
+                "Buen servicio, recomendado!",
+                new Date(),
+                3.0f,
+                servicio5
+        );
+
+        Comentario comentario1Servicio6 = new Comentario(
+                "Excelente servicio, super recomendado!",
+                new Date(),
+                5.0f,
+                servicio6
+        );
+
+        Comentario comentario2Servicio6 = new Comentario(
+                "Muy buen servicio, recomendado!",
+                new Date(),
+                4.0f,
+                servicio6
+        );
+
+        Comentario comentario3Servicio6 = new Comentario(
+                "Buen servicio, recomendado!",
+                new Date(),
+                3.0f,
+                servicio6
+        );
+
+        Comentario comentario1Servicio7 = new Comentario(
+                "Excelente servicio, super recomendado!",
+                new Date(),
+                5.0f,
+                servicio7
+        );
+
+        Comentario comentario2Servicio7 = new Comentario(
+                "Muy buen servicio, recomendado!",
+                new Date(),
+                4.0f,
+                servicio7
+        );
+
+        Comentario comentario3Servicio7 = new Comentario(
+                "Buen servicio, recomendado!",
+                new Date(),
+                3.0f,
+                servicio7
+        );
+
+        Comentario comentario1Servicio8 = new Comentario(
+                "Excelente servicio, super recomendado!",
+                new Date(),
+                5.0f,
+                servicio8
+        );
+
+        Comentario comentario2Servicio8 = new Comentario(
+                "Muy buen servicio, recomendado!",
+                new Date(),
+                4.0f,
+                servicio8
+        );
+
+        Comentario comentario3Servicio8 = new Comentario(
+                "Buen servicio, recomendado!",
+                new Date(),
+                3.0f,
+                servicio8
+        );
+
+        Comentario comentario1Servicio9 = new Comentario(
+                "Excelente servicio, super recomendado!",
+                new Date(),
+                5.0f,
+                servicio9
+        );
+
+        Comentario comentario2Servicio9 = new Comentario(
+                "Muy buen servicio, recomendado!",
+                new Date(),
+                4.0f,
+                servicio9
+        );
+
+        Comentario comentario3Servicio9 = new Comentario(
+                "Buen servicio, recomendado!",
+                new Date(),
+                3.0f,
+                servicio9
+        );
+
+        Comentario comentario1Servicio10 = new Comentario(
+                "Excelente servicio, super recomendado!",
+                new Date(),
+                5.0f,
+                servicio10
+        );
+
+        Comentario comentario2Servicio10 = new Comentario(
+                "Muy buen servicio, recomendado!",
+                new Date(),
+                4.0f,
+                servicio10
+        );
+
+        Comentario comentario3Servicio10 = new Comentario(
+                "Buen servicio, recomendado!",
+                new Date(),
+                3.0f,
+                servicio10
+        );
+        Comentario comentario4Servicio10 = new Comentario(
+                "Buen servicio, recomendado!",
+                new Date(),
+                3.0f,
+                servicio10
+        );
+
+        servicio1.setComentarios(List.of(comentario1Servicio1, comentario2Servicio1, comentario3Servicio1));
+        servicio2.setComentarios(List.of(comentario1Servicio2, comentario2Servicio2, comentario3Servicio2));
+        servicio3.setComentarios(List.of(comentario1Servicio3, comentario2Servicio3, comentario3Servicio3));
+        servicio4.setComentarios(List.of(comentario1Servicio4, comentario2Servicio4, comentario3Servicio4));
+        servicio5.setComentarios(List.of(comentario1Servicio5, comentario2Servicio5, comentario3Servicio5));
+        servicio6.setComentarios(List.of(comentario1Servicio6, comentario2Servicio6, comentario3Servicio6));
+        servicio7.setComentarios(List.of(comentario1Servicio7, comentario2Servicio7, comentario3Servicio7));
+        servicio8.setComentarios(List.of(comentario1Servicio8, comentario2Servicio8, comentario3Servicio8));
+        servicio9.setComentarios(List.of(comentario1Servicio9, comentario2Servicio9, comentario3Servicio9));
+        servicio10.setComentarios(List.of(comentario1Servicio10, comentario2Servicio10, comentario3Servicio10, comentario4Servicio10));
         //Crear 10 servicios
         // public Servicio(String nombre, String descripcion, float precio, String imagenURL, List<Comentario> comentarios, CuentaHabitacion cuentaHabitacion)
         servicioRepository.save(servicio1);

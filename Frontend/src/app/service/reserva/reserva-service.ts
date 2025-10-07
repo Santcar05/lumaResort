@@ -1,55 +1,39 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Reserva } from '../../Models/Reserva';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReservaService {
-  private storageKey = 'reservas';
-  private isBrowser: boolean;
+  private apiUrl = 'http://localhost:8080/reservas';
 
-  constructor() {
-    this.isBrowser = typeof window !== 'undefined' && !!window.localStorage;
+  constructor(private http: HttpClient) {}
 
-    if (this.isBrowser && !localStorage.getItem(this.storageKey)) {
-      const iniciales: Reserva[] = [];
-      localStorage.setItem(this.storageKey, JSON.stringify(iniciales));
-    }
+  // Obtener todas las reservas
+  findAll(): Observable<Reserva[]> {
+    return this.http.get<Reserva[]>(this.apiUrl);
   }
 
-  private getData(): Reserva[] {
-    if (!this.isBrowser) return [];
-    return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+  // Crear una nueva reserva
+  create(reserva: Reserva): Observable<Reserva> {
+    return this.http.post<Reserva>(this.apiUrl, reserva);
   }
 
-  private saveData(data: Reserva[]): void {
-    if (this.isBrowser) {
-      localStorage.setItem(this.storageKey, JSON.stringify(data));
-    }
+  // Actualizar una reserva existente
+  update(reserva: Reserva): Observable<Reserva> {
+    return this.http.put<Reserva>(`${this.apiUrl}/${reserva.idReserva!}`, reserva);
   }
 
-  findAll(): Reserva[] {
-    return this.getData();
+  // Eliminar una reserva por ID
+  delete(id: number): Observable<void> {
+    console.log('Eliminando reserva con ID:', id);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  create(reserva: Reserva): void {
-    const data = this.getData();
-    reserva.idReserva = data.length ? Math.max(...data.map((r) => r.idReserva)) + 1 : 1;
-    data.push(reserva);
-    this.saveData(data);
-  }
-
-  update(reserva: Reserva): void {
-    const data = this.getData();
-    const index = data.findIndex((r) => r.idReserva === reserva.idReserva);
-    if (index !== -1) {
-      data[index] = reserva;
-      this.saveData(data);
-    }
-  }
-
-  delete(id: number): void {
-    const data = this.getData().filter((r) => r.idReserva !== id);
-    this.saveData(data);
+  // Buscar una reserva por ID
+  findById(id: number): Observable<Reserva> {
+    return this.http.get<Reserva>(`${this.apiUrl}/${id}`);
   }
 }

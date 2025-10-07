@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Reserva } from '../Models/Reserva';
@@ -9,9 +9,9 @@ import { ReservaService } from '../service/reserva/reserva-service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './reserva-admin-component.html',
-  styleUrl: './reserva-admin-component.css',
+  styleUrls: ['./reserva-admin-component.css'],
 })
-export class ReservaAdminComponent {
+export class ReservaAdminComponent implements OnInit {
   habitaciones = [
     { idHabitacion: 1, numero: '101', tipo: 'Suite', precioPorNoche: 300 },
     { idHabitacion: 2, numero: '102', tipo: 'Doble', precioPorNoche: 200 },
@@ -25,51 +25,77 @@ export class ReservaAdminComponent {
   ];
 
   reservas: Reserva[] = [];
-  nuevaReserva: Reserva = {
-    idReserva: 0,
-    fechaInicio: '',
-    fechaFin: '',
-    cantidadPersonas: 1,
-    estado: 'Pendiente',
-    cliente: {
-      idUsuario: 0,
-      nombre: '',
-      apellido: '',
-      correo: '',
-      contrasena: '',
-      cedula: '',
-      telefono: '',
-      esOperador: false,
-      esAdministrador: false,
-      rol: 'Cliente',
-    },
-    habitacion: {
-      idHabitacion: 0,
-      numero: '',
-      precioPorNoche: 0,
-      estado: 'Disponible',
-      capacidad: 1,
-      descripcion: '',
-    },
-    servicios: [],
-  };
+  nuevaReserva: Reserva = this.crearReservaVacia();
   editando: Reserva | null = null;
 
   constructor(private reservaService: ReservaService) {}
 
   ngOnInit(): void {
-    this.reservas = this.reservaService.findAll();
+    this.cargarReservas();
   }
 
-  crearReserva() {
+  // 🔹 Cargar todas las reservas desde el backend
+  cargarReservas(): void {
+    this.reservaService.findAll().subscribe({
+      next: (data) => (this.reservas = data),
+      error: (err) => console.error('Error al cargar reservas:', err),
+    });
+  }
+
+  // 🔹 Crear una nueva reserva
+  crearReserva(): void {
     if (!this.nuevaReserva.cliente || !this.nuevaReserva.habitacion) return;
-    this.reservaService.create({ ...this.nuevaReserva });
-    this.reservas = this.reservaService.findAll();
-    this.resetFormulario();
+
+    this.reservaService.create(this.nuevaReserva).subscribe({
+      next: () => {
+        this.cargarReservas();
+        this.resetFormulario();
+      },
+      error: (err) => console.error('Error al crear reserva:', err),
+    });
   }
 
-  resetFormulario() {
-    this.nuevaReserva = {
+  // 🔹 Guardar cambios en una reserva editada
+  guardarEdicion(): void {
+    if (!this.editando) return;
+
+    this.reservaService.update(this.editando).subscribe({
+      next: () => {
+        this.cargarReservas();
+        this.editando = null;
+      },
+      error: (err) => console.error('Error al actualizar reserva:', err),
+    });
+  }
+
+  // 🔹 Eliminar una reserva
+  eliminarReserva(id: number): void {
+    if (confirm('¿Seguro que deseas eliminar esta reserva?')) {
+      this.reservaService.delete(id).subscribe({
+        next: () => this.cargarReservas(),
+        error: (err) => console.error('Error al eliminar reserva:', err),
+      });
+    }
+  }
+
+  // 🔹 Cancelar edición
+  cancelarEdicion(): void {
+    this.editando = null;
+  }
+
+  // 🔹 Seleccionar reserva para editar
+  editarReserva(reserva: Reserva): void {
+    this.editando = { ...reserva };
+  }
+
+  // 🔹 Limpiar formulario
+  resetFormulario(): void {
+    this.nuevaReserva = this.crearReservaVacia();
+  }
+
+  // 🔹 Crear plantilla vacía para una nueva reserva
+  private crearReservaVacia(): Reserva {
+    return {
       idReserva: 0,
       fechaInicio: '',
       fechaFin: '',
@@ -97,27 +123,5 @@ export class ReservaAdminComponent {
       },
       servicios: [],
     };
-  }
-
-  editarReserva(reserva: Reserva) {
-    this.editando = { ...reserva };
-  }
-
-  guardarEdicion() {
-    if (!this.editando) return;
-    this.reservaService.update(this.editando);
-    this.reservas = this.reservaService.findAll();
-    this.editando = null;
-  }
-
-  cancelarEdicion() {
-    this.editando = null;
-  }
-
-  eliminarReserva(id: number) {
-    if (confirm('¿Seguro que deseas eliminar esta reserva?')) {
-      this.reservaService.delete(id);
-      this.reservas = this.reservaService.findAll();
-    }
   }
 }

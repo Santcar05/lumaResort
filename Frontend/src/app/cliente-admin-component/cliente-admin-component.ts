@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Usuario } from '../Models/Usuario';
@@ -9,9 +9,9 @@ import { ClienteService } from '../service/cliente/cliente-service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './cliente-admin-component.html',
-  styleUrl: './cliente-admin-component.css',
+  styleUrls: ['./cliente-admin-component.css'],
 })
-export class ClienteAdminComponent {
+export class ClienteAdminComponent implements OnInit {
   clientes: Usuario[] = [];
   nuevoCliente: Usuario = this.crearNuevoUsuario();
   editando: Usuario | null = null;
@@ -22,6 +22,7 @@ export class ClienteAdminComponent {
     this.cargarClientes();
   }
 
+  // 🔹 Crear una plantilla de usuario vacío
   private crearNuevoUsuario(): Usuario {
     return {
       idUsuario: 0,
@@ -37,14 +38,16 @@ export class ClienteAdminComponent {
     };
   }
 
-  cargarClientes() {
+  // 🔹 Cargar lista de clientes desde el backend
+  cargarClientes(): void {
     this.clienteService.findAll().subscribe({
       next: (data) => (this.clientes = data),
       error: (err) => console.error('Error al cargar clientes:', err),
     });
   }
 
-  crearCliente() {
+  // 🔹 Crear nuevo cliente
+  crearCliente(): void {
     if (!this.nuevoCliente.nombre.trim() || !this.nuevoCliente.apellido.trim()) return;
 
     this.clienteService.create(this.nuevoCliente).subscribe({
@@ -56,11 +59,13 @@ export class ClienteAdminComponent {
     });
   }
 
-  editarCliente(cliente: Usuario) {
+  // 🔹 Seleccionar cliente para edición
+  editarCliente(cliente: Usuario): void {
     this.editando = { ...cliente };
   }
 
-  guardarEdicion() {
+  // 🔹 Guardar cambios en cliente editado
+  guardarEdicion(): void {
     if (!this.editando) return;
 
     this.clienteService.update(this.editando).subscribe({
@@ -72,11 +77,13 @@ export class ClienteAdminComponent {
     });
   }
 
-  cancelarEdicion() {
+  // 🔹 Cancelar edición
+  cancelarEdicion(): void {
     this.editando = null;
   }
 
-  eliminarCliente(id: number) {
+  // 🔹 Eliminar cliente
+  eliminarCliente(id: number): void {
     if (confirm('¿Seguro que deseas eliminar este cliente?')) {
       this.clienteService.delete(id).subscribe({
         next: () => this.cargarClientes(),

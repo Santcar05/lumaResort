@@ -6,10 +6,10 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './tarjetas-descubrimiento-component.component.html',
-  styleUrl: './tarjetas-descubrimiento-component.component.css',
+  styleUrls: ['./tarjetas-descubrimiento-component.component.css'],
 })
 export class TarjetaDescubrimientoComponent {
-  @Input() iconPath: string = ''; // ruta del <path> del SVG
-  @Input() title: string = ''; // título de la tarjeta
-  @Input() description: string = ''; // texto de la tarjeta
+  @Input() imageUrl: string = '';
+  @Input() title: string = '';
+  @Input() description: string = '';
 }

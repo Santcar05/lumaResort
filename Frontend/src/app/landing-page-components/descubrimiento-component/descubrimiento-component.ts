@@ -7,6 +7,6 @@ import { TarjetaDescubrimientoComponent } from '../../tarjetas-descubrimiento-co
   standalone: true,
   imports: [CommonModule, TarjetaDescubrimientoComponent],
   templateUrl: './descubrimiento-component.html',
-  styleUrl: './descubrimiento-component.css',
+  styleUrls: ['./descubrimiento-component.css'],
 })
 export class DescubrimientoComponent {}

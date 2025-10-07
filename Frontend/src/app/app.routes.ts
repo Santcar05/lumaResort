@@ -10,6 +10,7 @@ import { ReservaAdminComponent } from './reserva-admin-component/reserva-admin-c
 import { DetalleServicioComponent } from './detalle-servicio-component/detalle-servicio-component';
 import { ListaServiciosComponent } from './lista-servicios-component/lista-servicios-component';
 import { ReservasComponent } from './reservas-component/reservas-component';
+import { SignUpComponent } from './sign-up-component/sign-up-component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // por defecto muestra Landing
@@ -29,5 +30,6 @@ export const routes: Routes = [
   { path: 'servicios/:id', component: DetalleServicioComponent },
   { path: 'reservar/:id', component: ReservasComponent },
   { path: 'reservas', component: ReservasComponent },
+  { path: 'signup', component: SignUpComponent },
   { path: '**', redirectTo: '' }, // redirección en caso de ruta no válida COLOCAR SIEMPRE AL FINAL
 ];

@@ -58,4 +58,8 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
+    public Usuario login(String correo, String contrasena) {
+        return usuarioRepository.findByCorreoAndContrasena(correo, contrasena);
+        //Buscar por corr
+    }
 }

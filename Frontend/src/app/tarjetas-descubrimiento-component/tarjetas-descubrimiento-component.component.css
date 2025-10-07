@@ -1,3 +1,4 @@
+/* === FONDO Y SECCIÓN === */
 .discovery-section {
   background: linear-gradient(135deg, #0a1a2f 0%, #1a3a5f 100%);
   padding: 5rem 1.5rem;
@@ -54,6 +55,7 @@
   border-radius: 2px;
 }
 
+/* === GRID DE TARJETAS === */
 .discovery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -61,16 +63,17 @@
   margin-bottom: 4rem;
 }
 
+/* === TARJETAS === */
 .discovery-card {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  padding: 2.5rem 2rem;
+  overflow: hidden;
   text-align: center;
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .discovery-card::before {
@@ -96,16 +99,26 @@
   opacity: 1;
 }
 
-.card-icon {
-  margin-bottom: 1.5rem;
-  color: #5aa8ff;
-  display: flex;
-  justify-content: center;
+/* === TODAS LAS IMÁGENES DE LAS TARJETAS === */
+.discovery-card img {
+  width: 100%;
+  height: 230px; /* 🔹 Misma altura para todas */
+  object-fit: cover; /* 🔹 Recorta manteniendo proporciones */
+  display: block;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
+.discovery-card:hover img {
+  transform: scale(1.05);
+  opacity: 0.95;
+}
+
+/* === CONTENIDO DE LAS TARJETAS === */
 .discovery-card h3 {
   font-size: 1.4rem;
-  margin-bottom: 1rem;
+  margin: 1.2rem 0 0.5rem;
   color: #ffffff;
   font-weight: 600;
 }
@@ -114,8 +127,10 @@
   color: #c9e2ff;
   line-height: 1.6;
   font-size: 1rem;
+  padding: 0 1.5rem 2rem;
 }
 
+/* === CTA FINAL === */
 .discovery-cta {
   text-align: center;
   padding: 2.5rem;
@@ -150,30 +165,21 @@
   background: linear-gradient(90deg, #5aa8ff, #4a90e2);
 }
 
-/* Responsive */
+/* === RESPONSIVE === */
+@media (max-width: 1024px) {
+  .discovery-card img {
+    height: 200px;
+  }
+}
+
 @media (max-width: 768px) {
-  .discovery-section {
-    padding: 3rem 1rem;
+  .discovery-card img {
+    height: 180px;
   }
+}
 
-  .discovery-title {
-    font-size: 2.2rem;
-  }
-
-  .discovery-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .discovery-card {
-    padding: 2rem 1.5rem;
-  }
-
-  .discovery-cta {
-    padding: 2rem 1.5rem;
-  }
-
-  .discovery-cta p {
-    font-size: 1.1rem;
+@media (max-width: 480px) {
+  .discovery-card img {
+    height: 160px;
   }
 }

@@ -11,10 +11,12 @@ import { DetalleServicioComponent } from './detalle-servicio-component/detalle-s
 import { ListaServiciosComponent } from './lista-servicios-component/lista-servicios-component';
 import { ReservasComponent } from './reservas-component/reservas-component';
 import { SignUpComponent } from './sign-up-component/sign-up-component';
+import { PerfilComponent } from './perfil-component/perfil-component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // por defecto muestra Landing
   { path: 'login', component: LoginComponent }, // muestra login
+  { path: 'perfil/:id', component: PerfilComponent }, // muestra perfil
   {
     path: 'admin',
     component: AdminComponent,

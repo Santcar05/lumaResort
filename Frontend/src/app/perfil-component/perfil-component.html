@@ -1,0 +1,30 @@
+<app-header-component></app-header-component>
+<div class="profile-background">
+  <div class="overlay"></div>
+
+  <div *ngIf="usuario" class="profile-card">
+    <h2 class="title">Mi Perfil</h2>
+
+    <form (ngSubmit)="actualizarCliente()">
+      <!-- Grupo Nombre -->
+      <div class="input-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" [(ngModel)]="usuario.nombre" name="nombre" required />
+      </div>
+
+      <!-- Grupo Apellido -->
+      <div class="input-group">
+        <label for="apellido">Apellido</label>
+        <input type="text" id="apellido" [(ngModel)]="usuario.apellido" name="apellido" required />
+      </div>
+
+      <!-- Grupo Email -->
+      <div class="input-group">
+        <label for="correo">Correo</label>
+        <input type="correo" id="correo" [(ngModel)]="usuario.correo" name="correo" required />
+      </div>
+
+      <button type="submit" class="white-btn">Guardar Cambios</button>
+    </form>
+  </div>
+</div>

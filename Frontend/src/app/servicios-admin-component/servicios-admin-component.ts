@@ -17,14 +17,11 @@ export class ServiciosAdminComponent {
   nuevoServicio: Servicio = this.crearNuevoServicio();
   editando: Servicio | null = null;
 
-  // 🔍 Filtro de búsqueda
   filtro: string = '';
 
-  // 🔔 Mensajes tipo toast
   mensaje: string = '';
   mostrarMensaje: boolean = false;
 
-  // 🪟 Control del modal
   modalAbierto: boolean = false;
 
   constructor(private servicioService: CRUDServiciosService) {}

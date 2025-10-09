@@ -3,6 +3,7 @@ package com.example.lumaresort.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,9 @@ public class ClienteController {
 
     @Autowired
     private UsuarioService clienteService;
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     //http://localhost:8080/clientes  (GET)
     @GetMapping
@@ -50,4 +54,14 @@ public class ClienteController {
         clienteService.eliminar(id);
     }
 
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long idUsuario) {
+        Usuario usuario = usuarioService.buscarPorId(idUsuario);
+        
+        if (usuario != null) {
+            return ResponseEntity.ok(usuario);
+        } else { 
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

@@ -1,19 +1,45 @@
 package com.example.lumaresort.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.lumaresort.entities.Usuario;
 import com.example.lumaresort.service.UsuarioService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/Usuario")
+@RequestMapping("/usuario")
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @PostMapping("/login")
+    public ResponseEntity<Usuario> login(@RequestBody Map<String, String> credentials) {
+        String correo = credentials.get("correo");
+        String contrasena = credentials.get("contrasena");
+
+        Usuario usuarioEncontrado = usuarioService.findByCorreoAndContrasena(correo, contrasena);
+        if (usuarioEncontrado == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        return ResponseEntity.ok(usuarioEncontrado);
+    }
+
+    @PostMapping
+    public ResponseEntity<Usuario> crearUsuario(@RequestBody Usuario usuario) {
+        usuario.setIdUsuario(null); // asegurar que sea nuevo
+        usuarioService.save(usuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
+    }
 
 }
 

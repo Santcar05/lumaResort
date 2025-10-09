@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TipoHabitacion } from '../Models/TipoHabitacion';
 import { TipoHabitacionService } from '../service/tipo-habitacion';
+import { HabitacionService } from '../service/habitacion/habitacion-service';
 
 @Component({
   selector: 'app-tipo-habitacion-admin-component',
@@ -16,7 +17,14 @@ export class TipoHabitacionAdminComponent {
   nuevoTipo: TipoHabitacion = { id: 0, nombre: '', descripcion: '' };
   editando: TipoHabitacion | null = null;
 
-  constructor(private tipoHabitacionService: TipoHabitacionService) {}
+  // Variables para mostrar notificaciones dentro de la pantalla
+  mensaje: string = '';
+  tipoMensaje: 'success' | 'error' | '' = '';
+
+  constructor(
+    private tipoHabitacionService: TipoHabitacionService,
+    private habitacionService: HabitacionService
+  ) {}
 
   ngOnInit(): void {
     this.cargarTiposHabitacion();
@@ -36,8 +44,12 @@ export class TipoHabitacionAdminComponent {
       next: () => {
         this.cargarTiposHabitacion();
         this.nuevoTipo = { id: 0, nombre: '', descripcion: '' };
+        this.mostrarMensaje('Tipo de habitación creado exitosamente.', 'success');
       },
-      error: (err) => console.error('Error al crear tipo de habitación:', err),
+      error: (err) => {
+        console.error('Error al crear tipo de habitación:', err);
+        this.mostrarMensaje('Error al crear el tipo de habitación.', 'error');
+      },
     });
   }
 
@@ -51,9 +63,13 @@ export class TipoHabitacionAdminComponent {
     this.tipoHabitacionService.update(this.editando).subscribe({
       next: () => {
         this.cargarTiposHabitacion();
+        this.mostrarMensaje('Tipo de habitación actualizado exitosamente.', 'success');
         this.editando = null;
       },
-      error: (err) => console.error('Error al actualizar tipo de habitación:', err),
+      error: (err) => {
+        console.error('Error al actualizar tipo de habitación:', err);
+        this.mostrarMensaje('Error al actualizar el tipo de habitación.', 'error');
+      },
     });
   }
 
@@ -62,11 +78,45 @@ export class TipoHabitacionAdminComponent {
   }
 
   eliminarTipo(id: number): void {
-    if (confirm('¿Seguro que deseas eliminar este tipo de habitación?')) {
-      this.tipoHabitacionService.delete(id).subscribe({
-        next: () => this.cargarTiposHabitacion(),
-        error: (err) => console.error('Error al eliminar tipo de habitación:', err),
-      });
-    }
+    // Paso 1: verificar si hay habitaciones asociadas
+    this.habitacionService.findAll().subscribe({
+      next: (habitaciones) => {
+        const asociadas = habitaciones.filter((hab) => hab.tipoHabitacion?.id === id);
+
+        if (asociadas.length > 0) {
+          // Mensaje rojo dentro de la página
+          this.mostrarMensaje(
+            '❌ No se puede eliminar este tipo de habitación porque tiene habitaciones asociadas.',
+            'error'
+          );
+          return;
+        }
+
+        // Eliminar sin confirm() externo, pero con notificación interna
+        this.tipoHabitacionService.delete(id).subscribe({
+          next: () => {
+            this.cargarTiposHabitacion();
+            this.mostrarMensaje('Tipo de habitación eliminado exitosamente.', 'success');
+          },
+          error: (err) => {
+            console.error('Error al eliminar tipo de habitación:', err);
+            this.mostrarMensaje('Error al eliminar el tipo de habitación.', 'error');
+          },
+        });
+      },
+      error: (err) => console.error('Error al verificar habitaciones:', err),
+    });
+  }
+
+  // Método para mostrar mensajes por unos segundos
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error'): void {
+    this.mensaje = mensaje;
+    this.tipoMensaje = tipo;
+
+    // Ocultar después de 4 segundos
+    setTimeout(() => {
+      this.mensaje = '';
+      this.tipoMensaje = '';
+    }, 4000);
   }
 }

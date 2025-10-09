@@ -36,4 +36,8 @@ export class ClienteService {
   findById(id: number): Observable<Usuario> {
     return this.http.get<Usuario>(`${this.apiUrl}/${id}`);
   }
+
+  findByUsuarioId(idUsuario: number): Observable<Usuario> {
+    return this.http.get<Usuario>(`${this.apiUrl}/usuario/${idUsuario}`);
+  }
 }

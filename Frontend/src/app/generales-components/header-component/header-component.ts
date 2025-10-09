@@ -1,30 +1,53 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router'; 
+import { CommonModule } from '@angular/common'; 
 
 @Component({
   selector: 'app-header-component',
-  imports: [RouterModule],
+  standalone: true, 
+  imports: [CommonModule, RouterModule], 
   templateUrl: './header-component.html',
-  styleUrl: './header-component.css',
+  styleUrls: ['./header-component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   menuVisible = false;
-  private hideTimer: any;
+  isLoggedIn = false;
+  usuarioId: number | null = null; 
 
-  toggleMenu() {
-    this.menuVisible = !this.menuVisible;
-    if (this.menuVisible) {
-      clearTimeout(this.hideTimer);
+ constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      const usuario = JSON.parse(userData);
+      if (usuario && usuario.idUsuario) {
+        this.isLoggedIn = true;
+        this.usuarioId = usuario.idUsuario; 
+      }
+    } else {
+      this.isLoggedIn = false;
     }
   }
 
+
+  toggleMenu() {
+    this.menuVisible = !this.menuVisible;
+  }
+
   onMouseEnter() {
-    clearTimeout(this.hideTimer);
+    this.menuVisible = true;
   }
 
   onMouseLeave() {
-    this.hideTimer = setTimeout(() => {
-      this.menuVisible = false;
-    }, 2000); // 2 segundos
+    this.menuVisible = false;
+  }
+
+  logout(): void {
+    localStorage.removeItem('userData');
+    this.isLoggedIn = false;
+    this.usuarioId = null;
+    this.router.navigate(['/login']).then(() => {
+      window.location.reload();
+    });
   }
 }

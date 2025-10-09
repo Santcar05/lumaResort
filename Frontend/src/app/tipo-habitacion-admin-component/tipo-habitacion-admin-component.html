@@ -1,6 +1,18 @@
 <div class="admin-container">
   <h2 class="titulo">Tipos de Habitación</h2>
 
+  <!-- Mensajes dentro de la pantalla -->
+  <div
+    *ngIf="mensaje"
+    [ngClass]="{
+      'alerta-exito': tipoMensaje === 'success',
+      'alerta-error': tipoMensaje === 'error'
+    }"
+    class="alerta"
+  >
+    {{ mensaje }}
+  </div>
+
   <!-- Crear nuevo tipo -->
   <div class="card">
     <div class="card-header">Nuevo Tipo de Habitación</div>
@@ -35,6 +47,8 @@
         <tbody>
           <tr *ngFor="let tipo of tipos">
             <td>{{ tipo.id }}</td>
+
+            <!-- Campos editables -->
             <td *ngIf="editando?.id !== tipo.id">{{ tipo.nombre }}</td>
             <td *ngIf="editando?.id === tipo.id && editando">
               <input [(ngModel)]="editando!.nombre" name="editNombre{{ tipo.id }}" />
@@ -52,6 +66,7 @@
                   Eliminar
                 </button>
               </ng-container>
+
               <ng-container *ngIf="editando?.id === tipo.id">
                 <button class="btn btn-success btn-sm" (click)="guardarEdicion()">Guardar</button>
                 <button class="btn btn-secondary btn-sm" (click)="cancelarEdicion()">

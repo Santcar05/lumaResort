@@ -1,1 +1,6 @@
-
+#FileLock
+#Sat Oct 11 18:49:11 GMT-05:00 2025
+hostName=Juanesdt
+id=199d5667d0b188c3ac655f7d224275150426037b7f7
+method=file
+server=192.168.10.15\:53554

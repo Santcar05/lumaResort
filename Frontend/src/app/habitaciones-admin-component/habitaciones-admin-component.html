@@ -1,10 +1,150 @@
 <div class="admin-container">
+  <!-- Notificación flotante -->
+  <div
+    class="notificacion"
+    *ngIf="mostrarNotificacion"
+    [ngClass]="{ exito: tipoNotificacion === 'exito', error: tipoNotificacion === 'error' }"
+  >
+    {{ mensaje }}
+  </div>
+
   <h2 class="titulo">Gestión de Habitaciones</h2>
 
-  <!-- Crear nueva habitación -->
-  <div class="card">
-    <div class="card-header">Nueva Habitación</div>
+  <!-- Barra de búsqueda mejorada -->
+  <div class="form-group" style="text-align: center; margin-bottom: 1.5rem">
+    <p style="font-weight: 600; color: #003366">¿Qué desea buscar?</p>
+
+    <select
+      [(ngModel)]="categoriaBusqueda"
+      style="width: 25%; display: inline-block; margin-right: 1rem"
+    >
+      <option value="id">ID</option>
+      <option value="numero">Número de habitación</option>
+      <option value="tipo">Tipo de habitación</option>
+    </select>
+
+    <input
+      type="text"
+      placeholder="Ingrese su búsqueda..."
+      [(ngModel)]="filtroBusqueda"
+      class="form-control"
+      style="width: 30%; display: inline-block; margin-right: 1rem"
+    />
+
+    <select
+      [(ngModel)]="filtroEstado"
+      style="width: 20%; display: inline-block; margin-right: 1rem"
+    >
+      <option value="">Todos los estados</option>
+      <option value="disponible">Disponible</option>
+      <option value="ocupado">Ocupada</option>
+      <option value="en mantenimiento">En mantenimiento</option>
+    </select>
+
+    <button class="btn btn-primary" (click)="filtrarHabitaciones()">Buscar</button>
+    <button class="btn btn-secondary" (click)="limpiarFiltro()">Limpiar</button>
+  </div>
+
+  <!-- Botón para crear nueva habitación -->
+  <div class="crear-habitacion" style="text-align: center; margin-bottom: 2rem">
+    <p>Si deseas crear una nueva habitación <span style="font-size: 1.5rem">⬇️</span></p>
+    <button class="btn btn-success" (click)="abrirModal()">Crear habitación</button>
+  </div>
+
+  <!-- Lista de habitaciones -->
+  <div class="card mt-4">
+    <div class="card-header">Lista de Habitaciones</div>
     <div class="card-body">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Número</th>
+            <th>Precio/noche</th>
+            <th>Estado</th>
+            <th>Capacidad</th>
+            <th>Descripción</th>
+            <th>Tipo de Habitación</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let habitacion of habitacionesFiltradas">
+            <td>{{ habitacion.idHabitacion }}</td>
+
+            <td *ngIf="editando?.idHabitacion !== habitacion.idHabitacion">
+              {{ habitacion.numero }}
+            </td>
+            <td *ngIf="editando?.idHabitacion === habitacion.idHabitacion">
+              <input [(ngModel)]="editando!.numero" />
+            </td>
+
+            <td *ngIf="editando?.idHabitacion !== habitacion.idHabitacion">
+              {{ habitacion.precioPorNoche | currency }}
+            </td>
+            <td *ngIf="editando?.idHabitacion === habitacion.idHabitacion">
+              <input type="number" [(ngModel)]="editando!.precioPorNoche" />
+            </td>
+
+            <td *ngIf="editando?.idHabitacion !== habitacion.idHabitacion">
+              {{ habitacion.estado }}
+            </td>
+            <td *ngIf="editando?.idHabitacion === habitacion.idHabitacion">
+              <select [(ngModel)]="editando!.estado">
+                <option value="disponible">Disponible</option>
+                <option value="ocupado">Ocupado</option>
+                <option value="en mantenimiento">En mantenimiento</option>
+              </select>
+            </td>
+
+            <td *ngIf="editando?.idHabitacion !== habitacion.idHabitacion">
+              {{ habitacion.capacidad }}
+            </td>
+            <td *ngIf="editando?.idHabitacion === habitacion.idHabitacion">
+              <input type="number" [(ngModel)]="editando!.capacidad" />
+            </td>
+
+            <td *ngIf="editando?.idHabitacion !== habitacion.idHabitacion">
+              {{ habitacion.descripcion }}
+            </td>
+            <td *ngIf="editando?.idHabitacion === habitacion.idHabitacion">
+              <textarea [(ngModel)]="editando!.descripcion"></textarea>
+            </td>
+
+            <td>
+              {{ habitacion.tipoHabitacion?.nombre || 'N/A' }}
+            </td>
+
+            <td>
+              <ng-container *ngIf="editando?.idHabitacion !== habitacion.idHabitacion">
+                <button class="btn btn-warning btn-sm" (click)="editarHabitacion(habitacion)">
+                  Editar
+                </button>
+                <button
+                  class="btn btn-danger btn-sm"
+                  (click)="eliminarHabitacion(habitacion.idHabitacion!)"
+                >
+                  Eliminar
+                </button>
+              </ng-container>
+              <ng-container *ngIf="editando?.idHabitacion === habitacion.idHabitacion">
+                <button class="btn btn-success btn-sm" (click)="guardarEdicion()">Guardar</button>
+                <button class="btn btn-secondary btn-sm" (click)="cancelarEdicion()">
+                  Cancelar
+                </button>
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal flotante -->
+  <div class="modal" *ngIf="modalAbierto">
+    <div class="modal-overlay" (click)="cerrarModal()"></div>
+    <div class="modal-content">
+      <h3>Nueva Habitación</h3>
       <form (ngSubmit)="crearHabitacion()">
         <div class="form-group">
           <label>Número:</label>
@@ -51,118 +191,11 @@
           </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Crear</button>
+        <div class="modal-buttons">
+          <button type="submit" class="btn btn-success">Crear</button>
+          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+        </div>
       </form>
-    </div>
-  </div>
-
-  <!-- Lista de habitaciones -->
-  <div class="card mt-4">
-    <div class="card-header">Lista de Habitaciones</div>
-    <div class="card-body">
-      <table class="tabla">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Número</th>
-            <th>Precio/noche</th>
-            <th>Estado</th>
-            <th>Capacidad</th>
-            <th>Descripción</th>
-            <th>Tipo de Habitacion</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let habitacion of habitaciones">
-            <td>{{ habitacion.idHabitacion }}</td>
-
-            <!-- Número -->
-            <td *ngIf="editando?.idHabitacion !== habitacion.idHabitacion">
-              {{ habitacion.numero }}
-            </td>
-            <td *ngIf="editando?.idHabitacion === habitacion.idHabitacion">
-              <input
-                [(ngModel)]="editando!.numero"
-                name="editNumero{{ habitacion.idHabitacion }}"
-              />
-            </td>
-
-            <!-- Precio -->
-            <td *ngIf="editando?.idHabitacion !== habitacion.idHabitacion">
-              {{ habitacion.precioPorNoche | currency }}
-            </td>
-            <td *ngIf="editando?.idHabitacion === habitacion.idHabitacion">
-              <input
-                type="number"
-                [(ngModel)]="editando!.precioPorNoche"
-                name="editPrecio{{ habitacion.idHabitacion }}"
-              />
-            </td>
-
-            <!-- Estado -->
-            <td *ngIf="editando?.idHabitacion !== habitacion.idHabitacion">
-              {{ habitacion.estado }}
-            </td>
-            <td *ngIf="editando?.idHabitacion === habitacion.idHabitacion">
-              <select [(ngModel)]="editando!.estado" name="editEstado{{ habitacion.idHabitacion }}">
-                <option value="disponible">Disponible</option>
-                <option value="ocupado">Ocupado</option>
-                <option value="en mantenimiento">En mantenimiento</option>
-              </select>
-            </td>
-
-            <!-- Capacidad -->
-            <td *ngIf="editando?.idHabitacion !== habitacion.idHabitacion">
-              {{ habitacion.capacidad }}
-            </td>
-            <td *ngIf="editando?.idHabitacion === habitacion.idHabitacion">
-              <input
-                type="number"
-                [(ngModel)]="editando!.capacidad"
-                name="editCapacidad{{ habitacion.idHabitacion }}"
-              />
-            </td>
-
-            <!-- Descripción -->
-            <td *ngIf="editando?.idHabitacion !== habitacion.idHabitacion">
-              {{ habitacion.descripcion }}
-            </td>
-            <td *ngIf="editando?.idHabitacion === habitacion.idHabitacion">
-              <textarea
-                [(ngModel)]="editando!.descripcion"
-                name="editDescripcion{{ habitacion.idHabitacion }}"
-              ></textarea>
-            </td>
-
-            <!-- Tipo de Habitacion -->
-            <td>
-              {{ habitacion.tipoHabitacion?.nombre || 'N/A' }}
-            </td>
-
-            <!-- Acciones -->
-            <td>
-              <ng-container *ngIf="editando?.idHabitacion !== habitacion.idHabitacion">
-                <button class="btn btn-warning btn-sm" (click)="editarHabitacion(habitacion)">
-                  Editar
-                </button>
-                <button
-                  class="btn btn-danger btn-sm"
-                  (click)="eliminarHabitacion(habitacion.idHabitacion!)"
-                >
-                  Eliminar
-                </button>
-              </ng-container>
-              <ng-container *ngIf="editando?.idHabitacion === habitacion.idHabitacion">
-                <button class="btn btn-success btn-sm" (click)="guardarEdicion()">Guardar</button>
-                <button class="btn btn-secondary btn-sm" (click)="cancelarEdicion()">
-                  Cancelar
-                </button>
-              </ng-container>
-            </td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </div>

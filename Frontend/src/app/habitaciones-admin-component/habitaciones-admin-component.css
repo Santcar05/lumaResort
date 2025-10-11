@@ -211,3 +211,93 @@ option[value='ocupado'] {
 option[value='en mantenimiento'] {
   color: #f4a261;
 }
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+  position: relative;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 450px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.3s ease;
+  z-index: 2100;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+/* Notificación flotante */
+.notificacion {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  padding: 15px 25px;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  z-index: 3000;
+  opacity: 0;
+  animation: aparecer 0.4s forwards;
+}
+
+.notificacion.exito {
+  background-color: #2a9d8f;
+}
+
+.notificacion.error {
+  background-color: #e63946;
+}
+
+@keyframes aparecer {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+/* --- Botones pequeños uniformes (Editar / Eliminar / Guardar / Cancelar) --- */
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  min-width: 100px; /* asegura mismo ancho */
+  text-align: center;
+  border-radius: 8px;
+}
+
+/* Ajuste específico para mantener coherencia visual entre todos */
+.tabla button.btn-sm {
+  display: inline-block;
+  vertical-align: middle;
+}

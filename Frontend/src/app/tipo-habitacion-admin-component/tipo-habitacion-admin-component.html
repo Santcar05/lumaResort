@@ -1,34 +1,39 @@
 <div class="admin-container">
-  <h2 class="titulo">Tipos de Habitación</h2>
-
-  <!-- Mensajes dentro de la pantalla -->
+  <!-- Notificación flotante -->
   <div
-    *ngIf="mensaje"
-    [ngClass]="{
-      'alerta-exito': tipoMensaje === 'success',
-      'alerta-error': tipoMensaje === 'error'
-    }"
-    class="alerta"
+    class="notificacion"
+    *ngIf="mostrarNotificacion"
+    [ngClass]="{ exito: tipoNotificacion === 'exito', error: tipoNotificacion === 'error' }"
   >
     {{ mensaje }}
   </div>
 
-  <!-- Crear nuevo tipo -->
-  <div class="card">
-    <div class="card-header">Nuevo Tipo de Habitación</div>
-    <div class="card-body">
-      <form (ngSubmit)="crearTipo()">
-        <div class="form-group">
-          <label>Nombre:</label>
-          <input type="text" [(ngModel)]="nuevoTipo.nombre" name="nombre" required />
-        </div>
-        <div class="form-group">
-          <label>Descripción:</label>
-          <textarea [(ngModel)]="nuevoTipo.descripcion" name="descripcion" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Crear</button>
-      </form>
-    </div>
+  <h2 class="titulo">Tipos de Habitación</h2>
+
+  <!-- Barra de búsqueda -->
+  <div class="form-group" style="text-align: center; margin-bottom: 1.5rem">
+    <input
+      type="text"
+      placeholder="Buscar por ID..."
+      [(ngModel)]="filtroId"
+      class="form-control"
+      style="width: 20%; display: inline-block; margin-right: 1rem"
+    />
+    <input
+      type="text"
+      placeholder="Buscar por nombre..."
+      [(ngModel)]="filtroNombre"
+      class="form-control"
+      style="width: 40%; display: inline-block; margin-right: 1rem"
+    />
+    <button class="btn btn-primary" (click)="filtrarTipos()">Buscar</button>
+    <button class="btn btn-secondary" (click)="limpiarFiltro()">Limpiar</button>
+  </div>
+
+  <!-- Botón para crear nuevo tipo -->
+  <div class="crear-tipo" style="text-align: center; margin-bottom: 2rem">
+    <p>Si deseas crear un nuevo tipo de habitación <span style="font-size: 1.5rem">⬇️</span></p>
+    <button class="btn btn-success" (click)="abrirModal()">Crear tipo de habitación</button>
   </div>
 
   <!-- Lista -->
@@ -45,18 +50,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let tipo of tipos">
+          <tr *ngFor="let tipo of tiposFiltrados">
             <td>{{ tipo.id }}</td>
 
-            <!-- Campos editables -->
             <td *ngIf="editando?.id !== tipo.id">{{ tipo.nombre }}</td>
-            <td *ngIf="editando?.id === tipo.id && editando">
-              <input [(ngModel)]="editando!.nombre" name="editNombre{{ tipo.id }}" />
+            <td *ngIf="editando?.id === tipo.id">
+              <input [(ngModel)]="editando!.nombre" />
             </td>
 
             <td *ngIf="editando?.id !== tipo.id">{{ tipo.descripcion }}</td>
-            <td *ngIf="editando?.id === tipo.id && editando">
-              <input [(ngModel)]="editando!.descripcion" name="editDesc{{ tipo.id }}" />
+            <td *ngIf="editando?.id === tipo.id">
+              <textarea [(ngModel)]="editando!.descripcion"></textarea>
             </td>
 
             <td>
@@ -66,7 +70,6 @@
                   Eliminar
                 </button>
               </ng-container>
-
               <ng-container *ngIf="editando?.id === tipo.id">
                 <button class="btn btn-success btn-sm" (click)="guardarEdicion()">Guardar</button>
                 <button class="btn btn-secondary btn-sm" (click)="cancelarEdicion()">
@@ -77,6 +80,28 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <!-- Modal flotante -->
+  <div class="modal" *ngIf="modalAbierto">
+    <div class="modal-overlay" (click)="cerrarModal()"></div>
+    <div class="modal-content">
+      <h3>Nuevo Tipo de Habitación</h3>
+      <form (ngSubmit)="crearTipo()">
+        <div class="form-group">
+          <label>Nombre:</label>
+          <input type="text" [(ngModel)]="nuevoTipo.nombre" name="nombre" required />
+        </div>
+        <div class="form-group">
+          <label>Descripción:</label>
+          <textarea [(ngModel)]="nuevoTipo.descripcion" name="descripcion" required></textarea>
+        </div>
+        <div class="modal-buttons">
+          <button type="submit" class="btn btn-success">Crear</button>
+          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

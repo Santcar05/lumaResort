@@ -1,0 +1,77 @@
+<app-header-component></app-header-component>
+
+<div class="reservas-container">
+  <!-- Header -->
+  <div class="header-section">
+    <button class="back-btn" (click)="volver()"><span class="back-icon">←</span> Volver</button>
+
+    <div class="header-content">
+      <span class="section-label">MIS RESERVAS</span>
+      <h1 class="main-title">Historial de <span class="highlight">Reservas</span></h1>
+      <p class="subtitle">Consulta todas tus reservas pasadas, activas o futuras</p>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Cargando tus reservas...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMsg && !loading" class="error-state">
+    <div class="error-content">
+      <div class="error-icon">⚠</div>
+      <h3>Error</h3>
+      <p>{{ errorMsg }}</p>
+      <button class="btn-retry" (click)="cargarReservas()">
+        <span class="retry-icon">↻</span> Reintentar
+      </button>
+    </div>
+  </div>
+
+  <!-- Listado de Reservas -->
+  <div *ngIf="!loading && !errorMsg" class="reservas-lista">
+    <div *ngIf="reservas.length === 0" class="empty-message">
+      <span class="empty-icon">🛏️</span>
+      No tienes reservas registradas.
+    </div>
+
+    <div class="reservas-grid" *ngIf="reservas.length > 0">
+      <div class="reserva-card" *ngFor="let r of reservas">
+        <div class="reserva-header">
+          <span class="reserva-id">#{{ r.idReserva }}</span>
+          <span class="reserva-estado" [ngClass]="getEstadoClase(r.estado)">
+            {{ r.estado }}
+          </span>
+        </div>
+
+        <div class="reserva-body">
+          <h3 class="reserva-habitacion">
+            Habitación {{ r.habitacion?.numero }} - {{ r.habitacion?.tipoHabitacion?.nombre }}
+          </h3>
+          <p class="reserva-fechas">
+            <span>📅 {{ formatoFecha(r.fechaInicio) }} → {{ formatoFecha(r.fechaFin) }}</span>
+          </p>
+          <p class="reserva-personas">
+            👥 {{ r.cantidadPersonas }} {{ r.cantidadPersonas === 1 ? 'persona' : 'personas' }}
+          </p>
+          <p class="reserva-servicios" *ngIf="r.servicios?.length">
+            ✨ {{ r.servicios.length }} servicio{{ r.servicios.length > 1 ? 's' : '' }} incluido{{
+              r.servicios.length > 1 ? 's' : ''
+            }}
+          </p>
+        </div>
+
+        <div class="reserva-footer">
+          <span class="reserva-total">
+            💰 Total estimado:
+            <strong>{{
+              r.habitacion?.precioPorNoche || 0 | currency : 'COP' : 'symbol' : '1.0-0'
+            }}</strong>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

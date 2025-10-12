@@ -59,6 +59,10 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Historial> historial;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Reserva> reservas;
+
     //Constructor adicional (login)
     public Usuario(String correo, String contrasena) {
         this.correo = correo;

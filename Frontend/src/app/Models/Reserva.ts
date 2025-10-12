@@ -8,7 +8,7 @@ export interface Reserva {
   fechaFin: string | Date;
   cantidadPersonas: number;
   estado: string;
-  cliente: Usuario;
+  usuario: Usuario;
   habitacion: Habitacion;
   servicios: Servicio[];
 }

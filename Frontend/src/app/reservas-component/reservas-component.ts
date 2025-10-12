@@ -38,12 +38,6 @@ export class ReservasComponent implements OnInit {
   mostrarExito = false;
   reservaCreada: Reserva | null = null;
 
-  // URLs del backend
-  private baseUrlReservas = 'http://localhost:8080/reservas';
-  private baseUrlHabitaciones = 'http://localhost:8080/habitaciones';
-  private baseUrlServicios = 'http://localhost:8080/servicios';
-
-  // Usuario simulado (reemplaza con el usuario autenticado de tu sistema)
   private usuarioActual: Usuario = {
     idUsuario: 1,
     nombre: 'Usuario',
@@ -56,6 +50,11 @@ export class ReservasComponent implements OnInit {
     esOperador: false,
     esAdministrador: false,
   };
+
+  // URLs del backend
+  private baseUrlReservas = 'http://localhost:8080/reservas';
+  private baseUrlHabitaciones = 'http://localhost:8080/habitaciones';
+  private baseUrlServicios = 'http://localhost:8080/servicios';
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
     // Establecer fecha mínima como hoy
@@ -71,7 +70,18 @@ export class ReservasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cargarDatos();
+    // Cargar Usuario
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      const usuario = JSON.parse(userData);
+      if (usuario && usuario.idUsuario) {
+        this.usuarioActual = usuario;
+        this.cargarDatos();
+      }
+    } else {
+      //Llevamos al login
+      this.router.navigate(['/login']);
+    }
   }
 
   /**
@@ -239,7 +249,7 @@ export class ReservasComponent implements OnInit {
       fechaFin: this.fechaFin,
       cantidadPersonas: this.cantidadPersonas,
       estado: 'CONFIRMADA',
-      cliente: this.usuarioActual,
+      usuario: this.usuarioActual!,
       habitacion: this.habitacionSeleccionada!,
       servicios: this.serviciosSeleccionados,
     };

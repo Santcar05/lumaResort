@@ -9,7 +9,7 @@
         <!-- Selección de Cliente -->
         <div class="form-group">
           <label>Cliente:</label>
-          <select [(ngModel)]="nuevaReserva.cliente" name="cliente" required>
+          <select [(ngModel)]="nuevaReserva.usuario" name="usuario" required>
             <option [ngValue]="null">-- Selecciona un cliente --</option>
             <option *ngFor="let u of usuarios" [ngValue]="u">
               {{ u.nombre }} (ID: {{ u.idUsuario }})
@@ -72,10 +72,10 @@
           <tr *ngFor="let reserva of reservas">
             <td>{{ reserva.idReserva }}</td>
 
-            <td *ngIf="editando?.idReserva !== reserva.idReserva">{{ reserva.cliente.nombre }}</td>
+            <td *ngIf="editando?.idReserva !== reserva.idReserva">{{ reserva.usuario.nombre }}</td>
             <td *ngIf="editando?.idReserva === reserva.idReserva">
               <input
-                [(ngModel)]="editando!.cliente.nombre"
+                [(ngModel)]="editando!.usuario.nombre"
                 name="editNombre{{ reserva.idReserva }}"
               />
             </td>

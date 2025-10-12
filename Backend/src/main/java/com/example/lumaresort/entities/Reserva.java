@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,32 +45,33 @@ public class Reserva {
     private String estado;
 
     // Relación con Cliente: muchas reservas pueden pertenecer a un cliente
-    @JsonIgnore
+    @JsonIgnoreProperties({"reservas", "historial", "cliente", "administrador", "operador"})
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Usuario cliente;
+    @JoinColumn(name = "usuario_id") // opcionalmente cambia el nombre de la columna
+    private Usuario usuario;
 
-    @JsonIgnore
+    @JsonIgnoreProperties({"reservas"})
     @ManyToOne
     @JoinColumn(name = "habitacion_id")
     private Habitacion habitacion;
 
     //Conjunto de servicios
-    @JsonIgnore
+    @JsonIgnoreProperties({"reservas"}) // evita bucle infinito al devolver JSON
     @ManyToMany
     @JoinTable(
             name = "reserva_servicio",
-            joinColumns = @JoinColumn(name = "reserva_id"), // FK hacia esta entidad
-            inverseJoinColumns = @JoinColumn(name = "servicio_id") // FK hacia la entidad Servicio
+            joinColumns = @JoinColumn(name = "reserva_id"),
+            inverseJoinColumns = @JoinColumn(name = "servicio_id")
     )
-    private List<Servicio> servicios;
+    @Builder.Default
+    private List<Servicio> servicios = new ArrayList<>();
 
     public Reserva(Date fechaInicio, Date fechaFin, Integer cantidadPersonas, String estado, Usuario cliente, Habitacion habitacion) {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.cantidadPersonas = cantidadPersonas;
         this.estado = estado;
-        this.cliente = cliente;
+        this.usuario = cliente;
         this.habitacion = habitacion;
         this.servicios = new ArrayList<>();
     }
@@ -80,7 +81,7 @@ public class Reserva {
         this.fechaFin = fechaFin;
         this.cantidadPersonas = cantidadPersonas;
         this.estado = estado;
-        this.cliente = cliente;
+        this.usuario = cliente;
         this.habitacion = habitacion;
         this.servicios = servicios;
     }

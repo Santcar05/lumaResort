@@ -44,7 +44,7 @@ export class ReservaAdminComponent implements OnInit {
 
   // 🔹 Crear una nueva reserva
   crearReserva(): void {
-    if (!this.nuevaReserva.cliente || !this.nuevaReserva.habitacion) return;
+    if (!this.nuevaReserva.usuario || !this.nuevaReserva.habitacion) return;
 
     this.reservaService.create(this.nuevaReserva).subscribe({
       next: () => {
@@ -101,7 +101,7 @@ export class ReservaAdminComponent implements OnInit {
       fechaFin: '',
       cantidadPersonas: 1,
       estado: 'Pendiente',
-      cliente: {
+      usuario: {
         idUsuario: 0,
         nombre: '',
         apellido: '',

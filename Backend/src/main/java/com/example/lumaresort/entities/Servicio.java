@@ -24,7 +24,7 @@ public class Servicio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idServicio;
+    private Long idServicio;
 
     @Lob
     @Column(columnDefinition = "TEXT")

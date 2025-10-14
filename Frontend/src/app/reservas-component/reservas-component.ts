@@ -3,47 +3,69 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { catchError, of, forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+// Modelos
 import { Reserva } from '../Models/Reserva';
 import { Habitacion } from '../Models/Habitacion';
 import { Servicio } from '../Models/Servicio';
 import { Usuario } from '../Models/Usuario';
+
+// Componentes
 import { HeaderComponent } from '../generales-components/header-component/header-component';
-import { FooterComponent } from '../generales-components/footer-component/footer-component';
+
 @Component({
   selector: 'app-reservas',
   standalone: true,
-  imports: [CommonModule, HeaderComponent],
+  imports: [CommonModule, FormsModule, HeaderComponent],
   templateUrl: './reservas-component.html',
   styleUrls: ['./reservas-component.css'],
 })
 export class ReservasComponent implements OnInit {
+  /** ------------------ VARIABLES PRINCIPALES ------------------ **/
+
   // Datos del formulario
   fechaInicio: string = '';
   fechaFin: string = '';
   cantidadPersonas: number = 2;
   fechaMinima: string = '';
 
-  // Datos cargados
+  // Datos cargados desde el backend
   habitaciones: Habitacion[] = [];
   servicios: Servicio[] = [];
 
-  // Selecciones
+  // Selecciones del usuario
   habitacionSeleccionada: Habitacion | null = null;
   serviciosSeleccionados: Servicio[] = [];
 
-  // Estados
+  // Estados de la interfaz
   loading = true;
   errorMsg = '';
   procesando = false;
   mostrarExito = false;
   reservaCreada: Reserva | null = null;
 
-  // URLs del backend
+  /** ------------------ CONVERSOR DE MONEDAS ------------------ **/
+
+  monedas = [
+    { codigo: 'USD', nombre: 'Dólar estadounidense' },
+    { codigo: 'EUR', nombre: 'Euro' },
+    { codigo: 'GBP', nombre: 'Libra esterlina' },
+    { codigo: 'JPY', nombre: 'Yen japonés' },
+    { codigo: 'MXN', nombre: 'Peso mexicano' },
+    { codigo: 'COP', nombre: 'Peso colombiano' },
+  ];
+
+  monedaSeleccionada = 'USD';
+  tasaCambio = 0;
+  totalConvertido: number | null = null;
+
+  /** ------------------ URLs DEL BACKEND ------------------ **/
   private baseUrlReservas = 'http://localhost:8080/reservas';
   private baseUrlHabitaciones = 'http://localhost:8080/habitaciones';
   private baseUrlServicios = 'http://localhost:8080/servicios';
 
-  // Usuario simulado (reemplaza con el usuario autenticado de tu sistema)
+  /** ------------------ USUARIO SIMULADO ------------------ **/
   private usuarioActual: Usuario = {
     idUsuario: 1,
     nombre: 'Usuario',
@@ -57,12 +79,10 @@ export class ReservasComponent implements OnInit {
     esAdministrador: false,
   };
 
+  /** ------------------ CONSTRUCTOR ------------------ **/
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
-    // Establecer fecha mínima como hoy
     const today = new Date();
     this.fechaMinima = today.toISOString().split('T')[0];
-
-    // Inicializar fechas por defecto
     this.fechaInicio = this.fechaMinima;
 
     const tomorrow = new Date(today);
@@ -70,13 +90,12 @@ export class ReservasComponent implements OnInit {
     this.fechaFin = tomorrow.toISOString().split('T')[0];
   }
 
+  /** ------------------ CICLO DE VIDA ------------------ **/
   ngOnInit(): void {
     this.cargarDatos();
   }
 
-  /**
-   * Cargar habitaciones y servicios
-   */
+  /** ------------------ FUNCIONES DE CARGA ------------------ **/
   cargarDatos(): void {
     this.loading = true;
     this.errorMsg = '';
@@ -94,18 +113,14 @@ export class ReservasComponent implements OnInit {
           this.errorMsg = 'No hay datos disponibles en este momento';
         }
       },
-      error: (err) => {
-        console.error('Error general:', err);
-        this.errorMsg =
-          'No se pudo conectar con el servidor. Verifica que el backend esté corriendo.';
+      error: () => {
+        this.errorMsg = 'No se pudo conectar con el servidor.';
         this.loading = false;
       },
     });
   }
 
-  /**
-   * Validar que la fecha de fin sea posterior a la de inicio
-   */
+  /** ------------------ FUNCIONES DE VALIDACIÓN ------------------ **/
   validarFechas(): void {
     if (this.fechaInicio && this.fechaFin) {
       const inicio = new Date(this.fechaInicio);
@@ -119,119 +134,69 @@ export class ReservasComponent implements OnInit {
     }
   }
 
-  /**
-   * Calcular días de estancia
-   */
   get diasEstancia(): number {
     if (!this.fechaInicio || !this.fechaFin) return 0;
-
     const inicio = new Date(this.fechaInicio);
     const fin = new Date(this.fechaFin);
-    const diffTime = fin.getTime() - inicio.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    return diffDays > 0 ? diffDays : 0;
+    return Math.max(0, Math.ceil((fin.getTime() - inicio.getTime()) / (1000 * 60 * 60 * 24)));
   }
 
-  /**
-   * Incrementar cantidad de personas
-   */
-  incrementarPersonas(): void {
-    if (this.cantidadPersonas < 10) {
-      this.cantidadPersonas++;
-    }
+  /** ------------------ MANEJO DE FORMULARIO ------------------ **/
+  incrementarPersonas() {
+    if (this.cantidadPersonas < 10) this.cantidadPersonas++;
   }
 
-  /**
-   * Decrementar cantidad de personas
-   */
-  decrementarPersonas(): void {
-    if (this.cantidadPersonas > 1) {
-      this.cantidadPersonas--;
-    }
+  decrementarPersonas() {
+    if (this.cantidadPersonas > 1) this.cantidadPersonas--;
   }
 
-  /**
-   * Seleccionar habitación
-   */
-  seleccionarHabitacion(habitacion: Habitacion): void {
-    // No permitir seleccionar si no tiene capacidad suficiente
-    if (habitacion.capacidad < this.cantidadPersonas) {
-      return;
-    }
-
-    if (this.habitacionSeleccionada?.idHabitacion === habitacion.idHabitacion) {
-      this.habitacionSeleccionada = null;
-    } else {
-      this.habitacionSeleccionada = habitacion;
-    }
+  seleccionarHabitacion(habitacion: Habitacion) {
+    if (habitacion.capacidad < this.cantidadPersonas) return;
+    this.habitacionSeleccionada =
+      this.habitacionSeleccionada?.idHabitacion === habitacion.idHabitacion ? null : habitacion;
   }
 
-  /**
-   * Verificar si un servicio está seleccionado
-   */
+  toggleServicio(servicio: Servicio) {
+    const index = this.serviciosSeleccionados.findIndex(
+      (s) => s.idServicio === servicio.idServicio
+    );
+    index > -1
+      ? this.serviciosSeleccionados.splice(index, 1)
+      : this.serviciosSeleccionados.push(servicio);
+  }
+
   isServicioSeleccionado(idServicio: number): boolean {
     return this.serviciosSeleccionados.some((s) => s.idServicio === idServicio);
   }
 
-  /**
-   * Toggle selección de servicio
-   */
-  toggleServicio(servicio: Servicio): void {
-    const index = this.serviciosSeleccionados.findIndex(
-      (s) => s.idServicio === servicio.idServicio
-    );
-
-    if (index > -1) {
-      this.serviciosSeleccionados.splice(index, 1);
-    } else {
-      this.serviciosSeleccionados.push(servicio);
-    }
-  }
-
-  /**
-   * Calcular subtotal de habitación
-   */
+  /** ------------------ CÁLCULOS DE COSTOS ------------------ **/
   calcularSubtotalHabitacion(): number {
     if (!this.habitacionSeleccionada || this.diasEstancia <= 0) return 0;
     return this.habitacionSeleccionada.precioPorNoche * this.diasEstancia;
   }
 
-  /**
-   * Calcular subtotal de servicios
-   */
   calcularSubtotalServicios(): number {
-    return this.serviciosSeleccionados.reduce((total, s) => total + s.precio, 0);
+    return this.serviciosSeleccionados.reduce((t, s) => t + s.precio, 0);
   }
 
-  /**
-   * Calcular total
-   */
   calcularTotal(): number {
     return this.calcularSubtotalHabitacion() + this.calcularSubtotalServicios();
   }
 
-  /**
-   * Verificar si se puede realizar la reserva
-   */
+  /** ------------------ VALIDACIONES DE ESTADO ------------------ **/
   puedeReservar(): boolean {
-    return !!(
-      this.fechaInicio &&
-      this.fechaFin &&
+    return (
+      !!this.fechaInicio &&
+      !!this.fechaFin &&
       this.diasEstancia > 0 &&
-      this.habitacionSeleccionada &&
+      !!this.habitacionSeleccionada &&
       this.cantidadPersonas > 0
     );
   }
 
-  /**
-   * Realizar la reserva
-   */
+  /** ------------------ RESERVA ------------------ **/
   realizarReserva(): void {
-    if (!this.puedeReservar() || this.procesando) {
-      return;
-    }
-
+    if (!this.puedeReservar() || this.procesando) return;
     this.procesando = true;
 
     const reserva: Partial<Reserva> = {
@@ -247,16 +212,14 @@ export class ReservasComponent implements OnInit {
     this.http
       .post<Reserva>(this.baseUrlReservas, reserva)
       .pipe(
-        catchError((err) => {
-          console.error('Error al crear reserva:', err);
-          this.errorMsg = 'Error al procesar la reserva. Por favor intenta nuevamente.';
+        catchError(() => {
+          this.errorMsg = 'Error al procesar la reserva.';
           this.procesando = false;
           return of(null);
         })
       )
       .subscribe((response) => {
         this.procesando = false;
-
         if (response) {
           this.reservaCreada = response;
           this.mostrarExito = true;
@@ -264,60 +227,54 @@ export class ReservasComponent implements OnInit {
       });
   }
 
-  /**
-   * Limpiar formulario
-   */
+  /** ------------------ UTILIDADES ------------------ **/
   limpiarFormulario(): void {
     const today = new Date();
     this.fechaInicio = today.toISOString().split('T')[0];
-
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.fechaFin = tomorrow.toISOString().split('T')[0];
-
     this.cantidadPersonas = 2;
     this.habitacionSeleccionada = null;
     this.serviciosSeleccionados = [];
+    this.totalConvertido = null;
   }
 
-  /**
-   * Cerrar modal de éxito
-   */
   cerrarModal(): void {
     this.mostrarExito = false;
     this.limpiarFormulario();
-    // Opcional: redirigir a otra página
-    // this.router.navigate(['/mis-reservas']);
   }
 
-  /**
-   * Volver atrás
-   */
   volver(): void {
     this.router.navigate(['/']);
   }
 
-  /**
-   * Obtener descripción corta
-   */
-  obtenerDescripcionCorta(descripcion?: string): string {
-    if (!descripcion) return '';
-
-    const textoLimpio = descripcion.replace(/<[^>]*>/g, '');
-
-    if (textoLimpio.length <= 80) {
-      return textoLimpio;
-    }
-
-    return textoLimpio.substring(0, 80) + '...';
+  /** ------------------ CONVERSOR ------------------ **/
+  convertirMoneda() {
+    const totalCOP = this.calcularTotal();
+    const tasas: any = {
+      USD: 0.00026,
+      EUR: 0.00023,
+      GBP: 0.0002,
+      JPY: 0.038,
+      MXN: 0.0045,
+      COP: 1,
+    };
+    this.tasaCambio = tasas[this.monedaSeleccionada] || 1;
+    this.totalConvertido = totalCOP * this.tasaCambio;
   }
 
-  /**
-   * Manejar error de imagen
-   */
+  /** ------------------ AUXILIARES ------------------ **/
   onImageError(event: Event): void {
-    const el = event.target as HTMLImageElement;
-    el.src =
-      'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="250" height="150"><rect width="100%" height="100%" fill="%230a1524"/><text x="50%" y="50%" fill="%235aa8ff" font-size="14" font-family="Arial" text-anchor="middle" dominant-baseline="middle">Sin imagen</text></svg>';
+    const element = event.target as HTMLImageElement;
+    element.src = 'assets/img/placeholder.jpg'; // Imagen por defecto
+  }
+
+  obtenerDescripcionCorta(descripcion: string): string {
+    if (!descripcion) return '';
+    const maxLength = 100;
+    return descripcion.length > maxLength
+      ? descripcion.substring(0, maxLength) + '...'
+      : descripcion;
   }
 }

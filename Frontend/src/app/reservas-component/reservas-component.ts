@@ -45,6 +45,7 @@ export class ReservasComponent implements OnInit {
   mostrarExito = false;
   reservaCreada: Reserva | null = null;
 
+
   /** ------------------ CONVERSOR DE MONEDAS ------------------ **/
 
   monedas = [
@@ -66,6 +67,7 @@ export class ReservasComponent implements OnInit {
   private baseUrlServicios = 'http://localhost:8080/servicios';
 
   /** ------------------ USUARIO SIMULADO ------------------ **/
+
   private usuarioActual: Usuario = {
     idUsuario: 1,
     nombre: 'Usuario',
@@ -79,7 +81,13 @@ export class ReservasComponent implements OnInit {
     esAdministrador: false,
   };
 
-  /** ------------------ CONSTRUCTOR ------------------ **/
+
+  // URLs del backend
+  private baseUrlReservas = 'http://localhost:8080/reservas';
+  private baseUrlHabitaciones = 'http://localhost:8080/habitaciones';
+  private baseUrlServicios = 'http://localhost:8080/servicios';
+
+
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
     const today = new Date();
     this.fechaMinima = today.toISOString().split('T')[0];
@@ -92,7 +100,18 @@ export class ReservasComponent implements OnInit {
 
   /** ------------------ CICLO DE VIDA ------------------ **/
   ngOnInit(): void {
-    this.cargarDatos();
+    // Cargar Usuario
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      const usuario = JSON.parse(userData);
+      if (usuario && usuario.idUsuario) {
+        this.usuarioActual = usuario;
+        this.cargarDatos();
+      }
+    } else {
+      //Llevamos al login
+      this.router.navigate(['/login']);
+    }
   }
 
   /** ------------------ FUNCIONES DE CARGA ------------------ **/
@@ -204,7 +223,7 @@ export class ReservasComponent implements OnInit {
       fechaFin: this.fechaFin,
       cantidadPersonas: this.cantidadPersonas,
       estado: 'CONFIRMADA',
-      cliente: this.usuarioActual,
+      usuario: this.usuarioActual!,
       habitacion: this.habitacionSeleccionada!,
       servicios: this.serviciosSeleccionados,
     };

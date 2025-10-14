@@ -12,6 +12,7 @@ import { ListaServiciosComponent } from './lista-servicios-component/lista-servi
 import { ReservasComponent } from './reservas-component/reservas-component';
 import { SignUpComponent } from './sign-up-component/sign-up-component';
 import { PerfilComponent } from './perfil-component/perfil-component';
+import { VerReservasComponent } from './ver-reservas-component/ver-reservas-component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // por defecto muestra Landing
@@ -31,6 +32,7 @@ export const routes: Routes = [
   { path: 'servicios', component: ListaServiciosComponent },
   { path: 'servicios/:id', component: DetalleServicioComponent },
   { path: 'reservar/:id', component: ReservasComponent },
+  { path: 'reservas/:id', component: VerReservasComponent },
   { path: 'reservas', component: ReservasComponent },
   { path: 'signup', component: SignUpComponent },
   { path: '**', redirectTo: '' }, // redirección en caso de ruta no válida COLOCAR SIEMPRE AL FINAL

@@ -25,12 +25,16 @@
       <ul>
         <li class="PrimerLi"><a href="#">Contacto</a></li>
         <li class="PrimerLi"><a [routerLink]="['/reservas']">Reservas</a></li>
-    
+
         <li *ngIf="!isLoggedIn"><a [routerLink]="['/login']">Login</a></li>
-        
+
         <ng-container *ngIf="isLoggedIn">
-          <li><a [routerLink]="['/perfil', usuarioId]">Perfil</a></li>
-          <li><a (click)="logout()" style="cursor: pointer;">Logout</a></li>
+          <li><a (click)="togglePerfil()">Perfil</a></li>
+          <ul class="dropdown" [class.show]="perfilVisible">
+            <li><a href="#" [routerLink]="['/perfil', usuarioId]">Editar Perfil</a></li>
+            <li><a (click)="verReservas()">Ver Reservas</a></li>
+          </ul>
+          <li><a (click)="logout()" style="cursor: pointer">Logout</a></li>
         </ng-container>
       </ul>
     </div>

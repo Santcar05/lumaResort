@@ -1,5 +1,7 @@
 package com.example.lumaresort.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,4 +30,7 @@ public class ReservaService {
         return reservaRepository.findById(id).orElse(null);
     }
 
+    public List<Reserva> findByUsuarioId(Long id) {
+        return reservaRepository.findByUsuarioIdUsuario(id);
+    }
 }

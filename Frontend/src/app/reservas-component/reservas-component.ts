@@ -34,6 +34,10 @@ export class ReservasComponent implements OnInit {
   habitacionesFiltradas: Habitacion[] = [];
   servicios: Servicio[] = [];
 
+  // 🔹 INICIO CORRECCIÓN: lista de reservas existentes
+  reservasExistentes: Reserva[] = [];
+  // 🔹 FIN CORRECCIÓN
+
   // Filtro de tipo de habitación
   tiposHabitacion: string[] = [];
   tipoHabitacionSeleccionado: string = '';
@@ -111,28 +115,27 @@ export class ReservasComponent implements OnInit {
     this.loading = true;
     this.errorMsg = '';
 
+    // 🔹 INICIO CORRECCIÓN: ahora también cargamos las reservas existentes
     forkJoin({
       habitaciones: this.http.get<Habitacion[]>(this.baseUrlHabitaciones),
       servicios: this.http.get<Servicio[]>(this.baseUrlServicios),
+      reservas: this.http.get<Reserva[]>(this.baseUrlReservas),
     }).subscribe({
       next: (data) => {
-        // Filtrar habitaciones disponibles
         this.habitaciones = data.habitaciones.filter((h) => h.estado === 'Disponible');
-        this.habitacionesFiltradas = [...this.habitaciones];
         this.servicios = data.servicios;
+        this.reservasExistentes = data.reservas;
 
-        // Extraer tipos únicos y garantizar que sean string
+        // Filtramos habitaciones según fechas iniciales
+        this.filtrarHabitacionesDisponibles();
+
+        // Extraer tipos únicos
         const tipos = this.habitaciones
           .map((h) => h.tipoHabitacion?.nombre)
-          .filter((nombre): nombre is string => !!nombre); // <- aquí se corrige el error TS2322
+          .filter((nombre): nombre is string => !!nombre);
 
         this.tiposHabitacion = Array.from(new Set(tipos));
-
-        // Mostrar todas por defecto
-        if (this.tiposHabitacion.length > 0) {
-          this.tipoHabitacionSeleccionado = '';
-          this.filtrarHabitacionesPorTipo();
-        }
+        this.tipoHabitacionSeleccionado = '';
 
         this.loading = false;
 
@@ -145,6 +148,7 @@ export class ReservasComponent implements OnInit {
         this.loading = false;
       },
     });
+    // 🔹 FIN CORRECCIÓN
   }
 
   /** ------------------ VALIDACIÓN DE FECHAS ------------------ **/
@@ -159,6 +163,10 @@ export class ReservasComponent implements OnInit {
         this.fechaFin = nuevaFecha.toISOString().split('T')[0];
       }
     }
+
+    // 🔹 INICIO CORRECCIÓN: volver a filtrar cuando cambian las fechas
+    this.filtrarHabitacionesDisponibles();
+    // 🔹 FIN CORRECCIÓN
   }
 
   get diasEstancia(): number {
@@ -168,16 +176,45 @@ export class ReservasComponent implements OnInit {
     return Math.max(0, Math.ceil((fin.getTime() - inicio.getTime()) / (1000 * 60 * 60 * 24)));
   }
 
-  /** ------------------ FILTRO DE TIPO DE HABITACIÓN ------------------ **/
-  filtrarHabitacionesPorTipo(): void {
-    if (!this.tipoHabitacionSeleccionado) {
-      this.habitacionesFiltradas = [...this.habitaciones];
-    } else {
-      this.habitacionesFiltradas = this.habitaciones.filter(
+  /** ------------------ FILTRO DE DISPONIBILIDAD ------------------ **/
+  // 🔹 INICIO CORRECCIÓN: función nueva para filtrar habitaciones según reservas existentes
+  filtrarHabitacionesDisponibles(): void {
+    const inicio = new Date(this.fechaInicio);
+    const fin = new Date(this.fechaFin);
+
+    const estaReservada = (habitacionId: number): boolean => {
+      return this.reservasExistentes.some((reserva) => {
+        if (!reserva.habitacion || reserva.habitacion.idHabitacion !== habitacionId) return false;
+
+        const inicioRes = new Date(reserva.fechaInicio);
+        const finRes = new Date(reserva.fechaFin);
+
+        // Si las fechas se traslapan, está reservada
+        return inicio <= finRes && fin >= inicioRes;
+      });
+    };
+
+    // Filtramos solo las que no estén reservadas
+    this.habitacionesFiltradas = this.habitaciones.filter(
+      (h) => h.idHabitacion !== undefined && !estaReservada(h.idHabitacion)
+    );
+
+    // Si hay filtro por tipo, se aplica después
+    if (this.tipoHabitacionSeleccionado) {
+      this.habitacionesFiltradas = this.habitacionesFiltradas.filter(
         (h) => h.tipoHabitacion?.nombre === this.tipoHabitacionSeleccionado
       );
     }
+
     this.habitacionSeleccionada = null;
+  }
+  // 🔹 FIN CORRECCIÓN
+
+  /** ------------------ FILTRO DE TIPO DE HABITACIÓN ------------------ **/
+  filtrarHabitacionesPorTipo(): void {
+    // 🔹 INICIO CORRECCIÓN: reutilizamos la función general de disponibilidad
+    this.filtrarHabitacionesDisponibles();
+    // 🔹 FIN CORRECCIÓN
   }
 
   /** ------------------ MANEJO DE FORMULARIO ------------------ **/

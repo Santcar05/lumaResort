@@ -45,7 +45,6 @@ export class ReservasComponent implements OnInit {
   mostrarExito = false;
   reservaCreada: Reserva | null = null;
 
-
   /** ------------------ CONVERSOR DE MONEDAS ------------------ **/
 
   monedas = [
@@ -80,13 +79,6 @@ export class ReservasComponent implements OnInit {
     esOperador: false,
     esAdministrador: false,
   };
-
-
-  // URLs del backend
-  private baseUrlReservas = 'http://localhost:8080/reservas';
-  private baseUrlHabitaciones = 'http://localhost:8080/habitaciones';
-  private baseUrlServicios = 'http://localhost:8080/servicios';
-
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
     const today = new Date();

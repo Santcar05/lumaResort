@@ -11,7 +11,7 @@ import { TestimoniosComponent } from '../../landing-page-components/testimonios-
 import { ContactoFormComponent } from '../../landing-page-components/contacto-form-component/contacto-form-component';
 import { FooterComponent } from '../../generales-components/footer-component/footer-component';
 import { DetalleServicioComponent } from '../../detalle-servicio-component/detalle-servicio-component';
-
+import { ChatbotComponent } from '../../chatbot-component/chatbot-component';
 @Component({
   selector: 'app-landing-page-component',
   imports: [
@@ -27,6 +27,7 @@ import { DetalleServicioComponent } from '../../detalle-servicio-component/detal
     ContactoFormComponent,
     FooterComponent,
     DetalleServicioComponent,
+    ChatbotComponent,
   ],
   templateUrl: './landing-page-component.html',
   styleUrl: './landing-page-component.css',

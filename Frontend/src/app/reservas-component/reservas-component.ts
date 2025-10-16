@@ -27,12 +27,16 @@ export class ReservasComponent implements OnInit {
   // Datos del formulario
   fechaInicio: string = '';
   fechaFin: string = '';
-  cantidadPersonas: number = 2;
   fechaMinima: string = '';
 
   // Datos cargados desde el backend
   habitaciones: Habitacion[] = [];
+  habitacionesFiltradas: Habitacion[] = [];
   servicios: Servicio[] = [];
+
+  // Filtro de tipo de habitación
+  tiposHabitacion: string[] = [];
+  tipoHabitacionSeleccionado: string = '';
 
   // Selecciones del usuario
   habitacionSeleccionada: Habitacion | null = null;
@@ -45,9 +49,7 @@ export class ReservasComponent implements OnInit {
   mostrarExito = false;
   reservaCreada: Reserva | null = null;
 
-
   /** ------------------ CONVERSOR DE MONEDAS ------------------ **/
-
   monedas = [
     { codigo: 'USD', nombre: 'Dólar estadounidense' },
     { codigo: 'EUR', nombre: 'Euro' },
@@ -67,7 +69,6 @@ export class ReservasComponent implements OnInit {
   private baseUrlServicios = 'http://localhost:8080/servicios';
 
   /** ------------------ USUARIO SIMULADO ------------------ **/
-
   private usuarioActual: Usuario = {
     idUsuario: 1,
     nombre: 'Usuario',
@@ -81,13 +82,6 @@ export class ReservasComponent implements OnInit {
     esAdministrador: false,
   };
 
-
-  // URLs del backend
-  private baseUrlReservas = 'http://localhost:8080/reservas';
-  private baseUrlHabitaciones = 'http://localhost:8080/habitaciones';
-  private baseUrlServicios = 'http://localhost:8080/servicios';
-
-
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
     const today = new Date();
     this.fechaMinima = today.toISOString().split('T')[0];
@@ -100,7 +94,6 @@ export class ReservasComponent implements OnInit {
 
   /** ------------------ CICLO DE VIDA ------------------ **/
   ngOnInit(): void {
-    // Cargar Usuario
     const userData = localStorage.getItem('userData');
     if (userData) {
       const usuario = JSON.parse(userData);
@@ -109,12 +102,11 @@ export class ReservasComponent implements OnInit {
         this.cargarDatos();
       }
     } else {
-      //Llevamos al login
       this.router.navigate(['/login']);
     }
   }
 
-  /** ------------------ FUNCIONES DE CARGA ------------------ **/
+  /** ------------------ FUNCIÓN PRINCIPAL DE CARGA ------------------ **/
   cargarDatos(): void {
     this.loading = true;
     this.errorMsg = '';
@@ -124,8 +116,24 @@ export class ReservasComponent implements OnInit {
       servicios: this.http.get<Servicio[]>(this.baseUrlServicios),
     }).subscribe({
       next: (data) => {
+        // Filtrar habitaciones disponibles
         this.habitaciones = data.habitaciones.filter((h) => h.estado === 'Disponible');
+        this.habitacionesFiltradas = [...this.habitaciones];
         this.servicios = data.servicios;
+
+        // Extraer tipos únicos y garantizar que sean string
+        const tipos = this.habitaciones
+          .map((h) => h.tipoHabitacion?.nombre)
+          .filter((nombre): nombre is string => !!nombre); // <- aquí se corrige el error TS2322
+
+        this.tiposHabitacion = Array.from(new Set(tipos));
+
+        // Mostrar todas por defecto
+        if (this.tiposHabitacion.length > 0) {
+          this.tipoHabitacionSeleccionado = '';
+          this.filtrarHabitacionesPorTipo();
+        }
+
         this.loading = false;
 
         if (this.habitaciones.length === 0 && this.servicios.length === 0) {
@@ -139,7 +147,7 @@ export class ReservasComponent implements OnInit {
     });
   }
 
-  /** ------------------ FUNCIONES DE VALIDACIÓN ------------------ **/
+  /** ------------------ VALIDACIÓN DE FECHAS ------------------ **/
   validarFechas(): void {
     if (this.fechaInicio && this.fechaFin) {
       const inicio = new Date(this.fechaInicio);
@@ -160,17 +168,20 @@ export class ReservasComponent implements OnInit {
     return Math.max(0, Math.ceil((fin.getTime() - inicio.getTime()) / (1000 * 60 * 60 * 24)));
   }
 
+  /** ------------------ FILTRO DE TIPO DE HABITACIÓN ------------------ **/
+  filtrarHabitacionesPorTipo(): void {
+    if (!this.tipoHabitacionSeleccionado) {
+      this.habitacionesFiltradas = [...this.habitaciones];
+    } else {
+      this.habitacionesFiltradas = this.habitaciones.filter(
+        (h) => h.tipoHabitacion?.nombre === this.tipoHabitacionSeleccionado
+      );
+    }
+    this.habitacionSeleccionada = null;
+  }
+
   /** ------------------ MANEJO DE FORMULARIO ------------------ **/
-  incrementarPersonas() {
-    if (this.cantidadPersonas < 10) this.cantidadPersonas++;
-  }
-
-  decrementarPersonas() {
-    if (this.cantidadPersonas > 1) this.cantidadPersonas--;
-  }
-
   seleccionarHabitacion(habitacion: Habitacion) {
-    if (habitacion.capacidad < this.cantidadPersonas) return;
     this.habitacionSeleccionada =
       this.habitacionSeleccionada?.idHabitacion === habitacion.idHabitacion ? null : habitacion;
   }
@@ -208,8 +219,7 @@ export class ReservasComponent implements OnInit {
       !!this.fechaInicio &&
       !!this.fechaFin &&
       this.diasEstancia > 0 &&
-      !!this.habitacionSeleccionada &&
-      this.cantidadPersonas > 0
+      !!this.habitacionSeleccionada
     );
   }
 
@@ -221,7 +231,6 @@ export class ReservasComponent implements OnInit {
     const reserva: Partial<Reserva> = {
       fechaInicio: this.fechaInicio,
       fechaFin: this.fechaFin,
-      cantidadPersonas: this.cantidadPersonas,
       estado: 'CONFIRMADA',
       usuario: this.usuarioActual!,
       habitacion: this.habitacionSeleccionada!,
@@ -253,7 +262,9 @@ export class ReservasComponent implements OnInit {
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.fechaFin = tomorrow.toISOString().split('T')[0];
-    this.cantidadPersonas = 2;
+
+    this.tipoHabitacionSeleccionado = '';
+    this.habitacionesFiltradas = [...this.habitaciones];
     this.habitacionSeleccionada = null;
     this.serviciosSeleccionados = [];
     this.totalConvertido = null;
@@ -286,7 +297,7 @@ export class ReservasComponent implements OnInit {
   /** ------------------ AUXILIARES ------------------ **/
   onImageError(event: Event): void {
     const element = event.target as HTMLImageElement;
-    element.src = 'assets/img/placeholder.jpg'; // Imagen por defecto
+    element.src = 'assets/img/placeholder.jpg';
   }
 
   obtenerDescripcionCorta(descripcion: string): string {

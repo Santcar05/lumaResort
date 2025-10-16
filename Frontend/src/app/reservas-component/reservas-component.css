@@ -1224,3 +1224,79 @@
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.85rem;
 }
+/* ===== Ícono personalizado para el input de fecha ===== */
+.date-input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.date-input-wrapper input[type='date'] {
+  width: 100%;
+  background: rgba(90, 168, 255, 0.05);
+  border: 1px solid rgba(90, 168, 255, 0.3);
+  color: #ffffff;
+  padding: 0.9rem 1.2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ocultamos el ícono nativo del calendario */
+.date-input-wrapper input[type='date']::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* Ícono personalizado blanco */
+.date-input-wrapper::after {
+  content: '\1F4C5'; /* Unicode del ícono de calendario 📅 */
+  position: absolute;
+  right: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ffffff;
+  font-size: 1.3rem;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.date-input-wrapper input[type='date']:hover + ::after {
+  opacity: 1;
+}
+/* 🎨 Estilo del menú desplegable del filtro de tipo de habitación */
+.form-input {
+  background-color: #0a1b2a; /* azul oscuro principal de la página */
+  color: #ffffff;
+  border: 1px solid #1e3a5f;
+}
+
+.form-input option {
+  background-color: #0a1b2a; /* color del menú desplegable */
+  color: #ffffff;
+  border: none;
+}
+
+/* Quita los bordes blancos residuales en algunos navegadores */
+.form-input:focus,
+.form-input:active {
+  outline: none;
+  border-color: #1e90ff;
+  box-shadow: 0 0 4px rgba(30, 144, 255, 0.5);
+}
+
+/* Ajuste para evitar borde blanco en Chrome */
+select.form-input::-webkit-scrollbar {
+  width: 8px;
+}
+select.form-input::-webkit-scrollbar-thumb {
+  background-color: #1e3a5f;
+  border-radius: 4px;
+}

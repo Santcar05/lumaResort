@@ -610,6 +610,183 @@
   font-size: 1.2rem;
 }
 
+/* Estilos para la sección de reservas con servicio */
+.servicio-reservas {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 3px solid #0055aa;
+}
+
+.reservas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.reservas-label {
+  font-weight: 600;
+  color: #003366;
+  font-size: 0.9rem;
+}
+
+.reservas-count {
+  background: #0055aa;
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.reservas-lista {
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.reserva-item {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.reserva-item:last-child {
+  border-bottom: none;
+}
+
+.reserva-info {
+  font-size: 0.85rem;
+  color: #495057;
+}
+
+/* Estilos para la sección de reservas en las tarjetas de servicio */
+.servicio-reservas {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 3px solid #0055aa;
+}
+
+.reservas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.reservas-label {
+  font-weight: 600;
+  color: #003366;
+  font-size: 0.9rem;
+}
+
+.reservas-count {
+  background: #0055aa;
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.reservas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.reserva-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.6rem;
+  background: white;
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+
+.reserva-id {
+  font-weight: 600;
+  color: #003366;
+}
+
+.reserva-habitacion {
+  color: #666;
+}
+
+.reserva-estado {
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.estado-pendiente {
+  background: #fff3cd;
+  color: #856404;
+}
+.estado-confirmada {
+  background: #d1edf2;
+  color: #0c5460;
+}
+.estado-activa {
+  background: #d1ecf1;
+  color: #0055aa;
+}
+.estado-cancelada {
+  background: #f8d7da;
+  color: #721c24;
+}
+.estado-finalizada {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.mas-reservas {
+  text-align: center;
+  color: #666;
+  font-size: 0.8rem;
+  font-style: italic;
+  padding: 0.3rem;
+}
+
+/* Modal de eliminar de reserva específico */
+.modal-eliminar-reserva {
+  max-width: 600px;
+}
+
+.reserva-info-detalle {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+
+.info-item {
+  font-size: 0.9rem;
+}
+
+/* Botón deshabilitado */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn:disabled:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
 @keyframes aparecer {
   from {
     transform: translateY(-20px);

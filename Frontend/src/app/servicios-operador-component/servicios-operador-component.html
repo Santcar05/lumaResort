@@ -21,7 +21,7 @@
       <span class="titulo-texto">Gestión de Servicios</span>
       <span class="titulo-decoracion">🛎️</span>
     </h2>
-    <p class="subtitulo">Contrata y administra servicios para los huéspedes</p>
+    <p class="subtitulo">Contrata y elimina servicios de reservas</p>
   </div>
 
   <!-- Panel de filtros -->
@@ -119,6 +119,37 @@
           <span class="calificacion-count">({{ servicio.comentarios.length }})</span>
         </div>
 
+        <!-- Información de reservas que tienen este servicio -->
+        <div
+          class="servicio-reservas"
+          *ngIf="getReservasConServicio(servicio.idServicio).length > 0"
+        >
+          <div class="reservas-header">
+            <span class="reservas-label">📋 Reservas con este servicio:</span>
+            <span class="reservas-count">{{
+              getReservasConServicio(servicio.idServicio).length
+            }}</span>
+          </div>
+          <div class="reservas-lista">
+            <div
+              class="reserva-item"
+              *ngFor="let reserva of getReservasConServicio(servicio.idServicio).slice(0, 3)"
+            >
+              <span class="reserva-id">#{{ reserva.idReserva }}</span>
+              <span class="reserva-habitacion">Habitación {{ reserva.habitacion?.numero }}</span>
+              <span class="reserva-estado" [ngClass]="getEstadoClass(reserva.estado)">{{
+                reserva.estado
+              }}</span>
+            </div>
+            <div
+              class="mas-reservas"
+              *ngIf="getReservasConServicio(servicio.idServicio).length > 3"
+            >
+              +{{ getReservasConServicio(servicio.idServicio).length - 3 }} más...
+            </div>
+          </div>
+        </div>
+
         <div
           class="servicio-comentarios"
           *ngIf="servicio.comentarios && servicio.comentarios.length > 0"
@@ -139,8 +170,12 @@
         <button class="btn btn-contratar" (click)="abrirModalContratar(servicio)">
           📋 Contratar
         </button>
-        <button class="btn btn-eliminar" (click)="confirmarEliminacion(servicio)">
-          🗑️ Eliminar
+        <button
+          class="btn btn-eliminar"
+          (click)="abrirModalEliminarDeReserva(servicio)"
+          [disabled]="getReservasConServicio(servicio.idServicio).length === 0"
+        >
+          🗑️ Eliminar de Reserva
         </button>
       </div>
     </div>
@@ -236,32 +271,78 @@
     </div>
   </div>
 
-  <!-- Modal de eliminación -->
-  <div class="modal-overlay" *ngIf="servicioAEliminar">
-    <div class="modal-container">
+  <!-- Modal para eliminar servicio de reserva -->
+  <div class="modal-overlay" *ngIf="modalEliminarDeReservaAbierto">
+    <div class="modal-container modal-eliminar-reserva">
       <div class="modal-header">
-        <h3 class="modal-titulo">⚠️ Confirmar Eliminación</h3>
+        <h3 class="modal-titulo">🗑️ Eliminar Servicio de Reserva</h3>
       </div>
 
       <div class="modal-body">
-        <p>
-          ¿Estás seguro de que deseas eliminar el servicio
-          <strong>"{{ servicioAEliminar?.nombre }}"</strong>?
-        </p>
-        <div class="servicio-info-modal">
-          <strong>Tipo:</strong> {{ servicioAEliminar?.tipo }}<br />
-          <strong>Precio:</strong> {{ formatearPrecio(servicioAEliminar?.precio || 0) }}<br />
-          <strong>ID:</strong> #{{ servicioAEliminar?.idServicio }}
+        <div class="servicio-info-modal" *ngIf="servicioAEliminarDeReserva">
+          <h4>{{ servicioAEliminarDeReserva.nombre }}</h4>
+          <p><strong>Tipo:</strong> {{ servicioAEliminarDeReserva.tipo }}</p>
+          <p><strong>Precio:</strong> {{ formatearPrecio(servicioAEliminarDeReserva.precio) }}</p>
         </div>
-        <p class="advertencia">
-          Esta acción no se puede deshacer y eliminará todos los comentarios asociados.
-        </p>
+
+        <div class="form-group">
+          <label class="form-label">Seleccionar Reserva:</label>
+          <select
+            [(ngModel)]="reservaSeleccionadaId"
+            class="form-control"
+            (change)="onReservaSeleccionadaChange()"
+          >
+            <option value="">-- Seleccione una reserva --</option>
+            <option *ngFor="let reserva of reservasConServicio" [value]="reserva.idReserva">
+              Reserva #{{ reserva.idReserva }} - Hab. {{ reserva.habitacion?.numero }} ({{
+                reserva.usuario?.nombre
+              }}
+              {{ reserva.usuario?.apellido }}) - {{ reserva.estado }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Información de la reserva seleccionada -->
+        <div class="reserva-info-detalle" *ngIf="reservaSeleccionada">
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>Cliente:</strong> {{ reservaSeleccionada.usuario?.nombre }}
+              {{ reservaSeleccionada.usuario?.apellido }}
+            </div>
+            <div class="info-item">
+              <strong>Habitación:</strong> {{ reservaSeleccionada.habitacion?.numero }}
+            </div>
+            <div class="info-item">
+              <strong>Check-in:</strong> {{ formatearFecha(reservaSeleccionada.fechaInicio) }}
+            </div>
+            <div class="info-item">
+              <strong>Check-out:</strong> {{ formatearFecha(reservaSeleccionada.fechaFin) }}
+            </div>
+            <div class="info-item">
+              <strong>Estado:</strong>
+              <span [ngClass]="getEstadoClass(reservaSeleccionada.estado)">{{
+                reservaSeleccionada.estado
+              }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="advertencia" *ngIf="reservaSeleccionada">
+          <p>⚠️ ¿Está seguro de que desea eliminar este servicio de la reserva seleccionada?</p>
+          <p>El servicio será removido de la cuenta del cliente.</p>
+        </div>
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-cancelar" (click)="cancelarEliminacion()">❌ Cancelar</button>
-        <button class="btn btn-confirmar" (click)="eliminarServicio()">
-          ✅ Confirmar Eliminación
+        <button class="btn btn-cancelar" (click)="cerrarModalEliminarDeReserva()">
+          ❌ Cancelar
+        </button>
+        <button
+          class="btn btn-confirmar"
+          (click)="eliminarServicioDeReserva()"
+          [disabled]="!reservaSeleccionada"
+        >
+          ✅ Eliminar de Reserva
         </button>
       </div>
     </div>

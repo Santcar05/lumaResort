@@ -14,6 +14,9 @@ import { SignUpComponent } from './sign-up-component/sign-up-component';
 import { PerfilComponent } from './perfil-component/perfil-component';
 import { VerReservasComponent } from './ver-reservas-component/ver-reservas-component';
 import { ReservasOperadorComponent } from './reservas-operador-component/reservas-operador-component';
+import { NavOperadorComponent } from './nav-operador-component/nav-operador-component';
+import { ServiciosOperadorComponent } from './servicios-operador-component/servicios-operador-component';
+import { OperadorComponent } from './operador-component/operador-component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // por defecto muestra Landing
@@ -32,8 +35,25 @@ export const routes: Routes = [
   },
   {
     path: 'operador',
-    component: AdminComponent,
-    children: [{ path: 'reservas', component: ReservasOperadorComponent }],
+    component: OperadorComponent, // O crear un OperadorComponent específico
+    children: [
+      { path: '', redirectTo: 'reservas', pathMatch: 'full' }, // Portal operador
+      { path: 'reservas', component: ReservasOperadorComponent },
+      { path: 'servicios', component: ServiciosOperadorComponent },
+      { path: 'pagar-cuenta', component: ReservasOperadorComponent /* ComponentePagosComponent */ },
+      {
+        path: 'limpiar-cuenta',
+        component: ReservasOperadorComponent /* ComponentePagosComponent */,
+      },
+      {
+        path: 'activar-estadia',
+        component: ReservasOperadorComponent /* ComponenteEstadiasComponent */,
+      },
+      {
+        path: 'finalizar-estadia',
+        component: ReservasOperadorComponent /* ComponenteEstadiasComponent */,
+      },
+    ],
   },
   { path: 'servicios', component: ListaServiciosComponent },
   { path: 'servicios/:id', component: DetalleServicioComponent },

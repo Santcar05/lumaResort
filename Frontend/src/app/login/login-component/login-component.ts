@@ -51,7 +51,7 @@ export class LoginComponent {
         if (isAdmin) {
           targetUrl = ['/admin/tiposHabitacion'];
         } else if (isOperador) {
-          targetUrl = ['/operador/reservas'];
+          targetUrl = ['/operador'];
         } else {
           targetUrl = ['/perfil', usuario.idUsuario];
         }

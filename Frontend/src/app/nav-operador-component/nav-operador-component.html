@@ -1,0 +1,64 @@
+<div class="sidebar">
+  <!-- Encabezado -->
+  <div class="sidebar-header">
+    <img src="assets/images/soloLuma.png" alt="Luma Resort" class="logo" />
+    <div class="sidebar-title">
+      <h2>Luma Resort</h2>
+      <span>Operador</span>
+    </div>
+  </div>
+
+  <!-- Menú -->
+  <nav class="sidebar-menu">
+    <a routerLink="/operador" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      🏠 Portal Operador
+    </a>
+
+    <!-- Sección de Reservas -->
+    <div class="menu-section">
+      <a routerLink="/operador/reservas" class="section-title" routerLinkActive="active"
+        >📋 Gestión de Reservas</a
+      >
+      <!--
+      <a routerLink="/operador/reservas" routerLinkActive="active"> 👁️ Ver Todas las Reservas </a>
+      <a routerLink="/operador/eliminar-reserva" routerLinkActive="active"> 🗑️ Eliminar Reserva </a>
+      <a routerLink="/operador/activar-estadia" routerLinkActive="active"> ✅ Activar Estadía </a>
+      <a routerLink="/operador/finalizar-estadia" routerLinkActive="active">
+        🏁 Finalizar Estadía
+      </a>
+      -->
+    </div>
+
+    <!-- Sección de Servicios -->
+    <div class="menu-section">
+      <a routerLink="/operador/servicios" class="section-title" routerLinkActive="active"
+        >🛎️ Gestión de Servicios</a
+      >
+      <!-- 
+      <a routerLink="/operador/contratar-servicio" routerLinkActive="active">
+        📋 Contratar Servicio
+      </a>
+      <a routerLink="/operador/eliminar-servicio" routerLinkActive="active">
+        🗑️ Eliminar Servicio de Cuenta
+      </a>
+      -->
+    </div>
+
+    <!-- Sección de Pagos -->
+    <div class="menu-section">
+      <a routerLink="/operador/pagos" class="section-title" routerLinkActive="active"
+        >💳 Gestión de Pagos</a
+      >
+      <!--
+      <a routerLink="/operador/pagar-cuenta" routerLinkActive="active">
+        💰 Pagar Cuenta de Estadía
+      </a>
+      <a routerLink="/operador/limpiar-cuenta" routerLinkActive="active">
+        🧹 Limpiar Cuenta del Cliente
+      </a>
+      -->
+    </div>
+
+    <a routerLink="/" class="logout">🚪 Salir</a>
+  </nav>
+</div>

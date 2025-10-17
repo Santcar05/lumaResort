@@ -13,6 +13,7 @@ import { ReservasComponent } from './reservas-component/reservas-component';
 import { SignUpComponent } from './sign-up-component/sign-up-component';
 import { PerfilComponent } from './perfil-component/perfil-component';
 import { VerReservasComponent } from './ver-reservas-component/ver-reservas-component';
+import { ReservasOperadorComponent } from './reservas-operador-component/reservas-operador-component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // por defecto muestra Landing
@@ -28,6 +29,11 @@ export const routes: Routes = [
       { path: 'habitaciones', component: HabitacionesAdminComponent },
       { path: 'reservas', component: ReservaAdminComponent },
     ],
+  },
+  {
+    path: 'operador',
+    component: AdminComponent,
+    children: [{ path: 'reservas', component: ReservasOperadorComponent }],
   },
   { path: 'servicios', component: ListaServiciosComponent },
   { path: 'servicios/:id', component: DetalleServicioComponent },

@@ -1,0 +1,176 @@
+<div class="operador-container">
+  <!-- Notificación flotante mejorada -->
+  <div
+    class="notificacion"
+    *ngIf="mostrarNotificacion"
+    [ngClass]="{
+      exito: tipoNotificacion === 'exito',
+      error: tipoNotificacion === 'error',
+      info: tipoNotificacion === 'info'
+    }"
+  >
+    <span class="notificacion-icono">
+      {{ tipoNotificacion === 'exito' ? '✅' : tipoNotificacion === 'error' ? '❌' : 'ℹ️' }}
+    </span>
+    {{ mensaje }}
+  </div>
+
+  <!-- Header con título animado -->
+  <div class="header-section">
+    <h2 class="titulo-principal">
+      <span class="titulo-texto">Gestión de Reservas</span>
+      <span class="titulo-decoracion">🏨</span>
+    </h2>
+    <p class="subtitulo">Administra y visualiza todas las reservas del hotel</p>
+  </div>
+
+  <!-- Panel de filtros mejorado -->
+  <div class="filtros-panel">
+    <div class="filtros-header">
+      <h3 class="filtros-titulo">🔍 Filtros de Búsqueda</h3>
+    </div>
+    <div class="filtros-content">
+      <div class="filtro-group">
+        <label class="filtro-label">Buscar por ID:</label>
+        <input
+          type="text"
+          placeholder="Ej: 123"
+          [(ngModel)]="filtroId"
+          class="filtro-input"
+          (input)="filtrarReservas()"
+        />
+      </div>
+
+      <div class="filtro-group">
+        <label class="filtro-label">Filtrar por estado:</label>
+        <select [(ngModel)]="filtroEstado" class="filtro-select" (change)="filtrarReservas()">
+          <option *ngFor="let estado of estados" [value]="estado">
+            {{ estado }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filtro-actions">
+        <button class="btn btn-limpiar" (click)="limpiarFiltros()">🗑️ Limpiar Filtros</button>
+        <button class="btn btn-actualizar" (click)="cargarReservas()">🔄 Actualizar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contador de resultados -->
+  <div class="contador-reservas">
+    <span class="contador-numero">{{ reservasFiltradas.length }}</span>
+    <span class="contador-texto">
+      {{ reservasFiltradas.length === 1 ? 'reserva encontrada' : 'reservas encontradas' }}
+    </span>
+  </div>
+
+  <!-- Lista de reservas con tarjetas -->
+  <div class="reservas-grid" *ngIf="reservasFiltradas.length > 0; else sinResultados">
+    <div
+      class="reserva-card"
+      *ngFor="let reserva of reservasFiltradas"
+      [ngClass]="getEstadoClass(reserva.estado)"
+    >
+      <div class="reserva-header">
+        <div class="reserva-id">
+          <span class="id-prefix">#</span>
+          {{ reserva.idReserva }}
+        </div>
+        <div class="reserva-estado" [ngClass]="getEstadoClass(reserva.estado)">
+          <span class="estado-icono">{{ getEstadoIcon(reserva.estado) }}</span>
+          {{ reserva.estado }}
+        </div>
+      </div>
+
+      <div class="reserva-body">
+        <div class="reserva-info">
+          <div class="info-item">
+            <span class="info-label">👤 Cliente:</span>
+            <span class="info-value"
+              >{{ reserva.usuario?.nombre || 'N/A' }} {{ reserva.usuario?.apellido || '' }}</span
+            >
+          </div>
+
+          <div class="info-item">
+            <span class="info-label">📅 Fechas:</span>
+            <span class="info-value">
+              {{ formatearFecha(reserva.fechaInicio) }} - {{ formatearFecha(reserva.fechaFin) }}
+            </span>
+          </div>
+
+          <div class="info-item">
+            <span class="info-label">👥 Personas:</span>
+            <span class="info-value">{{ reserva.cantidadPersonas }}</span>
+          </div>
+
+          <div class="info-item">
+            <span class="info-label">🚪 Habitación:</span>
+            <span class="info-value">
+              {{ reserva.habitacion?.numero || 'N/A' }}
+              ({{ reserva.habitacion?.tipoHabitacion?.nombre || 'N/A' }})
+            </span>
+          </div>
+
+          <div class="info-item" *ngIf="reserva.servicios && reserva.servicios.length > 0">
+            <span class="info-label">🛎️ Servicios:</span>
+            <span class="info-value"> {{ reserva.servicios.length }} servicio(s) </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reserva-footer">
+        <button
+          class="btn btn-eliminar"
+          (click)="confirmarEliminacion(reserva)"
+          title="Eliminar reserva"
+        >
+          🗑️ Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje cuando no hay resultados -->
+  <ng-template #sinResultados>
+    <div class="sin-resultados">
+      <div class="sin-resultados-icono">🔍</div>
+      <h3 class="sin-resultados-titulo">No se encontraron reservas</h3>
+      <p class="sin-resultados-mensaje">
+        Intenta ajustar los filtros o verifica si hay reservas registradas.
+      </p>
+      <button class="btn btn-primary" (click)="limpiarFiltros()">Mostrar todas las reservas</button>
+    </div>
+  </ng-template>
+
+  <!-- Modal de confirmación de eliminación -->
+  <div class="modal-overlay" *ngIf="reservaAEliminar">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-titulo">⚠️ Confirmar Eliminación</h3>
+      </div>
+
+      <div class="modal-body">
+        <p>
+          ¿Estás seguro de que deseas eliminar la reserva
+          <strong>#{{ reservaAEliminar?.idReserva }}</strong
+          >?
+        </p>
+        <div class="reserva-info-modal">
+          <strong>Cliente:</strong> {{ reservaAEliminar?.usuario?.nombre }}
+          {{ reservaAEliminar?.usuario?.apellido }}<br />
+          <strong>Habitación:</strong> {{ reservaAEliminar?.habitacion?.numero }}<br />
+          <strong>Estado:</strong> {{ reservaAEliminar?.estado }}
+        </div>
+        <p class="advertencia">Esta acción no se puede deshacer.</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-cancelar" (click)="cancelarEliminacion()">❌ Cancelar</button>
+        <button class="btn btn-confirmar" (click)="eliminarReserva()">
+          ✅ Confirmar Eliminación
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

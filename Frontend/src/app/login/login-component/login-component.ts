@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../generales-components/header-component/header-component';
 import { UsuarioService } from '../../service/usuario/usuario-service';
 import { RouterOutlet } from '@angular/router';
-import { Usuario } from '../../Models/Usuario'; 
+import { Usuario } from '../../Models/Usuario';
 
 @Component({
   selector: 'app-login-component',
@@ -51,7 +51,7 @@ export class LoginComponent {
         if (isAdmin) {
           targetUrl = ['/admin/tiposHabitacion'];
         } else if (isOperador) {
-          targetUrl = ['/admin/reservas'];
+          targetUrl = ['/operador/reservas'];
         } else {
           targetUrl = ['/perfil', usuario.idUsuario];
         }

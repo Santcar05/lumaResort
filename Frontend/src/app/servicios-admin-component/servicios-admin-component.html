@@ -1,0 +1,128 @@
+<div class="admin-container">
+  <!-- Mensaje de confirmación -->
+  <div class="toast" *ngIf="mostrarMensaje">{{ mensaje }}</div>
+  <h2 class="titulo">Gestión de Servicios</h2>
+  <!-- Barra de búsqueda -->
+  <div class="form-group" style="text-align: center; margin-bottom: 1.5rem">
+    <input
+      type="text"
+      placeholder="Buscar por tipo o nombre..."
+      [(ngModel)]="filtro"
+      class="form-control"
+      style="width: 60%; display: inline-block"
+    />
+    <button class="btn btn-primary" (click)="buscarServicios()">Buscar</button>
+    <button class="btn btn-secondary" (click)="limpiarFiltro()">Limpiar</button>
+  </div>
+  <!-- Botón para crear nuevo servicio -->
+  <div class="crear-servicio" style="text-align: center; margin-bottom: 2rem">
+    <p>Si deseas crear un nuevo servicio <span style="font-size: 1.5rem">⬇️</span></p>
+    <button class="btn btn-success" (click)="abrirModal()">Crear servicio</button>
+  </div>
+  <!-- Lista de servicios -->
+  <div class="card mt-4">
+    <div class="card-header">Lista de Servicios</div>
+    <div class="card-body">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Imagen</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let servicio of serviciosFiltrados">
+            <td>{{ servicio.idServicio }}</td>
+            <!-- Tipo -->
+            <td *ngIf="editando?.idServicio !== servicio.idServicio">{{ servicio.tipo }}</td>
+            <td *ngIf="editando?.idServicio === servicio.idServicio">
+              <input [(ngModel)]="editando!.tipo" />
+            </td>
+            <!-- Nombre -->
+            <td *ngIf="editando?.idServicio !== servicio.idServicio">{{ servicio.nombre }}</td>
+            <td *ngIf="editando?.idServicio === servicio.idServicio">
+              <input [(ngModel)]="editando!.nombre" />
+            </td>
+            <!-- Descripción -->
+            <td *ngIf="editando?.idServicio !== servicio.idServicio">{{ servicio.descripcion }}</td>
+            <td *ngIf="editando?.idServicio === servicio.idServicio">
+              <textarea [(ngModel)]="editando!.descripcion"></textarea>
+            </td>
+            <!-- Precio -->
+            <td *ngIf="editando?.idServicio !== servicio.idServicio">
+              {{ servicio.precio | currency }}
+            </td>
+            <td *ngIf="editando?.idServicio === servicio.idServicio">
+              <input type="number" [(ngModel)]="editando!.precio" />
+            </td>
+            <!-- Imagen -->
+            <td>
+              <img
+                [src]="servicio.imagenURL"
+                alt="Imagen servicio"
+                width="80"
+                *ngIf="servicio.imagenURL"
+              />
+            </td>
+            <td>
+              <ng-container *ngIf="editando?.idServicio !== servicio.idServicio">
+                <button class="btn btn-warning btn-sm" (click)="editarServicio(servicio)">
+                  Editar
+                </button>
+                <button
+                  class="btn btn-danger btn-sm"
+                  (click)="eliminarServicio(servicio.idServicio)"
+                >
+                  Eliminar
+                </button>
+              </ng-container>
+              <ng-container *ngIf="editando?.idServicio === servicio.idServicio">
+                <button class="btn btn-success btn-sm" (click)="guardarEdicion()">Guardar</button>
+                <button class="btn btn-secondary btn-sm" (click)="cancelarEdicion()">
+                  Cancelar
+                </button>
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- Modal para crear servicio -->
+  <div class="modal" *ngIf="modalAbierto">
+    <div class="modal-content">
+      <h3>Nuevo Servicio</h3>
+      <form (ngSubmit)="crearServicio()">
+        <div class="form-group">
+          <label>Tipo:</label>
+          <input type="text" [(ngModel)]="nuevoServicio.tipo" name="tipo" required />
+        </div>
+        <div class="form-group">
+          <label>Nombre:</label>
+          <input type="text" [(ngModel)]="nuevoServicio.nombre" name="nombre" required />
+        </div>
+        <div class="form-group">
+          <label>Descripción:</label>
+          <textarea [(ngModel)]="nuevoServicio.descripcion" name="descripcion"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Precio:</label>
+          <input type="number" [(ngModel)]="nuevoServicio.precio" name="precio" required />
+        </div>
+        <div class="form-group">
+          <label>Imagen URL:</label>
+          <input type="text" [(ngModel)]="nuevoServicio.imagenURL" name="imagenURL" />
+        </div>
+        <div class="modal-buttons">
+          <button type="submit" class="btn btn-success">Crear</button>
+          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

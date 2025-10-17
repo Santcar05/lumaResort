@@ -1,0 +1,236 @@
+/* === FONDO Y SECCIÓN === */
+.discovery-section {
+  background: linear-gradient(135deg, #0a1a2f 0%, #1a3a5f 100%);
+  padding: 5rem 1.5rem;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.discovery-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%231e4975' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+  opacity: 0.3;
+}
+
+.discovery-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.discovery-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.discovery-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.discovery-subtitle {
+  font-size: 1.2rem;
+  color: #a8d0ff;
+  max-width: 600px;
+  margin: 0 auto 1.5rem;
+  line-height: 1.6;
+}
+
+.title-divider {
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #4a90e2, #5aa8ff);
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+/* === GRID DE TARJETAS === */
+.discovery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+/* === TARJETAS === */
+.discovery-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0; /* eliminamos padding superior para la imagen */
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.discovery-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.1) 0%, rgba(90, 168, 255, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.discovery-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border-color: rgba(90, 168, 255, 0.3);
+}
+
+.discovery-card:hover::before {
+  opacity: 1;
+}
+
+/* === IMAGEN DENTRO DE LAS TARJETAS === */
+.card-image {
+  width: 100%;
+  height: 220px; /* 🔹 Tamaño uniforme para todas las imágenes */
+  overflow: hidden;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 🔹 Mantiene proporciones sin deformar */
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.discovery-card:hover .card-image img {
+  transform: scale(1.05);
+  opacity: 0.95;
+}
+
+/* === CONTENIDO TEXTO DE LAS TARJETAS === */
+.card-icon {
+  margin: 1.5rem 0;
+  color: #5aa8ff;
+  display: flex;
+  justify-content: center;
+}
+
+.discovery-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.discovery-card p {
+  color: #c9e2ff;
+  line-height: 1.6;
+  font-size: 1rem;
+  padding: 0 1.5rem 2rem;
+}
+
+/* === CTA FINAL === */
+.discovery-cta {
+  text-align: center;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.discovery-cta p {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+}
+
+.cta-button {
+  display: inline-block;
+  background: linear-gradient(90deg, #4a90e2, #5aa8ff);
+  color: white;
+  padding: 1rem 2.5rem;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(74, 144, 226, 0.5);
+  background: linear-gradient(90deg, #5aa8ff, #4a90e2);
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 1024px) {
+  .card-image {
+    height: 200px;
+  }
+
+  .discovery-card h3 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .discovery-section {
+    padding: 3rem 1rem;
+  }
+
+  .discovery-title {
+    font-size: 2.2rem;
+  }
+
+  .discovery-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .discovery-card {
+    padding: 0;
+  }
+
+  .card-image {
+    height: 180px;
+  }
+
+  .discovery-cta {
+    padding: 2rem 1.5rem;
+  }
+
+  .discovery-cta p {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-image {
+    height: 160px;
+  }
+
+  .discovery-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .discovery-card p {
+    font-size: 0.9rem;
+  }
+}

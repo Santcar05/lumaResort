@@ -1,0 +1,224 @@
+/* ===== Container ===== */
+.reservas-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a1a2f 0%, #0d1f35 50%, #0a1524 100%);
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+  padding: 2rem;
+  padding-top: 120px;
+}
+
+/* ===== Header ===== */
+.header-section {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.back-btn {
+  background: rgba(90, 168, 255, 0.1);
+  border: 1px solid rgba(90, 168, 255, 0.3);
+  color: #5aa8ff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.back-btn:hover {
+  background: rgba(90, 168, 255, 0.2);
+  transform: translateX(-5px);
+}
+
+.section-label {
+  color: #5aa8ff;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.main-title {
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+.main-title .highlight {
+  font-weight: 700;
+  background: linear-gradient(135deg, #4a90e2 0%, #5aa8ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===== Estados ===== */
+.loading-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(90, 168, 255, 0.2);
+  border-top-color: #5aa8ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== Lista de Reservas ===== */
+.reservas-grid {
+  display: grid;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.reserva-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(90, 168, 255, 0.2);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.reserva-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(90, 168, 255, 0.15);
+}
+
+.reserva-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.reserva-id {
+  font-weight: bold;
+  color: #5aa8ff;
+}
+
+.reserva-estado {
+  padding: 0.4rem 1rem;
+  border-radius: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.estado-confirmada {
+  background: rgba(76, 175, 80, 0.15);
+  color: #4caf50;
+}
+
+.estado-pendiente {
+  background: rgba(255, 193, 7, 0.15);
+  color: #ffc107;
+}
+
+.estado-cancelada {
+  background: rgba(244, 67, 54, 0.15);
+  color: #f44336;
+}
+
+.reserva-body {
+  margin-bottom: 1.5rem;
+}
+
+.reserva-habitacion {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  color: #fff;
+}
+
+.reserva-fechas,
+.reserva-personas,
+.reserva-servicios {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0.3rem 0;
+}
+
+/* ===== Premios ===== */
+.reserva-premios {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(90, 168, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(90, 168, 255, 0.15);
+}
+
+.premios-header {
+  margin-bottom: 0.8rem;
+}
+
+.premios-label {
+  font-weight: 600;
+  color: #ffd700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.premios-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.premio-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.premio-tag:hover {
+  transform: scale(1.05);
+}
+
+.premio-icono {
+  font-size: 1.2rem;
+}
+
+.premio-nombre {
+  white-space: nowrap;
+}
+
+.reserva-footer {
+  border-top: 1px solid rgba(90, 168, 255, 0.2);
+  padding-top: 1rem;
+  text-align: right;
+  color: #5aa8ff;
+  font-weight: 600;
+}
+
+/* ===== Mensaje vacío ===== */
+.empty-message {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.empty-icon {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}

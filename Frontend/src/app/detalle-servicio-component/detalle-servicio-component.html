@@ -1,0 +1,196 @@
+<app-header-component></app-header-component>
+<div class="detalle-container" *ngIf="!loading; else loadingTpl">
+  <!-- Error State -->
+  <div *ngIf="errorMsg" class="error-state">
+    <div class="error-content">
+      <div class="error-icon">⚠</div>
+      <h2>{{ errorMsg }}</h2>
+      <button (click)="volverListado()" class="btn-back">Volver al listado</button>
+    </div>
+  </div>
+
+  <!-- Service Detail -->
+  <div *ngIf="servicio" class="service-detail">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <button class="back-floating" (click)="volverListado()" title="Volver">
+        <span class="back-icon">←</span> Volver
+      </button>
+
+      <div class="hero-content">
+        <!-- Image Gallery -->
+        <div class="gallery-section">
+          <div class="main-image-wrapper">
+            <img
+              class="main-image"
+              [src]="selectedImage"
+              [alt]="servicio.nombre"
+              (error)="onImageError($event)"
+            />
+            <div class="image-overlay"></div>
+
+            <!-- Price Badge -->
+            <div class="price-badge">
+              <span class="price-from">Desde</span>
+              <span class="price-value">
+                {{ servicio.precio | currency : 'COP' : 'symbol' : '1.0-0' }}
+              </span>
+            </div>
+
+            <!-- Reserve Floating Button -->
+            <button class="reserve-floating" (click)="reservar()">
+              <span class="reserve-icon">✓</span>
+              Reservar Ahora
+            </button>
+          </div>
+
+          <!-- Thumbnails -->
+          <!--
+          <div class="thumbnails-wrapper" *ngIf="servicio.imagenURL">
+            <div
+              class="thumbnail-item"
+              *ngFor="let img of [servicio.imagenURL]; let i = index"
+              [class.active]="selectedImage === img"
+              (click)="selectedImage = img"
+            >
+              <img
+                [src]="img"
+                [alt]="servicio.nombre + ' thumbnail ' + (i + 1)"
+                (error)="onImageError($event)"
+              />
+              <div class="thumbnail-overlay"></div>
+            </div>
+          </div>
+          -->
+          <!-- Comments Section -->
+          <div class="comments-section">
+            <h3 class="section-heading">Opiniones Destacadas</h3>
+
+            <div class="comments-grid" *ngIf="servicio.comentarios?.length; else noComments">
+              <div class="comment-card" *ngFor="let c of servicio.comentarios">
+                <div class="comment-header">
+                  <div class="comment-avatar">
+                    {{ (c.comentario || 'A').charAt(0) | uppercase }}
+                  </div>
+                  <div class="comment-meta">
+                    <div class="comment-rating">
+                      <span class="comment-star">★</span>
+                      <span class="comment-score">{{ c.calificacion }}</span>
+                    </div>
+                    <div class="comment-date">{{ fechaFormateada(c.fecha) }}</div>
+                  </div>
+                </div>
+                <p class="comment-text">{{ c.comentario }}</p>
+              </div>
+            </div>
+
+            <ng-template #noComments>
+              <div class="no-comments-state">
+                <div class="no-comments-icon">💬</div>
+                <p class="no-comments-text">
+                  Aún no hay opiniones. Sé el primero en reservar y compartir tu experiencia.
+                </p>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+
+        <!-- Service Info -->
+        <div class="info-section">
+          <!-- Category Badge -->
+          <div class="category-badge">
+            <span class="category-icon">◆</span>
+            {{ servicio.tipo | uppercase }}
+          </div>
+
+          <!-- Title -->
+          <h1 class="service-title">{{ servicio.nombre }}</h1>
+
+          <!-- Rating -->
+          <div class="rating-container">
+            <div class="stars-display">
+              <span class="star-icon" *ngFor="let _ of estrellas(promedioCalificacion())">★</span>
+            </div>
+            <div class="rating-info">
+              <span class="rating-score">{{ promedioCalificacion() }}</span>
+              <span class="rating-separator">·</span>
+              <span class="rating-count">{{ servicio.comentarios?.length || 0 }} opiniones</span>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <button class="btn-primary" (click)="reservar()">
+              <span class="btn-icon">✓</span>
+              Reservar Experiencia
+            </button>
+            <button class="btn-secondary" (click)="volverListado()">Explorar Más</button>
+          </div>
+
+          <!-- Description -->
+          <div class="description-section">
+            <h3 class="section-heading">Descripción</h3>
+            <div class="description-content" [innerHTML]="servicio.descripcion"></div>
+          </div>
+
+          <!-- Features -->
+          <div class="features-section">
+            <h3 class="section-heading">Detalles</h3>
+            <ul class="features-list">
+              <li class="feature-item">
+                <span class="feature-icon">🕐</span>
+                <div class="feature-content">
+                  <span class="feature-label">Duración:</span>
+                  <span class="feature-value">2 horas aprox.</span>
+                </div>
+              </li>
+              <li class="feature-item">
+                <span class="feature-icon">🌍</span>
+                <div class="feature-content">
+                  <span class="feature-label">Idioma:</span>
+                  <span class="feature-value">Español / English</span>
+                </div>
+              </li>
+              <li class="feature-item">
+                <span class="feature-icon">👥</span>
+                <div class="feature-content">
+                  <span class="feature-label">Capacidad:</span>
+                  <span class="feature-value">Máx. 6 personas</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading Template -->
+<ng-template #loadingTpl>
+  <div class="loading-container">
+    <div class="loading-content">
+      <div class="skeleton-gallery">
+        <div class="skeleton-main-image"></div>
+        <div class="skeleton-thumbnails">
+          <div class="skeleton-thumb"></div>
+          <div class="skeleton-thumb"></div>
+          <div class="skeleton-thumb"></div>
+        </div>
+      </div>
+      <div class="skeleton-info">
+        <div class="skeleton-badge"></div>
+        <div class="skeleton-title"></div>
+        <div class="skeleton-rating"></div>
+        <div class="skeleton-buttons">
+          <div class="skeleton-btn"></div>
+          <div class="skeleton-btn"></div>
+        </div>
+        <div class="skeleton-text"></div>
+        <div class="skeleton-text short"></div>
+        <div class="skeleton-text"></div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<app-footer-component></app-footer-component>

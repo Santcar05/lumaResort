@@ -1,0 +1,303 @@
+.admin-container {
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa, #dfe9f3);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Título principal */
+.titulo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #003366;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Tarjetas */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.card-header {
+  background: #003366;
+  color: #fff;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* Formularios */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #003366;
+}
+
+/* Inputs, selects y textarea */
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+  font-size: 0.95rem;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #003366;
+  box-shadow: 0 0 5px rgba(0, 51, 102, 0.3);
+  background-color: #fff;
+}
+
+/* Botones */
+.btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #0055aa;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #003366;
+}
+
+.btn-warning {
+  background: #ffaa00;
+  color: #fff;
+}
+
+.btn-danger {
+  background: #e63946;
+  color: #fff;
+}
+
+.btn-success {
+  background: #2a9d8f;
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: #fff;
+}
+
+/* Tabla */
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.tabla th,
+.tabla td {
+  padding: 0.8rem;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.tabla th {
+  background: #f0f0f0;
+  font-weight: bold;
+  color: #003366;
+}
+
+/* Hover en filas */
+.tabla tr:hover {
+  background-color: #f5faff;
+  transition: background-color 0.3s ease;
+}
+
+/* Espaciado entre botones */
+.tabla button {
+  margin: 0 0.2rem;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .admin-container {
+    padding: 1rem;
+  }
+
+  .tabla th,
+  .tabla td {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Estilos para el SELECT */
+select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #003366;
+  font-size: 0.95rem;
+  appearance: none; /* Oculta el estilo nativo del sistema */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, #003366 50%),
+    linear-gradient(135deg, #003366 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(1rem + 2px), calc(100% - 13px) calc(1rem + 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  transition: all 0.3s ease;
+}
+
+select:hover {
+  border-color: #0055aa;
+  cursor: pointer;
+}
+
+select:focus {
+  outline: none;
+  border-color: #003366;
+  box-shadow: 0 0 6px rgba(0, 51, 102, 0.3);
+}
+
+/* Opciones del select */
+option {
+  background-color: #fff;
+  color: #003366;
+}
+
+/* Colores según estado, opcional si deseas diferenciar visualmente */
+option[value='disponible'] {
+  color: #2a9d8f;
+}
+
+option[value='ocupado'] {
+  color: #e63946;
+}
+
+option[value='en mantenimiento'] {
+  color: #f4a261;
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+  position: relative;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 450px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.3s ease;
+  z-index: 2100;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+/* Notificación flotante */
+.notificacion {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  padding: 15px 25px;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  z-index: 3000;
+  opacity: 0;
+  animation: aparecer 0.4s forwards;
+}
+
+.notificacion.exito {
+  background-color: #2a9d8f;
+}
+
+.notificacion.error {
+  background-color: #e63946;
+}
+
+@keyframes aparecer {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+/* --- Botones pequeños uniformes (Editar / Eliminar / Guardar / Cancelar) --- */
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  min-width: 100px; /* asegura mismo ancho */
+  text-align: center;
+  border-radius: 8px;
+}
+
+/* Ajuste específico para mantener coherencia visual entre todos */
+.tabla button.btn-sm {
+  display: inline-block;
+  vertical-align: middle;
+}

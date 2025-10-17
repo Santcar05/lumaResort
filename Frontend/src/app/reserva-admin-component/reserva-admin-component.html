@@ -1,0 +1,119 @@
+<div class="admin-container">
+  <h2 class="titulo">Gestión de Reservas</h2>
+
+  <!-- Crear nueva reserva -->
+  <div class="card">
+    <div class="card-header">Nueva Reserva</div>
+    <div class="card-body">
+      <form (ngSubmit)="crearReserva()">
+        <!-- Selección de Cliente -->
+        <div class="form-group">
+          <label>Cliente:</label>
+          <select [(ngModel)]="nuevaReserva.usuario" name="usuario" required>
+            <option [ngValue]="null">-- Selecciona un cliente --</option>
+            <option *ngFor="let u of usuarios" [ngValue]="u">
+              {{ u.nombre }} (ID: {{ u.idUsuario }})
+            </option>
+          </select>
+        </div>
+
+        <!-- Selección de Habitación -->
+        <div class="form-group">
+          <label>Habitación:</label>
+          <select [(ngModel)]="nuevaReserva.habitacion" name="habitacion" required>
+            <option [ngValue]="null">-- Selecciona una habitación --</option>
+            <option *ngFor="let h of habitaciones" [ngValue]="h">
+              {{ h.numero }} - {{ h.tipo }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Fecha Inicio:</label>
+          <input type="date" [(ngModel)]="nuevaReserva.fechaInicio" name="fechaInicio" required />
+        </div>
+        <div class="form-group">
+          <label>Fecha Fin:</label>
+          <input type="date" [(ngModel)]="nuevaReserva.fechaFin" name="fechaFin" required />
+        </div>
+        <div class="form-group">
+          <label>Cantidad Personas:</label>
+          <input
+            type="number"
+            min="1"
+            [(ngModel)]="nuevaReserva.cantidadPersonas"
+            name="cantidadPersonas"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Crear</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Lista de reservas -->
+  <div class="card mt-4">
+    <div class="card-header">Lista de Reservas</div>
+    <div class="card-body">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Habitación</th>
+            <th>Inicio</th>
+            <th>Fin</th>
+            <th>Personas</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reserva of reservas">
+            <td>{{ reserva.idReserva }}</td>
+
+            <td *ngIf="editando?.idReserva !== reserva.idReserva">{{ reserva.usuario.nombre }}</td>
+            <td *ngIf="editando?.idReserva === reserva.idReserva">
+              <input
+                [(ngModel)]="editando!.usuario.nombre"
+                name="editNombre{{ reserva.idReserva }}"
+              />
+            </td>
+
+            <td *ngIf="editando?.idReserva !== reserva.idReserva">
+              {{ reserva.habitacion.numero }}
+            </td>
+            <td *ngIf="editando?.idReserva === reserva.idReserva">
+              <input
+                [(ngModel)]="editando!.habitacion.numero"
+                name="editNumero{{ reserva.idReserva }}"
+              />
+            </td>
+
+            <td>{{ reserva.fechaInicio | date }}</td>
+            <td>{{ reserva.fechaFin | date }}</td>
+            <td>{{ reserva.cantidadPersonas }}</td>
+            <td>{{ reserva.estado }}</td>
+
+            <td>
+              <ng-container *ngIf="editando?.idReserva !== reserva.idReserva">
+                <button class="btn btn-warning btn-sm" (click)="editarReserva(reserva)">
+                  Editar
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="eliminarReserva(reserva.idReserva)">
+                  Eliminar
+                </button>
+              </ng-container>
+              <ng-container *ngIf="editando?.idReserva === reserva.idReserva">
+                <button class="btn btn-success btn-sm" (click)="guardarEdicion()">Guardar</button>
+                <button class="btn btn-secondary btn-sm" (click)="cancelarEdicion()">
+                  Cancelar
+                </button>
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

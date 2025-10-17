@@ -1,0 +1,47 @@
+package com.example.lumaresort.entities;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+
+@Entity
+public class Administrador {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idAdministrador;
+
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario") // FK a 
+    private Usuario usuario;
+
+    // Getters y setters
+    public Integer getIdAdministrador() {
+        return idAdministrador;
+    }
+
+    public void setIdAdministrador(Integer idAdministrador) {
+        this.idAdministrador = idAdministrador;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Administrador() {
+    }
+
+    public Administrador(Usuario usuario) {
+        this.usuario = usuario;
+    }
+}

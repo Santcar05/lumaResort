@@ -1,0 +1,53 @@
+<app-header-component></app-header-component>
+
+<div class="login-background">
+  <div class="overlay"></div>
+  <div class="login-card animate-fade-in">
+    <h2 class="title">Bienvenido</h2>
+    <p class="subtitle">Inicia sesión en tu cuenta</p>
+
+    <form (ngSubmit)="onLogin()">
+      <div class="input-group">
+        <input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="Correo electrónico"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Contraseña"
+          required
+        />
+      </div>
+
+      <button type="submit" class="white-btn animate-pulse" [disabled]="loading">
+        {{ loading ? 'Iniciando...' : 'Iniciar Sesión' }}
+      </button>
+    </form>
+
+    <!-- Error State -->
+    <div *ngIf="errorMsg && !loading" class="error-state">
+      <div class="error-content">
+        <div class="error-icon">⚠</div>
+        <h3>Error al iniciar sesión</h3>
+        <p>{{ errorMsg }}</p>
+        <button class="btn-retry" (click)="onLogin()">
+          <span class="retry-icon">↻</span>
+          Reintentar
+        </button>
+      </div>
+    </div>
+
+    <p class="footer-text">
+      ¿No tienes cuenta?
+      <a [routerLink]="['/signup']" class="link">Regístrate</a>
+    </p>
+  </div>
+</div>

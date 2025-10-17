@@ -1,0 +1,206 @@
+<app-header-component></app-header-component>
+<div class="servicios-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="header-content">
+      <div class="title-group">
+        <span class="section-label">NUESTROS SERVICIOS</span>
+        <h1 class="main-title">Experiencias <span class="highlight">Exclusivas</span></h1>
+        <p class="subtitle">Descubre nuestra selección premium de servicios diseñados para ti</p>
+      </div>
+
+      <div class="actions-group">
+        <button class="btn-refresh" (click)="cargarServicios()" [disabled]="loading">
+          <span class="refresh-icon">↻</span>
+          Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Cargando servicios...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMsg && !loading" class="error-state">
+    <div class="error-content">
+      <div class="error-icon">⚠</div>
+      <h3>Error al cargar servicios</h3>
+      <p>{{ errorMsg }}</p>
+      <button class="btn-retry" (click)="cargarServicios()">
+        <span class="retry-icon">↻</span>
+        Reintentar
+      </button>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !errorMsg && servicios.length === 0" class="empty-state">
+    <div class="empty-content">
+      <div class="empty-icon">📦</div>
+      <h3>No hay servicios disponibles</h3>
+      <p>Aún no se han registrado servicios en el sistema</p>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div *ngIf="!loading && servicios.length > 0" class="filters-section">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Buscar servicios..."
+        [(ngModel)]="filtroTexto"
+        (input)="aplicarFiltros()"
+      />
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Filtrar por tipo:</label>
+      <select class="filter-select" [(ngModel)]="filtroTipo" (change)="aplicarFiltros()">
+        <option value="">Todos los tipos</option>
+        <option *ngFor="let tipo of tiposUnicos" [value]="tipo">{{ tipo }}</option>
+      </select>
+    </div>
+
+    <div class="results-count">
+      <span class="count-number">{{ serviciosFiltrados.length }}</span>
+      <span class="count-text">servicio(s) encontrado(s)</span>
+    </div>
+  </div>
+
+  <!-- Stats Section -->
+  <div *ngIf="!loading && servicios.length > 0" class="stats-section">
+    <div class="stat-card">
+      <div class="stat-icon">📊</div>
+      <div class="stat-content">
+        <span class="stat-value">{{ servicios.length }}</span>
+        <span class="stat-label">Total Servicios</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">⭐</div>
+      <div class="stat-content">
+        <span class="stat-value">{{ calcularPromedioGlobal() }}</span>
+        <span class="stat-label">Rating Promedio</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">💰</div>
+      <div class="stat-content">
+        <span class="stat-value">{{
+          calcularPrecioPromedio() | currency : 'COP' : 'symbol' : '1.0-0'
+        }}</span>
+        <span class="stat-label">Precio Promedio</span>
+      </div>
+    </div>
+  </div>
+  <!-- Table Section -->
+  <div *ngIf="!loading && serviciosFiltrados.length > 0" class="table-container">
+    <div class="table-wrapper">
+      <table class="services-table">
+        <thead>
+          <tr>
+            <th class="th-image">Imagen</th>
+            <th class="th-name" (click)="ordenarPor('nombre')">
+              <div class="th-content">
+                Nombre
+                <span class="sort-icon" *ngIf="columnaOrden === 'nombre'">
+                  {{ ordenAscendente ? '▲' : '▼' }}
+                </span>
+              </div>
+            </th>
+            <th class="th-type" (click)="ordenarPor('tipo')">
+              <div class="th-content">
+                Tipo
+                <span class="sort-icon" *ngIf="columnaOrden === 'tipo'">
+                  {{ ordenAscendente ? '▲' : '▼' }}
+                </span>
+              </div>
+            </th>
+            <th class="th-price" (click)="ordenarPor('precio')">
+              <div class="th-content">
+                Precio
+                <span class="sort-icon" *ngIf="columnaOrden === 'precio'">
+                  {{ ordenAscendente ? '▲' : '▼' }}
+                </span>
+              </div>
+            </th>
+            <th class="th-rating">Rating</th>
+            <th class="th-comments">Opiniones</th>
+            <th class="th-actions">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let servicio of serviciosFiltrados" class="table-row">
+            <td class="td-image">
+              <div class="image-cell">
+                <img
+                  [src]="servicio.imagenURL"
+                  [alt]="servicio.nombre"
+                  (error)="onImageError($event)"
+                  class="service-thumbnail"
+                />
+                <div class="image-overlay"></div>
+              </div>
+            </td>
+            <td class="td-name">
+              <div class="name-cell">
+                <span class="service-name">{{ servicio.nombre }}</span>
+                <span
+                  class="service-description"
+                  [innerHTML]="obtenerDescripcionCorta(servicio.descripcion)"
+                ></span>
+              </div>
+            </td>
+            <td class="td-type">
+              <span class="type-badge">{{ servicio.tipo }}</span>
+            </td>
+            <td class="td-price">
+              <span class="price-value">{{
+                servicio.precio | currency : 'COP' : 'symbol' : '1.0-0'
+              }}</span>
+            </td>
+            <td class="td-rating">
+              <div class="rating-cell">
+                <span class="rating-stars">★</span>
+                <span class="rating-number">{{ calcularPromedio(servicio) }}</span>
+              </div>
+            </td>
+            <td class="td-comments">
+              <div class="comments-cell">
+                <span class="comments-icon">💬</span>
+                <span class="comments-count">{{ servicio.comentarios?.length || 0 }}</span>
+              </div>
+            </td>
+            <td class="td-actions">
+              <div class="actions-cell">
+                <button
+                  class="btn-view"
+                  (click)="verDetalle(servicio.idServicio)"
+                  title="Ver detalles"
+                >
+                  <span class="btn-icon">👁</span>
+                  Ver
+                </button>
+                <button
+                  class="btn-reserve"
+                  (click)="reservar(servicio.idServicio)"
+                  title="Reservar"
+                >
+                  <span class="btn-icon">✓</span>
+                  Reservar
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<app-footer-component></app-footer-component>

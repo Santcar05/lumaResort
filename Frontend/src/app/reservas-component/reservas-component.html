@@ -1,0 +1,482 @@
+<app-header-component></app-header-component>
+<div class="reservas-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <button class="back-btn" (click)="volver()" title="Volver">
+      <span class="back-icon">←</span> Volver
+    </button>
+
+    <div class="header-content">
+      <span class="section-label">RESERVACIONES</span>
+      <h1 class="main-title">Crear tu <span class="highlight">Reserva</span></h1>
+      <p class="subtitle">Selecciona tu habitación perfecta y personaliza tu experiencia</p>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Cargando información...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMsg && !loading" class="error-state">
+    <div class="error-content">
+      <div class="error-icon">⚠</div>
+      <h3>Error</h3>
+      <p>{{ errorMsg }}</p>
+      <button class="btn-retry" (click)="cargarDatos()">
+        <span class="retry-icon">↻</span>
+        Reintentar
+      </button>
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <div *ngIf="!loading && !errorMsg" class="form-section">
+    <div class="form-grid">
+      <!-- Left Column - Form -->
+      <div class="form-column">
+        <div class="form-card">
+          <h2 class="form-title">
+            <span class="title-icon">📋</span>
+            Detalles de la Reserva
+          </h2>
+
+          <!-- Fechas -->
+          <div class="form-section-group">
+            <h3 class="section-subtitle">Fechas de Estadía</h3>
+            <div class="date-grid">
+              <div class="form-group">
+                <label class="form-label">
+                  <span class="label-icon">📅</span>
+                  Fecha de Entrada
+                </label>
+                <input
+                  type="date"
+                  class="form-input"
+                  [value]="fechaInicio"
+                  (input)="fechaInicio = $any($event.target).value; validarFechas()"
+                  [min]="fechaMinima"
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">
+                  <span class="label-icon">📅</span>
+                  Fecha de Salida
+                </label>
+                <input
+                  type="date"
+                  class="form-input"
+                  [value]="fechaFin"
+                  (input)="fechaFin = $any($event.target).value; validarFechas()"
+                  [min]="fechaInicio || fechaMinima"
+                />
+              </div>
+            </div>
+
+            <div class="info-badge" *ngIf="diasEstancia > 0">
+              <span class="info-icon">🌙</span>
+              {{ diasEstancia }} {{ diasEstancia === 1 ? 'noche' : 'noches' }} de estadía
+            </div>
+          </div>
+
+          <!-- Huéspedes -->
+          <div class="form-section-group">
+            <h3 class="section-subtitle">Información de Huéspedes</h3>
+            <div class="form-group">
+              <label class="form-label">
+                <span class="label-icon">👥</span>
+                Cantidad de Personas
+              </label>
+              <div class="counter-control">
+                <button
+                  class="counter-btn"
+                  (click)="decrementarPersonas()"
+                  [disabled]="cantidadPersonas <= 1"
+                >
+                  −
+                </button>
+                <input
+                  type="number"
+                  class="counter-input"
+                  [value]="cantidadPersonas"
+                  (input)="cantidadPersonas = +$any($event.target).value"
+                  min="1"
+                  max="10"
+                  readonly
+                />
+                <button
+                  class="counter-btn"
+                  (click)="incrementarPersonas()"
+                  [disabled]="cantidadPersonas >= 10"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Habitaciones -->
+          <div class="form-section-group">
+            <h3 class="section-subtitle">Selecciona tu Habitación</h3>
+
+            <div *ngIf="habitaciones.length === 0" class="empty-message">
+              <span class="empty-icon">🏨</span>
+              No hay habitaciones disponibles
+            </div>
+
+            <div class="habitaciones-grid">
+              <div
+                *ngFor="let hab of habitaciones"
+                class="habitacion-card"
+                [class.selected]="habitacionSeleccionada?.idHabitacion === hab.idHabitacion"
+                [class.disabled]="hab.capacidad < cantidadPersonas"
+                (click)="seleccionarHabitacion(hab)"
+              >
+                <div class="hab-header">
+                  <div class="hab-number">
+                    <span class="number-icon">🚪</span>
+                    Hab. {{ hab.numero }}
+                  </div>
+                  <div class="hab-capacity" [class.warning]="hab.capacidad < cantidadPersonas">
+                    <span class="capacity-icon">👥</span>
+                    {{ hab.capacidad }} personas
+                  </div>
+                </div>
+
+                <div class="hab-body">
+                  <h4 class="hab-name">{{ hab.tipoHabitacion?.nombre || 'Habitación' }}</h4>
+                  <p class="hab-description">{{ hab.descripcion }}</p>
+
+                  <div class="hab-features">
+                    <span class="feature-badge">
+                      <span class="feature-icon">🛏️</span>
+                      {{ hab.tipoHabitacion?.nombre }}
+                    </span>
+                    <span class="feature-badge" [class.disponible]="hab.estado === 'disponible'">
+                      <span class="feature-icon">●</span>
+                      {{ hab.estado }}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="hab-footer">
+                  <div class="hab-price">
+                    <span class="price-label">Por noche</span>
+                    <span class="price-amount">{{
+                      hab.precioPorNoche | currency : 'COP' : 'symbol' : '1.0-0'
+                    }}</span>
+                  </div>
+                  <div
+                    class="selection-indicator"
+                    *ngIf="habitacionSeleccionada?.idHabitacion === hab.idHabitacion"
+                  >
+                    ✓ Seleccionada
+                  </div>
+                </div>
+
+                <div class="disabled-overlay" *ngIf="hab.capacidad < cantidadPersonas">
+                  <span class="overlay-text">Capacidad insuficiente</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicios Adicionales -->
+          <div class="form-section-group">
+            <h3 class="section-subtitle">Servicios Adicionales</h3>
+
+            <div *ngIf="servicios.length === 0" class="empty-message">
+              <span class="empty-icon">✨</span>
+              No hay servicios disponibles
+            </div>
+
+            <div class="servicios-grid">
+              <div
+                *ngFor="let servicio of servicios"
+                class="servicio-card"
+                [class.selected]="isServicioSeleccionado(servicio.idServicio)"
+                (click)="toggleServicio(servicio)"
+              >
+                <div class="servicio-image">
+                  <img
+                    [src]="servicio.imagenURL"
+                    [alt]="servicio.nombre"
+                    (error)="onImageError($event)"
+                  />
+                  <div class="image-gradient"></div>
+                  <div class="check-icon" *ngIf="isServicioSeleccionado(servicio.idServicio)">
+                    ✓
+                  </div>
+                </div>
+
+                <div class="servicio-content">
+                  <div class="servicio-header">
+                    <span class="servicio-type">{{ servicio.tipo }}</span>
+                  </div>
+                  <h4 class="servicio-name">{{ servicio.nombre }}</h4>
+                  <p
+                    class="servicio-description"
+                    [innerHTML]="obtenerDescripcionCorta(servicio.descripcion)"
+                  ></p>
+                  <div class="servicio-price">
+                    + {{ servicio.precio | currency : 'COP' : 'symbol' : '1.0-0' }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column - Summary -->
+      <div class="summary-column">
+        <!-- Contenedor sticky que mantiene ambas secciones fijas -->
+        <div class="sticky-wrapper">
+          <!-- 💳 Resumen de Reserva -->
+          <div class="summary-card">
+            <h2 class="summary-title">
+              <span class="title-icon">💳</span>
+              Resumen de Reserva
+            </h2>
+
+            <div class="summary-content">
+              <!-- Fechas Summary -->
+              <div class="summary-section">
+                <h4 class="summary-subtitle">Fechas</h4>
+                <div class="summary-item">
+                  <span class="item-label">Entrada:</span>
+                  <span class="item-value">{{
+                    fechaInicio ? (fechaInicio | date : 'dd/MM/yyyy') : '-'
+                  }}</span>
+                </div>
+                <div class="summary-item">
+                  <span class="item-label">Salida:</span>
+                  <span class="item-value">{{
+                    fechaFin ? (fechaFin | date : 'dd/MM/yyyy') : '-'
+                  }}</span>
+                </div>
+                <div class="summary-item highlight">
+                  <span class="item-label">Total noches:</span>
+                  <span class="item-value">{{ diasEstancia || 0 }}</span>
+                </div>
+              </div>
+
+              <!-- Habitación Summary -->
+              <div class="summary-section" *ngIf="habitacionSeleccionada">
+                <h4 class="summary-subtitle">Habitación</h4>
+                <div class="summary-item">
+                  <span class="item-label">Número:</span>
+                  <span class="item-value">{{ habitacionSeleccionada.numero }}</span>
+                </div>
+                <div class="summary-item">
+                  <span class="item-label">Tipo:</span>
+                  <span class="item-value">{{
+                    habitacionSeleccionada.tipoHabitacion?.nombre
+                  }}</span>
+                </div>
+                <div class="summary-item">
+                  <span class="item-label">Huéspedes:</span>
+                  <span class="item-value">{{ cantidadPersonas }}</span>
+                </div>
+                <div class="summary-item price-item">
+                  <span class="item-label">Precio/noche:</span>
+                  <span class="item-value">{{
+                    habitacionSeleccionada.precioPorNoche | currency : 'COP' : 'symbol' : '1.0-0'
+                  }}</span>
+                </div>
+              </div>
+
+              <!-- Servicios Summary -->
+              <div class="summary-section" *ngIf="serviciosSeleccionados.length > 0">
+                <h4 class="summary-subtitle">
+                  Servicios Adicionales ({{ serviciosSeleccionados.length }})
+                </h4>
+                <div class="summary-item" *ngFor="let servicio of serviciosSeleccionados">
+                  <span class="item-label">{{ servicio.nombre }}</span>
+                  <span class="item-value">{{
+                    servicio.precio | currency : 'COP' : 'symbol' : '1.0-0'
+                  }}</span>
+                </div>
+              </div>
+
+              <!-- Total -->
+              <div class="summary-total">
+                <div class="total-breakdown">
+                  <div class="breakdown-item">
+                    <span
+                      >Habitación ({{ diasEstancia }}
+                      {{ diasEstancia === 1 ? 'noche' : 'noches' }}):</span
+                    >
+                    <span>{{
+                      calcularSubtotalHabitacion() | currency : 'COP' : 'symbol' : '1.0-0'
+                    }}</span>
+                  </div>
+                  <div class="breakdown-item" *ngIf="calcularSubtotalServicios() > 0">
+                    <span>Servicios adicionales:</span>
+                    <span>{{
+                      calcularSubtotalServicios() | currency : 'COP' : 'symbol' : '1.0-0'
+                    }}</span>
+                  </div>
+                </div>
+                <div class="total-final">
+                  <span class="total-label">Total a Pagar:</span>
+                  <span class="total-amount">{{
+                    calcularTotal() | currency : 'COP' : 'symbol' : '1.0-0'
+                  }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="summary-actions">
+              <button
+                class="btn-reserve"
+                (click)="realizarReserva()"
+                [disabled]="!puedeReservar() || procesando"
+              >
+                <span class="btn-icon" *ngIf="!procesando">✓</span>
+                <span class="loading-mini" *ngIf="procesando"></span>
+                {{ procesando ? 'Procesando...' : 'Confirmar Reserva' }}
+              </button>
+              <button class="btn-cancel" (click)="limpiarFormulario()" [disabled]="procesando">
+                Limpiar
+              </button>
+            </div>
+
+            <div class="validation-messages" *ngIf="!puedeReservar()">
+              <p class="validation-message" *ngIf="!fechaInicio || !fechaFin">
+                <span class="validation-icon">⚠</span>
+                Selecciona las fechas de estadía
+              </p>
+              <p class="validation-message" *ngIf="!habitacionSeleccionada">
+                <span class="validation-icon">⚠</span>
+                Selecciona una habitación
+              </p>
+              <p class="validation-message" *ngIf="diasEstancia <= 0 && fechaInicio && fechaFin">
+                <span class="validation-icon">⚠</span>
+                La fecha de salida debe ser posterior a la entrada
+              </p>
+            </div>
+          </div>
+
+          <!-- 💱 Conversor de Moneda (debajo del resumen, pero dentro del sticky-wrapper) -->
+          <div class="currency-converter">
+            <h3 class="converter-title">💱 Conversor de Moneda</h3>
+            <p class="converter-subtitle">
+              Convierte el total estimado a otras monedas para tu referencia.
+            </p>
+
+            <div class="converter-controls">
+              <select
+                class="converter-select"
+                [(ngModel)]="monedaSeleccionada"
+                (change)="convertirMoneda()"
+              >
+                <option *ngFor="let moneda of monedas" [value]="moneda.codigo">
+                  {{ moneda.nombre }}
+                </option>
+              </select>
+
+              <button class="btn-convert" (click)="convertirMoneda()">Convertir</button>
+            </div>
+
+            <div class="converter-result" *ngIf="totalConvertido !== null">
+              <p>
+                Total estimado en {{ monedaSeleccionada }}:
+                <span class="result-value">
+                  {{ totalConvertido | number : '1.2-2' }}
+                  {{ monedaSeleccionada }}
+                </span>
+              </p>
+              <small class="converter-note">
+                * Tasa referencial, puede variar según el mercado.
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- Ruleta Modal -->
+<div class="modal-overlay" *ngIf="mostrarRuleta" (click)="$event.stopPropagation()">
+  <div class="modal-content" style="max-width: 650px;" (click)="$event.stopPropagation()">
+    <h2 class="ruleta-title">🎉 ¡Felicidades por tu Reserva! 🎉</h2>
+    <p class="ruleta-subtitle">Gira la ruleta y gana un premio exclusivo</p>
+
+    <div class="ruleta-wrapper">
+      <!-- Flecha indicadora -->
+      <div class="ruleta-arrow"></div>
+
+      <!-- Ruleta con SVG -->
+      <div class="ruleta-wheel" 
+           [style.transform]="'rotate(' + anguloRotacion + 'deg)'"
+           [class.spinning]="girandoRuleta">
+        <svg class="wheel-svg" viewBox="0 0 400 400">
+          <g *ngFor="let premio of premios; let i = index">
+            <path [attr.d]="getSegmentPath(i)"
+                  [attr.fill]="premio.color"
+                  stroke="white"
+                  stroke-width="2"/>
+            
+            <text [attr.x]="getTextX(i)" 
+                  [attr.y]="getTextY(i) - 10"
+                  text-anchor="middle"
+                  fill="white"
+                  font-size="24"
+                  [attr.transform]="'rotate(' + (getAnguloTexto(i) + 90) + ',' + getTextX(i) + ',' + (getTextY(i) - 10) + ')'">
+              {{ premio.icono }}
+            </text>
+            
+            
+          </g>
+        </svg>
+      </div>
+
+      <!-- Centro de la ruleta -->
+      <div class="ruleta-center" (click)="girarRuleta()">
+        <span class="center-icon">🎁</span>
+      </div>
+    </div>
+
+    <button class="btn-girar-ruleta" 
+            (click)="girarRuleta()"
+            [disabled]="girandoRuleta"
+            *ngIf="!premioGanado">
+      {{ girandoRuleta ? 'Girando...' : '¡GIRAR RULETA!' }}
+    </button>  
+  </div>
+</div>
+
+<!-- Success Modal (se muestra después de la ruleta) -->
+<div class="modal-overlay" *ngIf="mostrarExito" (click)="cerrarModal()">
+  <div class="modal-content success" (click)="$event.stopPropagation()">
+    <div class="modal-icon success-icon">✓</div>
+    <h3 class="modal-title">¡Reserva Exitosa!</h3>
+    <p class="modal-message">Tu reserva ha sido confirmada correctamente.</p>
+    
+    <div class="modal-details" *ngIf="reservaCreada">
+      <p><strong>Código de reserva:</strong> #{{ reservaCreada.idReserva }}</p>
+      <p><strong>Habitación:</strong> {{ reservaCreada.habitacion?.numero }}</p>
+      <p><strong>Check-in:</strong> {{ reservaCreada.fechaInicio | date : 'dd/MM/yyyy' }}</p>
+      <p><strong>Check-out:</strong> {{ reservaCreada.fechaFin | date : 'dd/MM/yyyy' }}</p>
+    </div>
+
+    <!-- Mostrar premio ganado si existe -->
+    <div class="premio-ganado-info" *ngIf="premioGanado">
+      <div class="premio-badge">
+        <span class="premio-badge-icon">{{ premioGanado.icono }}</span>
+        <div class="premio-badge-text">
+          <strong>Premio Ganado:</strong>
+          <p>{{ premioGanado.nombre }}</p>
+          <small>{{ premioGanado.descripcion }}</small>
+        </div>
+      </div>
+    </div>
+    <button class="btn-modal-close" (click)="cerrarModal()">Entendido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

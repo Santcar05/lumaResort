@@ -1,0 +1,120 @@
+#banner {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  /* border: 2px solid red;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#banner img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  /*Volver un poco más oscura la imagen*/
+  filter: brightness(0.5);
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  /*text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);*/
+  padding: 2rem;
+  max-width: 1000px;
+}
+
+.banner-content h1 {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.banner-content p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.btn {
+  display: inline-block;
+  background: #ffffff; /* blanco base */
+  color: #000000; /* texto oscuro para contraste */
+  padding: 0.8rem 1.8rem;
+  font-size: 1.6rem;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+
+  /* animaciones por defecto */
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.4), 0 0 10px rgba(255, 255, 255, 0.3) inset;
+  transform: translateY(0) scale(1);
+
+  /* transición suave en ambas direcciones */
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.5s ease,
+    background-color 0.6s ease;
+}
+
+/* efecto hover */
+.btn:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(240, 240, 240, 1) 50%,
+    rgba(220, 220, 220, 1) 100%
+  );
+  color: #000000;
+
+  transform: translateY(-6px) scale(1.08) rotate(-0.5deg);
+
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.6), 0 0 25px rgba(255, 255, 255, 0.7),
+    0 0 40px rgba(255, 255, 255, 0.5);
+
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.8), 0 0 12px rgba(255, 255, 255, 0.6);
+}
+
+/* Efecto extra dinámico con brillo en movimiento */
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  transform: skewX(-25deg);
+}
+
+.btn:hover::after {
+  animation: shine 1s forwards;
+}
+
+/* Animación de barrido */
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
+
+.content {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.content h2 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}

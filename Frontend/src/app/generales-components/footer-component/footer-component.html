@@ -1,0 +1,177 @@
+<footer class="footer">
+  <div class="footer-background">
+    <div class="footer-waves">
+      <div class="wave wave-1"></div>
+      <div class="wave wave-2"></div>
+      <div class="wave wave-3"></div>
+    </div>
+  </div>
+
+  <div class="footer-container">
+    <!-- Main Footer Content -->
+    <div class="footer-main">
+      <!-- Brand Section -->
+      <div class="footer-brand">
+        <div class="brand-logo">
+          <svg width="40" height="40" viewBox="0 0 50 50">
+            <path d="M25 5L5 25L25 45L45 25L25 5Z" fill="currentColor" />
+            <circle cx="25" cy="25" r="10" fill="#5aa8ff" />
+          </svg>
+          <span class="logo-text">LumaResort</span>
+        </div>
+        <p class="brand-description">
+          Experimente el lujo redefine en nuestro resort de clase mundial. Donde cada momento se
+          convierte en un recuerdo invaluable.
+        </p>
+        <div class="social-links">
+          <a
+            *ngFor="let social of socialLinks"
+            [href]="social.url"
+            class="social-link"
+            [attr.aria-label]="social.label"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                [attr.d]="social.path"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Discover Links -->
+      <div class="footer-links">
+        <h3 class="links-title">Descubrir</h3>
+        <ul class="links-list">
+          <li *ngFor="let link of footerLinks.discover">
+            <a [href]="link.url" class="footer-link">
+              <span class="link-icon">→</span>
+              {{ link.name }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Services Links -->
+      <div class="footer-links">
+        <h3 class="links-title">Servicios</h3>
+        <ul class="links-list">
+          <li *ngFor="let link of footerLinks.services">
+            <a [href]="link.url" class="footer-link">
+              <span class="link-icon">→</span>
+              {{ link.name }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Support Links -->
+      <div class="footer-links">
+        <h3 class="links-title">Soporte</h3>
+        <ul class="links-list">
+          <li *ngFor="let link of footerLinks.support">
+            <a [href]="link.url" class="footer-link">
+              <span class="link-icon">→</span>
+              {{ link.name }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Newsletter Section -->
+      <div class="footer-newsletter">
+        <h3 class="newsletter-title">Manténgase Actualizado</h3>
+        <p class="newsletter-description">
+          Suscríbase a nuestro newsletter para recibir ofertas exclusivas y noticias.
+        </p>
+
+        <div class="newsletter-form" [class.subscribed]="isSubscribed">
+          <input
+            type="email"
+            placeholder="Su correo electrónico"
+            [(ngModel)]="newsletterEmail"
+            class="newsletter-input"
+            [disabled]="isLoading || isSubscribed"
+          />
+
+          <button
+            class="newsletter-btn"
+            (click)="subscribeNewsletter()"
+            [disabled]="
+              !newsletterEmail || !isValidEmail(newsletterEmail) || isLoading || isSubscribed
+            "
+            [class.loading]="isLoading"
+            [class.success]="isSubscribed"
+          >
+            <span class="btn-text">
+              {{ isLoading ? 'Enviando...' : isSubscribed ? '¡Gracias!' : 'Suscribirse' }}
+            </span>
+
+            <div class="btn-loader" *ngIf="isLoading">
+              <div class="loader-dot"></div>
+              <div class="loader-dot"></div>
+              <div class="loader-dot"></div>
+            </div>
+
+            <svg
+              class="success-icon"
+              *ngIf="isSubscribed"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M20 6L9 17L4 12"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-content">
+        <div class="copyright">
+          <p>&copy; {{ currentYear }} LumaResort. Todos los derechos reservados.</p>
+        </div>
+
+        <div class="legal-links">
+          <a href="#" class="legal-link">Política de Privacidad</a>
+          <span class="separator">•</span>
+          <a href="#" class="legal-link">Términos de Servicio</a>
+          <span class="separator">•</span>
+          <a href="#" class="legal-link">Cookies</a>
+        </div>
+
+        <button class="back-to-top" (click)="scrollToTop()" aria-label="Volver arriba">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M18 15L12 9L6 15"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Decorative Elements -->
+    <div class="footer-decoration">
+      <div class="decoration-item item-1">✨</div>
+      <div class="decoration-item item-2">🌟</div>
+      <div class="decoration-item item-3">💫</div>
+    </div>
+  </div>
+</footer>

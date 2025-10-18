@@ -90,4 +90,23 @@ public class ReservaController {
     public List<Reserva> buscarReservaPorUsuarioId(@PathVariable Long id) {
         return reservaService.findByUsuarioId(id);
     }
+
+    //Remover un servicio de una reserva basado en la peticion 
+    //this.http.delete<void>(`${this.apiUrl}/${idReserva}/servicios/${idServicio}`);
+    @DeleteMapping("/{idReserva}/servicios/{idServicio}")
+    public void removerServicio(@PathVariable Long idReserva, @PathVariable Long idServicio) {
+        reservaService.removerServicio(idReserva, idServicio);
+    }
+
+    // this.http.post<void>(`${this.apiUrl}/${idServicio}/contratar`, habitacionId);
+    @PostMapping("/{idServicio}/contratar/{idHabitacion}")
+    public void contratarServicio(@PathVariable Long idServicio, @PathVariable Long idHabitacion) {
+        reservaService.contratarServicio(idServicio, idHabitacion);
+    }
+
+    @GetMapping("/habitaciones/disponibles/{idServicio}")
+    public List<Habitacion> obtenerHabitacionesDisponibles(@PathVariable Long idServicio) {
+        return reservaService.obtenerHabitacionesDisponiblesParaServicio(idServicio);
+    }
+
 }

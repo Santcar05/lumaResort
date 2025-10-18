@@ -1,0 +1,185 @@
+/* Sidebar general */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 280px;
+  background: linear-gradient(180deg, #1a1a2e, #16213e);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
+  transition: width 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.sidebar:hover {
+  width: 300px;
+}
+
+/* Encabezado */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-header .logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.sidebar-title h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.sidebar-title span {
+  font-size: 0.85rem;
+  color: #4fd1c7;
+  font-weight: 600;
+}
+
+/* Menú */
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  flex-grow: 1;
+}
+
+/* Secciones del menú */
+.menu-section {
+  margin-bottom: 1.5rem;
+  padding: 0 0.5rem;
+}
+
+.section-title {
+  display: block;
+  padding: 0.8rem 1rem;
+  color: #4fd1c7;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-left: 3px solid #4fd1c7;
+  background: rgba(79, 209, 199, 0.1);
+  margin-bottom: 0.5rem;
+  border-radius: 0 8px 8px 0;
+}
+
+/* Enlaces del menú */
+.sidebar-menu a {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.9rem 1.2rem;
+  color: #ddd;
+  text-decoration: none;
+  font-size: 0.92rem;
+  border-left: 3px solid transparent;
+  transition: all 0.3s ease;
+  margin: 0.2rem 0.5rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.sidebar-menu a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-left: 3px solid #4fd1c7;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-menu a.active {
+  background: rgba(79, 209, 199, 0.15);
+  color: #4fd1c7;
+  border-left: 3px solid #4fd1c7;
+  font-weight: 600;
+}
+
+/* Enlaces específicos por categoría */
+.sidebar-menu a[routerLink*='reservas']:hover {
+  border-left-color: #4299e1;
+}
+
+.sidebar-menu a[routerLink*='servicio']:hover {
+  border-left-color: #48bb78;
+}
+
+.sidebar-menu a[routerLink*='pagar']:hover,
+.sidebar-menu a[routerLink*='cuenta']:hover {
+  border-left-color: #ed8936;
+}
+
+.sidebar-menu a[routerLink*='eliminar']:hover {
+  border-left-color: #f56565;
+}
+
+.sidebar-menu a[routerLink*='activar']:hover {
+  border-left-color: #48bb78;
+}
+
+.sidebar-menu a[routerLink*='finalizar']:hover {
+  border-left-color: #9f7aea;
+}
+
+/* Logout */
+.sidebar-menu a.logout {
+  margin-top: auto;
+  color: #feb2b2;
+  font-weight: 600;
+  background: rgba(254, 178, 178, 0.1);
+  border-left: 3px solid transparent;
+}
+
+.sidebar-menu a.logout:hover {
+  background: rgba(254, 178, 178, 0.2);
+  border-left: 3px solid #fc8181;
+  color: #fed7d7;
+  transform: translateX(4px);
+}
+
+/* Scrollbar personalizado */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(79, 209, 199, 0.5);
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(79, 209, 199, 0.8);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 250px;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar:hover {
+    width: 250px;
+  }
+}

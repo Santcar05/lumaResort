@@ -1,0 +1,388 @@
+<div class="operador-container">
+  <!-- Notificación flotante -->
+  <div
+    class="notificacion"
+    *ngIf="mostrarNotificacion"
+    [ngClass]="{
+      exito: tipoNotificacion === 'exito',
+      error: tipoNotificacion === 'error',
+      info: tipoNotificacion === 'info'
+    }"
+  >
+    <span class="notificacion-icono">
+      {{ tipoNotificacion === 'exito' ? '✅' : tipoNotificacion === 'error' ? '❌' : 'ℹ️' }}
+    </span>
+    {{ mensaje }}
+  </div>
+
+  <!-- Header -->
+  <div class="header-section">
+    <h2 class="titulo-principal">
+      <span class="titulo-texto">Gestión de Estadías</span>
+      <span class="titulo-decoracion">🏨</span>
+    </h2>
+    <p class="subtitulo">Activa, finaliza y gestiona pagos de estadías</p>
+  </div>
+
+  <!-- Panel de filtros -->
+  <div class="filtros-panel">
+    <div class="filtros-header">
+      <h3 class="filtros-titulo">🔍 Filtros de Búsqueda</h3>
+    </div>
+    <div class="filtros-content">
+      <div class="filtro-group">
+        <label class="filtro-label">Buscar por ID:</label>
+        <input
+          type="text"
+          placeholder="Ej: 123"
+          [(ngModel)]="filtroId"
+          class="filtro-input"
+          (input)="filtrarReservas()"
+        />
+      </div>
+
+      <div class="filtro-group">
+        <label class="filtro-label">Buscar por habitación:</label>
+        <input
+          type="text"
+          placeholder="Ej: 101"
+          [(ngModel)]="filtroHabitacion"
+          class="filtro-input"
+          (input)="filtrarReservas()"
+        />
+      </div>
+
+      <div class="filtro-group">
+        <label class="filtro-label">Filtrar por estado:</label>
+        <select [(ngModel)]="filtroEstado" class="filtro-select" (change)="filtrarReservas()">
+          <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+        </select>
+      </div>
+
+      <div class="filtro-actions">
+        <button class="btn btn-limpiar" (click)="limpiarFiltros()">🗑️ Limpiar Filtros</button>
+        <button class="btn btn-actualizar" (click)="cargarReservas()">🔄 Actualizar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contador de resultados -->
+  <div class="contador-reservas">
+    <span class="contador-numero">{{ reservasFiltradas.length }}</span>
+    <span class="contador-texto">
+      {{ reservasFiltradas.length === 1 ? 'reserva encontrada' : 'reservas encontradas' }}
+    </span>
+  </div>
+
+  <!-- Lista de reservas -->
+  <div class="reservas-grid" *ngIf="reservasFiltradas.length > 0; else sinResultados">
+    <div
+      class="reserva-card"
+      *ngFor="let reserva of reservasFiltradas"
+      [ngClass]="getEstadoClass(reserva.estado)"
+    >
+      <div class="reserva-header">
+        <div class="reserva-id">
+          <span class="id-prefix">#</span>
+          {{ reserva.idReserva }}
+        </div>
+        <div class="reserva-estado" [ngClass]="getEstadoClass(reserva.estado)">
+          <span class="estado-icono">{{ getEstadoIcon(reserva.estado) }}</span>
+          {{ reserva.estado }}
+        </div>
+      </div>
+
+      <div class="reserva-body">
+        <!-- Información del cliente -->
+        <div class="cliente-info">
+          <h4 class="cliente-nombre">
+            👤 {{ reserva.usuario?.nombre }} {{ reserva.usuario?.apellido }}
+          </h4>
+          <p class="cliente-contacto">
+            📧 {{ reserva.usuario?.correo }} | 📱 {{ reserva.usuario?.telefono }}
+          </p>
+        </div>
+
+        <!-- Información de la habitación -->
+        <div class="habitacion-info">
+          <div class="info-item">
+            <span class="info-label">🚪 Habitación:</span>
+            <span class="info-value">{{ reserva.habitacion?.numero }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">🛏️ Tipo:</span>
+            <span class="info-value">{{ reserva.habitacion?.tipoHabitacion?.nombre }}</span>
+          </div>
+        </div>
+
+        <!-- Fechas de la estadía -->
+        <div class="fechas-info">
+          <div class="info-item">
+            <span class="info-label">📅 Check-in:</span>
+            <span class="info-value">{{ formatearFecha(reserva.fechaInicio) }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">📅 Check-out:</span>
+            <span class="info-value">{{ formatearFecha(reserva.fechaFin) }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">👥 Personas:</span>
+            <span class="info-value">{{ reserva.cantidadPersonas }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">💰Precio Habitación:</span>
+            <span class="info-value">{{ formatearPrecio(reserva.habitacion.precioPorNoche) }}</span>
+          </div>
+        </div>
+
+        <!-- Información de servicios -->
+        <div class="servicios-info" *ngIf="reserva.servicios && reserva.servicios.length > 0">
+          <div class="servicios-header">
+            <span class="servicios-label">🛎️ Servicios contratados:</span>
+            <span class="servicios-count">{{ reserva.servicios.length }}</span>
+          </div>
+          <div class="servicios-lista">
+            <div class="servicio-item" *ngFor="let servicio of reserva.servicios.slice(0, 3)">
+              <span class="servicio-nombre">{{ servicio.nombre }}</span>
+              <span class="servicio-precio">{{ formatearPrecio(servicio.precio) }}</span>
+            </div>
+            <div class="mas-servicios" *ngIf="reserva.servicios.length > 3">
+              +{{ reserva.servicios.length - 3 }} más...
+            </div>
+          </div>
+        </div>
+
+        <!-- Información de pagos -->
+        <div class="pagos-info">
+          <div class="pagos-header">
+            <span class="pagos-label">💳 Estado de cuenta:</span>
+            <span class="pagos-total">{{ formatearPrecio(calcularTotalReserva(reserva)) }}</span>
+          </div>
+          <div class="saldo-info">
+            <span class="saldo-label">Saldo pendiente:</span>
+            <span
+              class="saldo-valor"
+              [ngClass]="{
+                'saldo-pendiente': getSaldoPendiente(reserva) > 0,
+                'saldo-pagado': getSaldoPendiente(reserva) === 0
+              }"
+            >
+              {{ formatearPrecio(getSaldoPendiente(reserva)) }}
+            </span>
+          </div>
+          <div class="pagos-realizados" *ngIf="getPagosReserva(reserva.idReserva).length > 0">
+            <span class="pagos-count"
+              >{{ getPagosReserva(reserva.idReserva).length }} pago(s) realizado(s)</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="reserva-footer">
+        <!-- Botón de pagar cuenta -->
+        <button
+          class="btn btn-pagar"
+          (click)="abrirModalPagar(reserva)"
+          [disabled]="!puedePagar(reserva)"
+          title="Pagar cuenta de la estadía"
+        >
+          💰 Pagar
+        </button>
+
+        <!-- Botón de limpiar cuenta -->
+        <button
+          class="btn btn-limpiar-cuenta"
+          (click)="limpiarCuenta(reserva)"
+          [disabled]="!isCuentaLimpia(reserva)"
+          title="Limpiar cuenta del cliente"
+        >
+          🧹 Limpiar
+        </button>
+
+        <!-- Botón de activar estadía -->
+        <button
+          class="btn btn-activar"
+          (click)="abrirModalActivar(reserva)"
+          [disabled]="!puedeActivar(reserva)"
+          title="Activar estadía del cliente"
+        >
+          ✅ Activar
+        </button>
+
+        <!-- Botón de finalizar estadía -->
+        <button
+          class="btn btn-finalizar"
+          (click)="abrirModalFinalizar(reserva)"
+          [disabled]="!puedeFinalizar(reserva)"
+          title="Finalizar estadía del cliente"
+        >
+          🏁 Finalizar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sin resultados -->
+  <ng-template #sinResultados>
+    <div class="sin-resultados">
+      <div class="sin-resultados-icono">🔍</div>
+      <h3 class="sin-resultados-titulo">No se encontraron reservas</h3>
+      <p class="sin-resultados-mensaje">
+        Intenta ajustar los filtros o verifica si hay reservas registradas.
+      </p>
+      <button class="btn btn-primary" (click)="limpiarFiltros()">Mostrar todas las reservas</button>
+    </div>
+  </ng-template>
+
+  <!-- Modal de pago -->
+  <div class="modal-overlay" *ngIf="modalPagarAbierto">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-titulo">💰 Pagar Cuenta de Estadía</h3>
+      </div>
+
+      <div class="modal-body">
+        <div class="reserva-info-modal" *ngIf="reservaSeleccionada">
+          <h4>Reserva #{{ reservaSeleccionada.idReserva }}</h4>
+          <p>
+            <strong>Cliente:</strong> {{ reservaSeleccionada.usuario?.nombre }}
+            {{ reservaSeleccionada.usuario?.apellido }}
+          </p>
+          <p><strong>Habitación:</strong> {{ reservaSeleccionada.habitacion?.numero }}</p>
+          <p>
+            <strong>Total cuenta:</strong>
+            {{ formatearPrecio(calcularTotalReserva(reservaSeleccionada)) }}
+          </p>
+          <p>
+            <strong>Saldo pendiente:</strong>
+            {{ formatearPrecio(getSaldoPendiente(reservaSeleccionada)) }}
+          </p>
+          <p>
+            <strong>Precio Habitación:</strong>
+            {{ formatearPrecio(reservaSeleccionada.habitacion.precioPorNoche) }}
+          </p>
+        </div>
+
+        <form class="form-pago">
+          <div class="form-group">
+            <label class="form-label">Monto a pagar *</label>
+            <input
+              type="number"
+              [(ngModel)]="datosPago.monto"
+              name="monto"
+              class="form-control"
+              [max]="getSaldoPendiente(reservaSeleccionada!)"
+              min="0"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Método de pago *</label>
+            <select
+              [(ngModel)]="datosPago.metodoPago"
+              name="metodoPago"
+              class="form-control"
+              required
+            >
+              <option *ngFor="let metodo of metodosPago" [value]="metodo">{{ metodo }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Referencia o número de transacción</label>
+            <input
+              type="text"
+              [(ngModel)]="datosPago.referencia"
+              name="referencia"
+              class="form-control"
+              placeholder="Opcional"
+            />
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-cancelar" (click)="cerrarModalPagar()">❌ Cancelar</button>
+        <button class="btn btn-confirmar" (click)="pagarCuenta()">✅ Confirmar Pago</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de activar estadía -->
+  <div class="modal-overlay" *ngIf="modalActivarAbierto">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-titulo">✅ Activar Estadía</h3>
+      </div>
+
+      <div class="modal-body">
+        <div class="reserva-info-modal" *ngIf="reservaSeleccionada">
+          <h4>Reserva #{{ reservaSeleccionada.idReserva }}</h4>
+          <p>
+            <strong>Cliente:</strong> {{ reservaSeleccionada.usuario?.nombre }}
+            {{ reservaSeleccionada.usuario?.apellido }}
+          </p>
+          <p><strong>Habitación:</strong> {{ reservaSeleccionada.habitacion?.numero }}</p>
+          <p><strong>Check-in:</strong> {{ formatearFecha(reservaSeleccionada.fechaInicio) }}</p>
+          <p><strong>Check-out:</strong> {{ formatearFecha(reservaSeleccionada.fechaFin) }}</p>
+        </div>
+
+        <div class="advertencia">
+          <p>⚠️ ¿Está seguro de que desea activar esta estadía?</p>
+          <p>
+            El estado de la reserva cambiará a <strong>ACTIVA</strong> y el cliente podrá ocupar la
+            habitación.
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-cancelar" (click)="cerrarModalActivar()">❌ Cancelar</button>
+        <button class="btn btn-confirmar" (click)="activarEstadia()">✅ Activar Estadía</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de finalizar estadía -->
+  <div class="modal-overlay" *ngIf="modalFinalizarAbierto">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-titulo">🏁 Finalizar Estadía</h3>
+      </div>
+
+      <div class="modal-body">
+        <div class="reserva-info-modal" *ngIf="reservaSeleccionada">
+          <h4>Reserva #{{ reservaSeleccionada.idReserva }}</h4>
+          <p>
+            <strong>Cliente:</strong> {{ reservaSeleccionada.usuario?.nombre }}
+            {{ reservaSeleccionada.usuario?.apellido }}
+          </p>
+          <p><strong>Habitación:</strong> {{ reservaSeleccionada.habitacion?.numero }}</p>
+          <p>
+            <strong>Estado de cuenta:</strong>
+            <span [ngClass]="{ 'saldo-pagado': isCuentaLimpia(reservaSeleccionada) }">
+              {{
+                isCuentaLimpia(reservaSeleccionada) ? 'PAGADA COMPLETAMENTE' : 'CON SALDO PENDIENTE'
+              }}
+            </span>
+          </p>
+        </div>
+
+        <div class="advertencia" *ngIf="isCuentaLimpia(reservaSeleccionada!)">
+          <p>✅ La cuenta está completamente pagada.</p>
+          <p>⚠️ ¿Está seguro de que desea finalizar esta estadía?</p>
+          <p>
+            El estado de la reserva cambiará a <strong>FINALIZADA</strong> y la habitación quedará
+            disponible.
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-cancelar" (click)="cerrarModalFinalizar()">❌ Cancelar</button>
+        <button class="btn btn-confirmar" (click)="finalizarEstadia()">✅ Finalizar Estadía</button>
+      </div>
+    </div>
+  </div>
+</div>

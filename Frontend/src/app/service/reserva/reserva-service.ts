@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Reserva } from '../../Models/Reserva';
+import { Habitacion } from '../../Models/Habitacion';
 
 @Injectable({
   providedIn: 'root',
@@ -35,5 +36,17 @@ export class ReservaService {
   // Buscar una reserva por ID
   findById(id: number): Observable<Reserva> {
     return this.http.get<Reserva>(`${this.apiUrl}/${id}`);
+  }
+
+  removerServicio(idReserva: number, idServicio: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${idReserva}/servicios/${idServicio}`);
+  }
+
+  contratarServicio(idServicio: number, idHabitacion: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${idServicio}/contratar/${idHabitacion}`, {});
+  }
+
+  getHabitacionesDisponibles(idServicio: number): Observable<Habitacion[]> {
+    return this.http.get<Habitacion[]>(`${this.apiUrl}/habitaciones/disponibles/${idServicio}`);
   }
 }

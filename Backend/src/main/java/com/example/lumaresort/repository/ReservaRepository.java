@@ -11,4 +11,8 @@ import com.example.lumaresort.entities.Reserva;
 public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
     List<Reserva> findByUsuarioIdUsuario(Long idUsuario);
+
+    Reserva findByHabitacionIdHabitacion(Long idHabitacion);
+
+    List<Reserva> findByServiciosIdServicio(Long idServicio);
 }

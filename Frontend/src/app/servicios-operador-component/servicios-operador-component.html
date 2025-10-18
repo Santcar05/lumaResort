@@ -1,0 +1,314 @@
+<div class="operador-container">
+  <!-- Notificación flotante -->
+  <div
+    class="notificacion"
+    *ngIf="mostrarNotificacion"
+    [ngClass]="{
+      exito: tipoNotificacion === 'exito',
+      error: tipoNotificacion === 'error',
+      info: tipoNotificacion === 'info'
+    }"
+  >
+    <span class="notificacion-icono">
+      {{ tipoNotificacion === 'exito' ? '✅' : tipoNotificacion === 'error' ? '❌' : 'ℹ️' }}
+    </span>
+    {{ mensaje }}
+  </div>
+
+  <!-- Header -->
+  <div class="header-section">
+    <h2 class="titulo-principal">
+      <span class="titulo-texto">Gestión de Servicios</span>
+      <span class="titulo-decoracion">🛎️</span>
+    </h2>
+    <p class="subtitulo">Contrata y elimina servicios de reservas</p>
+  </div>
+
+  <!-- Panel de filtros -->
+  <div class="filtros-panel">
+    <div class="filtros-header">
+      <h3 class="filtros-titulo">🔍 Filtros de Búsqueda</h3>
+    </div>
+    <div class="filtros-content">
+      <div class="filtro-group">
+        <label class="filtro-label">Buscar por ID:</label>
+        <input
+          type="text"
+          placeholder="Ej: 123"
+          [(ngModel)]="filtroId"
+          class="filtro-input"
+          (input)="filtrarServicios()"
+        />
+      </div>
+
+      <div class="filtro-group">
+        <label class="filtro-label">Buscar por nombre:</label>
+        <input
+          type="text"
+          placeholder="Ej: Masaje relajante"
+          [(ngModel)]="filtroNombre"
+          class="filtro-input"
+          (input)="filtrarServicios()"
+        />
+      </div>
+
+      <div class="filtro-group">
+        <label class="filtro-label">Filtrar por tipo:</label>
+        <select [(ngModel)]="filtroTipo" class="filtro-select" (change)="filtrarServicios()">
+          <option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</option>
+        </select>
+      </div>
+
+      <div class="filtro-actions">
+        <button class="btn btn-limpiar" (click)="limpiarFiltros()">🗑️ Limpiar Filtros</button>
+        <button class="btn btn-actualizar" (click)="cargarServicios()">🔄 Actualizar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contador de resultados -->
+  <div class="contador-servicios">
+    <span class="contador-numero">{{ serviciosFiltrados.length }}</span>
+    <span class="contador-texto">
+      {{ serviciosFiltrados.length === 1 ? 'servicio encontrado' : 'servicios encontrados' }}
+    </span>
+  </div>
+
+  <!-- Lista de servicios -->
+  <div class="servicios-grid" *ngIf="serviciosFiltrados.length > 0; else sinResultados">
+    <div
+      class="servicio-card"
+      *ngFor="let servicio of serviciosFiltrados"
+      [ngClass]="getTipoClass(servicio.tipo)"
+    >
+      <div class="servicio-header">
+        <div class="servicio-id">
+          <span class="id-prefix">#</span>
+          {{ servicio.idServicio }}
+        </div>
+        <div class="servicio-tipo" [ngClass]="getTipoClass(servicio.tipo)">
+          <span class="tipo-icono">{{ getTipoIcon(servicio.tipo) }}</span>
+          {{ servicio.tipo }}
+        </div>
+      </div>
+
+      <div class="servicio-imagen" *ngIf="servicio.imagenURL">
+        <img [src]="servicio.imagenURL" [alt]="servicio.nombre" class="imagen-servicio" />
+      </div>
+
+      <div class="servicio-body">
+        <h4 class="servicio-nombre">{{ servicio.nombre }}</h4>
+        <p class="servicio-descripcion">{{ servicio.descripcion }}</p>
+
+        <div class="servicio-precio">
+          <span class="precio-label">Precio:</span>
+          <span class="precio-valor">{{ formatearPrecio(servicio.precio) }}</span>
+        </div>
+
+        <div
+          class="servicio-calificacion"
+          *ngIf="servicio.comentarios && servicio.comentarios.length > 0"
+        >
+          <span class="calificacion-label">Calificación promedio:</span>
+          <span class="calificacion-estrellas">
+            {{ getCalificacionEstrellas(getPromedioCalificacion(servicio)) }}
+          </span>
+          <span class="calificacion-numero">
+            ({{ getPromedioCalificacion(servicio).toFixed(1) }})
+          </span>
+          <span class="calificacion-count">({{ servicio.comentarios.length }})</span>
+        </div>
+
+        <!-- Información de reservas que tienen este servicio -->
+        <div
+          class="servicio-reservas"
+          *ngIf="getReservasConServicio(servicio.idServicio).length > 0"
+        >
+          <div class="reservas-header">
+            <span class="reservas-label">📋 Reservas con este servicio:</span>
+            <span class="reservas-count">{{
+              getReservasConServicio(servicio.idServicio).length
+            }}</span>
+          </div>
+          <div class="reservas-lista">
+            <div
+              class="reserva-item"
+              *ngFor="let reserva of getReservasConServicio(servicio.idServicio).slice(0, 3)"
+            >
+              <span class="reserva-id">#{{ reserva.idReserva }}</span>
+              <span class="reserva-habitacion">Habitación {{ reserva.habitacion?.numero }}</span>
+              <span class="reserva-estado" [ngClass]="getEstadoClass(reserva.estado)">{{
+                reserva.estado
+              }}</span>
+            </div>
+            <div
+              class="mas-reservas"
+              *ngIf="getReservasConServicio(servicio.idServicio).length > 3"
+            >
+              +{{ getReservasConServicio(servicio.idServicio).length - 3 }} más...
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="servicio-comentarios"
+          *ngIf="servicio.comentarios && servicio.comentarios.length > 0"
+        >
+          <div
+            class="comentario-reciente"
+            *ngFor="let comentario of servicio.comentarios.slice(0, 2)"
+          >
+            <span class="comentario-texto">"{{ comentario.comentario }}"</span>
+            <span class="comentario-calificacion">
+              {{ getCalificacionEstrellas(comentario.calificacion) }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="servicio-footer">
+        <button class="btn btn-contratar" (click)="abrirModalContratar(servicio)">
+          📋 Contratar
+        </button>
+        <button
+          class="btn btn-eliminar"
+          (click)="abrirModalEliminarDeReserva(servicio)"
+          [disabled]="getReservasConServicio(servicio.idServicio).length === 0"
+        >
+          🗑️ Eliminar de Reserva
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sin resultados -->
+  <ng-template #sinResultados>
+    <div class="sin-resultados">
+      <div class="sin-resultados-icono">🔍</div>
+      <h3 class="sin-resultados-titulo">No se encontraron servicios</h3>
+      <p class="sin-resultados-mensaje">
+        Intenta ajustar los filtros o verifica si hay servicios registrados.
+      </p>
+      <button class="btn btn-primary" (click)="limpiarFiltros()">
+        Mostrar todos los servicios
+      </button>
+    </div>
+  </ng-template>
+
+  <!-- Modal de contratación -->
+  <div class="modal-overlay" *ngIf="modalContratarAbierto">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-titulo">📋 Contratar Servicio</h3>
+      </div>
+
+      <div class="modal-body">
+        <div class="servicio-info-modal" *ngIf="servicioAContratar">
+          <h4>{{ servicioAContratar.nombre }}</h4>
+          <p><strong>Tipo:</strong> {{ servicioAContratar.tipo }}</p>
+          <p><strong>Precio:</strong> {{ formatearPrecio(servicioAContratar.precio) }}</p>
+          <p><strong>Descripción:</strong> {{ servicioAContratar.descripcion }}</p>
+        </div>
+
+        <form (ngSubmit)="contratarServicio()" class="form-contratacion">
+          <div class="form-group">
+            <label class="form-label">Seleccionar Habitación *</label>
+            <select name="habitacionId" [(ngModel)]="habitacionId" class="form-control" required>
+              <option [ngValue]="null">-- Seleccione una habitación --</option>
+              <option
+                *ngFor="let habitacion of habitacionesDisponibles"
+                [ngValue]="habitacion.idHabitacion"
+              >
+                Habitación {{ habitacion.numero }}
+              </option>
+            </select>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-cancelar" (click)="cerrarModalContratar()">❌ Cancelar</button>
+        <button class="btn btn-confirmar" (click)="contratarServicio()">
+          ✅ Confirmar Contratación
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para eliminar servicio de reserva -->
+  <div class="modal-overlay" *ngIf="modalEliminarDeReservaAbierto">
+    <div class="modal-container modal-eliminar-reserva">
+      <div class="modal-header">
+        <h3 class="modal-titulo">🗑️ Eliminar Servicio de Reserva</h3>
+      </div>
+
+      <div class="modal-body">
+        <div class="servicio-info-modal" *ngIf="servicioAEliminarDeReserva">
+          <h4>{{ servicioAEliminarDeReserva.nombre }}</h4>
+          <p><strong>Tipo:</strong> {{ servicioAEliminarDeReserva.tipo }}</p>
+          <p><strong>Precio:</strong> {{ formatearPrecio(servicioAEliminarDeReserva.precio) }}</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Seleccionar Reserva:</label>
+          <select
+            [(ngModel)]="reservaSeleccionadaId"
+            class="form-control"
+            (change)="onReservaSeleccionadaChange()"
+          >
+            <option value="">-- Seleccione una reserva --</option>
+            <option *ngFor="let reserva of reservasConServicio" [value]="reserva.idReserva">
+              Reserva #{{ reserva.idReserva }} - Hab. {{ reserva.habitacion?.numero }} ({{
+                reserva.usuario?.nombre
+              }}
+              {{ reserva.usuario?.apellido }}) - {{ reserva.estado }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Información de la reserva seleccionada -->
+        <div class="reserva-info-detalle" *ngIf="reservaSeleccionada">
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>Cliente:</strong> {{ reservaSeleccionada.usuario?.nombre }}
+              {{ reservaSeleccionada.usuario?.apellido }}
+            </div>
+            <div class="info-item">
+              <strong>Habitación:</strong> {{ reservaSeleccionada.habitacion?.numero }}
+            </div>
+            <div class="info-item">
+              <strong>Check-in:</strong> {{ formatearFecha(reservaSeleccionada.fechaInicio) }}
+            </div>
+            <div class="info-item">
+              <strong>Check-out:</strong> {{ formatearFecha(reservaSeleccionada.fechaFin) }}
+            </div>
+            <div class="info-item">
+              <strong>Estado:</strong>
+              <span [ngClass]="getEstadoClass(reservaSeleccionada.estado)">{{
+                reservaSeleccionada.estado
+              }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="advertencia" *ngIf="reservaSeleccionada">
+          <p>⚠️ ¿Está seguro de que desea eliminar este servicio de la reserva seleccionada?</p>
+          <p>El servicio será removido de la cuenta del cliente.</p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-cancelar" (click)="cerrarModalEliminarDeReserva()">
+          ❌ Cancelar
+        </button>
+        <button
+          class="btn btn-confirmar"
+          (click)="eliminarServicioDeReserva()"
+          [disabled]="!reservaSeleccionada"
+        >
+          ✅ Eliminar de Reserva
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

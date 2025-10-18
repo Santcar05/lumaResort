@@ -129,6 +129,10 @@
             <span class="info-label">👥 Personas:</span>
             <span class="info-value">{{ reserva.cantidadPersonas }}</span>
           </div>
+          <div class="info-item">
+            <span class="info-label">💰Precio Habitación:</span>
+            <span class="info-value">{{ formatearPrecio(reserva.habitacion.precioPorNoche) }}</span>
+          </div>
         </div>
 
         <!-- Información de servicios -->
@@ -252,6 +256,10 @@
           <p>
             <strong>Saldo pendiente:</strong>
             {{ formatearPrecio(getSaldoPendiente(reservaSeleccionada)) }}
+          </p>
+          <p>
+            <strong>Precio Habitación:</strong>
+            {{ formatearPrecio(reservaSeleccionada.habitacion.precioPorNoche) }}
           </p>
         </div>
 

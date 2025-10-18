@@ -104,6 +104,11 @@ export class EstadiaOperadorComponent implements OnInit {
       total += reserva.servicios.reduce((sum, servicio) => sum + (servicio.precio || 0), 0);
     }
 
+    // sumar el precio de la habitación
+    if (reserva.habitacion) {
+      total += reserva.habitacion.precioPorNoche || 0;
+    }
+
     // Aquí podrías agregar el costo de la habitación, etc.
     return total;
   }

@@ -59,11 +59,10 @@ export class ServiciosOperadorComponent implements OnInit {
     this.serviciosService.findAll().subscribe({
       next: (data) => {
         this.tipos = Array.from(new Set(data.map((servicio) => servicio.tipo)));
+        this.tipos.push('TODOS');
       },
       error: () => console.error('Error al cargar los tipos de servicios'),
     });
-
-    this.tipos.push('TODOS');
   }
   cargarServicios(): void {
     this.serviciosService.findAll().subscribe({

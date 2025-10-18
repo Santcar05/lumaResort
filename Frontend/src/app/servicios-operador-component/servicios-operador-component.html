@@ -212,51 +212,15 @@
 
         <form (ngSubmit)="contratarServicio()" class="form-contratacion">
           <div class="form-group">
-            <label class="form-label">Número de Habitación *</label>
-            <input
-              type="text"
-              [(ngModel)]="datosContratacion.habitacionId"
-              name="habitacionId"
-              class="form-control"
-              placeholder="Ej: 101"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Fecha del Servicio</label>
-            <input
-              type="date"
-              [(ngModel)]="datosContratacion.fecha"
-              name="fecha"
-              class="form-control"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Comentarios o Especificaciones</label>
-            <textarea
-              [(ngModel)]="datosContratacion.comentario"
-              name="comentario"
-              class="form-control"
-              placeholder="Especificaciones adicionales del servicio..."
-              rows="3"
-            ></textarea>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Calificación Inicial</label>
-            <select
-              [(ngModel)]="datosContratacion.calificacion"
-              name="calificacion"
-              class="form-control"
-            >
-              <option value="5">★★★★★ (5) - Excelente</option>
-              <option value="4">★★★★☆ (4) - Muy Bueno</option>
-              <option value="3">★★★☆☆ (3) - Bueno</option>
-              <option value="2">★★☆☆☆ (2) - Regular</option>
-              <option value="1">★☆☆☆☆ (1) - Malo</option>
+            <label class="form-label">Seleccionar Habitación *</label>
+            <select name="habitacionId" [(ngModel)]="habitacionId" class="form-control" required>
+              <option [ngValue]="null">-- Seleccione una habitación --</option>
+              <option
+                *ngFor="let habitacion of habitacionesDisponibles"
+                [ngValue]="habitacion.idHabitacion"
+              >
+                Habitación {{ habitacion.numero }}
+              </option>
             </select>
           </div>
         </form>

@@ -17,6 +17,7 @@ import { ReservasOperadorComponent } from './reservas-operador-component/reserva
 import { NavOperadorComponent } from './nav-operador-component/nav-operador-component';
 import { ServiciosOperadorComponent } from './servicios-operador-component/servicios-operador-component';
 import { OperadorComponent } from './operador-component/operador-component';
+import { EstadiaOperadorComponent } from './estadia-operador-component/estadia-operador-component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // por defecto muestra Landing
@@ -40,7 +41,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'reservas', pathMatch: 'full' }, // Portal operador
       { path: 'reservas', component: ReservasOperadorComponent },
       { path: 'servicios', component: ServiciosOperadorComponent },
-      { path: 'pagar-cuenta', component: ReservasOperadorComponent /* ComponentePagosComponent */ },
+      { path: 'pago', component: EstadiaOperadorComponent },
       {
         path: 'limpiar-cuenta',
         component: ReservasOperadorComponent /* ComponentePagosComponent */,

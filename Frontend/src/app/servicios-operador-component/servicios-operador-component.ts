@@ -5,6 +5,7 @@ import { Servicio } from '../Models/Servicio';
 import { Reserva } from '../Models/Reserva';
 import { CRUDServiciosService } from '../service/servicios/CRUD/crudservicios-service';
 import { ReservaService } from '../service/reserva/reserva-service';
+import { Habitacion } from '../Models/Habitacion';
 
 @Component({
   selector: 'app-servicios-operador-component',
@@ -44,12 +45,7 @@ export class ServiciosOperadorComponent implements OnInit {
   reservaSeleccionadaId: number | null = null;
   reservaSeleccionada: Reserva | null = null;
 
-  datosContratacion: any = {
-    habitacionId: '',
-    fecha: '',
-    comentario: '',
-    calificacion: 5,
-  };
+  habitacionId: number | null = null;
 
   // Notificación
   mensaje: string = '';
@@ -113,8 +109,8 @@ export class ServiciosOperadorComponent implements OnInit {
 
   onReservaSeleccionadaChange(): void {
     if (this.reservaSeleccionadaId) {
-      this.reservaSeleccionada =
-        this.reservas.find((r) => r.idReserva === this.reservaSeleccionadaId) || null;
+      const id = Number(this.reservaSeleccionadaId);
+      this.reservaSeleccionada = this.reservas.find((r) => r.idReserva === id) || null;
     } else {
       this.reservaSeleccionada = null;
     }
@@ -132,16 +128,26 @@ export class ServiciosOperadorComponent implements OnInit {
       reserva: this.reservaSeleccionada,
     });
 
-    // Aquí iría la lógica real para eliminar el servicio de la reserva
-    // Por ejemplo: this.reservaService.removerServicio(this.reservaSeleccionada.idReserva, this.servicioAEliminarDeReserva.idServicio)
-
-    this.mostrarMensaje(
-      `Servicio "${this.servicioAEliminarDeReserva.nombre}" eliminado de la reserva #${this.reservaSeleccionada.idReserva}`,
-      'exito'
-    );
-
-    this.cerrarModalEliminarDeReserva();
-    this.cargarReservas(); // Recargar reservas para actualizar la información
+    this.reservaService
+      .removerServicio(
+        this.reservaSeleccionada.idReserva,
+        this.servicioAEliminarDeReserva.idServicio
+      )
+      .subscribe({
+        next: () => {
+          this.mostrarMensaje(
+            `Servicio "${this.servicioAEliminarDeReserva!.nombre}" eliminado de la reserva #${
+              this.reservaSeleccionada!.idReserva
+            }`,
+            'exito'
+          );
+          this.cerrarModalEliminarDeReserva();
+          this.cargarReservas();
+        },
+        error: () => {
+          this.mostrarMensaje('Error al eliminar el servicio de la reserva', 'error');
+        },
+      });
   }
 
   // Métodos existentes (sin cambios)
@@ -167,15 +173,20 @@ export class ServiciosOperadorComponent implements OnInit {
     this.serviciosFiltrados = this.servicios;
   }
 
+  habitacionesDisponibles: Habitacion[] = [];
   abrirModalContratar(servicio: Servicio): void {
+    this.reservaService.getHabitacionesDisponibles(servicio.idServicio).subscribe({
+      next: (habitaciones) => {
+        this.habitacionesDisponibles = habitaciones;
+      },
+      error: (err) => {
+        console.error('Error al obtener habitaciones disponibles', err);
+      },
+    });
+
     this.servicioAContratar = servicio;
     this.modalContratarAbierto = true;
-    this.datosContratacion = {
-      habitacionId: '',
-      fecha: new Date().toISOString().split('T')[0],
-      comentario: '',
-      calificacion: 5,
-    };
+    this.habitacionId = null;
     document.body.style.overflow = 'hidden';
   }
 
@@ -186,20 +197,24 @@ export class ServiciosOperadorComponent implements OnInit {
   }
 
   contratarServicio(): void {
-    if (!this.servicioAContratar || !this.datosContratacion.habitacionId) {
+    if (!this.servicioAContratar || !this.habitacionId) {
       this.mostrarMensaje('Por favor complete todos los campos requeridos', 'error');
       return;
     }
+    //Logica para contratar un servicio a una reserva existente
+    this.reservaService
+      .contratarServicio(this.servicioAContratar.idServicio, this.habitacionId)
+      .subscribe({
+        next: () => {
+          this.mostrarMensaje('Servicio contratado correctamente', 'exito');
+          this.cerrarModalContratar();
+          this.cargarReservas();
+        },
+        error: () => {
+          this.mostrarMensaje('Error al contratar el servicio', 'error');
+        },
+      });
 
-    console.log('Contratando servicio:', {
-      servicio: this.servicioAContratar,
-      datos: this.datosContratacion,
-    });
-
-    this.mostrarMensaje(
-      `Servicio "${this.servicioAContratar.nombre}" contratado exitosamente`,
-      'exito'
-    );
     this.cerrarModalContratar();
   }
 

@@ -23,15 +23,7 @@ export class ServiciosOperadorComponent implements OnInit {
   filtroId: string = '';
   filtroNombre: string = '';
   filtroTipo: string = 'TODOS';
-  tipos: string[] = [
-    'TODOS',
-    'RESTAURANTE',
-    'SPA',
-    'LAVANDERIA',
-    'TRANSPORTE',
-    'ENTRETENIMIENTO',
-    'OTROS',
-  ];
+  tipos: string[] = ['TODOS'];
 
   // Modales
   modalContratarAbierto: boolean = false;
@@ -60,8 +52,19 @@ export class ServiciosOperadorComponent implements OnInit {
   ngOnInit(): void {
     this.cargarServicios();
     this.cargarReservas();
+    this.cargarTipos();
   }
 
+  cargarTipos(): void {
+    this.serviciosService.findAll().subscribe({
+      next: (data) => {
+        this.tipos = Array.from(new Set(data.map((servicio) => servicio.tipo)));
+      },
+      error: () => console.error('Error al cargar los tipos de servicios'),
+    });
+
+    this.tipos.push('TODOS');
+  }
   cargarServicios(): void {
     this.serviciosService.findAll().subscribe({
       next: (data) => {

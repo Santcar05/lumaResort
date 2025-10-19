@@ -15,6 +15,12 @@ import { HeaderComponent } from '../generales-components/header-component/header
 })
 export class PerfilComponent implements OnInit {
   usuario?: Usuario;
+  modoEdicion: boolean = false;
+
+  // ✅ Notificación
+  mostrarNotificacion: boolean = false;
+  mensajeNotificacion: string = '';
+  tipoNotificacion: 'exito' | 'error' = 'exito';
 
   constructor(
     private clienteService: ClienteService,
@@ -31,12 +37,33 @@ export class PerfilComponent implements OnInit {
     }
   }
 
+  activarEdicion(): void {
+    this.modoEdicion = true;
+  }
+
+  cancelarEdicion(): void {
+    this.modoEdicion = false;
+  }
+
   actualizarCliente(): void {
     if (this.usuario) {
-      this.clienteService.update(this.usuario).subscribe(() => {
-        alert('Perfil actualizado con éxito');
-        this.router.navigate(['/']);
+      this.clienteService.update(this.usuario).subscribe({
+        next: () => {
+          this.mostrarMensaje('✅ Perfil actualizado con éxito', 'exito');
+          this.modoEdicion = false;
+        },
+        error: () => {
+          this.mostrarMensaje('❌ Error al actualizar el perfil', 'error');
+        },
       });
     }
+  }
+
+  // 🔔 Método para mostrar notificación
+  mostrarMensaje(mensaje: string, tipo: 'exito' | 'error' = 'exito') {
+    this.mensajeNotificacion = mensaje;
+    this.tipoNotificacion = tipo;
+    this.mostrarNotificacion = true;
+    setTimeout(() => (this.mostrarNotificacion = false), 2500);
   }
 }

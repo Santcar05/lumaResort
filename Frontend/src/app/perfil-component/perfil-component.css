@@ -44,16 +44,22 @@
   position: relative;
   z-index: 2;
   background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  padding: 3rem 2.5rem;
-  width: 100%;
-  max-width: 600px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(18px);
+  border-radius: 16px;
+  padding: 2rem 1.8rem;
+  margin-top: 100px; /* deja un espacio cómodo debajo del header */
+  width: 90%;
+  max-width: 500px; /* más compacta */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
   color: white;
   text-align: left;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   animation: fadeIn 1.5s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.profile-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
 }
 
 @keyframes fadeIn {
@@ -143,4 +149,71 @@
 
 .white-btn:hover::after {
   left: 100%;
+}
+/* Grupos de información en modo lectura */
+.info-group {
+  margin-bottom: 1.5rem;
+}
+
+.info-group label {
+  display: block;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.3rem;
+}
+
+.info-group p {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  color: white;
+  margin: 0;
+}
+
+/* Contenedor de botones al editar */
+.boton-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+/* 🔔 Notificación flotante */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  color: white;
+  animation: aparecer 0.4s ease-out, desaparecer 0.4s ease-in 2.1s forwards;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.toast.exito {
+  background: linear-gradient(90deg, #2ecc71, #27ae60);
+}
+
+.toast.error {
+  background: linear-gradient(90deg, #e74c3c, #c0392b);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes desaparecer {
+  to {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
 }

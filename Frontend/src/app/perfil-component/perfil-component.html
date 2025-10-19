@@ -1,30 +1,83 @@
 <app-header-component></app-header-component>
+
+<div *ngIf="mostrarNotificacion" class="toast" [ngClass]="tipoNotificacion">
+  {{ mensajeNotificacion }}
+</div>
+
 <div class="profile-background">
   <div class="overlay"></div>
 
   <div *ngIf="usuario" class="profile-card">
     <h2 class="title">Mi Perfil</h2>
 
-    <form (ngSubmit)="actualizarCliente()">
-      <!-- Grupo Nombre -->
+    <!-- MODO LECTURA -->
+    <div *ngIf="!modoEdicion">
+      <div class="info-group">
+        <label>Nombre:</label>
+        <p>{{ usuario.nombre }}</p>
+      </div>
+
+      <div class="info-group">
+        <label>Apellido:</label>
+        <p>{{ usuario.apellido }}</p>
+      </div>
+
+      <div class="info-group">
+        <label>Correo:</label>
+        <p>{{ usuario.correo }}</p>
+      </div>
+
+      <div class="info-group">
+        <label>Cédula:</label>
+        <p>{{ usuario.cedula }}</p>
+      </div>
+
+      <div class="info-group">
+        <label>Teléfono:</label>
+        <p>{{ usuario.telefono }}</p>
+      </div>
+
+      <button class="white-btn" (click)="activarEdicion()">Editar Perfil</button>
+    </div>
+
+    <!-- MODO EDICIÓN -->
+    <form *ngIf="modoEdicion" (ngSubmit)="actualizarCliente()">
       <div class="input-group">
         <label for="nombre">Nombre</label>
         <input type="text" id="nombre" [(ngModel)]="usuario.nombre" name="nombre" required />
       </div>
 
-      <!-- Grupo Apellido -->
       <div class="input-group">
         <label for="apellido">Apellido</label>
         <input type="text" id="apellido" [(ngModel)]="usuario.apellido" name="apellido" required />
       </div>
 
-      <!-- Grupo Email -->
       <div class="input-group">
         <label for="correo">Correo</label>
-        <input type="correo" id="correo" [(ngModel)]="usuario.correo" name="correo" required />
+        <input type="email" id="correo" [(ngModel)]="usuario.correo" name="correo" required />
       </div>
 
-      <button type="submit" class="white-btn">Guardar Cambios</button>
+      <div class="input-group">
+        <label for="cedula">Cédula</label>
+        <input type="text" id="cedula" [(ngModel)]="usuario.cedula" name="cedula" />
+      </div>
+
+      <div class="input-group">
+        <label for="telefono">Teléfono</label>
+        <input type="text" id="telefono" [(ngModel)]="usuario.telefono" name="telefono" />
+      </div>
+
+      <div class="boton-container">
+        <button type="submit" class="white-btn">Guardar Cambios</button>
+        <button
+          type="button"
+          class="white-btn"
+          style="background: #e63946; color: white"
+          (click)="cancelarEdicion()"
+        >
+          Cancelar
+        </button>
+      </div>
     </form>
   </div>
 </div>

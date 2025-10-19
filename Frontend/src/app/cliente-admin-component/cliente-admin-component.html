@@ -1,34 +1,47 @@
 <div class="admin-container">
+  <!-- Notificación flotante -->
+  <div
+    class="notificacion"
+    *ngIf="mostrarNotificacion"
+    [ngClass]="{ exito: tipoNotificacion === 'exito', error: tipoNotificacion === 'error' }"
+  >
+    {{ mensaje }}
+  </div>
+
   <h2 class="titulo">Gestión de Clientes</h2>
 
-  <!-- Crear nuevo cliente -->
-  <div class="card">
-    <div class="card-header">Nuevo Cliente</div>
-    <div class="card-body">
-      <form (ngSubmit)="crearCliente()">
-        <div class="form-group">
-          <label>Nombre:</label>
-          <input type="text" [(ngModel)]="nuevoCliente.nombre" name="nombre" required />
-        </div>
-        <div class="form-group">
-          <label>Apellido:</label>
-          <input type="text" [(ngModel)]="nuevoCliente.apellido" name="apellido" required />
-        </div>
-        <div class="form-group">
-          <label>Correo:</label>
-          <input type="email" [(ngModel)]="nuevoCliente.correo" name="correo" required />
-        </div>
-        <div class="form-group">
-          <label>Cédula:</label>
-          <input type="text" [(ngModel)]="nuevoCliente.cedula" name="cedula" required />
-        </div>
-        <div class="form-group">
-          <label>Teléfono:</label>
-          <input type="text" [(ngModel)]="nuevoCliente.telefono" name="telefono" />
-        </div>
-        <button type="submit" class="btn btn-primary">Crear</button>
-      </form>
-    </div>
+  <!-- Barra de búsqueda -->
+  <div class="form-group" style="text-align: center; margin-bottom: 1.5rem">
+    <p style="font-weight: 600; color: #003366">Buscar clientes por:</p>
+
+    <select
+      [(ngModel)]="categoriaBusqueda"
+      style="width: 25%; display: inline-block; margin-right: 1rem"
+    >
+      <option value="nombre">Nombre</option>
+      <option value="apellido">Apellido</option>
+      <option value="correo">Correo</option>
+      <option value="id">ID</option>
+      <option value="cedula">Cédula</option>
+      <option value="telefono">Teléfono</option>
+    </select>
+
+    <input
+      type="text"
+      placeholder="Ingrese su búsqueda..."
+      [(ngModel)]="filtroBusqueda"
+      class="form-control"
+      style="width: 30%; display: inline-block; margin-right: 1rem"
+    />
+
+    <button class="btn btn-primary" (click)="filtrarClientes()">Buscar</button>
+    <button class="btn btn-secondary" (click)="limpiarFiltro()">Limpiar</button>
+  </div>
+
+  <!-- Crear cliente -->
+  <div class="crear-cliente" style="text-align: center; margin-bottom: 2rem">
+    <p>Si deseas crear un nuevo cliente <span style="font-size: 1.5rem">⬇️</span></p>
+    <button class="btn btn-success" (click)="abrirModal()">Crear cliente</button>
   </div>
 
   <!-- Lista de clientes -->
@@ -49,40 +62,34 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let cliente of clientes">
+          <tr *ngFor="let cliente of clientesFiltrados">
             <td>{{ cliente.idUsuario }}</td>
 
-            <!-- Nombre -->
             <td *ngIf="editando?.idUsuario !== cliente.idUsuario">{{ cliente.nombre }}</td>
             <td *ngIf="editando?.idUsuario === cliente.idUsuario">
-              <input [(ngModel)]="editando!.nombre" name="editNombre{{ cliente.idUsuario }}" />
+              <input [(ngModel)]="editando!.nombre" />
             </td>
 
-            <!-- Apellido -->
             <td *ngIf="editando?.idUsuario !== cliente.idUsuario">{{ cliente.apellido }}</td>
             <td *ngIf="editando?.idUsuario === cliente.idUsuario">
-              <input [(ngModel)]="editando!.apellido" name="editApellido{{ cliente.idUsuario }}" />
+              <input [(ngModel)]="editando!.apellido" />
             </td>
 
-            <!-- Correo -->
             <td *ngIf="editando?.idUsuario !== cliente.idUsuario">{{ cliente.correo }}</td>
             <td *ngIf="editando?.idUsuario === cliente.idUsuario">
-              <input [(ngModel)]="editando!.correo" name="editCorreo{{ cliente.idUsuario }}" />
+              <input [(ngModel)]="editando!.correo" />
             </td>
 
-            <!-- Cedula -->
             <td *ngIf="editando?.idUsuario !== cliente.idUsuario">{{ cliente.cedula }}</td>
             <td *ngIf="editando?.idUsuario === cliente.idUsuario">
-              <input [(ngModel)]="editando!.cedula" name="editCedula{{ cliente.idUsuario }}" />
+              <input [(ngModel)]="editando!.cedula" />
             </td>
 
-            <!-- Telefono -->
             <td *ngIf="editando?.idUsuario !== cliente.idUsuario">{{ cliente.telefono }}</td>
             <td *ngIf="editando?.idUsuario === cliente.idUsuario">
-              <input [(ngModel)]="editando!.telefono" name="editTelefono{{ cliente.idUsuario }}" />
+              <input [(ngModel)]="editando!.telefono" />
             </td>
 
-            <!-- Rol -->
             <td>{{ cliente.rol }}</td>
 
             <td>
@@ -104,6 +111,41 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <!-- Modal flotante -->
+  <div class="modal" *ngIf="modalAbierto">
+    <div class="modal-overlay" (click)="cerrarModal()"></div>
+    <div class="modal-content">
+      <h3>Nuevo Cliente</h3>
+      <form (ngSubmit)="crearCliente()">
+        <div class="form-group">
+          <label>Nombre:</label>
+          <input type="text" [(ngModel)]="nuevoCliente.nombre" name="nombre" required />
+        </div>
+        <div class="form-group">
+          <label>Apellido:</label>
+          <input type="text" [(ngModel)]="nuevoCliente.apellido" name="apellido" required />
+        </div>
+        <div class="form-group">
+          <label>Correo:</label>
+          <input type="email" [(ngModel)]="nuevoCliente.correo" name="correo" required />
+        </div>
+        <div class="form-group">
+          <label>Cédula:</label>
+          <input type="text" [(ngModel)]="nuevoCliente.cedula" name="cedula" required />
+        </div>
+        <div class="form-group">
+          <label>Teléfono:</label>
+          <input type="text" [(ngModel)]="nuevoCliente.telefono" name="telefono" />
+        </div>
+
+        <div style="text-align: center; margin-top: 1.5rem">
+          <button type="submit" class="btn btn-success">Crear</button>
+          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

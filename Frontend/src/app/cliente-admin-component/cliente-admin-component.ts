@@ -13,8 +13,21 @@ import { ClienteService } from '../service/cliente/cliente-service';
 })
 export class ClienteAdminComponent implements OnInit {
   clientes: Usuario[] = [];
+  clientesFiltrados: Usuario[] = [];
   nuevoCliente: Usuario = this.crearNuevoUsuario();
   editando: Usuario | null = null;
+
+  // 🔍 Filtros
+  filtroBusqueda: string = '';
+  categoriaBusqueda: string = 'nombre';
+
+  // 🪟 Modal
+  modalAbierto: boolean = false;
+
+  // 🔔 Notificaciones flotantes
+  mensaje: string = '';
+  mostrarNotificacion: boolean = false;
+  tipoNotificacion: 'exito' | 'error' = 'exito';
 
   constructor(private clienteService: ClienteService) {}
 
@@ -22,7 +35,7 @@ export class ClienteAdminComponent implements OnInit {
     this.cargarClientes();
   }
 
-  // 🔹 Crear una plantilla de usuario vacío
+  // 🧩 Crear objeto base de usuario
   private crearNuevoUsuario(): Usuario {
     return {
       idUsuario: 0,
@@ -38,56 +51,109 @@ export class ClienteAdminComponent implements OnInit {
     };
   }
 
-  // 🔹 Cargar lista de clientes desde el backend
+  // 📥 Cargar lista de clientes
   cargarClientes(): void {
     this.clienteService.findAll().subscribe({
-      next: (data) => (this.clientes = data),
-      error: (err) => console.error('Error al cargar clientes:', err),
+      next: (data) => {
+        this.clientes = data;
+        this.clientesFiltrados = data;
+      },
+      error: () => this.mostrarMensaje('Error al cargar clientes', 'error'),
     });
   }
 
-  // 🔹 Crear nuevo cliente
+  // 🔍 Filtros dinámicos
+  filtrarClientes(): void {
+    const filtro = this.filtroBusqueda.toLowerCase().trim();
+
+    this.clientesFiltrados = this.clientes.filter((c) => {
+      switch (this.categoriaBusqueda) {
+        case 'nombre':
+          return c.nombre?.toLowerCase().includes(filtro);
+        case 'apellido':
+          return c.apellido?.toLowerCase().includes(filtro);
+        case 'correo':
+          return c.correo?.toLowerCase().includes(filtro);
+        case 'id':
+          return c.idUsuario?.toString().includes(filtro);
+        case 'cedula':
+          return c.cedula?.toLowerCase().includes(filtro);
+        case 'telefono':
+          return c.telefono?.toLowerCase().includes(filtro);
+        default:
+          return true;
+      }
+    });
+  }
+
+  limpiarFiltro(): void {
+    this.filtroBusqueda = '';
+    this.categoriaBusqueda = 'nombre';
+    this.clientesFiltrados = this.clientes;
+  }
+
+  // 🪟 MODAL
+  abrirModal(): void {
+    this.modalAbierto = true;
+    document.body.style.overflow = 'hidden'; // evita que se mueva el fondo
+  }
+
+  cerrarModal(): void {
+    this.modalAbierto = false;
+    document.body.style.overflow = 'auto';
+    this.nuevoCliente = this.crearNuevoUsuario();
+  }
+
+  // 🔔 NOTIFICACIONES
+  mostrarMensaje(texto: string, tipo: 'exito' | 'error' = 'exito'): void {
+    this.mensaje = texto;
+    this.tipoNotificacion = tipo;
+    this.mostrarNotificacion = true;
+    setTimeout(() => (this.mostrarNotificacion = false), 2500);
+  }
+
+  // 🧱 CRUD OPERATIONS
   crearCliente(): void {
     if (!this.nuevoCliente.nombre.trim() || !this.nuevoCliente.apellido.trim()) return;
 
     this.clienteService.create(this.nuevoCliente).subscribe({
       next: () => {
         this.cargarClientes();
-        this.nuevoCliente = this.crearNuevoUsuario();
+        this.cerrarModal();
+        this.mostrarMensaje('Cliente creado correctamente');
       },
-      error: (err) => console.error('Error al crear cliente:', err),
+      error: () => this.mostrarMensaje('Error al crear cliente', 'error'),
     });
   }
 
-  // 🔹 Seleccionar cliente para edición
   editarCliente(cliente: Usuario): void {
     this.editando = { ...cliente };
   }
 
-  // 🔹 Guardar cambios en cliente editado
   guardarEdicion(): void {
     if (!this.editando) return;
-
     this.clienteService.update(this.editando).subscribe({
       next: () => {
         this.cargarClientes();
         this.editando = null;
+        this.mostrarMensaje('Cliente actualizado correctamente');
       },
-      error: (err) => console.error('Error al actualizar cliente:', err),
+      error: () => this.mostrarMensaje('Error al actualizar cliente', 'error'),
     });
   }
 
-  // 🔹 Cancelar edición
   cancelarEdicion(): void {
     this.editando = null;
   }
 
-  // 🔹 Eliminar cliente
   eliminarCliente(id: number): void {
     if (confirm('¿Seguro que deseas eliminar este cliente?')) {
       this.clienteService.delete(id).subscribe({
-        next: () => this.cargarClientes(),
-        error: (err) => console.error('Error al eliminar cliente:', err),
+        next: () => {
+          this.cargarClientes();
+          this.mostrarMensaje('Cliente eliminado correctamente');
+        },
+        error: () => this.mostrarMensaje('Error al eliminar cliente', 'error'),
       });
     }
   }

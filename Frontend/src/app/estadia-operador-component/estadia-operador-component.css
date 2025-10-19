@@ -712,6 +712,45 @@
   font-size: 1.2rem;
 }
 
+.paginacion-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+  gap: 1rem;
+}
+
+.btn-paginacion {
+  background: #003366;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-paginacion:hover:not(:disabled) {
+  background: #0055a5;
+}
+
+.btn-paginacion:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.paginacion-info {
+  font-weight: 600;
+  color: #003366;
+}
+
+.rango-resultados {
+  text-align: center;
+  color: #555;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
 @keyframes aparecer {
   from {
     transform: translateY(-20px);

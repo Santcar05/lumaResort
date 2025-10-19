@@ -78,7 +78,7 @@
   <div class="servicios-grid" *ngIf="serviciosFiltrados.length > 0; else sinResultados">
     <div
       class="servicio-card"
-      *ngFor="let servicio of serviciosFiltrados"
+      *ngFor="let servicio of serviciosPaginados"
       [ngClass]="getTipoClass(servicio.tipo)"
     >
       <div class="servicio-header">
@@ -179,6 +179,26 @@
         </button>
       </div>
     </div>
+  </div>
+  <!-- Navegación entre páginas -->
+  <div class="paginacion" *ngIf="totalPaginas > 1">
+    <button
+      class="btn btn-pagina"
+      [disabled]="paginaActual === 1"
+      (click)="cambiarPagina(paginaActual - 1)"
+    >
+      ⬅️ Anterior
+    </button>
+
+    <span class="pagina-info"> Página {{ paginaActual }} de {{ totalPaginas }} </span>
+
+    <button
+      class="btn btn-pagina"
+      [disabled]="paginaActual === totalPaginas"
+      (click)="cambiarPagina(paginaActual + 1)"
+    >
+      Siguiente ➡️
+    </button>
   </div>
 
   <!-- Sin resultados -->

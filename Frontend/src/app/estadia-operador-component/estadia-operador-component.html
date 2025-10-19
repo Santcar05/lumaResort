@@ -75,10 +75,10 @@
   </div>
 
   <!-- Lista de reservas -->
-  <div class="reservas-grid" *ngIf="reservasFiltradas.length > 0; else sinResultados">
+  <div class="reservas-grid" *ngIf="reservasPaginadas.length > 0; else sinResultados">
     <div
       class="reserva-card"
-      *ngFor="let reserva of reservasFiltradas"
+      *ngFor="let reserva of reservasPaginadas"
       [ngClass]="getEstadoClass(reserva.estado)"
     >
       <div class="reserva-header">
@@ -220,6 +220,26 @@
         </button>
       </div>
     </div>
+  </div>
+  <!-- 🔹 Controles de paginación -->
+  <div class="paginacion-container" *ngIf="reservasFiltradas.length > elementosPorPagina">
+    <button
+      class="btn btn-paginacion"
+      [disabled]="paginaActual === 1"
+      (click)="cambiarPagina(paginaActual - 1)"
+    >
+      ⬅️ Anterior
+    </button>
+
+    <span class="paginacion-info"> Página {{ paginaActual }} de {{ totalPaginas() }} </span>
+
+    <button
+      class="btn btn-paginacion"
+      [disabled]="paginaActual === totalPaginas()"
+      (click)="cambiarPagina(paginaActual + 1)"
+    >
+      Siguiente ➡️
+    </button>
   </div>
 
   <!-- Sin resultados -->

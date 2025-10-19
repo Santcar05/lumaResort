@@ -283,4 +283,27 @@ export class ServiciosOperadorComponent implements OnInit {
     const c = Math.min(5, Math.max(0, Math.round(calificacion)));
     return '★'.repeat(c) + '☆'.repeat(5 - c);
   }
+
+  // Variables de paginación
+  paginaActual: number = 1;
+  serviciosPorPagina: number = 6;
+
+  // Devuelve los servicios visibles según la página actual
+  get serviciosPaginados() {
+    const inicio = (this.paginaActual - 1) * this.serviciosPorPagina;
+    const fin = inicio + this.serviciosPorPagina;
+    return this.serviciosFiltrados.slice(inicio, fin);
+  }
+
+  // Número total de páginas
+  get totalPaginas() {
+    return Math.ceil(this.serviciosFiltrados.length / this.serviciosPorPagina);
+  }
+
+  // Cambia la página actual
+  cambiarPagina(nuevaPagina: number) {
+    if (nuevaPagina >= 1 && nuevaPagina <= this.totalPaginas) {
+      this.paginaActual = nuevaPagina;
+    }
+  }
 }

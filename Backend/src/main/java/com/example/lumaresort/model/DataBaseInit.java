@@ -651,25 +651,25 @@ public class Operador {
                 }
          */
         //Crear 10 reservas
-        Reserva reserva1 = new Reserva(new Date(2023, 10, 1), new Date(2023, 10, 5), 2, "Confirmada",
+        Reserva reserva1 = new Reserva(new Date(2023, 10, 1), new Date(2023, 10, 5), 2, "CONFIRMADA",
                 null, habitacion1);
-        Reserva reserva2 = new Reserva(new Date(2023, 11, 10), new Date(2023, 11, 15), 4, "Pendiente",
+        Reserva reserva2 = new Reserva(new Date(2023, 11, 10), new Date(2023, 11, 15), 4, "PENDIENTE",
                 null, habitacion2);
-        Reserva reserva3 = new Reserva(new Date(2023, 12, 20), new Date(2023, 12, 25), 1, "Cancelada",
+        Reserva reserva3 = new Reserva(new Date(2023, 12, 20), new Date(2023, 12, 25), 1, "CANCELADA",
                 null, habitacion3);
-        Reserva reserva4 = new Reserva(new Date(2024, 1, 5), new Date(2024, 1, 10), 3, "Confirmada",
+        Reserva reserva4 = new Reserva(new Date(2024, 1, 5), new Date(2024, 1, 10), 3, "CONFIRMADA",
                 null, habitacion4);
-        Reserva reserva5 = new Reserva(new Date(2024, 2, 14), new Date(2024, 2, 18), 2, "Pendiente",
+        Reserva reserva5 = new Reserva(new Date(2024, 2, 14), new Date(2024, 2, 18), 2, "PENDIENTE",
                 null, habitacion5);
-        Reserva reserva6 = new Reserva(new Date(2024, 3, 1), new Date(2024, 3, 5), 5, "Confirmada",
+        Reserva reserva6 = new Reserva(new Date(2024, 3, 1), new Date(2024, 3, 5), 5, "CONFIRMADA",
                 null, habitacion6);
-        Reserva reserva7 = new Reserva(new Date(2024, 4, 10), new Date(2024, 4, 15), 2, "Cancelada",
+        Reserva reserva7 = new Reserva(new Date(2024, 4, 10), new Date(2024, 4, 15), 2, "CANCELADA",
                 null, habitacion7);
-        Reserva reserva8 = new Reserva(new Date(2024, 5, 20), new Date(2024, 5, 25), 4, "Confirmada",
+        Reserva reserva8 = new Reserva(new Date(2024, 5, 20), new Date(2024, 5, 25), 4, "CONFIRMADA",
                 null, habitacion8);
-        Reserva reserva9 = new Reserva(new Date(2024, 6, 15), new Date(2024, 6, 20), 1, "Pendiente",
+        Reserva reserva9 = new Reserva(new Date(2024, 6, 15), new Date(2024, 6, 20), 1, "PENDIENTE",
                 null, habitacion9);
-        Reserva reserva10 = new Reserva(new Date(2024, 7, 1), new Date(2024, 7, 5), 3, "Confirmada",
+        Reserva reserva10 = new Reserva(new Date(2024, 7, 1), new Date(2024, 7, 5), 3, "CONFIRMADA",
                 null, habitacion10);
         // Aquí puedes guardar las reservas en su repositorio correspondiente si lo tienes
         reservaRepository.save(reserva1);

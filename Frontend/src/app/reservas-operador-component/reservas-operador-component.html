@@ -69,7 +69,7 @@
   <div class="reservas-grid" *ngIf="reservasFiltradas.length > 0; else sinResultados">
     <div
       class="reserva-card"
-      *ngFor="let reserva of reservasFiltradas"
+      *ngFor="let reserva of reservasPaginadas"
       [ngClass]="getEstadoClass(reserva.estado)"
     >
       <div class="reserva-header">
@@ -129,6 +129,27 @@
         </button>
       </div>
     </div>
+  </div>
+
+  <!-- Paginación -->
+  <div class="paginacion" *ngIf="totalPaginas > 1">
+    <button
+      class="btn-paginacion"
+      [disabled]="paginaActual === 1"
+      (click)="cambiarPagina(paginaActual - 1)"
+    >
+      ⬅️ Anterior
+    </button>
+
+    <span class="pagina-info"> Página {{ paginaActual }} de {{ totalPaginas }} </span>
+
+    <button
+      class="btn-paginacion"
+      [disabled]="paginaActual === totalPaginas"
+      (click)="cambiarPagina(paginaActual + 1)"
+    >
+      Siguiente ➡️
+    </button>
   </div>
 
   <!-- Mensaje cuando no hay resultados -->

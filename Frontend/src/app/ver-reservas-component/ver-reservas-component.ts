@@ -65,9 +65,9 @@ export class VerReservasComponent implements OnInit {
 
   getEstadoClase(estado: string): string {
     const e = estado.toLowerCase();
-    if (e.includes('cancelada')) return 'estado-cancelada';
-    if (e.includes('pendiente')) return 'estado-pendiente';
-    if (e.includes('confirmada')) return 'estado-confirmada';
+    if (e.includes('CANCELADA')) return 'estado-cancelada';
+    if (e.includes('PENDIENTE')) return 'estado-pendiente';
+    if (e.includes('CONFIRMADA')) return 'estado-confirmada';
     return 'estado-otro';
   }
 

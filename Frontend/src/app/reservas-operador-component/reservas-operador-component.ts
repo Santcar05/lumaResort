@@ -39,6 +39,7 @@ export class ReservasOperadorComponent implements OnInit {
       next: (data) => {
         this.reservas = data;
         this.reservasFiltradas = data;
+        this.actualizarPaginacion();
         this.mostrarMensaje(`${data.length} reservas cargadas correctamente`, 'info');
       },
       error: () => this.mostrarMensaje('Error al cargar las reservas', 'error'),
@@ -51,17 +52,20 @@ export class ReservasOperadorComponent implements OnInit {
 
     this.reservasFiltradas = this.reservas.filter((reserva) => {
       const coincideId = idFiltro ? reserva.idReserva.toString().includes(idFiltro) : true;
-
       const coincideEstado = estadoFiltro === 'Todas' ? true : reserva.estado === estadoFiltro;
-
       return coincideId && coincideEstado;
     });
+
+    this.paginaActual = 1; // Reinicia a la primera página
+    this.actualizarPaginacion();
   }
 
   limpiarFiltros(): void {
     this.filtroId = '';
     this.filtroEstado = 'Todas';
     this.reservasFiltradas = this.reservas;
+    this.paginaActual = 1;
+    this.actualizarPaginacion();
   }
 
   confirmarEliminacion(reserva: Reserva): void {
@@ -126,5 +130,26 @@ export class ReservasOperadorComponent implements OnInit {
       month: '2-digit',
       year: 'numeric',
     });
+  }
+
+  // --- Paginación ---
+  paginaActual: number = 1;
+  reservasPorPagina: number = 6;
+  totalPaginas: number = 1;
+
+  get reservasPaginadas(): Reserva[] {
+    const inicio = (this.paginaActual - 1) * this.reservasPorPagina;
+    const fin = inicio + this.reservasPorPagina;
+    return this.reservasFiltradas.slice(inicio, fin);
+  }
+
+  actualizarPaginacion(): void {
+    this.totalPaginas = Math.ceil(this.reservasFiltradas.length / this.reservasPorPagina);
+    if (this.paginaActual > this.totalPaginas) this.paginaActual = this.totalPaginas || 1;
+  }
+
+  cambiarPagina(pagina: number): void {
+    if (pagina < 1 || pagina > this.totalPaginas) return;
+    this.paginaActual = pagina;
   }
 }

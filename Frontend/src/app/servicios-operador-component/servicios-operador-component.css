@@ -787,6 +787,40 @@
   box-shadow: none !important;
 }
 
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.btn-pagina {
+  background-color: #0055aa;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-pagina:hover {
+  background-color: #003366;
+  transform: translateY(-2px);
+}
+
+.btn-pagina:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagina-info {
+  font-weight: bold;
+  color: #003366;
+}
+
 @keyframes aparecer {
   from {
     transform: translateY(-20px);

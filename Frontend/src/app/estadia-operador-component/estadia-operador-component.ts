@@ -16,7 +16,12 @@ import { PagoService } from '../service/pago/pago-service';
 export class EstadiaOperadorComponent implements OnInit {
   reservas: Reserva[] = [];
   reservasFiltradas: Reserva[] = [];
+  reservasPaginadas: Reserva[] = [];
   pagos: Pago[] = [];
+
+  // Paginación
+  paginaActual: number = 1;
+  elementosPorPagina: number = 4;
 
   // Filtros
   filtroId: string = '';
@@ -57,6 +62,7 @@ export class EstadiaOperadorComponent implements OnInit {
       next: (data) => {
         this.reservas = data;
         this.reservasFiltradas = data;
+        this.actualizarPaginacion();
         this.mostrarMensaje(`${data.length} reservas cargadas correctamente`, 'info');
       },
       error: () => this.mostrarMensaje('Error al cargar las reservas', 'error'),
@@ -86,6 +92,8 @@ export class EstadiaOperadorComponent implements OnInit {
 
       return coincideId && coincideHabitacion && coincideEstado;
     });
+    this.paginaActual = 1;
+    this.actualizarPaginacion();
   }
 
   limpiarFiltros(): void {
@@ -93,6 +101,22 @@ export class EstadiaOperadorComponent implements OnInit {
     this.filtroHabitacion = '';
     this.filtroEstado = 'TODAS';
     this.reservasFiltradas = this.reservas;
+  }
+  actualizarPaginacion(): void {
+    const inicio = (this.paginaActual - 1) * this.elementosPorPagina;
+    const fin = inicio + this.elementosPorPagina;
+    this.reservasPaginadas = this.reservasFiltradas.slice(inicio, fin);
+  }
+
+  totalPaginas(): number {
+    return Math.ceil(this.reservasFiltradas.length / this.elementosPorPagina);
+  }
+
+  cambiarPagina(pagina: number): void {
+    if (pagina >= 1 && pagina <= this.totalPaginas()) {
+      this.paginaActual = pagina;
+      this.actualizarPaginacion();
+    }
   }
 
   // Calcular total de la cuenta de una reserva

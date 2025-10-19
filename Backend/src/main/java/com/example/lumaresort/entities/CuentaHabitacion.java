@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -52,15 +50,16 @@ public class CuentaHabitacion {
     private List<Servicio> servicios;
 
     // Una cuenta puede tener varios pagos
+    /* 
     @JsonIgnore
     @OneToMany(mappedBy = "cuentaHabitacion", cascade = CascadeType.ALL)
     private List<Pago> pagos;
-
+     */
     public CuentaHabitacion(float total, List<Habitacion> habitaciones, List<Servicio> servicios, List<Pago> pagos) {
         this.total = total;
         this.habitaciones = habitaciones;
         this.servicios = servicios;
-        this.pagos = pagos;
+        // this.pagos = pagos;
     }
 
     public CuentaHabitacion(float total) {

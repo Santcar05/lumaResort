@@ -217,15 +217,12 @@ export class EstadiaOperadorComponent implements OnInit {
     if (!this.reservaSeleccionada) return;
 
     const pago: Pago = {
-      idPago: 0,
       monto: this.datosPago.monto,
       fecha: new Date(),
       estado: 'COMPLETADO',
-      reserva: this.reservaSeleccionada,
-      metodoPago: {
-        idMetodo: 0,
-        nombre: this.datosPago.metodoPago,
-      },
+      metodoPago: this.datosPago.metodoPago,
+
+      reserva: { idReserva: this.reservaSeleccionada.idReserva } as Reserva,
     };
 
     this.pagoService.create(pago).subscribe({
@@ -280,8 +277,8 @@ export class EstadiaOperadorComponent implements OnInit {
       return;
     }
 
-    // Aquí podrías implementar lógica adicional para "limpiar" la cuenta
-    this.mostrarMensaje('Cuenta limpiada correctamente', 'exito');
+    // Lógica  para "limpiar" la cuenta
+    
   }
 
   // Utilidades

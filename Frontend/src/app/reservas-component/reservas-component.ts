@@ -164,9 +164,7 @@ export class ReservasComponent implements OnInit {
       }
     }
 
-    // 🔹 INICIO CORRECCIÓN: volver a filtrar cuando cambian las fechas
     this.filtrarHabitacionesDisponibles();
-    // 🔹 FIN CORRECCIÓN
   }
 
   get diasEstancia(): number {
@@ -177,7 +175,7 @@ export class ReservasComponent implements OnInit {
   }
 
   /** ------------------ FILTRO DE DISPONIBILIDAD ------------------ **/
-  // 🔹 INICIO CORRECCIÓN: función nueva para filtrar habitaciones según reservas existentes
+  // función nueva para filtrar habitaciones según reservas existentes
   filtrarHabitacionesDisponibles(): void {
     const inicio = new Date(this.fechaInicio);
     const fin = new Date(this.fechaFin);
@@ -208,13 +206,10 @@ export class ReservasComponent implements OnInit {
 
     this.habitacionSeleccionada = null;
   }
-  // 🔹 FIN CORRECCIÓN
 
   /** ------------------ FILTRO DE TIPO DE HABITACIÓN ------------------ **/
   filtrarHabitacionesPorTipo(): void {
-    // 🔹 INICIO CORRECCIÓN: reutilizamos la función general de disponibilidad
     this.filtrarHabitacionesDisponibles();
-    // 🔹 FIN CORRECCIÓN
   }
 
   /** ------------------ MANEJO DE FORMULARIO ------------------ **/

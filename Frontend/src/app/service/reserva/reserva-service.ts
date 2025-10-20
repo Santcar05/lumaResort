@@ -49,4 +49,8 @@ export class ReservaService {
   getHabitacionesDisponibles(idServicio: number): Observable<Habitacion[]> {
     return this.http.get<Habitacion[]>(`${this.apiUrl}/habitaciones/disponibles/${idServicio}`);
   }
+
+  cancelarReserva(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/cancelar/${id}`, {});
+  }
 }

@@ -62,7 +62,7 @@ export class VerReservasComponent implements OnInit {
     if (!confirmar) return;
 
     this.http
-      .put(`${this.baseUrlReservas}/cancelar/${idReserva}`, null)
+      .put(`${this.baseUrlReservas}/cancelar/${idReserva}`, {}, { responseType: 'text' })
       .pipe(
         catchError((err) => {
           console.error('Error al cancelar reserva:', err);
@@ -72,7 +72,7 @@ export class VerReservasComponent implements OnInit {
       )
       .subscribe((resp) => {
         if (resp !== null) {
-          alert('Reserva cancelada correctamente ✅');
+          alert('Reserva cancelada correctamente');
           this.cargarReservas();
         }
       });

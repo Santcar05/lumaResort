@@ -2,8 +2,10 @@ package com.example.lumaresort.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +21,11 @@ import com.example.lumaresort.entities.Reserva;
 import com.example.lumaresort.entities.Servicio;
 import com.example.lumaresort.entities.Usuario;
 import com.example.lumaresort.repository.HabitacionRepository;
+import com.example.lumaresort.repository.ReservaRepository;
 import com.example.lumaresort.repository.ServicioRepository;
 import com.example.lumaresort.repository.UsuarioRepository;
 import com.example.lumaresort.service.ReservaService;
+
 
 @RestController
 @RequestMapping("/reservas")
@@ -30,6 +34,8 @@ public class ReservaController {
 
     @Autowired
     private ReservaService reservaService;
+    @Autowired
+    private ReservaRepository reservaRepository;
     @Autowired
     private UsuarioRepository usuarioRepository;
     @Autowired
@@ -108,5 +114,20 @@ public class ReservaController {
     public List<Habitacion> obtenerHabitacionesDisponibles(@PathVariable Long idServicio) {
         return reservaService.obtenerHabitacionesDisponiblesParaServicio(idServicio);
     }
+
+    @PutMapping("/cancelar/{id}")
+    public ResponseEntity<?> cancelarReserva(@PathVariable Long id) {
+    Optional<Reserva> reservaOpt = reservaRepository.findById(id);
+
+    if (reservaOpt.isEmpty()) {
+        return ResponseEntity.notFound().build();
+    }
+
+    Reserva reserva = reservaOpt.get();
+    reserva.setEstado("Cancelada");
+    reservaRepository.save(reserva);
+
+    return ResponseEntity.ok("Reserva cancelada correctamente");
+}
 
 }

@@ -70,6 +70,15 @@
               r.habitacion?.precioPorNoche || 0 | currency : 'COP' : 'symbol' : '1.0-0'
             }}</strong>
           </span>
+
+          <!-- Botón Cancelar Reserva -->
+          <button
+            *ngIf="r.estado.toLowerCase() !== 'cancelada'"
+            class="btn-cancelar"
+            (click)="cancelarReserva(r.idReserva)"
+          >
+            ❌ Cancelar reserva
+          </button>
         </div>
       </div>
     </div>

@@ -157,6 +157,24 @@
   font-weight: 600;
 }
 
+/* ===== Botón Cancelar ===== */
+.btn-cancelar {
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.4);
+  color: #ff6b6b;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 1rem;
+}
+
+.btn-cancelar:hover {
+  background: rgba(244, 67, 54, 0.2);
+  transform: scale(1.05);
+}
+
 /* ===== Mensaje vacío ===== */
 .empty-message {
   text-align: center;

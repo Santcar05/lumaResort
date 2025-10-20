@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { HeaderComponent } from '../generales-components/header-component/header-component';
 import { Reserva } from '../Models/Reserva';
-import { Usuario } from '../Models/Usuario';
 import { catchError, of } from 'rxjs';
 
 @Component({
@@ -33,7 +32,6 @@ export class VerReservasComponent implements OnInit {
         this.cargarReservas();
       }
     } else {
-      //Llevamos al login
       this.router.navigate(['/login']);
     }
   }
@@ -59,15 +57,36 @@ export class VerReservasComponent implements OnInit {
       });
   }
 
+  cancelarReserva(idReserva: number): void {
+    const confirmar = confirm('¿Seguro que deseas cancelar esta reserva?');
+    if (!confirmar) return;
+
+    this.http
+      .put(`${this.baseUrlReservas}/cancelar/${idReserva}`, null)
+      .pipe(
+        catchError((err) => {
+          console.error('Error al cancelar reserva:', err);
+          alert('No se pudo cancelar la reserva. Inténtalo más tarde.');
+          return of(null);
+        })
+      )
+      .subscribe((resp) => {
+        if (resp !== null) {
+          alert('Reserva cancelada correctamente ✅');
+          this.cargarReservas();
+        }
+      });
+  }
+
   volver(): void {
     this.router.navigate(['/']);
   }
 
   getEstadoClase(estado: string): string {
     const e = estado.toLowerCase();
-    if (e.includes('CANCELADA')) return 'estado-cancelada';
-    if (e.includes('PENDIENTE')) return 'estado-pendiente';
-    if (e.includes('CONFIRMADA')) return 'estado-confirmada';
+    if (e.includes('cancelada')) return 'estado-cancelada';
+    if (e.includes('pendiente')) return 'estado-pendiente';
+    if (e.includes('confirmada')) return 'estado-confirmada';
     return 'estado-otro';
   }
 

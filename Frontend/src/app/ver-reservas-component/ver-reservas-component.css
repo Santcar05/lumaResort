@@ -152,12 +152,41 @@
 .reserva-footer {
   border-top: 1px solid rgba(90, 168, 255, 0.2);
   padding-top: 1rem;
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.reserva-total {
   color: #5aa8ff;
   font-weight: 600;
 }
 
-/* ===== Botón Cancelar ===== */
+.reserva-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ===== Botones de Acción ===== */
+.btn-actualizar {
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.4);
+  color: #ffc107;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-actualizar:hover {
+  background: rgba(255, 193, 7, 0.2);
+  transform: scale(1.05);
+}
+
 .btn-cancelar {
   background: rgba(244, 67, 54, 0.1);
   border: 1px solid rgba(244, 67, 54, 0.4);
@@ -167,7 +196,6 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-left: 1rem;
 }
 
 .btn-cancelar:hover {
@@ -187,4 +215,216 @@
   display: block;
   font-size: 2rem;
   margin-bottom: 1rem;
+}
+
+/* ===== Modal de Actualización ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.actualizar-modal {
+  background: linear-gradient(135deg, #1a2f4f 0%, #1e3657 100%);
+  border: 1px solid rgba(90, 168, 255, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(90, 168, 255, 0.2);
+}
+
+.modal-title {
+  color: #fff;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-body {
+  margin-bottom: 2rem;
+}
+
+.reserva-info {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.reserva-info p {
+  margin: 0.5rem 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.fechas-anteriores {
+  color: #ffc107 !important;
+  font-style: italic;
+}
+
+.calendario-actualizar h4 {
+  color: #5aa8ff;
+  margin-bottom: 1rem;
+}
+
+.date-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid rgba(90, 168, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 1rem;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #5aa8ff;
+  box-shadow: 0 0 0 2px rgba(90, 168, 255, 0.2);
+}
+
+.info-badge {
+  background: rgba(90, 168, 255, 0.1);
+  border: 1px solid rgba(90, 168, 255, 0.3);
+  border-radius: 8px;
+  padding: 0.8rem;
+  text-align: center;
+  color: #5aa8ff;
+  font-weight: 600;
+}
+
+.info-icon {
+  margin-right: 0.5rem;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(90, 168, 255, 0.2);
+}
+
+.btn-cancelar-modal {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cancelar-modal:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-actualizar-modal {
+  background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+  border: none;
+  color: #000;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-actualizar-modal:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+}
+
+.btn-actualizar-modal:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.loading-mini {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .date-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reserva-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .reserva-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+  }
+
+  .btn-cancelar-modal,
+  .btn-actualizar-modal {
+    width: 100%;
+  }
 }

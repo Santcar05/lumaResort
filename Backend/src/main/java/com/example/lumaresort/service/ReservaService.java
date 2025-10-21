@@ -69,48 +69,54 @@ public class ReservaService {
 
     @Transactional
     public Reserva contratarServicio(Long idServicio, Long idHabitacion) {
-        Reserva reserva = reservaRepository.findByHabitacionIdHabitacion(idHabitacion);
-        Servicio servicio = servicioRepository.findById(idServicio).orElse(null);
+    // Cambia esto:
+    // Reserva reserva = reservaRepository.findByHabitacionIdHabitacion(idHabitacion);
+    
+    // Por esto (toma la primera reserva de la lista):
+    List<Reserva> reservas = reservaRepository.findByHabitacionIdHabitacion(idHabitacion);
+    Reserva reserva = reservas.isEmpty() ? null : reservas.get(0);
+    
+    Servicio servicio = servicioRepository.findById(idServicio).orElse(null);
 
-        if (reserva == null) {
-            throw new RuntimeException("No se encontró la reserva con idHabitacion de ID: " + idHabitacion);
-        }
-
-        if (servicio == null) {
-            throw new RuntimeException("No se encontró el servicio con ID: " + idServicio);
-        }
-
-        // Inicializar la lista de servicios si está vacía
-        if (reserva.getServicios() == null) {
-            reserva.setServicios(new ArrayList<>());
-        }
-
-        reserva.getServicios().add(servicio);
-        return reservaRepository.save(reserva);
+    if (reserva == null) {
+        throw new RuntimeException("No se encontró la reserva con idHabitacion de ID: " + idHabitacion);
     }
+
+    if (servicio == null) {
+        throw new RuntimeException("No se encontró el servicio con ID: " + idServicio);
+    }
+
+    // Inicializar la lista de servicios si está vacía
+    if (reserva.getServicios() == null) {
+        reserva.setServicios(new ArrayList<>());
+    }
+
+    reserva.getServicios().add(servicio);
+    return reservaRepository.save(reserva);
+}
 
     //Habitaciones que están reservadas pero sin el servicio indicado
     public List<Habitacion> obtenerHabitacionesDisponiblesParaServicio(Long idServicio) {
-        //Ahora colocar todas las habitaciones disponibles para ese servicio (Se sabe a traves de las reservas)
-        List<Reserva> reservasServicio = reservaRepository.findByServiciosIdServicio(idServicio);
-        List<Reserva> reservasTotales = reservaRepository.findAll();
-        //Filtrar las habitaciones reservadas y que no tengan ese servicio
-        List<Habitacion> resultados = new ArrayList<>();
+    List<Reserva> reservasServicio = reservaRepository.findByServiciosIdServicio(idServicio);
+    List<Reserva> reservasTotales = reservaRepository.findAll();
+    
+    List<Habitacion> resultados = new ArrayList<>();
 
-        boolean existeServicio = false;
-        for (Reserva r : reservasTotales) {
-            for (Reserva r2 : reservasServicio) {
-                if (r.getHabitacion().getIdHabitacion() == r2.getHabitacion().getIdHabitacion()) {
-                    existeServicio = true;
-                }
+    boolean existeServicio = false;
+    for (Reserva r : reservasTotales) {
+        for (Reserva r2 : reservasServicio) {
+            if (r.getHabitacion().getIdHabitacion().equals(r2.getHabitacion().getIdHabitacion())) {
+                existeServicio = true;
+                break; // Agregar break para optimizar
             }
-            if (!existeServicio) {
-                resultados.add(r.getHabitacion());
-            }
-            existeServicio = false;
         }
-
-        return resultados;
+        if (!existeServicio) {
+            resultados.add(r.getHabitacion());
+        }
+        existeServicio = false;
     }
+
+    return resultados;
+}
 
 }

@@ -27,6 +27,13 @@ export class ReservaService {
     return this.http.put<Reserva>(`${this.apiUrl}/${reserva.idReserva!}`, reserva);
   }
 
+  // CORRECCIÓN: Método para actualizar fechas de reserva - permitir respuesta de texto
+  actualizarReserva(id: number, reservaActualizada: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/actualizar/${id}`, reservaActualizada, {
+      responseType: 'text' as 'json', // CORRECCIÓN IMPORTANTE: Permitir respuesta de texto
+    });
+  }
+
   // Eliminar una reserva por ID
   delete(id: number): Observable<void> {
     console.log('Eliminando reserva con ID:', id);
@@ -50,7 +57,14 @@ export class ReservaService {
     return this.http.get<Habitacion[]>(`${this.apiUrl}/habitaciones/disponibles/${idServicio}`);
   }
 
+  // CORRECCIÓN: También para cancelarReserva por si acaso
   cancelarReserva(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/cancelar/${id}`, {});
+    return this.http.put(
+      `${this.apiUrl}/cancelar/${id}`,
+      {},
+      {
+        responseType: 'text' as 'json',
+      }
+    );
   }
 }

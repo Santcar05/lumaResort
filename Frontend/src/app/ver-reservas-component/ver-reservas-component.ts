@@ -6,6 +6,7 @@ import { HeaderComponent } from '../generales-components/header-component/header
 import { Reserva } from '../Models/Reserva';
 import { catchError, of } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { ReservaService } from '../service/reserva/reserva-service';
 
 @Component({
   selector: 'app-ver-reservas-component',
@@ -30,7 +31,11 @@ export class VerReservasComponent implements OnInit {
 
   private baseUrlReservas = 'http://localhost:8080/reservas';
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private reservaService: ReservaService
+  ) {
     const today = new Date();
     this.fechaMinima = today.toISOString().split('T')[0];
   }
@@ -73,8 +78,8 @@ export class VerReservasComponent implements OnInit {
     const confirmar = confirm('¿Seguro que deseas cancelar esta reserva?');
     if (!confirmar) return;
 
-    this.http
-      .put(`${this.baseUrlReservas}/cancelar/${idReserva}`, {}, { responseType: 'text' })
+    this.reservaService
+      .cancelarReserva(idReserva)
       .pipe(
         catchError((err) => {
           console.error('Error al cancelar reserva:', err);
@@ -129,48 +134,91 @@ export class VerReservasComponent implements OnInit {
     return Math.max(0, Math.ceil((fin.getTime() - inicio.getTime()) / (1000 * 60 * 60 * 24)));
   }
 
-  // Nueva función para actualizar la reserva
+  // CORRECCIÓN: Función para actualizar la reserva con mejor manejo de respuestas
   actualizarReserva(): void {
     if (!this.reservaAActualizar || this.procesandoActualizacion) return;
 
-    const confirmar = confirm(`¿Seguro que deseas actualizar las fechas de esta reserva?
-    
-Fecha anterior: ${this.formatoFecha(this.reservaAActualizar.fechaInicio)} - ${this.formatoFecha(
-      this.reservaAActualizar.fechaFin
-    )}
-Nueva fecha: ${this.formatoFecha(this.nuevaFechaInicio)} - ${this.formatoFecha(
-      this.nuevaFechaFin
-    )}`);
+    const confirmar = confirm(
+      `¿Seguro que deseas actualizar las fechas de esta reserva?\n\nFecha anterior: ${this.formatoFecha(
+        this.reservaAActualizar.fechaInicio
+      )} - ${this.formatoFecha(this.reservaAActualizar.fechaFin)}\nNueva fecha: ${this.formatoFecha(
+        this.nuevaFechaInicio
+      )} - ${this.formatoFecha(this.nuevaFechaFin)}`
+    );
 
     if (!confirmar) return;
 
     this.procesandoActualizacion = true;
 
+    // Convertir las fechas a objetos Date para el backend
+    const fechaInicioDate = new Date(this.nuevaFechaInicio);
+    const fechaFinDate = new Date(this.nuevaFechaFin);
+
+    // CORRECCIÓN: Asegurar que los nombres de campos coincidan exactamente con el DTO
     const reservaActualizada = {
-      ...this.reservaAActualizar,
-      fechaInicio: this.nuevaFechaInicio,
-      fechaFin: this.nuevaFechaFin,
+      fechaInicio: fechaInicioDate,
+      fechaFin: fechaFinDate,
+      cantidadPersonas: this.reservaAActualizar.cantidadPersonas,
+      estado: this.reservaAActualizar.estado,
+      idUsuario: this.reservaAActualizar.usuario?.idUsuario,
+      idHabitacion: this.reservaAActualizar.habitacion?.idHabitacion,
     };
 
-    this.http
-      .put(
-        `${this.baseUrlReservas}/actualizar/${this.reservaAActualizar.idReserva}`,
-        reservaActualizada
-      )
+    console.log('=== DEBUG ACTUALIZACIÓN ===');
+    console.log('ID Reserva:', this.reservaAActualizar.idReserva);
+    console.log('Datos enviados:', reservaActualizada);
+    console.log('JSON enviado:', JSON.stringify(reservaActualizada));
+
+    this.reservaService
+      .actualizarReserva(this.reservaAActualizar.idReserva, reservaActualizada)
       .pipe(
         catchError((err) => {
-          console.error('Error al actualizar reserva:', err);
-          alert('No se pudo actualizar la reserva. Inténtalo más tarde.');
+          console.error('=== ERROR COMPLETO ===', err);
+          console.error('Status:', err.status);
+          console.error('URL:', err.url);
+
+          let errorMsg = 'No se pudo actualizar la reserva. Inténtalo más tarde.';
+          if (err.error) {
+            // Manejar diferentes formatos de error
+            if (typeof err.error === 'string') {
+              errorMsg = err.error;
+            } else if (err.error.message) {
+              errorMsg = err.error.message;
+            } else if (err.error.error) {
+              errorMsg = err.error.error;
+            }
+          }
+
+          alert('Error: ' + errorMsg);
           this.procesandoActualizacion = false;
           return of(null);
         })
       )
       .subscribe((resp: any) => {
+        console.log('=== RESPUESTA DEL SERVIDOR ===', resp);
         this.procesandoActualizacion = false;
+
         if (resp) {
-          alert('Reserva actualizada correctamente');
-          this.cerrarCalendarioActualizar();
-          this.cargarReservas();
+          // CORRECCIÓN: Manejar tanto respuesta JSON como texto plano
+          if (typeof resp === 'string') {
+            // Si la respuesta es texto plano (para compatibilidad con versiones anteriores)
+            console.log('Respuesta del servidor (texto):', resp);
+            alert('Reserva actualizada correctamente');
+            this.cerrarCalendarioActualizar();
+            this.cargarReservas();
+          } else if (resp.success !== false) {
+            // Si la respuesta es JSON con campo success
+            console.log('Respuesta del servidor (JSON):', resp);
+            alert(resp.message || 'Reserva actualizada correctamente');
+            this.cerrarCalendarioActualizar();
+            this.cargarReservas();
+          } else {
+            // Si hay error en la respuesta JSON
+            alert(resp.message || 'Error al actualizar la reserva');
+          }
+        } else {
+          console.log('Respuesta vacía o nula del servidor');
+          alert('No se recibió respuesta del servidor');
         }
       });
   }

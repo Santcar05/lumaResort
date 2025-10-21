@@ -34,7 +34,7 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idReserva;
 
-    @Temporal(TemporalType.DATE) // o TIMESTAMP si quieres fecha y hora
+    @Temporal(TemporalType.DATE)
     private Date fechaInicio;
 
     @Temporal(TemporalType.DATE)
@@ -47,7 +47,7 @@ public class Reserva {
     // Relación con Cliente: muchas reservas pueden pertenecer a un cliente
     @JsonIgnoreProperties({"reservas", "historial", "cliente", "administrador", "operador"})
     @ManyToOne
-    @JoinColumn(name = "usuario_id") // opcionalmente cambia el nombre de la columna
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     @JsonIgnoreProperties({"reservas"})
@@ -56,7 +56,7 @@ public class Reserva {
     private Habitacion habitacion;
 
     //Conjunto de servicios
-    @JsonIgnoreProperties({"reservas"}) // evita bucle infinito al devolver JSON
+    @JsonIgnoreProperties({"reservas"})
     @ManyToMany
     @JoinTable(
             name = "reserva_servicio",
@@ -86,4 +86,18 @@ public class Reserva {
         this.servicios = servicios;
     }
 
+    // CORRECCIÓN: toString() simplificado para evitar StackOverflowError
+    @Override
+    public String toString() {
+        return "Reserva{" +
+                "idReserva=" + idReserva +
+                ", fechaInicio=" + fechaInicio +
+                ", fechaFin=" + fechaFin +
+                ", cantidadPersonas=" + cantidadPersonas +
+                ", estado='" + estado + '\'' +
+                ", habitacionId=" + (habitacion != null ? habitacion.getIdHabitacion() : null) +
+                ", usuarioId=" + (usuario != null ? usuario.getIdUsuario() : null) +
+                ", serviciosCount=" + (servicios != null ? servicios.size() : 0) +
+                '}';
+    }
 }

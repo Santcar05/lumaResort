@@ -30,6 +30,28 @@
     </div>
   </div>
 
+  <!-- Filtro de Reservas (basado en reserva-component) -->
+  <div *ngIf="!loading && !errorMsg" class="filtro-section">
+    <div class="form-section-group">
+      <h3 class="section-subtitle">Filtrar por Estado</h3>
+      <div class="form-group">
+        <label class="form-label">
+          <span class="label-icon">🏷️</span>
+          Selecciona el estado que deseas ver
+        </label>
+        <select class="form-input" [(ngModel)]="filtroEstado" (change)="aplicarFiltro()">
+          <option value="TODAS">Todas</option>
+          <option value="CONFIRMADA">Confirmada</option>
+          <option value="CANCELADA">Cancelada</option>
+          <option value="FINALIZADA">Finalizada</option>
+        </select>
+      </div>
+      <div class="filtro-info">
+        <p>Mostrando {{ reservasFiltradas.length }} de {{ reservas.length }} reservas</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Listado de Reservas -->
   <div *ngIf="!loading && !errorMsg" class="reservas-lista">
     <div *ngIf="reservas.length === 0" class="empty-message">
@@ -38,7 +60,7 @@
     </div>
 
     <div class="reservas-grid" *ngIf="reservas.length > 0">
-      <div class="reserva-card" *ngFor="let r of reservas">
+      <div class="reserva-card" *ngFor="let r of reservasFiltradas">
         <div class="reserva-header">
           <span class="reserva-id">#{{ r.idReserva }}</span>
           <span class="reserva-estado" [ngClass]="getEstadoClase(r.estado)">
@@ -70,7 +92,114 @@
               r.habitacion?.precioPorNoche || 0 | currency : 'COP' : 'symbol' : '1.0-0'
             }}</strong>
           </span>
+
+          <div class="reserva-actions">
+            <!-- Botón Actualizar Reserva -->
+            <button
+              *ngIf="r.estado.toLowerCase() !== 'cancelada'"
+              class="btn-actualizar"
+              (click)="abrirCalendarioActualizar(r)"
+            >
+              ✏️ Actualizar reserva
+            </button>
+
+            <!-- Botón Cancelar Reserva -->
+            <button
+              *ngIf="r.estado.toLowerCase() !== 'cancelada'"
+              class="btn-cancelar"
+              (click)="cancelarReserva(r.idReserva)"
+            >
+              ❌ Cancelar reserva
+            </button>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Actualización de Reserva -->
+  <div
+    class="modal-overlay"
+    *ngIf="mostrarCalendarioActualizar"
+    (click)="cerrarCalendarioActualizar()"
+  >
+    <div class="modal-content actualizar-modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">📅 Actualizar Fechas de Reserva</h3>
+        <button class="modal-close" (click)="cerrarCalendarioActualizar()">×</button>
+      </div>
+
+      <div class="modal-body" *ngIf="reservaAActualizar">
+        <div class="reserva-info">
+          <p>
+            <strong>Reserva #{{ reservaAActualizar.idReserva }}</strong>
+          </p>
+          <p>
+            Habitación {{ reservaAActualizar.habitacion?.numero }} -
+            {{ reservaAActualizar.habitacion?.tipoHabitacion?.nombre }}
+          </p>
+          <p class="fechas-anteriores">
+            Fechas anteriores: {{ formatoFecha(reservaAActualizar.fechaInicio) }} -
+            {{ formatoFecha(reservaAActualizar.fechaFin) }}
+          </p>
+        </div>
+
+        <div class="calendario-actualizar">
+          <h4>Selecciona las nuevas fechas:</h4>
+
+          <div class="date-grid">
+            <div class="form-group">
+              <label class="form-label">Nueva fecha de entrada</label>
+              <input
+                type="date"
+                class="form-input"
+                [(ngModel)]="nuevaFechaInicio"
+                (change)="validarFechasActualizar()"
+                [min]="fechaMinima"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Nueva fecha de salida</label>
+              <input
+                type="date"
+                class="form-input"
+                [(ngModel)]="nuevaFechaFin"
+                (change)="validarFechasActualizar()"
+                [min]="nuevaFechaInicio || fechaMinima"
+              />
+            </div>
+          </div>
+
+          <div class="info-badge" *ngIf="diasEstanciaActualizar > 0">
+            <span class="info-icon">🌙</span>
+            {{ diasEstanciaActualizar }} {{ diasEstanciaActualizar === 1 ? 'noche' : 'noches' }} de
+            estadía
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          class="btn-cancelar-modal"
+          (click)="cerrarCalendarioActualizar()"
+          [disabled]="procesandoActualizacion"
+        >
+          Cancelar
+        </button>
+        <button
+          class="btn-actualizar-modal"
+          (click)="actualizarReserva()"
+          [disabled]="
+            !nuevaFechaInicio ||
+            !nuevaFechaFin ||
+            diasEstanciaActualizar <= 0 ||
+            procesandoActualizacion
+          "
+        >
+          <span class="loading-mini" *ngIf="procesandoActualizacion"></span>
+          {{ procesandoActualizacion ? 'Actualizando...' : 'Confirmar Cambios' }}
+        </button>
       </div>
     </div>
   </div>

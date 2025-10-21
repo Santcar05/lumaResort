@@ -19,6 +19,7 @@ export class VerReservasComponent implements OnInit {
   loading = true;
   errorMsg = '';
   reservas: Reserva[] = [];
+  reservasFiltradas: Reserva[] = [];
   usuarioId: number | null = null;
 
   // Variables para la actualización de reserva
@@ -28,6 +29,9 @@ export class VerReservasComponent implements OnInit {
   nuevaFechaFin: string = '';
   fechaMinima: string = '';
   procesandoActualizacion = false;
+
+  // Variables para el filtro (basado en reserva-component)
+  filtroEstado: string = 'TODAS';
 
   private baseUrlReservas = 'http://localhost:8080/reservas';
 
@@ -70,8 +74,25 @@ export class VerReservasComponent implements OnInit {
       )
       .subscribe((data) => {
         this.reservas = data;
+        this.aplicarFiltro();
         this.loading = false;
       });
+  }
+
+  // Métodos para el filtro
+  aplicarFiltro(): void {
+    if (this.filtroEstado === 'TODAS') {
+      this.reservasFiltradas = [...this.reservas];
+    } else {
+      this.reservasFiltradas = this.reservas.filter(
+        (reserva) => reserva.estado && reserva.estado.toUpperCase() === this.filtroEstado
+      );
+    }
+  }
+
+  cambiarFiltro(nuevoFiltro: string): void {
+    this.filtroEstado = nuevoFiltro;
+    this.aplicarFiltro();
   }
 
   cancelarReserva(idReserva: number): void {
@@ -95,7 +116,6 @@ export class VerReservasComponent implements OnInit {
       });
   }
 
-  // Nueva función para abrir el calendario de actualización
   abrirCalendarioActualizar(reserva: Reserva): void {
     this.reservaAActualizar = reserva;
     this.nuevaFechaInicio = this.formatoFechaParaInput(reserva.fechaInicio);
@@ -103,7 +123,6 @@ export class VerReservasComponent implements OnInit {
     this.mostrarCalendarioActualizar = true;
   }
 
-  // Nueva función para cerrar el calendario de actualización
   cerrarCalendarioActualizar(): void {
     this.mostrarCalendarioActualizar = false;
     this.reservaAActualizar = null;
@@ -112,7 +131,6 @@ export class VerReservasComponent implements OnInit {
     this.procesandoActualizacion = false;
   }
 
-  // Nueva función para validar fechas al actualizar
   validarFechasActualizar(): void {
     if (this.nuevaFechaInicio && this.nuevaFechaFin) {
       const inicio = new Date(this.nuevaFechaInicio);
@@ -126,7 +144,6 @@ export class VerReservasComponent implements OnInit {
     }
   }
 
-  // Nueva función para calcular días de estancia
   get diasEstanciaActualizar(): number {
     if (!this.nuevaFechaInicio || !this.nuevaFechaFin) return 0;
     const inicio = new Date(this.nuevaFechaInicio);
@@ -134,7 +151,6 @@ export class VerReservasComponent implements OnInit {
     return Math.max(0, Math.ceil((fin.getTime() - inicio.getTime()) / (1000 * 60 * 60 * 24)));
   }
 
-  // CORRECCIÓN: Función para actualizar la reserva con mejor manejo de respuestas
   actualizarReserva(): void {
     if (!this.reservaAActualizar || this.procesandoActualizacion) return;
 
@@ -150,11 +166,9 @@ export class VerReservasComponent implements OnInit {
 
     this.procesandoActualizacion = true;
 
-    // Convertir las fechas a objetos Date para el backend
     const fechaInicioDate = new Date(this.nuevaFechaInicio);
     const fechaFinDate = new Date(this.nuevaFechaFin);
 
-    // CORRECCIÓN: Asegurar que los nombres de campos coincidan exactamente con el DTO
     const reservaActualizada = {
       fechaInicio: fechaInicioDate,
       fechaFin: fechaFinDate,
@@ -167,7 +181,6 @@ export class VerReservasComponent implements OnInit {
     console.log('=== DEBUG ACTUALIZACIÓN ===');
     console.log('ID Reserva:', this.reservaAActualizar.idReserva);
     console.log('Datos enviados:', reservaActualizada);
-    console.log('JSON enviado:', JSON.stringify(reservaActualizada));
 
     this.reservaService
       .actualizarReserva(this.reservaAActualizar.idReserva, reservaActualizada)
@@ -179,7 +192,6 @@ export class VerReservasComponent implements OnInit {
 
           let errorMsg = 'No se pudo actualizar la reserva. Inténtalo más tarde.';
           if (err.error) {
-            // Manejar diferentes formatos de error
             if (typeof err.error === 'string') {
               errorMsg = err.error;
             } else if (err.error.message) {
@@ -199,21 +211,17 @@ export class VerReservasComponent implements OnInit {
         this.procesandoActualizacion = false;
 
         if (resp) {
-          // CORRECCIÓN: Manejar tanto respuesta JSON como texto plano
           if (typeof resp === 'string') {
-            // Si la respuesta es texto plano (para compatibilidad con versiones anteriores)
             console.log('Respuesta del servidor (texto):', resp);
             alert('Reserva actualizada correctamente');
             this.cerrarCalendarioActualizar();
             this.cargarReservas();
           } else if (resp.success !== false) {
-            // Si la respuesta es JSON con campo success
             console.log('Respuesta del servidor (JSON):', resp);
             alert(resp.message || 'Reserva actualizada correctamente');
             this.cerrarCalendarioActualizar();
             this.cargarReservas();
           } else {
-            // Si hay error en la respuesta JSON
             alert(resp.message || 'Error al actualizar la reserva');
           }
         } else {
@@ -232,6 +240,7 @@ export class VerReservasComponent implements OnInit {
     if (e.includes('cancelada')) return 'estado-cancelada';
     if (e.includes('pendiente')) return 'estado-pendiente';
     if (e.includes('confirmada')) return 'estado-confirmada';
+    if (e.includes('finalizada')) return 'estado-finalizada';
     return 'estado-otro';
   }
 
@@ -243,7 +252,6 @@ export class VerReservasComponent implements OnInit {
     });
   }
 
-  // Función auxiliar para formatear fecha para input type="date"
   private formatoFechaParaInput(fecha: string | Date): string {
     return new Date(fecha).toISOString().split('T')[0];
   }

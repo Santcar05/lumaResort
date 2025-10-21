@@ -30,6 +30,28 @@
     </div>
   </div>
 
+  <!-- Filtro de Reservas (basado en reserva-component) -->
+  <div *ngIf="!loading && !errorMsg" class="filtro-section">
+    <div class="form-section-group">
+      <h3 class="section-subtitle">Filtrar por Estado</h3>
+      <div class="form-group">
+        <label class="form-label">
+          <span class="label-icon">🏷️</span>
+          Selecciona el estado que deseas ver
+        </label>
+        <select class="form-input" [(ngModel)]="filtroEstado" (change)="aplicarFiltro()">
+          <option value="TODAS">Todas</option>
+          <option value="CONFIRMADA">Confirmada</option>
+          <option value="CANCELADA">Cancelada</option>
+          <option value="FINALIZADA">Finalizada</option>
+        </select>
+      </div>
+      <div class="filtro-info">
+        <p>Mostrando {{ reservasFiltradas.length }} de {{ reservas.length }} reservas</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Listado de Reservas -->
   <div *ngIf="!loading && !errorMsg" class="reservas-lista">
     <div *ngIf="reservas.length === 0" class="empty-message">
@@ -38,7 +60,7 @@
     </div>
 
     <div class="reservas-grid" *ngIf="reservas.length > 0">
-      <div class="reserva-card" *ngFor="let r of reservas">
+      <div class="reserva-card" *ngFor="let r of reservasFiltradas">
         <div class="reserva-header">
           <span class="reserva-id">#{{ r.idReserva }}</span>
           <span class="reserva-estado" [ngClass]="getEstadoClase(r.estado)">

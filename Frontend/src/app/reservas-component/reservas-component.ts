@@ -115,7 +115,7 @@ export class ReservasComponent implements OnInit {
     this.loading = true;
     this.errorMsg = '';
 
-    // 🔹 INICIO CORRECCIÓN: ahora también cargamos las reservas existentes
+    // INICIO CORRECCIÓN: ahora también cargamos las reservas existentes
     forkJoin({
       habitaciones: this.http.get<Habitacion[]>(this.baseUrlHabitaciones),
       servicios: this.http.get<Servicio[]>(this.baseUrlServicios),
@@ -194,7 +194,7 @@ export class ReservasComponent implements OnInit {
 
     // Filtramos solo las que no estén reservadas
     this.habitacionesFiltradas = this.habitaciones.filter(
-      (h) => h.idHabitacion !== undefined && !estaReservada(h.idHabitacion)
+      (h) => h.idHabitacion !== undefined /* && !estaReservada(h.idHabitacion)*/
     );
 
     // Si hay filtro por tipo, se aplica después
@@ -267,6 +267,7 @@ export class ReservasComponent implements OnInit {
       usuario: this.usuarioActual!,
       habitacion: this.habitacionSeleccionada!,
       servicios: this.serviciosSeleccionados,
+      cantidadPersonas: this.habitacionSeleccionada?.capacidad,
     };
 
     this.http

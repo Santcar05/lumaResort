@@ -83,13 +83,13 @@ public class ReservaController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Reserva reserva) {
         Optional<Reserva> reservaExistenteOpt = reservaRepository.findById(id);
-        
+
         if (reservaExistenteOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
         Reserva reservaExistente = reservaExistenteOpt.get();
-        
+
         // Actualizar campos básicos
         if (reserva.getFechaInicio() != null) {
             reservaExistente.setFechaInicio(reserva.getFechaInicio());
@@ -130,105 +130,105 @@ public class ReservaController {
 
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<?> actualizarReserva(@PathVariable Long id, @RequestBody ActualizarReservaRequest request) {
-    try {
-        System.out.println("=== INICIANDO ACTUALIZACIÓN DE RESERVA ===");
-        System.out.println("ID de reserva: " + id);
-        System.out.println("Fecha inicio recibida: " + request.getFechaInicio());
-        System.out.println("Fecha fin recibida: " + request.getFechaFin());
-        System.out.println("Cantidad personas: " + request.getCantidadPersonas());
-        System.out.println("ID Usuario: " + request.getIdUsuario());
-        System.out.println("ID Habitacion: " + request.getIdHabitacion());
-        
-        Optional<Reserva> reservaOpt = reservaRepository.findById(id);
+        try {
+            System.out.println("=== INICIANDO ACTUALIZACIÓN DE RESERVA ===");
+            System.out.println("ID de reserva: " + id);
+            System.out.println("Fecha inicio recibida: " + request.getFechaInicio());
+            System.out.println("Fecha fin recibida: " + request.getFechaFin());
+            System.out.println("Cantidad personas: " + request.getCantidadPersonas());
+            System.out.println("ID Usuario: " + request.getIdUsuario());
+            System.out.println("ID Habitacion: " + request.getIdHabitacion());
 
-        if (reservaOpt.isEmpty()) {
-            System.out.println("Reserva no encontrada con ID: " + id);
-            return ResponseEntity.notFound().build();
-        }
+            Optional<Reserva> reservaOpt = reservaRepository.findById(id);
 
-        Reserva reservaExistente = reservaOpt.get();
-        System.out.println("Reserva existente - ID: " + reservaExistente.getIdReserva() + 
-                         ", Habitacion: " + (reservaExistente.getHabitacion() != null ? reservaExistente.getHabitacion().getIdHabitacion() : "null"));
-        
-        // Validar que la reserva no esté cancelada
-        if ("Cancelada".equalsIgnoreCase(reservaExistente.getEstado())) {
-            System.out.println("Intento de actualizar reserva cancelada");
-            return ResponseEntity.badRequest().body("No se puede actualizar una reserva cancelada");
-        }
-
-        // Validar que las nuevas fechas sean válidas
-        if (request.getFechaInicio() != null && request.getFechaFin() != null) {
-            System.out.println("Validando fechas...");
-            System.out.println("Fecha inicio: " + request.getFechaInicio());
-            System.out.println("Fecha fin: " + request.getFechaFin());
-            
-            if (request.getFechaFin().before(request.getFechaInicio())) {
-                System.out.println("Error: fecha fin anterior a fecha inicio");
-                return ResponseEntity.badRequest().body("La fecha de fin no puede ser anterior a la fecha de inicio");
+            if (reservaOpt.isEmpty()) {
+                System.out.println("Reserva no encontrada con ID: " + id);
+                return ResponseEntity.notFound().build();
             }
-            
-            // Validar que no se solape con otras reservas de la misma habitación
-            List<Reserva> reservasMismaHabitacion = reservaRepository.findByHabitacionIdHabitacion(reservaExistente.getHabitacion().getIdHabitacion());
-            System.out.println("Reservas misma habitación: " + reservasMismaHabitacion.size());
-            
-            List<Reserva> reservasSolapadas = new ArrayList<>();
-            
-            for (Reserva r : reservasMismaHabitacion) {
-                // Excluir la reserva actual y las canceladas
-                if (!r.getIdReserva().equals(id) && !"Cancelada".equalsIgnoreCase(r.getEstado())) {
-                    System.out.println("Comparando con reserva: " + r.getIdReserva());
-                    // Verificar solapamiento
-                    if (request.getFechaInicio().before(r.getFechaFin()) && 
-                        request.getFechaFin().after(r.getFechaInicio())) {
-                        reservasSolapadas.add(r);
-                        System.out.println("¡SOLAPAMIENTO DETECTADO con reserva: " + r.getIdReserva());
+
+            Reserva reservaExistente = reservaOpt.get();
+            System.out.println("Reserva existente - ID: " + reservaExistente.getIdReserva()
+                    + ", Habitacion: " + (reservaExistente.getHabitacion() != null ? reservaExistente.getHabitacion().getIdHabitacion() : "null"));
+
+            // Validar que la reserva no esté cancelada
+            if ("Cancelada".equalsIgnoreCase(reservaExistente.getEstado())) {
+                System.out.println("Intento de actualizar reserva cancelada");
+                return ResponseEntity.badRequest().body("No se puede actualizar una reserva cancelada");
+            }
+
+            // Validar que las nuevas fechas sean válidas
+            if (request.getFechaInicio() != null && request.getFechaFin() != null) {
+                System.out.println("Validando fechas...");
+                System.out.println("Fecha inicio: " + request.getFechaInicio());
+                System.out.println("Fecha fin: " + request.getFechaFin());
+
+                if (request.getFechaFin().before(request.getFechaInicio())) {
+                    System.out.println("Error: fecha fin anterior a fecha inicio");
+                    return ResponseEntity.badRequest().body("La fecha de fin no puede ser anterior a la fecha de inicio");
+                }
+
+                // Validar que no se solape con otras reservas de la misma habitación
+                List<Reserva> reservasMismaHabitacion = reservaRepository.findByHabitacionIdHabitacion(reservaExistente.getHabitacion().getIdHabitacion());
+                System.out.println("Reservas misma habitación: " + reservasMismaHabitacion.size());
+
+                List<Reserva> reservasSolapadas = new ArrayList<>();
+
+                for (Reserva r : reservasMismaHabitacion) {
+                    // Excluir la reserva actual y las canceladas
+                    if (!r.getIdReserva().equals(id) && !"Cancelada".equalsIgnoreCase(r.getEstado())) {
+                        System.out.println("Comparando con reserva: " + r.getIdReserva());
+                        // Verificar solapamiento
+                        if (request.getFechaInicio().before(r.getFechaFin())
+                                && request.getFechaFin().after(r.getFechaInicio())) {
+                            reservasSolapadas.add(r);
+                            System.out.println("¡SOLAPAMIENTO DETECTADO con reserva: " + r.getIdReserva());
+                        }
                     }
+                }
+
+                if (!reservasSolapadas.isEmpty()) {
+                    System.out.println("Error: solapamiento con " + reservasSolapadas.size() + " reservas");
+                    return ResponseEntity.badRequest().body("Las nuevas fechas se solapan con otra reserva existente");
                 }
             }
 
-            if (!reservasSolapadas.isEmpty()) {
-                System.out.println("Error: solapamiento con " + reservasSolapadas.size() + " reservas");
-                return ResponseEntity.badRequest().body("Las nuevas fechas se solapan con otra reserva existente");
+            // Actualizar solo las fechas
+            if (request.getFechaInicio() != null) {
+                reservaExistente.setFechaInicio(request.getFechaInicio());
             }
-        }
+            if (request.getFechaFin() != null) {
+                reservaExistente.setFechaFin(request.getFechaFin());
+            }
 
-        // Actualizar solo las fechas
-        if (request.getFechaInicio() != null) {
-            reservaExistente.setFechaInicio(request.getFechaInicio());
-        }
-        if (request.getFechaFin() != null) {
-            reservaExistente.setFechaFin(request.getFechaFin());
-        }
-        
-        // Actualizar cantidad de personas si se envía
-        if (request.getCantidadPersonas() != null) {
-            reservaExistente.setCantidadPersonas(request.getCantidadPersonas());
-        }
+            // Actualizar cantidad de personas si se envía
+            if (request.getCantidadPersonas() != null) {
+                reservaExistente.setCantidadPersonas(request.getCantidadPersonas());
+            }
 
-        System.out.println("Guardando reserva actualizada...");
-        Reserva reservaGuardada = reservaRepository.save(reservaExistente);
-        System.out.println("Reserva guardada exitosamente - ID: " + reservaGuardada.getIdReserva());
+            System.out.println("Guardando reserva actualizada...");
+            Reserva reservaGuardada = reservaRepository.save(reservaExistente);
+            System.out.println("Reserva guardada exitosamente - ID: " + reservaGuardada.getIdReserva());
 
-        // CORRECCIÓN: Devolver un objeto JSON en lugar de texto plano
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", "Reserva actualizada correctamente");
-        response.put("reserva", reservaGuardada);
-        response.put("success", true);
-        
-        return ResponseEntity.ok(response);
-        
-    } catch (Exception e) {
-        System.out.println("ERROR EN ACTUALIZACIÓN: " + e.getMessage());
-        e.printStackTrace();
-        
-        // CORRECCIÓN: Devolver error como JSON
-        Map<String, Object> errorResponse = new HashMap<>();
-        errorResponse.put("message", "Error interno del servidor: " + e.getMessage());
-        errorResponse.put("success", false);
-        
-        return ResponseEntity.status(500).body(errorResponse);
+            // CORRECCIÓN: Devolver un objeto JSON en lugar de texto plano
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Reserva actualizada correctamente");
+            response.put("reserva", reservaGuardada);
+            response.put("success", true);
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            System.out.println("ERROR EN ACTUALIZACIÓN: " + e.getMessage());
+            e.printStackTrace();
+
+            // CORRECCIÓN: Devolver error como JSON
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Error interno del servidor: " + e.getMessage());
+            errorResponse.put("success", false);
+
+            return ResponseEntity.status(500).body(errorResponse);
+        }
     }
-}
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
@@ -283,4 +283,10 @@ public class ReservaController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/disponibles/servicio/{idServicio}")
+    public List<Reserva> obtenerReservasDisponiblesParaServicio(@PathVariable Long idServicio) {
+        return reservaService.obtenerReservasDisponiblesParaServicio(idServicio);
+    }
+
 }

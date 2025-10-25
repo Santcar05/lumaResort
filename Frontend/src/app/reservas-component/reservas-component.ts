@@ -115,7 +115,7 @@ export class ReservasComponent implements OnInit {
     this.loading = true;
     this.errorMsg = '';
 
-    // 🔹 INICIO CORRECCIÓN: ahora también cargamos las reservas existentes
+    // INICIO CORRECCIÓN: ahora también cargamos las reservas existentes
     forkJoin({
       habitaciones: this.http.get<Habitacion[]>(this.baseUrlHabitaciones),
       servicios: this.http.get<Servicio[]>(this.baseUrlServicios),
@@ -267,6 +267,7 @@ export class ReservasComponent implements OnInit {
       usuario: this.usuarioActual!,
       habitacion: this.habitacionSeleccionada!,
       servicios: this.serviciosSeleccionados,
+      cantidadPersonas: this.habitacionSeleccionada?.capacidad,
     };
 
     this.http

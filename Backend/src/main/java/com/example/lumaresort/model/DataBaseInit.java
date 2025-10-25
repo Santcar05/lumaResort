@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 
 import com.example.lumaresort.entities.Administrador;
@@ -27,6 +28,7 @@ import jakarta.transaction.Transactional;
 
 @Controller
 @Transactional
+@Profile("default")
 public class DataBaseInit implements ApplicationRunner {
 
     @Autowired
@@ -70,21 +72,21 @@ public class DataBaseInit implements ApplicationRunner {
 
         // Aquí puedes agregar más lógica para crear habitaciones y usuarios
         // public Habitacion(String numero, float precioPorNoche, String estado, Integer capacidad, String descripcion, TipoHabitacion tipoHabitacion)
-        Habitacion habitacion1 = new Habitacion("101", 100.0f, "Disponible", 1, "Habitación individual cómoda", tipo1);
-        Habitacion habitacion2 = new Habitacion("102", 150.0f, "Disponible", 2, "Habitación doble con vista al mar", tipo2);
+        Habitacion habitacion1 = new Habitacion("101", 100.0f, "Ocupada", 1, "Habitación individual cómoda", tipo1);
+        Habitacion habitacion2 = new Habitacion("102", 150.0f, "Ocupada", 2, "Habitación doble con vista al mar", tipo2);
         Habitacion habitacion3 = new Habitacion("201", 300.0f, "Ocupada", 4, "Suite de lujo con jacuzzi", tipo3);
-        Habitacion habitacion4 = new Habitacion("202", 200.0f, "Disponible", 4, "Habitación familiar espaciosa", tipo4);
-        Habitacion habitacion5 = new Habitacion("301", 500.0f, "Disponible", 2, "Habitación presidencial con todas las comodidades", tipo5);
-        Habitacion habitacion6 = new Habitacion("103", 120.0f, "Disponible", 1, "Habitación individual con balcón", tipo1);
+        Habitacion habitacion4 = new Habitacion("202", 200.0f, "Ocupada", 4, "Habitación familiar espaciosa", tipo4);
+        Habitacion habitacion5 = new Habitacion("301", 500.0f, "Ocupada", 2, "Habitación presidencial con todas las comodidades", tipo5);
+        Habitacion habitacion6 = new Habitacion("103", 120.0f, "Ocupada", 1, "Habitación individual con balcón", tipo1);
         Habitacion habitacion7 = new Habitacion("104", 160.0f, "Ocupada", 2, "Habitación doble con cama king size", tipo2);
-        Habitacion habitacion8 = new Habitacion("203", 320.0f, "Disponible", 4, "Suite con vista panorámica", tipo3);
-        Habitacion habitacion9 = new Habitacion("204", 220.0f, "Disponible", 4, "Habitación familiar con dos baños", tipo4);
+        Habitacion habitacion8 = new Habitacion("203", 320.0f, "Ocupada", 4, "Suite con vista panorámica", tipo3);
+        Habitacion habitacion9 = new Habitacion("204", 220.0f, "Ocupada", 4, "Habitación familiar con dos baños", tipo4);
         Habitacion habitacion10 = new Habitacion("302", 520.0f, "Ocupada", 2, "Habitación presidencial con terraza privada", tipo5);
-        Habitacion habitacion11 = new Habitacion("105", 130.0f, "Disponible", 1, "Habitación individual con escritorio de trabajo", tipo1);
-        Habitacion habitacion12 = new Habitacion("106", 170.0f, "Disponible", 2, "Habitación doble con sofá cama", tipo2);
+        Habitacion habitacion11 = new Habitacion("105", 130.0f, "Ocupada", 1, "Habitación individual con escritorio de trabajo", tipo1);
+        Habitacion habitacion12 = new Habitacion("106", 170.0f, "Ocupada", 2, "Habitación doble con sofá cama", tipo2);
         Habitacion habitacion13 = new Habitacion("205", 340.0f, "Ocupada", 4, "Suite con sala de estar independiente", tipo3);
-        Habitacion habitacion14 = new Habitacion("206", 240.0f, "Disponible", 4, "Habitación familiar con cocina pequeña", tipo4);
-        Habitacion habitacion15 = new Habitacion("303", 540.0f, "Disponible", 2, "Habitación presidencial con chimenea", tipo5);
+        Habitacion habitacion14 = new Habitacion("206", 240.0f, "Ocupada", 4, "Habitación familiar con cocina pequeña", tipo4);
+        Habitacion habitacion15 = new Habitacion("303", 540.0f, "Ocupada", 2, "Habitación presidencial con chimenea", tipo5);
         Habitacion habitacion16 = new Habitacion("107", 140.0f, "Ocupada", 1, "Habitación individual con vista al jardín", tipo1);
         Habitacion habitacion17 = new Habitacion("108", 180.0f, "Disponible", 2, "Habitación doble con balcón privado", tipo2);
         Habitacion habitacion18 = new Habitacion("207", 360.0f, "Disponible", 4, "Suite con bañera de hidromasaje", tipo3);

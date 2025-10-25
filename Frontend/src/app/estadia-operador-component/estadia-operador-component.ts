@@ -276,9 +276,6 @@ export class EstadiaOperadorComponent implements OnInit {
       this.mostrarMensaje('No se puede limpiar la cuenta: aún hay saldo pendiente', 'error');
       return;
     }
-
-    // Lógica  para "limpiar" la cuenta
-    
   }
 
   // Utilidades
@@ -316,6 +313,8 @@ export class EstadiaOperadorComponent implements OnInit {
   }
 
   formatearFecha(fecha: string | Date): string {
+    //Agregarle un día más a la fecha
+
     return new Date(fecha).toLocaleDateString('es-ES', {
       day: '2-digit',
       month: '2-digit',

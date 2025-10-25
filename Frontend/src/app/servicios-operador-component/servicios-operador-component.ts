@@ -306,4 +306,23 @@ export class ServiciosOperadorComponent implements OnInit {
       this.paginaActual = nuevaPagina;
     }
   }
+
+  // Devuelve una descripción extendida de la habitación con su reserva y cliente (si aplica)
+  getDescripcionHabitacion(habitacion: Habitacion): string {
+    // Buscar si la habitación está asociada a alguna reserva existente
+    const reserva = this.reservas.find(
+      (r) => r.habitacion?.idHabitacion === habitacion.idHabitacion
+    );
+
+    // Si tiene reserva, mostrar información del cliente y reserva
+    if (reserva) {
+      const nombreCliente = reserva.usuario
+        ? `${reserva.usuario.nombre} ${reserva.usuario.apellido}`
+        : 'Desconocido';
+      return `Hab. ${habitacion.numero} — Cliente: ${nombreCliente} — Reserva #${reserva.idReserva}`;
+    }
+
+    // Si no tiene reserva asociada
+    return `Hab. ${habitacion.numero} — (Sin reserva asignada)`;
+  }
 }

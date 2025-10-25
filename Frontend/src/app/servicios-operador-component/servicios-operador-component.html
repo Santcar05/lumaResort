@@ -239,7 +239,7 @@
                 *ngFor="let habitacion of habitacionesDisponibles"
                 [ngValue]="habitacion.idHabitacion"
               >
-                Habitación {{ habitacion.numero }}
+                {{ getDescripcionHabitacion(habitacion) }}
               </option>
             </select>
           </div>

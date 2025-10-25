@@ -52,14 +52,6 @@ public class Usuario {
     private Operador operador;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private Configuracion configuracion;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Historial> historial;
-
-    @JsonIgnore
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Reserva> reservas;
 

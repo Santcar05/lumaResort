@@ -194,7 +194,7 @@ export class ReservasComponent implements OnInit {
 
     // Filtramos solo las que no estén reservadas
     this.habitacionesFiltradas = this.habitaciones.filter(
-      (h) => h.idHabitacion !== undefined /* && !estaReservada(h.idHabitacion)*/
+      (h) => h.idHabitacion !== undefined && !estaReservada(h.idHabitacion)
     );
 
     // Si hay filtro por tipo, se aplica después

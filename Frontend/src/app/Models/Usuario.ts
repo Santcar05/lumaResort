@@ -1,7 +1,6 @@
 import { Administrador } from './Administrador';
 import { Cliente } from './Cliente';
-import { Configuracion } from './Configuracion';
-import { Historial } from './Historial';
+
 import { Operador } from './Operador';
 
 export interface Usuario {
@@ -18,6 +17,4 @@ export interface Usuario {
   cliente?: Cliente;
   administrador?: Administrador;
   operador?: Operador;
-  configuracion?: Configuracion;
-  historial?: Historial[];
 }

@@ -1,6 +1,6 @@
 #FileLock
-#Tue Oct 21 06:42:55 GMT-05:00 2025
-hostName=LAPTOP-10QVUPLI
-id=19a06944ca445d7befe5e3d2c09b2197e50bdaff1da
+#Sun Oct 26 21:50:40 GMT-05:00 2025
+hostName=Juanesdt
+id=19a235d3bf538b7735c7487450ff2820d8dd1f7bd02
 method=file
-server=192.168.10.10\:54771
+server=192.168.10.19\:59091

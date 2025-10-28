@@ -49,9 +49,9 @@ public class ReservaServiceTestMockito {
     private ReservaRepository reservaRepository;
 
     @Mock
-    private ServicioRepository servicioRepository; // ✅ NUEVO MOCK AGREGADO
+    private ServicioRepository servicioRepository;
 
-    // ✅ PRUEBA 1 - TU PRUEBA ORIGINAL (MANTENIDA)
+    // PRUEBA 1 - TU PRUEBA ORIGINAL (MANTENIDA)
     @Test
     public void testSave() {
         //Arrange
@@ -75,7 +75,7 @@ public class ReservaServiceTestMockito {
         assertEquals("CONFIRMADA", reserva1.getEstado());
     }
 
-    // ✅ PRUEBA 2 - save_Reserva_DeberiaCambiarEstadoHabitacionAOcupada
+    // PRUEBA 2 - save_Reserva_DeberiaCambiarEstadoHabitacionAOcupada
     @Test
     void save_Reserva_DeberiaCambiarEstadoHabitacionAOcupada() {
         // Arrange
@@ -99,7 +99,7 @@ public class ReservaServiceTestMockito {
         verify(reservaRepository, times(1)).save(reserva);
     }
 
-    // ✅ PRUEBA 3 - contratarServicio_ReservaExistente_DeberiaAgregarServicio
+    // PRUEBA 3 - contratarServicio_ReservaExistente_DeberiaAgregarServicio
     @Test
     void contratarServicio_ReservaExistente_DeberiaAgregarServicio() {
         // Arrange
@@ -128,7 +128,7 @@ public class ReservaServiceTestMockito {
         verify(reservaRepository, times(1)).save(reserva);
     }
 
-    // ✅ PRUEBA 4 - contratarServicio_ReservaNoExistente_DeberiaLanzarExcepcion
+    // PRUEBA 4 - contratarServicio_ReservaNoExistente_DeberiaLanzarExcepcion
     @Test
     void contratarServicio_ReservaNoExistente_DeberiaLanzarExcepcion() {
         // Arrange
@@ -146,7 +146,7 @@ public class ReservaServiceTestMockito {
         assertEquals("No se encontró la reserva con idHabitacion de ID: " + idHabitacion, exception.getMessage());
     }
 
-    // ✅ PRUEBA 5 - removerServicio_ReservaExistente_DeberiaEliminarServicio
+    // PRUEBA 5 - removerServicio_ReservaExistente_DeberiaEliminarServicio
     @Test
     void removerServicio_ReservaExistente_DeberiaEliminarServicio() {
         // Arrange
@@ -172,7 +172,7 @@ public class ReservaServiceTestMockito {
         verify(reservaRepository, times(1)).saveAndFlush(reserva);
     }
 
-    // ✅ PRUEBA 6 - obtenerReservasDisponiblesParaServicio_DeberiaFiltrarCorrectamente
+    // PRUEBA 6 - obtenerReservasDisponiblesParaServicio_DeberiaFiltrarCorrectamente
     @Test
     void obtenerReservasDisponiblesParaServicio_DeberiaFiltrarCorrectamente() {
         // Arrange
@@ -211,7 +211,7 @@ public class ReservaServiceTestMockito {
         verify(reservaRepository, times(1)).findAll();
     }
 
-    // ✅ PRUEBA 7 - findByUsuarioId_DeberiaRetornarReservasUsuario
+    // PRUEBA 7 - findByUsuarioId_DeberiaRetornarReservasUsuario
     @Test
     void findByUsuarioId_DeberiaRetornarReservasUsuario() {
         // Arrange
@@ -232,7 +232,7 @@ public class ReservaServiceTestMockito {
         verify(reservaRepository, times(1)).findByUsuarioIdUsuario(usuarioId);
     }
 
-    // ✅ PRUEBA 8 - findById_ReservaExistente_DeberiaRetornarReserva
+    // PRUEBA 8 - findById_ReservaExistente_DeberiaRetornarReserva
     @Test
     void findById_ReservaExistente_DeberiaRetornarReserva() {
         // Arrange
@@ -251,7 +251,7 @@ public class ReservaServiceTestMockito {
         verify(reservaRepository, times(1)).findById(idReserva);
     }
 
-    // ✅ PRUEBA 9 - obtenerHabitacionesDisponiblesParaServicio_DeberiaFiltrarHabitaciones
+    // PRUEBA 9 - obtenerHabitacionesDisponiblesParaServicio_DeberiaFiltrarHabitaciones
     @Test
     void obtenerHabitacionesDisponiblesParaServicio_DeberiaFiltrarHabitaciones() {
         // Arrange

@@ -59,7 +59,6 @@ public class ReservaServiceTestMockito {
         Usuario usuario = new Usuario();
         Habitacion habitacion = new Habitacion();
 
-        // Si usas repositorios separados:
         usuarioRepository.save(usuario);
         habitacionRepository.save(habitacion);
 

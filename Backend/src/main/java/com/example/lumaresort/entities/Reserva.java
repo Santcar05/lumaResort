@@ -86,7 +86,6 @@ public class Reserva {
         this.servicios = servicios;
     }
 
-    // CORRECCIÓN: toString() simplificado para evitar StackOverflowError
     @Override
     public String toString() {
         return "Reserva{" +

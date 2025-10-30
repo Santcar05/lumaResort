@@ -2,20 +2,16 @@ package com.example.lumaresort.Repository;
 
 import java.util.List;
 
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.example.lumaresort.entities.Servicio;
 import com.example.lumaresort.repository.ServicioRepository;
 
 @DataJpaTest
-@RunWith(SpringRunner.class)
 public class ServicioRepositoryTest {
 
     @Autowired
@@ -42,17 +38,13 @@ public class ServicioRepositoryTest {
         //Agregar servicios a la base de datos
         servicioRepository.save(servicio1);
         servicioRepository.save(servicio2);
-
     }
 
     @Test
     public void test_FindAll() {
-
         //Act
         List<Servicio> servicios = servicioRepository.findAll();
 
         Assertions.assertEquals(2, servicios.size());
-
     }
-
 }

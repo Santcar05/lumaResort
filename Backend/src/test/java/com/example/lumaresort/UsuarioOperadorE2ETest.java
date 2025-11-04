@@ -44,7 +44,6 @@ public class UsuarioOperadorE2ETest {
 
     private static final String BASE_URL = "http://localhost:4200";
 
-    // CORREGIDO: Credenciales más específicas
     private static final String USUARIO_EMAIL = "Usaurio1@gmail.com";
     private static final String USUARIO_PASSWORD = "pass1";
     private static final String OPERADOR_EMAIL = "Operador1@gmail.com"; 
@@ -60,12 +59,11 @@ public class UsuarioOperadorE2ETest {
         options.addArguments("--disable-extensions");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-        // options.addArguments("--headless");
 
         driverUsuario = new ChromeDriver(options);
         driverOperador = new ChromeDriver(options);
         
-        // CORREGIDO: Timeouts más largos para estabilidad
+        //Timeouts más largos para estabilidad
         waitUsuario = new WebDriverWait(driverUsuario, Duration.ofSeconds(25));
         waitOperador = new WebDriverWait(driverOperador, Duration.ofSeconds(25));
 
@@ -97,7 +95,7 @@ public class UsuarioOperadorE2ETest {
         
         driver.get(BASE_URL + "/login");
         
-        // CORREGIDO: Espera más robusta para el formulario
+        //Espera más robusta para el formulario
         try {
             wait.until(ExpectedConditions.presenceOfElementLocated(
                 By.cssSelector("input[name='correo'], input[type='email'], input[formcontrolname='correo']")));
@@ -106,7 +104,7 @@ public class UsuarioOperadorE2ETest {
             System.out.println("Formulario no cargó, intentando continuar...");
         }
         
-        // CORREGIDO: Búsqueda más flexible de campos
+        //Búsqueda más flexible de campos
         WebElement emailInput = findElementWithRetry(driver, 
             "input[name='correo'], input[type='email'], input[formcontrolname='correo'], input[placeholder*='mail']");
         emailInput.clear();
@@ -121,14 +119,14 @@ public class UsuarioOperadorE2ETest {
 
         Thread.sleep(1000);
 
-        // CORREGIDO: Búsqueda más flexible del botón
+        //Búsqueda más flexible del botón
         WebElement loginButton = findElementWithRetry(driver,
             "button[type='submit'], button:contains('Iniciar'), button:contains('Login'), .login-button, button");
         
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", loginButton);
 
-        // CORREGIDO: Espera mejorada para redirección
+        //Espera mejorada para redirección
         try {
             wait.until(ExpectedConditions.or(
                 ExpectedConditions.urlContains("/perfil"),
@@ -189,7 +187,7 @@ public class UsuarioOperadorE2ETest {
         }
     }
 
-    // ==================== PRUEBAS MEJORADAS ====================
+    // ==================== PRUEBAS E2E =====================
 
     @Test
     @Order(1)
@@ -203,7 +201,7 @@ public class UsuarioOperadorE2ETest {
         // 2. Navegar a reservas con verificación
         driverUsuario.get(BASE_URL + "/reservas");
         
-        // CORREGIDO: Espera más flexible para reservas
+        // Espera más flexible para reservas
         List<WebElement> reservas = waitUsuario.until(
             ExpectedConditions.presenceOfAllElementsLocatedBy(
                 By.cssSelector(".reserva-card, .reserva-item, app-reserva, mat-card, .card, [class*='reserva']")));
@@ -211,7 +209,7 @@ public class UsuarioOperadorE2ETest {
         assertTrue(reservas.size() > 0, "El usuario debe tener al menos una reserva");
         System.out.println("Reservas encontradas: " + reservas.size());
         
-        // CORREGIDO: Verificación más robusta de estados
+        // Verificación más robusta de estados
         boolean reservaPendienteEncontrada = false;
         for (WebElement reserva : reservas) {
             try {
@@ -245,14 +243,14 @@ public class UsuarioOperadorE2ETest {
         // 2. Navegar a gestión de reservas
         driverOperador.get(BASE_URL + "/operador/reservas");
         
-        // CORREGIDO: Espera mejorada para reservas del operador
+        // Espera mejorada para reservas del operador
         List<WebElement> reservasOperador = waitOperador.until(
             ExpectedConditions.presenceOfAllElementsLocatedBy(
                 By.cssSelector(".reserva-card, .reserva-item, app-reserva, mat-card, .card, [class*='reserva']")));
         
         assertTrue(reservasOperador.size() > 0, "El operador debe ver reservas");
         
-        // CORREGIDO: Búsqueda más robusta del botón checkin
+        // Búsqueda más robusta del botón checkin
         WebElement reservaParaCheckin = null;
         WebElement btnCheckin = null;
         
@@ -290,7 +288,7 @@ public class UsuarioOperadorE2ETest {
         assertNotNull(reservaParaCheckin, "Debe haber una reserva pendiente para checkin");
         assertNotNull(btnCheckin, "Debe haber un botón para hacer checkin");
         
-        // CORREGIDO: Click más robusto
+        // Click más robusto
         JavascriptExecutor js = (JavascriptExecutor) driverOperador;
         js.executeScript("arguments[0].scrollIntoView(true);", btnCheckin);
         Thread.sleep(1000);
@@ -298,7 +296,7 @@ public class UsuarioOperadorE2ETest {
         
         System.out.println("Click en botón checkin realizado");
         
-        // CORREGIDO: Espera para confirmación
+        // Espera para confirmación
         Thread.sleep(5000);
         System.out.println("Test 2 COMPLETADO - Checkin realizado por operador");
     }
@@ -312,14 +310,14 @@ public class UsuarioOperadorE2ETest {
         // 1. Navegar a gestión de servicios
         driverOperador.get(BASE_URL + "/operador/servicios");
         
-        // CORREGIDO: Espera mejorada para servicios
+        // Espera mejorada para servicios
         List<WebElement> servicios = waitOperador.until(
             ExpectedConditions.presenceOfAllElementsLocatedBy(
                 By.cssSelector(".servicio-card, .servicio-item, app-servicio, mat-card, .card, [class*='servicio']")));
         
         assertTrue(servicios.size() >= 2, "Debe haber al menos 2 servicios disponibles. Encontrados: " + servicios.size());
         
-        // CORREGIDO: Agregar servicios con mejor manejo de errores
+        // Agregar servicios con mejor manejo de errores
         int serviciosAgregados = 0;
         JavascriptExecutor js = (JavascriptExecutor) driverOperador;
         
@@ -370,7 +368,7 @@ public class UsuarioOperadorE2ETest {
     public void test04_checkoutYPago() throws InterruptedException {
         System.out.println("=== PASO 4: Checkout y pago ===");
         
-        // CORREGIDO: Usuario solicita checkout
+        // Usuario solicita checkout
         driverUsuario.get(BASE_URL + "/reservas");
         Thread.sleep(3000);
         
@@ -392,7 +390,7 @@ public class UsuarioOperadorE2ETest {
             System.out.println("No se pudo hacer checkout desde usuario: " + e.getMessage());
         }
         
-        // CORREGIDO: Operador procesa checkout
+        // Operador procesa checkout
         driverOperador.get(BASE_URL + "/operador/checkout");
         Thread.sleep(3000);
         
@@ -430,7 +428,7 @@ public class UsuarioOperadorE2ETest {
             System.out.println("No se pudo extraer valor numérico del monto: " + montoTexto);
         }
         
-        // CORREGIDO: Buscar botón pagar de forma más flexible
+        // Buscar botón pagar de forma más flexible
         WebElement btnPagar = null;
         List<WebElement> botonesPagar = driverOperador.findElements(
             By.cssSelector(".btn-pagar, .pay-button, button"));
@@ -455,7 +453,7 @@ public class UsuarioOperadorE2ETest {
         Thread.sleep(1000);
         js.executeScript("arguments[0].click();", btnPagar);
         
-        // CORREGIDO: Espera más larga para procesamiento
+        // Espera más larga para procesamiento
         Thread.sleep(5000);
         System.out.println("Test 4 COMPLETADO - Proceso de checkout y pago realizado");
     }

@@ -29,7 +29,7 @@ import jakarta.transaction.Transactional;
 @Controller
 @Transactional
 @Profile("test")
-public class DataBaseInitTest implements ApplicationRunner {
+public class DatabaseInitTest implements ApplicationRunner {
 
     @Autowired
     private UsuarioRepository usuarioRepository;

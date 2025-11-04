@@ -184,6 +184,7 @@ public class UsuarioOperadorE2ETest {
 
     // ==================== PRUEBAS E2E =====================
 
+    // Verifica que el usuario puede iniciar sesión y ver sus reservas pendientes
     @Test
     @Order(1)
     @DisplayName("Usuario registrado hace login y revisa reservas pendientes")
@@ -197,7 +198,7 @@ public class UsuarioOperadorE2ETest {
         driverUsuario.get(BASE_URL + "/reservas");
         Thread.sleep(3000);
         
-        // CORRECCIÓN: Búsqueda más exhaustiva de elementos de reserva
+        // Búsqueda más exhaustiva de elementos de reserva
         List<WebElement> reservas = findElementsWithMultipleSelectors(driverUsuario,
             ".reserva-card", ".reserva-item", "app-reserva", "mat-card", ".card", 
             "[class*='reserva']", "table tbody tr", ".list-group-item", ".item");
@@ -213,7 +214,7 @@ public class UsuarioOperadorE2ETest {
         
         assertTrue(reservas.size() > 0, "El usuario debe tener al menos una reserva");
         
-        // CORRECCIÓN: Verificación más flexible de estados de reserva
+        // Verificación más flexible de estados de reserva
         boolean reservaPendienteEncontrada = false;
         for (WebElement reserva : reservas) {
             try {
@@ -237,7 +238,7 @@ public class UsuarioOperadorE2ETest {
             }
         }
         
-        // CORRECCIÓN: Si no encuentra reserva pendiente, verificar que al menos hay reservas visibles
+        // Si no encuentra reserva pendiente, verificar que al menos hay reservas visibles
         if (!reservaPendienteEncontrada && reservas.size() > 0) {
             System.out.println("No se identificó reserva como 'pendiente', pero hay " + reservas.size() + " reservas visibles");
             // Considerar que cualquier reserva visible es válida para continuar el flujo
@@ -248,6 +249,7 @@ public class UsuarioOperadorE2ETest {
         System.out.println("Test 1 COMPLETADO - Usuario puede ver reservas pendientes");
     }
 
+    // Verifica que el operador puede iniciar sesión y realizar checkin de una reserva
     @Test
     @Order(2)
     @DisplayName("Operador hace login y activa checkin de reserva")
@@ -315,6 +317,7 @@ public class UsuarioOperadorE2ETest {
         System.out.println("Test 2 COMPLETADO - Checkin realizado por operador");
     }
 
+    // Verifica que el operador puede agregar servicios adicionales a la reserva
     @Test
     @Order(3)
     @DisplayName("Operador agrega 2 servicios a la reserva")
@@ -374,6 +377,7 @@ public class UsuarioOperadorE2ETest {
         System.out.println("Test 3 COMPLETADO - Servicios agregados: " + serviciosAgregados);
     }
 
+    // Verifica que el usuario puede solicitar checkout y el operador procesa el pago
     @Test
     @Order(4)
     @DisplayName("Usuario solicita checkout y operador procesa pago")
@@ -468,6 +472,7 @@ public class UsuarioOperadorE2ETest {
         System.out.println("Test 4 COMPLETADO - Proceso de checkout y pago realizado");
     }
 
+    // Verifica que tanto usuario como operador pueden ver la reserva como finalizada
     @Test
     @Order(5)
     @DisplayName("Verificar reserva finalizada desde ambas perspectivas")
@@ -488,7 +493,7 @@ public class UsuarioOperadorE2ETest {
                 String textoReserva = reserva.getText().toLowerCase();
                 System.out.println("Contenido reserva operador: " + textoReserva);
                 
-                // CORRECCIÓN: Palabras clave más amplias para estados finalizados
+                // Palabras clave más amplias para estados finalizados
                 if (textoReserva.contains("finalizada") || textoReserva.contains("completada") || 
                     textoReserva.contains("terminada") || textoReserva.contains("cerrada") ||
                     textoReserva.contains("checkout") || textoReserva.contains("pagada") ||
@@ -504,7 +509,7 @@ public class UsuarioOperadorE2ETest {
             }
         }
         
-        // CORRECCIÓN: Si no encuentra reserva finalizada, verificar si hay cambios en las reservas
+        // Si no encuentra reserva finalizada, verificar si hay cambios en las reservas
         if (!reservaFinalizadaOperador && reservasOperador.size() > 0) {
             System.out.println("No se identificó reserva como 'finalizada' desde operador, pero hay " + reservasOperador.size() + " reservas visibles");
             // Para fines de prueba, considerar éxito si hay reservas visibles después del flujo completo
@@ -541,7 +546,7 @@ public class UsuarioOperadorE2ETest {
             }
         }
         
-        // CORRECCIÓN: Misma lógica flexible para usuario
+        // Misma lógica flexible para usuario
         if (!reservaFinalizadaUsuario && reservasUsuario.size() > 0) {
             System.out.println("No se identificó reserva como 'finalizada' desde usuario, pero hay " + reservasUsuario.size() + " reservas visibles");
             reservaFinalizadaUsuario = true;

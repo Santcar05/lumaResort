@@ -26,7 +26,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -43,7 +43,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ActiveProfiles("test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class UsuarioOperadorE2ETest {
 
     private static WebDriver driverUsuario;
@@ -51,9 +50,13 @@ public class UsuarioOperadorE2ETest {
     private static WebDriverWait waitUsuario;
     private static WebDriverWait waitOperador;
 
-    // URLs de la aplicación
+    // CORREGIDO: Puerto definido correctamente
+    @LocalServerPort
+    private int port = 8080; 
+
+    // CORREGIDO: URL base fija para Angular
     private static final String BASE_URL = "http://localhost:4200";
-    
+
     // Credenciales de prueba basadas en tu base de datos
     private static final String USUARIO_EMAIL = "Usaurio1@gmail.com";
     private static final String USUARIO_PASSWORD = "pass1";
@@ -85,6 +88,9 @@ public class UsuarioOperadorE2ETest {
         driverUsuario.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
         driverOperador.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driverOperador.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+
+        System.out.println("🚀 WebDrivers configurados correctamente");
+        System.out.println("🌐 URL base: " + BASE_URL);
     }
 
     @AfterAll
@@ -96,13 +102,14 @@ public class UsuarioOperadorE2ETest {
         if (driverOperador != null) {
             driverOperador.quit();
         }
+        System.out.println("✅ Navegadores cerrados correctamente");
     }
 
     /**
      * Método para hacer login en la aplicación
      */
     private void hacerLogin(WebDriver driver, WebDriverWait wait, String email, String password) throws InterruptedException {
-        System.out.println("Intentando login con: " + email);
+        System.out.println("🔐 Intentando login con: " + email);
         
         driver.get(BASE_URL + "/login");
         
@@ -139,14 +146,14 @@ public class UsuarioOperadorE2ETest {
                 ExpectedConditions.urlContains("localhost:4200")
             ));
             Thread.sleep(2000);
-            System.out.println("Login exitoso para: " + email);
+            System.out.println("✅ Login exitoso para: " + email);
         } catch (TimeoutException e) {
             // Intentar detectar mensaje de error
             try {
                 WebElement errorMsg = driver.findElement(By.cssSelector(".error-message, .alert-danger, .error, .mat-error"));
-                System.out.println("Error de login: " + errorMsg.getText());
+                System.out.println("❌ Error de login: " + errorMsg.getText());
             } catch (Exception ex) {
-                System.out.println("No se encontró mensaje de error visible");
+                System.out.println("❌ No se encontró mensaje de error visible");
             }
             throw e;
         }
@@ -195,17 +202,17 @@ public class UsuarioOperadorE2ETest {
                 if (estado.contains("pendiente") || estado.contains("sin iniciar") || 
                     estado.contains("confirmada") || estado.contains("reservada")) {
                     reservaPendienteEncontrada = true;
-                    System.out.println("Reserva pendiente encontrada: " + estado);
+                    System.out.println("✅ Reserva pendiente encontrada: " + estado);
                     break;
                 }
             } catch (NoSuchElementException e) {
                 // Continuar con la siguiente reserva
-                System.out.println("No se pudo encontrar elemento de estado en una reserva");
+                System.out.println("ℹ️  No se pudo encontrar elemento de estado en una reserva");
             }
         }
         
         assertTrue(reservaPendienteEncontrada, "Debe haber al menos una reserva pendiente sin iniciar");
-        System.out.println("Usuario puede ver sus reservas pendientes correctamente");
+        System.out.println("✅ Usuario puede ver sus reservas pendientes correctamente");
     }
 
     @Test
@@ -238,7 +245,7 @@ public class UsuarioOperadorE2ETest {
                 if (estado.contains("pendiente") || estado.contains("sin iniciar") || 
                     estado.contains("confirmada")) {
                     reservaParaCheckin = reserva;
-                    System.out.println("Reserva encontrada para checkin: " + estado);
+                    System.out.println("📍 Reserva encontrada para checkin: " + estado);
                     break;
                 }
             } catch (NoSuchElementException e) {
@@ -254,14 +261,14 @@ public class UsuarioOperadorE2ETest {
                 By.cssSelector(".btn-checkin, [id*='checkin'], button"));
             JavascriptExecutor js = (JavascriptExecutor) driverOperador;
             js.executeScript("arguments[0].click();", btnCheckin);
-            System.out.println("Click en botón checkin realizado");
+            System.out.println("✅ Click en botón checkin realizado");
         } catch (NoSuchElementException e) {
             // Intentar método alternativo - buscar cualquier botón en la reserva
             List<WebElement> botones = reservaParaCheckin.findElements(By.cssSelector("button"));
             if (!botones.isEmpty()) {
                 JavascriptExecutor js = (JavascriptExecutor) driverOperador;
                 js.executeScript("arguments[0].click();", botones.get(0));
-                System.out.println("Click en primer botón de la reserva realizado");
+                System.out.println("✅ Click en primer botón de la reserva realizado");
             } else {
                 fail("No se encontró ningún botón en la reserva para hacer checkin");
             }
@@ -275,7 +282,7 @@ public class UsuarioOperadorE2ETest {
         waitOperador.until(ExpectedConditions.presenceOfElementLocated(
             By.cssSelector(".reserva-card, .reserva-item, [class*='reserva']")));
         
-        System.out.println("Checkin realizado exitosamente por el operador");
+        System.out.println("✅ Checkin realizado exitosamente por el operador");
     }
 
     @Test
@@ -310,15 +317,15 @@ public class UsuarioOperadorE2ETest {
                 Thread.sleep(1500); // Esperar entre agregados
                 
                 serviciosAgregados++;
-                System.out.println("Servicio " + serviciosAgregados + " agregado");
+                System.out.println("✅ Servicio " + serviciosAgregados + " agregado");
                 
             } catch (Exception e) {
-                System.out.println("No se pudo agregar servicio " + (i + 1) + ": " + e.getMessage());
+                System.out.println("⚠️  No se pudo agregar servicio " + (i + 1) + ": " + e.getMessage());
             }
         }
         
         assertEquals(2, serviciosAgregados, "Deben haberse agregado exactamente 2 servicios");
-        System.out.println("2 servicios agregados correctamente a la reserva");
+        System.out.println("✅ 2 servicios agregados correctamente a la reserva");
     }
 
     @Test
@@ -337,10 +344,10 @@ public class UsuarioOperadorE2ETest {
                     By.cssSelector(".btn-checkout, [id*='checkout'], button")));
             JavascriptExecutor js = (JavascriptExecutor) driverUsuario;
             js.executeScript("arguments[0].click();", btnCheckout);
-            System.out.println("Usuario solicitó checkout");
+            System.out.println("✅ Usuario solicitó checkout");
             Thread.sleep(2000);
         } catch (TimeoutException e) {
-            System.out.println("Botón de checkout no encontrado en perfil, continuando...");
+            System.out.println("ℹ️  Botón de checkout no encontrado en perfil, continuando...");
         }
         
         // 2. Operador procesa el checkout
@@ -355,15 +362,15 @@ public class UsuarioOperadorE2ETest {
         assertNotNull(montoTexto, "Debe mostrarse el monto total");
         assertFalse(montoTexto.isEmpty(), "El monto total no debe estar vacío");
         
-        System.out.println("Monto total a pagar: " + montoTexto);
+        System.out.println("💰 Monto total a pagar: " + montoTexto);
         
         // 4. Verificar que el monto sea numérico y mayor a 0
         try {
             double montoNumerico = extraerMontoNumerico(montoTexto);
             assertTrue(montoNumerico > 0, "El monto debe ser mayor a 0");
-            System.out.println("Monto válido: $" + montoNumerico);
+            System.out.println("✅ Monto válido: $" + montoNumerico);
         } catch (NumberFormatException e) {
-            System.out.println("No se pudo extraer valor numérico del monto: " + montoTexto);
+            System.out.println("⚠️  No se pudo extraer valor numérico del monto: " + montoTexto);
         }
         
         // 5. Realizar el pago
@@ -384,9 +391,9 @@ public class UsuarioOperadorE2ETest {
                 ExpectedConditions.presenceOfElementLocated(
                     By.cssSelector(".success-message, .alert-success, [class*='success']"))
             ));
-            System.out.println("Pago procesado exitosamente");
+            System.out.println("✅ Pago procesado exitosamente");
         } catch (TimeoutException e) {
-            System.out.println("No se detectó confirmación explícita de pago, pero continuando...");
+            System.out.println("ℹ️  No se detectó confirmación explícita de pago, pero continuando...");
         }
     }
 
@@ -415,7 +422,7 @@ public class UsuarioOperadorE2ETest {
                     estado.contains("terminada") || estado.contains("cerrada") ||
                     estado.contains("checkout")) {
                     reservaFinalizadaOperador = true;
-                    System.out.println("Operador ve reserva finalizada: " + estado);
+                    System.out.println("✅ Operador ve reserva finalizada: " + estado);
                     break;
                 }
             } catch (NoSuchElementException e) {
@@ -443,7 +450,7 @@ public class UsuarioOperadorE2ETest {
                     estado.contains("terminada") || estado.contains("cerrada") ||
                     estado.contains("checkout")) {
                     reservaFinalizadaUsuario = true;
-                    System.out.println("Usuario ve reserva finalizada: " + estado);
+                    System.out.println("✅ Usuario ve reserva finalizada: " + estado);
                     break;
                 }
             } catch (NoSuchElementException e) {

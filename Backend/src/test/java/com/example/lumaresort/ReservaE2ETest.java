@@ -1,8 +1,26 @@
 package com.example.lumaresort;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.*;
-import org.openqa.selenium.*;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,10 +29,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import static org.junit.jupiter.api.Assertions.*;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ActiveProfiles("test")
@@ -26,7 +42,7 @@ public class ReservaE2ETest {
     private static WebDriverWait wait;
 
     @LocalServerPort
-    private int port = 8080; 
+    private int port = 8080;
 
     private static final String BASE_URL = "http://localhost:4200";
 
@@ -39,9 +55,9 @@ public class ReservaE2ETest {
 
     @BeforeAll
     public static void setupClass() {
-        
+
         WebDriverManager.chromedriver().setup();
-       
+
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
         options.addArguments("--disable-blink-features=AutomationControlled");
@@ -68,13 +84,13 @@ public class ReservaE2ETest {
     @Order(1)
     @DisplayName("landing page")
     public void test01_navegarALandingPage() {
-    
+
         driver.get(BASE_URL);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("app-header-component")));
 
         String currentUrl = driver.getCurrentUrl();
         assertTrue(currentUrl.contains("localhost:4200"),
-            "Debe estar en la página principal");
+                "Debe estar en la página principal");
 
     }
 
@@ -82,15 +98,15 @@ public class ReservaE2ETest {
     @Order(2)
     @DisplayName("registro e intentar registro con correo invalido")
     public void test02_intentarRegistroConCorreoInvalido() {
-        
+
         driver.get(BASE_URL + "/signup");
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("form")));
         wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.cssSelector("input[name='nombre']")));
+                By.cssSelector("input[name='nombre']")));
 
         WebElement nombreInput = wait.until(ExpectedConditions.elementToBeClickable(
-            By.cssSelector("input[name='nombre']")));
+                By.cssSelector("input[name='nombre']")));
         nombreInput.clear();
         nombreInput.sendKeys("Juan");
 
@@ -100,7 +116,7 @@ public class ReservaE2ETest {
 
         WebElement correoInput = driver.findElement(By.cssSelector("input[name='correo']"));
         correoInput.clear();
-        correoInput.sendKeys("juanperezinvalido"); 
+        correoInput.sendKeys("juanperezinvalido");
 
         WebElement contrasenaInput = driver.findElement(By.cssSelector("input[name='contrasena']"));
         contrasenaInput.clear();
@@ -120,25 +136,25 @@ public class ReservaE2ETest {
         String validationMessage = correoInput.getAttribute("validationMessage");
         assertNotNull(validationMessage, "Debe haber un mensaje de validación");
         assertFalse(validationMessage.isEmpty(),
-            "El mensaje de validación no debe estar vacío");
+                "El mensaje de validación no debe estar vacío");
     }
 
     @Test
     @Order(3)
     @DisplayName("Corregir y registrarse correctamente")
     public void test03_registrarseCorrectamente() throws InterruptedException {
-        
+
         driver.get(BASE_URL + "/signup");
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("form")));
         wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.cssSelector("input[name='nombre']")));
+                By.cssSelector("input[name='nombre']")));
 
         String timestamp = String.valueOf(System.currentTimeMillis());
         correoUsuario = "usuario" + timestamp + "@test.com";
 
         WebElement nombreInput = wait.until(ExpectedConditions.elementToBeClickable(
-            By.cssSelector("input[name='nombre']")));
+                By.cssSelector("input[name='nombre']")));
         nombreInput.clear();
         nombreInput.sendKeys("Juan");
 
@@ -163,16 +179,15 @@ public class ReservaE2ETest {
         telefonoInput.sendKeys("3001234567");
 
         WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(
-            By.cssSelector("button[type='submit']")));
+                By.cssSelector("button[type='submit']")));
         submitButton.click();
 
         try {
             WebElement successMsg = wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.cssSelector(".success-state, .success-content")));
+                    By.cssSelector(".success-state, .success-content")));
             assertTrue(successMsg.isDisplayed(), "Debe mostrar mensaje de éxito");
 
-            Thread.sleep(2000);
-
+            //Thread.sleep(2000);
         } catch (TimeoutException e) {
             System.out.println("hubo un error al registrar el usuario");
         }
@@ -186,42 +201,41 @@ public class ReservaE2ETest {
         driver.get(BASE_URL + "/login");
 
         wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.cssSelector("input[name='correo'], input[type='email']")));
+                By.cssSelector("input[name='correo'], input[type='email']")));
 
         WebElement loginCorreo = wait.until(ExpectedConditions.elementToBeClickable(
-            By.cssSelector("input[name='correo'], input[type='email']")));
+                By.cssSelector("input[name='correo'], input[type='email']")));
         loginCorreo.clear();
-        Thread.sleep(200);
+        //Thread.sleep(200);
         loginCorreo.sendKeys(correoUsuario);
-        
+
         WebElement loginPassword = driver.findElement(
-            By.cssSelector("input[name='contrasena'], input[type='password']"));
+                By.cssSelector("input[name='contrasena'], input[type='password']"));
         loginPassword.clear();
-        Thread.sleep(200);
+        //Thread.sleep(200);
         loginPassword.sendKeys(contrasenaUsuario);
 
-        Thread.sleep(500);
-
+        //Thread.sleep(500);
         WebElement loginButton = driver.findElement(By.cssSelector("button[type='submit']"));
         loginButton.click();
 
         try {
             wait.until(ExpectedConditions.or(
-                ExpectedConditions.urlContains("/perfil"),
-                ExpectedConditions.urlContains("/home"),
-                ExpectedConditions.urlContains("localhost:4200")
+                    ExpectedConditions.urlContains("/perfil"),
+                    ExpectedConditions.urlContains("/home"),
+                    ExpectedConditions.urlContains("localhost:4200")
             ));
 
-            Thread.sleep(2000);
+            Thread.sleep(1000);
 
         } catch (TimeoutException e) {
-         
+
             try {
                 WebElement errorMsg = driver.findElement(By.cssSelector(".error-message, .alert-danger, .error, .mat-error"));
             } catch (Exception ex) {
                 System.out.println("   No se encontro mensaje de error visible");
             }
-            throw e; 
+            throw e;
         }
     }
 
@@ -229,18 +243,18 @@ public class ReservaE2ETest {
     @Order(5)
     @DisplayName("Crear primera reserva para la siguiente semana")
     public void test05_crearPrimeraReserva() throws InterruptedException {
-       
+
         driver.get(BASE_URL + "/reservas");
 
         wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.cssSelector(".reservas-container, .form-section")));
+                By.cssSelector(".reservas-container, .form-section")));
 
         wait.until(ExpectedConditions.invisibilityOfElementLocated(
-            By.cssSelector(".loading-state")));
-    
+                By.cssSelector(".loading-state")));
+
         LocalDate hoy = LocalDate.now();
-        LocalDate inicioReserva = hoy.plusDays(7); 
-        LocalDate finReserva = inicioReserva.plusDays(3); 
+        LocalDate inicioReserva = hoy.plusDays(7);
+        LocalDate finReserva = inicioReserva.plusDays(3);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         fechaInicio = inicioReserva.format(formatter);
@@ -251,7 +265,7 @@ public class ReservaE2ETest {
 
         // Llenar las fechas
         WebElement fechaInicioInput = wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.cssSelector("input[type='date']")));
+                By.cssSelector("input[type='date']")));
 
         // Usar JavaScript para establecer el valor de la fecha
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -263,19 +277,18 @@ public class ReservaE2ETest {
         js.executeScript("arguments[0].value = arguments[1];", fechaFinInput, fechaFin);
         js.executeScript("arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", fechaFinInput);
 
-        Thread.sleep(2000);
-
+        Thread.sleep(1000);
 
         // Esperar y seleccionar una habitación
         wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.cssSelector(".habitacion-card")));
+                By.cssSelector(".habitacion-card")));
 
         WebElement primeraHabitacionCard = driver.findElement(By.cssSelector(".habitacion-card"));
 
         // Obtener el numero de habitacion
         WebElement habNumero = primeraHabitacionCard.findElement(By.cssSelector(".hab-number"));
         String numeroTexto = habNumero.getText();
-        primeraHabitacion = numeroTexto.replaceAll("[^0-9]", ""); 
+        primeraHabitacion = numeroTexto.replaceAll("[^0-9]", "");
 
         System.out.println("   Habitación seleccionada: " + primeraHabitacion);
 
@@ -283,24 +296,22 @@ public class ReservaE2ETest {
 
         wait.until(ExpectedConditions.attributeContains(primeraHabitacionCard, "class", "selected"));
 
-        Thread.sleep(1000);
-
+        //Thread.sleep(1000);
         WebElement btnConfirmar = wait.until(ExpectedConditions.elementToBeClickable(
-            By.cssSelector(".btn-reserve")));
+                By.cssSelector(".btn-reserve")));
         js.executeScript("arguments[0].click();", btnConfirmar);
-
 
         // Esperar el exito
         WebElement modalExito = null;
         try {
             modalExito = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.cssSelector(".modal-overlay, .success-icon, .modal-content.success")));
+                    By.cssSelector(".modal-overlay, .success-icon, .modal-content.success")));
         } catch (TimeoutException e) {
             try {
                 modalExito = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                    By.cssSelector(".modal, .success, [class*='modal'], [class*='success']")));
+                        By.cssSelector(".modal, .success, [class*='modal'], [class*='success']")));
             } catch (TimeoutException e2) {
-               
+
                 try {
                     WebElement error = driver.findElement(By.cssSelector(".error, .alert-danger, .mat-error"));
                     System.out.println("   Mensaje de error: " + error.getText());
@@ -320,11 +331,11 @@ public class ReservaE2ETest {
         try {
             WebElement btnCerrar = driver.findElement(By.cssSelector(".btn-modal-close"));
             js.executeScript("arguments[0].click();", btnCerrar);
-            Thread.sleep(1000);
+            // Thread.sleep(1000);
         } catch (Exception e) {
             try {
                 js.executeScript("arguments[0].click();", modalExito);
-                Thread.sleep(500);
+                //Thread.sleep(500);
             } catch (Exception ex) {
                 System.out.println("   No se pudo cerrar el modal de exito");
             }
@@ -335,20 +346,18 @@ public class ReservaE2ETest {
     @Order(6)
     @DisplayName("Crear segunda reserva con fechas cruzadas")
     public void test06_crearSegundaReservaConFechasInterceptadas() throws InterruptedException {
-       
+
         driver.get(BASE_URL + "/reservas");
 
         wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.cssSelector(".reservas-container")));
+                By.cssSelector(".reservas-container")));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(
-            By.cssSelector(".loading-state")));
-
-        
+                By.cssSelector(".loading-state")));
 
         // Calcular fechas interceptadas
         LocalDate hoy = LocalDate.now();
-        LocalDate inicioSegundaReserva = hoy.plusDays(8); 
-        LocalDate finSegundaReserva = inicioSegundaReserva.plusDays(3); 
+        LocalDate inicioSegundaReserva = hoy.plusDays(8);
+        LocalDate finSegundaReserva = inicioSegundaReserva.plusDays(3);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String fechaInicioSegunda = inicioSegundaReserva.format(formatter);
@@ -358,7 +367,7 @@ public class ReservaE2ETest {
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         WebElement fechaInicioInput = wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.cssSelector("input[type='date']")));
+                By.cssSelector("input[type='date']")));
         js.executeScript("arguments[0].value = arguments[1];", fechaInicioInput, fechaInicioSegunda);
         js.executeScript("arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", fechaInicioInput);
 
@@ -369,7 +378,7 @@ public class ReservaE2ETest {
         Thread.sleep(2000);
 
         wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.cssSelector(".habitacion-card")));
+                By.cssSelector(".habitacion-card")));
 
         var habitacionesCards = driver.findElements(By.cssSelector(".habitacion-card"));
 
@@ -391,25 +400,25 @@ public class ReservaE2ETest {
         }
 
         assertNotNull(segundaHabitacionCard,
-            "Debe haber al menos una habitación diferente disponible");
+                "Debe haber al menos una habitación diferente disponible");
 
         js.executeScript("arguments[0].click();", segundaHabitacionCard);
 
         wait.until(ExpectedConditions.attributeContains(segundaHabitacionCard, "class", "selected"));
 
-        Thread.sleep(1000);
-
+        //Thread.sleep(1000);
         // Confirmar reserva
         WebElement btnConfirmar = wait.until(ExpectedConditions.elementToBeClickable(
-            By.cssSelector(".btn-reserve")));
+                By.cssSelector(".btn-reserve")));
         js.executeScript("arguments[0].click();", btnConfirmar);
 
         // Esperar el exito
         WebElement modalExito = wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.cssSelector(".modal-overlay, .success-icon, .modal-content.success")));
+                By.cssSelector(".modal-overlay, .success-icon, .modal-content.success")));
 
         assertTrue(modalExito.isDisplayed(), "Debe mostrar modal de éxito para la segunda reserva");
     }
+
     @Test
     @Order(7)
     @DisplayName("Verificar que las habitaciones asignadas son diferentes")
@@ -418,26 +427,26 @@ public class ReservaE2ETest {
         assertNotNull(primeraHabitacion, "Primera habitación debe estar asignada");
         assertNotNull(segundaHabitacion, "Segunda habitación debe estar asignada");
         assertNotEquals(primeraHabitacion, segundaHabitacion,
-            "Las habitaciones deben ser diferentes para reservas con fechas interceptadas");
+                "Las habitaciones deben ser diferentes para reservas con fechas interceptadas");
     }
 
     @Test
     @Order(8)
     @DisplayName("Verificar que la primera habitacion no está disponible para las fechas interceptadas")
     public void test08_verificarPrimeraHabitacionNoDisponible() throws InterruptedException {
-    
+
         driver.get(BASE_URL + "/reservas");
 
         wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.cssSelector(".reservas-container")));
+                By.cssSelector(".reservas-container")));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(
-            By.cssSelector(".loading-state")));
+                By.cssSelector(".loading-state")));
 
         // Configurar las mismas fechas de la primera reserva
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         WebElement fechaInicioInput = wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.cssSelector("input[type='date']")));
+                By.cssSelector("input[type='date']")));
         js.executeScript("arguments[0].value = arguments[1];", fechaInicioInput, fechaInicio);
         js.executeScript("arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", fechaInicioInput);
 
@@ -464,7 +473,7 @@ public class ReservaE2ETest {
                 String estadoTexto = estadoBadge.getText().toLowerCase();
 
                 assertFalse(estadoTexto.contains("disponible"),
-                    "La habitación " + primeraHabitacion + " NO debe estar disponible para estas fechas");
+                        "La habitación " + primeraHabitacion + " NO debe estar disponible para estas fechas");
                 break;
             }
         }

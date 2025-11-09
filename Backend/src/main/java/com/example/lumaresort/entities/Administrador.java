@@ -1,14 +1,13 @@
 package com.example.lumaresort.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Administrador {
 
@@ -18,30 +17,6 @@ public class Administrador {
 
     @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario") // FK a 
+    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
     private Usuario usuario;
-
-    // Getters y setters
-    public Integer getIdAdministrador() {
-        return idAdministrador;
-    }
-
-    public void setIdAdministrador(Integer idAdministrador) {
-        this.idAdministrador = idAdministrador;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Administrador() {
-    }
-
-    public Administrador(Usuario usuario) {
-        this.usuario = usuario;
-    }
 }

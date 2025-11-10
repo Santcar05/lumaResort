@@ -28,8 +28,8 @@ public class Usuario {
     private String cedula;
     private String telefono;
 
-    // NUEVA RELACIÓN CON ROLES
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    // NUEVA RELACIÓN CON ROLES - MODIFICADA
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
         name = "usuario_roles",
         joinColumns = @JoinColumn(name = "usuario_id"),
@@ -52,4 +52,20 @@ public class Usuario {
     @JsonIgnore
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Reserva> reservas;
+
+    // MÉTODOS AUXILIARES PARA VERIFICAR ROLES
+    public boolean isEsAdministrador() {
+        return roles.stream().anyMatch(role -> 
+            role.getNombre() == ERole.ROLE_ADMINISTRADOR);
+    }
+
+    public boolean isEsOperador() {
+        return roles.stream().anyMatch(role -> 
+            role.getNombre() == ERole.ROLE_OPERADOR);
+    }
+
+    public boolean isEsCliente() {
+        return roles.stream().anyMatch(role -> 
+            role.getNombre() == ERole.ROLE_CLIENTE);
+    }
 }

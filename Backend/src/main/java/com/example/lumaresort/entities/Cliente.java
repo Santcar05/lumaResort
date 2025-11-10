@@ -22,8 +22,9 @@ public class Cliente {
     private String tipoHabitacion;
     private String estadoReserva; // En uso, Paga, Pendiente
 
+    // MODIFICADO: Cambiado a @OneToOne con cascade
     @JsonIgnore
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idUsuario")
     private Usuario usuario;
 }

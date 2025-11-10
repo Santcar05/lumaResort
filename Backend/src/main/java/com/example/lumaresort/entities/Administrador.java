@@ -15,8 +15,9 @@ public class Administrador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAdministrador;
 
+    // MODIFICADO: Cambiado a @OneToOne con cascade
     @JsonIgnore
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
     private Usuario usuario;
 }

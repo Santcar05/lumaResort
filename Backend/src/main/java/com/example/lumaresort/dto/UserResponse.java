@@ -1,9 +1,14 @@
 package com.example.lumaresort.dto;
 
+import com.example.lumaresort.entities.ERole;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserResponse {
     private Long idUsuario;
     private String nombre;
@@ -11,17 +16,16 @@ public class UserResponse {
     private String correo;
     private String cedula;
     private String telefono;
-    private List<String> roles;
+    private List<ERole> roles;
     
-    // Constructor para facilitar la creación
-    public UserResponse(Long idUsuario, String nombre, String apellido, String correo, 
-                       String cedula, String telefono, List<String> roles) {
-        this.idUsuario = idUsuario;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.correo = correo;
-        this.cedula = cedula;
-        this.telefono = telefono;
-        this.roles = roles;
+    public String getTipoUsuario() {
+        if (roles.contains(ERole.ROLE_ADMINISTRADOR)) {
+            return "ADMINISTRADOR";
+        } else if (roles.contains(ERole.ROLE_OPERADOR)) {
+            return "OPERADOR";
+        } else if (roles.contains(ERole.ROLE_CLIENTE)) {
+            return "CLIENTE";
+        }
+        return "USUARIO";
     }
 }

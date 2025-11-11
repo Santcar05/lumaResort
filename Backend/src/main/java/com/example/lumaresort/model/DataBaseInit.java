@@ -1,5 +1,6 @@
 package com.example.lumaresort.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Arrays;
@@ -7,6 +8,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
 import com.example.lumaresort.entities.*;
@@ -25,8 +27,11 @@ public class DataBaseInit implements ApplicationRunner {
     @Autowired private TipoHabitacionRepository tipoHabitacionRepository;
     @Autowired private CuentaHabitacionRepository cuentaHabitacionRepository;
     @Autowired private AdministradorRepository administradorRepository;
+    @Autowired private ClienteRepository clienteRepository;
     @Autowired private OperadorRepository operadorRepository;
     @Autowired private ReservaRepository reservaRepository;
+    @Autowired private RoleRepository roleRepository;
+    @Autowired private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(org.springframework.boot.ApplicationArguments args) throws Exception {
@@ -36,84 +41,139 @@ public class DataBaseInit implements ApplicationRunner {
     public void init() {
 
         // ============================
+        //  CREAR ROLES
+        // ============================
+        Role roleCliente = roleRepository.findByNombre(ERole.ROLE_CLIENTE)
+                .orElseGet(() -> roleRepository.save(new Role(ERole.ROLE_CLIENTE)));
+
+        Role roleOperador = roleRepository.findByNombre(ERole.ROLE_OPERADOR)
+                .orElseGet(() -> roleRepository.save(new Role(ERole.ROLE_OPERADOR)));
+
+        Role roleAdministrador = roleRepository.findByNombre(ERole.ROLE_ADMINISTRADOR)
+                .orElseGet(() -> roleRepository.save(new Role(ERole.ROLE_ADMINISTRADOR)));
+
+        // ============================
         //  CREAR TIPOS DE HABITACIÓN
         // ============================
-        TipoHabitacion tipo1 = new TipoHabitacion("Individual", "Habitación para una persona",
-                Arrays.asList("https://example.com/imagen_individual.jpg"),
-                Arrays.asList("Cama individual, Baño privado, Wi-Fi gratuito"), 50.0);
+        TipoHabitacion tipo1 = TipoHabitacion.builder()
+                .nombre("Individual")
+                .descripcion("Habitación para una persona")
+                .imagenes(Arrays.asList("https://example.com/imagen_individual.jpg"))
+                .caracteristicas(Arrays.asList("Cama individual, Baño privado, Wi-Fi gratuito"))
+                .precio(50.0)
+                .build();
 
-        TipoHabitacion tipo2 = new TipoHabitacion("Doble", "Habitación para dos personas",
-                Arrays.asList("https://example.com/imagen_doble.jpg"),
-                Arrays.asList("Cama doble, Baño privado, Wi-Fi gratuito, TV por cable"), 100.0);
+        TipoHabitacion tipo2 = TipoHabitacion.builder()
+                .nombre("Doble")
+                .descripcion("Habitación para dos personas")
+                .imagenes(Arrays.asList("https://example.com/imagen_doble.jpg"))
+                .caracteristicas(Arrays.asList("Cama doble, Baño privado, Wi-Fi gratuito, TV por cable"))
+                .precio(100.0)
+                .build();
 
-        TipoHabitacion tipo3 = new TipoHabitacion("Suite", "Habitación de lujo con sala de estar",
-                Arrays.asList("https://example.com/imagen_suite.jpg"),
-                Arrays.asList("Cama king size, Sala de estar, Baño con jacuzzi, Wi-Fi gratuito, TV por cable"), 200.0);
+        TipoHabitacion tipo3 = TipoHabitacion.builder()
+                .nombre("Suite")
+                .descripcion("Habitación de lujo con sala de estar")
+                .imagenes(Arrays.asList("https://example.com/imagen_suite.jpg"))
+                .caracteristicas(Arrays.asList("Cama king size, Sala de estar, Baño con jacuzzi, Wi-Fi gratuito, TV por cable"))
+                .precio(200.0)
+                .build();
 
         tipoHabitacionRepository.saveAll(List.of(tipo1, tipo2, tipo3));
 
         // ============================
         //  CREAR HABITACIONES
         // ============================
-        Habitacion habitacion1 = new Habitacion("101", 100.0f, "Ocupada", 1, "Habitación individual cómoda", tipo1);
-        Habitacion habitacion2 = new Habitacion("102", 150.0f, "Disponible", 2, "Habitación doble con vista al mar", tipo2);
-        Habitacion habitacion3 = new Habitacion("201", 300.0f, "Ocupada", 4, "Suite de lujo con jacuzzi", tipo3);
+        Habitacion habitacion1 = Habitacion.builder()
+                .numero("101")
+                .precioPorNoche(100.0f)
+                .estado("Ocupada")
+                .capacidad(1)
+                .descripcion("Habitación individual cómoda")
+                .tipoHabitacion(tipo1)
+                .build();
+
+        Habitacion habitacion2 = Habitacion.builder()
+                .numero("102")
+                .precioPorNoche(150.0f)
+                .estado("Disponible")
+                .capacidad(2)
+                .descripcion("Habitación doble con vista al mar")
+                .tipoHabitacion(tipo2)
+                .build();
+
+        Habitacion habitacion3 = Habitacion.builder()
+                .numero("201")
+                .precioPorNoche(300.0f)
+                .estado("Ocupada")
+                .capacidad(4)
+                .descripcion("Suite de lujo con jacuzzi")
+                .tipoHabitacion(tipo3)
+                .build();
 
         habitacionRepository.saveAll(List.of(habitacion1, habitacion2, habitacion3));
 
         // ============================
-        //  CREAR USUARIOS con BUILDER
+        //  CREAR USUARIOS CLIENTES
         // ============================
-
-        // 🔹 10 clientes
         for (int i = 1; i <= 10; i++) {
-            Usuario cliente = Usuario.builder()
+            Usuario usuario = Usuario.builder()
                     .nombre("Usuario" + i)
                     .apellido("Demo")
                     .correo("usuario" + i + "@gmail.com")
-                    .contrasena("pass" + i)
-                    .esAdministrador(false)
-                    .esOperador(false)
-                    .rol("CLIENTE")
+                    .contrasena(passwordEncoder.encode("pass" + i))
+                    .cedula("100000000" + i)
+                    .telefono("300000000" + i)
+                    .roles(new ArrayList<>(List.of(roleCliente)))
                     .build();
-            usuarioRepository.save(cliente);
+            Usuario savedUsuario = usuarioRepository.save(usuario);
+
+            // Crear perfil de cliente
+            Cliente cliente = new Cliente();
+            cliente.setUsuario(savedUsuario);
+            clienteRepository.save(cliente);
         }
 
-        // 🔹 5 operadores
+        // ============================
+        //  CREAR USUARIOS OPERADORES
+        // ============================
         for (int i = 1; i <= 5; i++) {
-            Usuario operador = Usuario.builder()
+            Usuario usuario = Usuario.builder()
                     .nombre("Operador" + i)
                     .apellido("Soporte")
                     .correo("operador" + i + "@gmail.com")
-                    .contrasena("op" + i)
-                    .esAdministrador(false)
-                    .esOperador(true)
-                    .rol("OPERADOR")
+                    .contrasena(passwordEncoder.encode("op" + i))
+                    .cedula("200000000" + i)
+                    .telefono("310000000" + i)
+                    .roles(new ArrayList<>(List.of(roleOperador)))
                     .build();
-            usuarioRepository.save(operador);
+            Usuario savedUsuario = usuarioRepository.save(usuario);
+
+            // Crear perfil de operador
+            Operador operador = new Operador();
+            operador.setUsuario(savedUsuario);
+            operadorRepository.save(operador);
         }
 
-        // 🔹 5 administradores
+        // ============================
+        //  CREAR USUARIOS ADMINISTRADORES
+        // ============================
         for (int i = 1; i <= 5; i++) {
-            Usuario admin = Usuario.builder()
+            Usuario usuario = Usuario.builder()
                     .nombre("Admin" + i)
                     .apellido("Luma")
                     .correo("admin" + i + "@gmail.com")
-                    .contrasena("admin" + i)
-                    .esAdministrador(true)
-                    .esOperador(false)
-                    .rol("ADMIN")
+                    .contrasena(passwordEncoder.encode("admin" + i))
+                    .cedula("300000000" + i)
+                    .telefono("320000000" + i)
+                    .roles(new ArrayList<>(List.of(roleAdministrador)))
                     .build();
-            usuarioRepository.save(admin);
-        }
+            Usuario savedUsuario = usuarioRepository.save(usuario);
 
-        // ============================
-        //  VINCULAR ADMINISTRADORES
-        // ============================
-        for (int i = 1; i <= 5; i++) {
-            Usuario usuarioAdmin = usuarioRepository.findByCorreoAndContrasena("admin" + i + "@gmail.com", "admin" + i);
-            Administrador adminEntity = new Administrador(usuarioAdmin);
-            administradorRepository.save(adminEntity);
+            // Crear perfil de administrador
+            Administrador admin = new Administrador();
+            admin.setUsuario(savedUsuario);
+            administradorRepository.save(admin);
         }
 
         // ============================
@@ -140,13 +200,13 @@ public class DataBaseInit implements ApplicationRunner {
         //  CREAR RESERVAS DE EJEMPLO
         // ============================
         Reserva reserva1 = new Reserva(new Date(2023 - 1900, 10, 1), new Date(2023 - 1900, 10, 5), 2,
-                "CONFIRMADA", usuarioRepository.findByCorreoAndContrasena("usuario1@gmail.com", "pass1"), habitacion1);
+                "CONFIRMADA", usuarioRepository.findByCorreo("usuario1@gmail.com"), habitacion1);
 
         Reserva reserva2 = new Reserva(new Date(2023 - 1900, 11, 10), new Date(2023 - 1900, 11, 15), 4,
-                "PENDIENTE", usuarioRepository.findByCorreoAndContrasena("usuario2@gmail.com", "pass2"), habitacion2);
+                "PENDIENTE", usuarioRepository.findByCorreo("usuario2@gmail.com"), habitacion2);
 
         reservaRepository.saveAll(List.of(reserva1, reserva2));
 
-        System.out.println("Inicialización completada con Builder en Usuario");
+        System.out.println("Inicialización de base de datos DEFAULT completada con sistema de Roles");
     }
 }

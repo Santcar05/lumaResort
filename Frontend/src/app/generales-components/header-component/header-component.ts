@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../service/auth/auth.service';
+import { UserResponse } from '../../Models/UserResponse';
 
 @Component({
   selector: 'app-header-component',
@@ -14,20 +16,20 @@ export class HeaderComponent implements OnInit {
   isLoggedIn = false;
   usuarioId: number | null = null;
   perfilVisible = false;
+  currentUser: UserResponse | null = null;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    const userData = localStorage.getItem('userData');
-    if (userData) {
-      const usuario = JSON.parse(userData);
-      if (usuario && usuario.idUsuario) {
-        this.isLoggedIn = true;
-        this.usuarioId = usuario.idUsuario;
-      }
-    } else {
-      this.isLoggedIn = false;
-    }
+    // Suscribirse a los cambios de autenticación en tiempo real
+    this.authService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+      this.isLoggedIn = user !== null;
+      this.usuarioId = user?.idUsuario || null;
+    });
   }
 
   toggleMenu() {
@@ -50,12 +52,8 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('userData');
-    this.isLoggedIn = false;
-    this.usuarioId = null;
-    this.router.navigate(['/login']).then(() => {
-      window.location.reload();
-    });
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
   verReservas() {
     //Ir al componente de ver reservas (URL: reservas/{id})

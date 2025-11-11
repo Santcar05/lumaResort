@@ -18,6 +18,7 @@ import { NavOperadorComponent } from './nav-operador-component/nav-operador-comp
 import { ServiciosOperadorComponent } from './servicios-operador-component/servicios-operador-component';
 import { OperadorComponent } from './operador-component/operador-component';
 import { EstadiaOperadorComponent } from './estadia-operador-component/estadia-operador-component';
+import { clienteGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // por defecto muestra Landing
@@ -36,7 +37,7 @@ export const routes: Routes = [
   },
   {
     path: 'operador',
-    component: OperadorComponent, // O crear un OperadorComponent específico
+    component: OperadorComponent,
     children: [
       { path: '', redirectTo: 'reservas', pathMatch: 'full' }, // Portal operador
       { path: 'reservas', component: ReservasOperadorComponent },
@@ -62,5 +63,11 @@ export const routes: Routes = [
   { path: 'reservas/:id', component: VerReservasComponent },
   { path: 'reservas', component: ReservasComponent },
   { path: 'signup', component: SignUpComponent },
-  { path: '**', redirectTo: '' }, // redirección en caso de ruta no válida COLOCAR SIEMPRE AL FINAL
+  // Ruta para clientes 
+  {
+    path: 'cliente',
+    component: LandingPageComponent,
+    canActivate: [clienteGuard]
+  },
+  { path: '**', redirectTo: '' }, // redirección en caso de ruta
 ];

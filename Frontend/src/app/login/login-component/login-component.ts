@@ -48,7 +48,9 @@ export class LoginComponent {
         } else if (this.authService.isOperador()) {
           this.router.navigate(['/operador']);
         } else if (this.authService.isCliente()) {
-          this.router.navigate(['/cliente']);
+          // Redirigir a la página de reservas del cliente
+          const userId = response.usuario.idUsuario;
+          this.router.navigate(['/reservas', userId]);
         } else {
           // Fallback si no tiene ningún rol reconocido
           this.router.navigate(['/']);

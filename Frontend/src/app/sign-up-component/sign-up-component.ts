@@ -47,13 +47,17 @@ export class SignUpComponent {
     this.loading = true;
     this.authService.register(this.registerData).subscribe({
       next: (response) => {
+        console.log('Registro exitoso:', response);
         this.loading = false;
         this.successMsg = 'Usuario registrado exitosamente 🎉';
-        console.log('Registro exitoso:', response);
-        // El usuario ya está autenticado automáticamente, redirigir a su dashboard
+
+        // Redirigir según el rol del usuario después del registro
+        // AuthService ya guardó el token y el usuario automáticamente
         setTimeout(() => {
           if (this.authService.isCliente()) {
-            this.router.navigate(['/cliente']);
+            // Redirigir a la página de reservas del usuario recién registrado
+            const userId = response.usuario.idUsuario;
+            this.router.navigate(['/reservas', userId]);
           } else {
             this.router.navigate(['/']);
           }

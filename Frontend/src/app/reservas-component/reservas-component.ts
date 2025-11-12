@@ -14,6 +14,9 @@ import { Usuario } from '../Models/Usuario';
 // Componentes
 import { HeaderComponent } from '../generales-components/header-component/header-component';
 
+// Servicios
+import { AuthService } from '../service/auth/auth.service';
+
 @Component({
   selector: 'app-reservas',
   standalone: true,
@@ -22,8 +25,7 @@ import { HeaderComponent } from '../generales-components/header-component/header
   styleUrls: ['./reservas-component.css'],
 })
 export class ReservasComponent implements OnInit {
-  /** ------------------ VARIABLES PRINCIPALES ------------------ **/
-
+  
   // Datos del formulario
   fechaInicio: string = '';
   fechaFin: string = '';
@@ -33,10 +35,6 @@ export class ReservasComponent implements OnInit {
   habitaciones: Habitacion[] = [];
   habitacionesFiltradas: Habitacion[] = [];
   servicios: Servicio[] = [];
-
-  // 🔹 INICIO CORRECCIÓN: lista de reservas existentes
-  reservasExistentes: Reserva[] = [];
-  // 🔹 FIN CORRECCIÓN
 
   // Filtro de tipo de habitación
   tiposHabitacion: string[] = [];
@@ -70,6 +68,7 @@ export class ReservasComponent implements OnInit {
   /** ------------------ URLs DEL BACKEND ------------------ **/
   private baseUrlReservas = 'http://localhost:8080/reservas';
   private baseUrlHabitaciones = 'http://localhost:8080/habitaciones';
+  private baseUrlHabitacionesDisponibles = 'http://localhost:8080/habitaciones/disponibles';
   private baseUrlServicios = 'http://localhost:8080/servicios';
 
   /** ------------------ USUARIO SIMULADO ------------------ **/
@@ -86,7 +85,12 @@ export class ReservasComponent implements OnInit {
     esAdministrador: false,
   };
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute,
+    private authService: AuthService
+  ) {
     const today = new Date();
     this.fechaMinima = today.toISOString().split('T')[0];
     this.fechaInicio = this.fechaMinima;
@@ -98,14 +102,25 @@ export class ReservasComponent implements OnInit {
 
   /** ------------------ CICLO DE VIDA ------------------ **/
   ngOnInit(): void {
-    const userData = localStorage.getItem('userData');
-    if (userData) {
-      const usuario = JSON.parse(userData);
-      if (usuario && usuario.idUsuario) {
-        this.usuarioActual = usuario;
-        this.cargarDatos();
-      }
+    // Usar AuthService para obtener el usuario autenticado
+    const usuario = this.authService.getUser();
+    if (usuario && usuario.idUsuario) {
+      // Adaptar UserResponse a Usuario para compatibilidad
+      this.usuarioActual = {
+        idUsuario: usuario.idUsuario,
+        nombre: usuario.nombre,
+        apellido: usuario.apellido,
+        correo: usuario.correo,
+        telefono: usuario.telefono,
+        cedula: usuario.cedula,
+        rol: 'CLIENTE',
+        contrasena: '',
+        esOperador: false,
+        esAdministrador: false,
+      };
+      this.cargarDatos();
     } else {
+      // Si no hay usuario autenticado, redirigir a login
       this.router.navigate(['/login']);
     }
   }
@@ -115,40 +130,23 @@ export class ReservasComponent implements OnInit {
     this.loading = true;
     this.errorMsg = '';
 
-    // INICIO CORRECCIÓN: ahora también cargamos las reservas existentes
+    // Cargar solo servicios inicialmente
     forkJoin({
-      habitaciones: this.http.get<Habitacion[]>(this.baseUrlHabitaciones),
       servicios: this.http.get<Servicio[]>(this.baseUrlServicios),
-      reservas: this.http.get<Reserva[]>(this.baseUrlReservas),
     }).subscribe({
       next: (data) => {
-        this.habitaciones = data.habitaciones.filter((h) => h.estado === 'Disponible');
         this.servicios = data.servicios;
-        this.reservasExistentes = data.reservas;
 
-        // Filtramos habitaciones según fechas iniciales
+        // Cargar habitaciones disponibles usando el nuevo endpoint
         this.filtrarHabitacionesDisponibles();
 
-        // Extraer tipos únicos
-        const tipos = this.habitaciones
-          .map((h) => h.tipoHabitacion?.nombre)
-          .filter((nombre): nombre is string => !!nombre);
-
-        this.tiposHabitacion = Array.from(new Set(tipos));
-        this.tipoHabitacionSeleccionado = '';
-
         this.loading = false;
-
-        if (this.habitaciones.length === 0 && this.servicios.length === 0) {
-          this.errorMsg = 'No hay datos disponibles en este momento';
-        }
       },
       error: () => {
         this.errorMsg = 'No se pudo conectar con el servidor.';
         this.loading = false;
       },
     });
-    // 🔹 FIN CORRECCIÓN
   }
 
   /** ------------------ VALIDACIÓN DE FECHAS ------------------ **/
@@ -175,36 +173,48 @@ export class ReservasComponent implements OnInit {
   }
 
   /** ------------------ FILTRO DE DISPONIBILIDAD ------------------ **/
-  // función nueva para filtrar habitaciones según reservas existentes
+  // Nueva función: consulta al backend las habitaciones disponibles en las fechas seleccionadas
   filtrarHabitacionesDisponibles(): void {
-    const inicio = new Date(this.fechaInicio);
-    const fin = new Date(this.fechaFin);
-
-    const estaReservada = (habitacionId: number): boolean => {
-      return this.reservasExistentes.some((reserva) => {
-        if (!reserva.habitacion || reserva.habitacion.idHabitacion !== habitacionId) return false;
-
-        const inicioRes = new Date(reserva.fechaInicio);
-        const finRes = new Date(reserva.fechaFin);
-
-        // Si las fechas se traslapan, está reservada
-        return inicio <= finRes && fin >= inicioRes;
-      });
-    };
-
-    // Filtramos solo las que no estén reservadas
-    this.habitacionesFiltradas = this.habitaciones.filter(
-      (h) => h.idHabitacion !== undefined && !estaReservada(h.idHabitacion)
-    );
-
-    // Si hay filtro por tipo, se aplica después
-    if (this.tipoHabitacionSeleccionado) {
-      this.habitacionesFiltradas = this.habitacionesFiltradas.filter(
-        (h) => h.tipoHabitacion?.nombre === this.tipoHabitacionSeleccionado
-      );
+    if (!this.fechaInicio || !this.fechaFin) {
+      return;
     }
 
-    this.habitacionSeleccionada = null;
+    // Llamar al nuevo endpoint del backend
+    const url = `${this.baseUrlHabitacionesDisponibles}?fechaInicio=${this.fechaInicio}&fechaFin=${this.fechaFin}`;
+
+    this.http.get<Habitacion[]>(url).subscribe({
+      next: (habitacionesDisponibles) => {
+        this.habitaciones = habitacionesDisponibles;
+        this.habitacionesFiltradas = habitacionesDisponibles;
+
+        // Si hay filtro por tipo, se aplica
+        if (this.tipoHabitacionSeleccionado) {
+          this.habitacionesFiltradas = this.habitacionesFiltradas.filter(
+            (h) => h.tipoHabitacion?.nombre === this.tipoHabitacionSeleccionado
+          );
+        }
+
+        // Extraer tipos únicos de las habitaciones disponibles
+        const tipos = this.habitaciones
+          .map((h) => h.tipoHabitacion?.nombre)
+          .filter((nombre): nombre is string => !!nombre);
+
+        this.tiposHabitacion = Array.from(new Set(tipos));
+
+        this.habitacionSeleccionada = null;
+
+        if (this.habitaciones.length === 0) {
+          this.errorMsg = 'No hay habitaciones disponibles para las fechas seleccionadas';
+        } else {
+          this.errorMsg = '';
+        }
+      },
+      error: (err) => {
+        console.error('Error al cargar habitaciones disponibles:', err);
+        this.errorMsg = 'Error al cargar habitaciones disponibles';
+        this.habitacionesFiltradas = [];
+      }
+    });
   }
 
   /** ------------------ FILTRO DE TIPO DE HABITACIÓN ------------------ **/

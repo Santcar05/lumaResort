@@ -17,14 +17,17 @@ export class AuthService {
   private isBrowser: boolean;
 
   // BehaviorSubject para observar cambios en autenticación
-  private currentUserSubject = new BehaviorSubject<UserResponse | null>(this.getUserFromStorage());
-  public currentUser$ = this.currentUserSubject.asObservable();
+  private currentUserSubject!: BehaviorSubject<UserResponse | null>;
+  public currentUser$!: Observable<UserResponse | null>;
 
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
+    // Inicializar el BehaviorSubject después de establecer isBrowser
+    this.currentUserSubject = new BehaviorSubject<UserResponse | null>(this.getUserFromStorage());
+    this.currentUser$ = this.currentUserSubject.asObservable();
   }
 
   /**
@@ -71,6 +74,19 @@ export class AuthService {
    */
   getCurrentUser(): Observable<UserResponse> {
     return this.http.get<UserResponse>(`${this.apiUrl}/actual`)
+      .pipe(
+        tap(user => {
+          this.setUser(user);
+          this.currentUserSubject.next(user);
+        })
+      );
+  }
+
+  /**
+   * Actualizar perfil del usuario autenticado
+   */
+  updateProfile(updateData: { nombre: string; apellido: string; cedula: string; telefono: string }): Observable<UserResponse> {
+    return this.http.put<UserResponse>(`${this.apiUrl}/perfil`, updateData)
       .pipe(
         tap(user => {
           this.setUser(user);

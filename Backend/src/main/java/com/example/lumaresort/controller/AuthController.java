@@ -3,6 +3,7 @@ package com.example.lumaresort.controller;
 import com.example.lumaresort.dto.AuthResponse;
 import com.example.lumaresort.dto.LoginRequest;
 import com.example.lumaresort.dto.RegisterRequest;
+import com.example.lumaresort.dto.UpdateProfileRequest;
 import com.example.lumaresort.dto.UserResponse;
 import com.example.lumaresort.entities.Cliente;
 import com.example.lumaresort.entities.ERole;
@@ -199,5 +200,59 @@ public class AuthController {
         );
 
         return ResponseEntity.ok(userResponse);
+    }
+
+    /**
+     * Endpoint para actualizar el perfil del usuario autenticado
+     */
+    @PutMapping("/perfil")
+    public ResponseEntity<?> updateProfile(@Valid @RequestBody UpdateProfileRequest updateRequest,
+                                          Authentication authentication) {
+        try {
+            // Verificar que el usuario esté autenticado
+            if (authentication == null || !authentication.isAuthenticated()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("mensaje", "No autenticado"));
+            }
+
+            // Obtener el usuario actual por su correo (del token JWT)
+            String correo = authentication.getName();
+            Usuario usuario = usuarioRepository.findByCorreo(correo);
+
+            if (usuario == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(Map.of("mensaje", "Usuario no encontrado"));
+            }
+
+            // Actualizar solo los campos permitidos (NO correo ni contraseña)
+            usuario.setNombre(updateRequest.getNombre());
+            usuario.setApellido(updateRequest.getApellido());
+            usuario.setCedula(updateRequest.getCedula());
+            usuario.setTelefono(updateRequest.getTelefono());
+
+            // Guardar cambios
+            Usuario usuarioActualizado = usuarioRepository.save(usuario);
+
+            // Crear respuesta con los datos actualizados
+            UserResponse userResponse = new UserResponse(
+                    usuarioActualizado.getIdUsuario(),
+                    usuarioActualizado.getNombre(),
+                    usuarioActualizado.getApellido(),
+                    usuarioActualizado.getCorreo(),
+                    usuarioActualizado.getCedula(),
+                    usuarioActualizado.getTelefono(),
+                    usuarioActualizado.getRoles().stream()
+                            .map(role -> role.getNombre())
+                            .collect(Collectors.toList())
+            );
+
+            return ResponseEntity.ok(userResponse);
+
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("mensaje", "Error al actualizar perfil");
+            error.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+        }
     }
 }

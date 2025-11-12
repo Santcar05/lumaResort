@@ -24,9 +24,9 @@ public class JwtUtils {
     @Value("${app.jwt.expiration:86400000}") // 24 horas en milisegundos
     private int jwtExpirationMs;
 
-    /**
-     * Genera un token JWT basado en la autenticación del usuario
-     */
+    
+    // Genera un token JWT basado en la autenticación del usuario
+     
     public String generateJwtToken(Authentication authentication) {
         UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
         return generateTokenFromUsername(userPrincipal.getUsername());

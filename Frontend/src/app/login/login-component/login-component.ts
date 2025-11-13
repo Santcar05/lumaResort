@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../generales-components/header-component/header-component';
-import { UsuarioService } from '../../service/usuario/usuario-service';
+import { AuthService } from '../../service/auth/auth.service';
 import { RouterOutlet } from '@angular/router';
-import { Usuario } from '../../Models/Usuario';
+import { LoginRequest } from '../../Models/LoginRequest';
 
 @Component({
   selector: 'app-login-component',
@@ -20,7 +20,7 @@ export class LoginComponent {
   errorMsg = '';
   loading = false;
 
-  constructor(private usuarioService: UsuarioService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onLogin() {
     this.errorMsg = '';
@@ -32,33 +32,29 @@ export class LoginComponent {
 
     this.loading = true;
 
-    this.usuarioService.login(this.email, this.password).subscribe({
-      next: (usuario: Usuario) => {
+    const loginRequest: LoginRequest = {
+      correo: this.email,
+      contrasena: this.password
+    };
+
+    this.authService.login(loginRequest).subscribe({
+      next: (response) => {
         this.loading = false;
+        console.log('Login exitoso:', response);
 
-        if (!usuario || !usuario.idUsuario) {
-          this.errorMsg = 'Respuesta de login inválida.';
-          return;
-        }
-        // Guarda los datos del usuario en localStorage
-        localStorage.setItem('userData', JSON.stringify(usuario));
-
-        const isAdmin = !!usuario.esAdministrador;
-        const isOperador = !!usuario.esOperador;
-
-        let targetUrl: any[] = [];
-
-        if (isAdmin) {
-          targetUrl = ['/admin/tiposHabitacion'];
-        } else if (isOperador) {
-          targetUrl = ['/operador'];
+        // Redirigir según el rol usando los métodos del AuthService
+        if (this.authService.isAdmin()) {
+          this.router.navigate(['/admin']);
+        } else if (this.authService.isOperador()) {
+          this.router.navigate(['/operador']);
+        } else if (this.authService.isCliente()) {
+          // Redirigir a la página de reservas del cliente
+          const userId = response.usuario.idUsuario;
+          this.router.navigate(['/reservas', userId]);
         } else {
-          targetUrl = ['/perfil', usuario.idUsuario];
+          // Fallback si no tiene ningún rol reconocido
+          this.router.navigate(['/']);
         }
-
-        this.router.navigate(targetUrl).then(() => {
-          window.location.reload();
-        });
       },
       error: (err) => {
         this.loading = false;

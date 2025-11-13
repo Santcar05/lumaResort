@@ -1,5 +1,7 @@
 package com.example.lumaresort;
 
+import java.util.ArrayList;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -18,12 +20,28 @@ public class LumaresortApplication {
     //Crear bean
     @Bean
     public Usuario usuario() {
-        return new Usuario("", "");
+        return Usuario.builder()
+                .nombre("")
+                .apellido("")
+                .correo("")
+                .contrasena("")
+                .cedula("")
+                .telefono("")
+                .roles(new ArrayList<>())
+                .build();
     }
 
     @Bean
     public Usuario usuarioCrearCuenta() {
-        return new Usuario("", "");
+        return Usuario.builder()
+                .nombre("")
+                .apellido("")
+                .correo("")
+                .contrasena("")
+                .cedula("")
+                .telefono("")
+                .roles(new ArrayList<>())
+                .build();
     }
 
 }

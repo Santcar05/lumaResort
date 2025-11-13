@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HeaderComponent } from '../generales-components/header-component/header-component';
 import { FooterComponent } from '../generales-components/footer-component/footer-component';
-import { Usuario } from '../Models/Usuario';
-import { UsuarioService } from '../service/usuario/usuario-service';
+import { RegisterRequest } from '../Models/RegisterRequest';
+import { AuthService } from '../service/auth/auth.service';
 
 @Component({
   selector: 'app-sign-up-component',
@@ -15,45 +15,53 @@ import { UsuarioService } from '../service/usuario/usuario-service';
   styleUrls: ['./sign-up-component.css'],
 })
 export class SignUpComponent {
-  usuario: Usuario = {
+  registerData: RegisterRequest = {
     nombre: '',
     apellido: '',
     correo: '',
     contrasena: '',
     cedula: '',
-    telefono: '',
-    idUsuario: 0,
-    esOperador: false,
-    esAdministrador: false,
-    rol: '',
+    telefono: ''
   };
 
   loading = false;
   successMsg = '';
   errorMsg = '';
 
-  constructor(private usuarioService: UsuarioService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onRegister() {
     this.successMsg = '';
     this.errorMsg = '';
 
     if (
-      !this.usuario.nombre ||
-      !this.usuario.apellido ||
-      !this.usuario.correo ||
-      !this.usuario.contrasena
+      !this.registerData.nombre ||
+      !this.registerData.apellido ||
+      !this.registerData.correo ||
+      !this.registerData.contrasena
     ) {
       this.errorMsg = 'Por favor complete todos los campos obligatorios.';
       return;
     }
 
     this.loading = true;
-    this.usuarioService.createUsuario(this.usuario).subscribe({
-      next: () => {
+    this.authService.register(this.registerData).subscribe({
+      next: (response) => {
+        console.log('Registro exitoso:', response);
         this.loading = false;
         this.successMsg = 'Usuario registrado exitosamente 🎉';
-        setTimeout(() => this.router.navigate(['/login']), 2000);
+
+        // Redirigir según el rol del usuario después del registro
+        // AuthService ya guardó el token y el usuario automáticamente
+        setTimeout(() => {
+          if (this.authService.isCliente()) {
+            // Redirigir a la página de reservas del usuario recién registrado
+            const userId = response.usuario.idUsuario;
+            this.router.navigate(['/reservas', userId]);
+          } else {
+            this.router.navigate(['/']);
+          }
+        }, 1500);
       },
       error: (err) => {
         this.loading = false;

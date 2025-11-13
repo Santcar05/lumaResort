@@ -28,7 +28,7 @@ public class Usuario {
     private String cedula;
     private String telefono;
 
-    // NUEVA RELACIÓN CON ROLES - MODIFICADA
+    // NUEVA RELACIÓN CON ROLES
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
         name = "usuario_roles",

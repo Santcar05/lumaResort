@@ -1,4 +1,0 @@
-2025-10-06 19:08:16.389149-05:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "ADMINISTRADOR" no encontrada
-Table "ADMINISTRADOR" not found; SQL statement:
-insert into administrador (id_usuario,id_administrador) values (?,default) [42102-232]

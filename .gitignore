@@ -1,0 +1,5 @@
+# H2 Database files - No commit database state
+*.mv.db
+*.trace.db
+*.lock.db
+lumaresort.*

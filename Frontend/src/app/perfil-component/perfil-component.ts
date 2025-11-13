@@ -5,6 +5,8 @@ import { Usuario } from '../Models/Usuario';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../generales-components/header-component/header-component';
+import { AuthService } from '../service/auth/auth.service';
+import { UserResponse } from '../Models/UserResponse';
 
 @Component({
   selector: 'app-perfil-component',
@@ -25,15 +27,31 @@ export class PerfilComponent implements OnInit {
   constructor(
     private clienteService: ClienteService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    const idUsuario = this.route.snapshot.params['id'];
-    if (idUsuario) {
-      this.clienteService.findByUsuarioId(idUsuario).subscribe((data: Usuario) => {
-        this.usuario = data;
-      });
+    // Obtener el usuario autenticado desde AuthService
+    const currentUser = this.authService.getUser();
+
+    if (currentUser) {
+      // Adaptar UserResponse a Usuario para el formulario
+      this.usuario = {
+        idUsuario: currentUser.idUsuario,
+        nombre: currentUser.nombre,
+        apellido: currentUser.apellido,
+        correo: currentUser.correo,
+        telefono: currentUser.telefono,
+        cedula: currentUser.cedula,
+        contrasena: '', // No mostrar la contraseña
+        rol: 'CLIENTE',
+        esOperador: false,
+        esAdministrador: false
+      };
+    } else {
+      // Si no hay usuario autenticado, redirigir a login
+      this.router.navigate(['/login']);
     }
   }
 
@@ -47,12 +65,35 @@ export class PerfilComponent implements OnInit {
 
   actualizarCliente(): void {
     if (this.usuario) {
-      this.clienteService.update(this.usuario).subscribe({
-        next: () => {
+      // Usar el nuevo endpoint de AuthService que actualiza el perfil del usuario autenticado
+      const updateData = {
+        nombre: this.usuario.nombre,
+        apellido: this.usuario.apellido,
+        cedula: this.usuario.cedula,
+        telefono: this.usuario.telefono
+      };
+
+      this.authService.updateProfile(updateData).subscribe({
+        next: (userResponse: UserResponse) => {
           this.mostrarMensaje('✅ Perfil actualizado con éxito', 'exito');
           this.modoEdicion = false;
+
+          // Actualizar el usuario en el componente con los datos del response
+          this.usuario = {
+            idUsuario: userResponse.idUsuario,
+            nombre: userResponse.nombre,
+            apellido: userResponse.apellido,
+            correo: userResponse.correo,
+            telefono: userResponse.telefono,
+            cedula: userResponse.cedula,
+            contrasena: '',
+            rol: 'CLIENTE',
+            esOperador: false,
+            esAdministrador: false
+          };
         },
-        error: () => {
+        error: (err) => {
+          console.error('Error al actualizar perfil:', err);
           this.mostrarMensaje('❌ Error al actualizar el perfil', 'error');
         },
       });

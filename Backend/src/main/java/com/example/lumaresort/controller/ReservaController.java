@@ -7,7 +7,10 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,8 +54,20 @@ public class ReservaController {
     }
 
     @GetMapping("/{id}")
-    public Reserva getById(@PathVariable Long id) {
-        return reservaService.findById(id);
+    public ResponseEntity<?> getById(@PathVariable Long id, Authentication authentication) {
+        Reserva reserva = reservaService.findById(id);
+
+        if (reserva == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Verificar que el usuario tenga acceso a esta reserva
+        if (!tieneAccesoAReserva(authentication, reserva)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("mensaje", "No tiene permiso para ver esta reserva"));
+        }
+
+        return ResponseEntity.ok(reserva);
     }
 
     @PostMapping
@@ -81,7 +96,7 @@ public class ReservaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Reserva reserva) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Reserva reserva, Authentication authentication) {
         Optional<Reserva> reservaExistenteOpt = reservaRepository.findById(id);
 
         if (reservaExistenteOpt.isEmpty()) {
@@ -89,6 +104,12 @@ public class ReservaController {
         }
 
         Reserva reservaExistente = reservaExistenteOpt.get();
+
+        // Verificar que el usuario tenga acceso a modificar esta reserva
+        if (!tieneAccesoAReserva(authentication, reservaExistente)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("mensaje", "No tiene permiso para modificar esta reserva"));
+        }
 
         // Actualizar campos básicos
         if (reserva.getFechaInicio() != null) {
@@ -129,7 +150,7 @@ public class ReservaController {
     }
 
     @PutMapping("/actualizar/{id}")
-    public ResponseEntity<?> actualizarReserva(@PathVariable Long id, @RequestBody ActualizarReservaRequest request) {
+    public ResponseEntity<?> actualizarReserva(@PathVariable Long id, @RequestBody ActualizarReservaRequest request, Authentication authentication) {
         try {
             System.out.println("=== INICIANDO ACTUALIZACIÓN DE RESERVA ===");
             System.out.println("ID de reserva: " + id);
@@ -149,6 +170,15 @@ public class ReservaController {
             Reserva reservaExistente = reservaOpt.get();
             System.out.println("Reserva existente - ID: " + reservaExistente.getIdReserva()
                     + ", Habitacion: " + (reservaExistente.getHabitacion() != null ? reservaExistente.getHabitacion().getIdHabitacion() : "null"));
+
+            // Verificar que el usuario tenga acceso a modificar esta reserva
+            if (!tieneAccesoAReserva(authentication, reservaExistente)) {
+                System.out.println("Usuario sin permiso para modificar esta reserva");
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("message", "No tiene permiso para modificar esta reserva");
+                errorResponse.put("success", false);
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+            }
 
             // Validar que la reserva no esté cancelada
             if ("Cancelada".equalsIgnoreCase(reservaExistente.getEstado())) {
@@ -231,11 +261,21 @@ public class ReservaController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id, Authentication authentication) {
         Reserva reserva = reservaService.findById(id);
-        if (reserva != null) {
-            reservaService.delete(reserva);
+
+        if (reserva == null) {
+            return ResponseEntity.notFound().build();
         }
+
+        // Verificar que el usuario tenga acceso a eliminar esta reserva
+        if (!tieneAccesoAReserva(authentication, reserva)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("mensaje", "No tiene permiso para eliminar esta reserva"));
+        }
+
+        reservaService.delete(reserva);
+        return ResponseEntity.ok(Map.of("mensaje", "Reserva eliminada correctamente"));
     }
 
     @GetMapping("/buscar/{id}")
@@ -243,10 +283,23 @@ public class ReservaController {
         return reservaService.findByUsuarioId(id);
     }
 
-    //Remover un servicio de una reserva basado en la peticion 
+    //Remover un servicio de una reserva basado en la peticion
     @DeleteMapping("/{idReserva}/servicios/{idServicio}")
-    public void removerServicio(@PathVariable Long idReserva, @PathVariable Long idServicio) {
+    public ResponseEntity<?> removerServicio(@PathVariable Long idReserva, @PathVariable Long idServicio, Authentication authentication) {
+        Reserva reserva = reservaService.findById(idReserva);
+
+        if (reserva == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Verificar que el usuario tenga acceso a modificar esta reserva
+        if (!tieneAccesoAReserva(authentication, reserva)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("mensaje", "No tiene permiso para modificar los servicios de esta reserva"));
+        }
+
         reservaService.removerServicio(idReserva, idServicio);
+        return ResponseEntity.ok(Map.of("mensaje", "Servicio removido correctamente"));
     }
 
     @PostMapping("/{idServicio}/contratar/{idHabitacion}")
@@ -260,7 +313,7 @@ public class ReservaController {
     }
 
     @PutMapping("/cancelar/{id}")
-    public ResponseEntity<?> cancelarReserva(@PathVariable Long id) {
+    public ResponseEntity<?> cancelarReserva(@PathVariable Long id, Authentication authentication) {
         Optional<Reserva> reservaOpt = reservaRepository.findById(id);
 
         if (reservaOpt.isEmpty()) {
@@ -268,10 +321,17 @@ public class ReservaController {
         }
 
         Reserva reserva = reservaOpt.get();
+
+        // Verificar que el usuario tenga acceso a cancelar esta reserva
+        if (!tieneAccesoAReserva(authentication, reserva)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("mensaje", "No tiene permiso para cancelar esta reserva"));
+        }
+
         reserva.setEstado("Cancelada");
         reservaRepository.save(reserva);
 
-        return ResponseEntity.ok("Reserva cancelada correctamente");
+        return ResponseEntity.ok(Map.of("mensaje", "Reserva cancelada correctamente"));
     }
 
     @GetMapping("/test/{id}")
@@ -287,6 +347,44 @@ public class ReservaController {
     @GetMapping("/disponibles/servicio/{idServicio}")
     public List<Reserva> obtenerReservasDisponiblesParaServicio(@PathVariable Long idServicio) {
         return reservaService.obtenerReservasDisponiblesParaServicio(idServicio);
+    }
+
+    // ============================
+    //  MÉTODOS HELPER DE SEGURIDAD
+    // ============================
+
+    /**
+     * Verifica si el usuario autenticado tiene el rol de OPERADOR
+     */
+    private boolean isOperador(Authentication authentication) {
+        if (authentication == null) {
+            return false;
+        }
+        return authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_OPERADOR"));
+    }
+
+    /**
+     * Verifica si el usuario autenticado tiene acceso a una reserva específica
+     * Tiene acceso si:
+     * - Es el dueño de la reserva (su correo coincide con el de la reserva)
+     * - Tiene el rol de OPERADOR
+     */
+    private boolean tieneAccesoAReserva(Authentication authentication, Reserva reserva) {
+        if (authentication == null || reserva == null || reserva.getUsuario() == null) {
+            return false;
+        }
+
+        // Si es OPERADOR, tiene acceso a todas las reservas
+        if (isOperador(authentication)) {
+            return true;
+        }
+
+        // Si es el dueño de la reserva (comparar por correo electrónico)
+        String correoAutenticado = authentication.getName();
+        String correoReserva = reserva.getUsuario().getCorreo();
+
+        return correoAutenticado != null && correoAutenticado.equals(correoReserva);
     }
 
 }

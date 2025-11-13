@@ -11,7 +11,7 @@
       <div class="input-group">
         <input
           type="text"
-          [(ngModel)]="usuario.nombre"
+          [(ngModel)]="registerData.nombre"
           name="nombre"
           placeholder="Nombre"
           required
@@ -21,7 +21,7 @@
       <div class="input-group">
         <input
           type="text"
-          [(ngModel)]="usuario.apellido"
+          [(ngModel)]="registerData.apellido"
           name="apellido"
           placeholder="Apellido"
           required
@@ -31,7 +31,7 @@
       <div class="input-group">
         <input
           type="email"
-          [(ngModel)]="usuario.correo"
+          [(ngModel)]="registerData.correo"
           name="correo"
           placeholder="Correo electrónico"
           required
@@ -41,7 +41,7 @@
       <div class="input-group">
         <input
           type="password"
-          [(ngModel)]="usuario.contrasena"
+          [(ngModel)]="registerData.contrasena"
           name="contrasena"
           placeholder="Contraseña"
           required
@@ -49,11 +49,11 @@
       </div>
 
       <div class="input-group">
-        <input type="text" [(ngModel)]="usuario.cedula" name="cedula" placeholder="Cédula" />
+        <input type="text" [(ngModel)]="registerData.cedula" name="cedula" placeholder="Cédula" />
       </div>
 
       <div class="input-group">
-        <input type="text" [(ngModel)]="usuario.telefono" name="telefono" placeholder="Teléfono" />
+        <input type="text" [(ngModel)]="registerData.telefono" name="telefono" placeholder="Teléfono" />
       </div>
 
       <button type="submit" class="white-btn animate-pulse" [disabled]="loading">

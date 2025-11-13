@@ -44,10 +44,26 @@ public class HabitacionControllerTest {
     @Test
     public void crearHabitacion_test() throws Exception {
         //Arrange
-        TipoHabitacion tipo1 = new TipoHabitacion("Individual", "Habitación para una persona", java.util.Arrays.asList("https://example.com/imagen_individual.jpg"), java.util.Arrays.asList("Cama individual, Baño privado, Wi-Fi gratuito"), 50.0);
-        tipo1.setId(1L);
+        TipoHabitacion tipo1 = TipoHabitacion.builder()
+                .id(1L)
+                .nombre("Individual")
+                .descripcion("Habitación para una persona")
+                .imagenes(java.util.Arrays.asList("https://example.com/imagen_individual.jpg"))
+                .caracteristicas(java.util.Arrays.asList("Cama individual, Baño privado, Wi-Fi gratuito"))
+                .precio(50.0)
+                .build();
+
         when(tipoHabitacionService.crear(Mockito.any(TipoHabitacion.class))).thenReturn(tipo1);
-        Habitacion habitacion1 = new Habitacion("101", 100.0f, "Ocupada", 1, "Habitación individual cómoda", tipo1);
+
+        Habitacion habitacion1 = Habitacion.builder()
+                .numero("101")
+                .precioPorNoche(100.0f)
+                .estado("Ocupada")
+                .capacidad(1)
+                .descripcion("Habitación individual cómoda")
+                .tipoHabitacion(tipo1)
+                .build();
+
         when(habitacionService.crearHabitacion(Mockito.any(Habitacion.class), Mockito.any(Long.class))).thenReturn(habitacion1);
         ResultActions response = mockMvc.perform(
                 post("/habitaciones")
@@ -86,17 +102,24 @@ public class HabitacionControllerTest {
     @Test
     public void obtenerHabitacion_Test() throws Exception {
         // Arrange
-        TipoHabitacion tipo1 = new TipoHabitacion(
-                "Individual",
-                "Habitación para una persona",
-                java.util.Arrays.asList("https://example.com/imagen_individual.jpg"),
-                java.util.Arrays.asList("Cama individual, Baño privado, Wi-Fi gratuito"),
-                50.0
-        );
-        tipo1.setId(1L);
+        TipoHabitacion tipo1 = TipoHabitacion.builder()
+                .id(1L)
+                .nombre("Individual")
+                .descripcion("Habitación para una persona")
+                .imagenes(java.util.Arrays.asList("https://example.com/imagen_individual.jpg"))
+                .caracteristicas(java.util.Arrays.asList("Cama individual, Baño privado, Wi-Fi gratuito"))
+                .precio(50.0)
+                .build();
 
-        Habitacion habitacion1 = new Habitacion("101", 100.0f, "Ocupada", 1, "Habitación individual cómoda", tipo1);
-        habitacion1.setIdHabitacion(1L);
+        Habitacion habitacion1 = Habitacion.builder()
+                .idHabitacion(1L)
+                .numero("101")
+                .precioPorNoche(100.0f)
+                .estado("Ocupada")
+                .capacidad(1)
+                .descripcion("Habitación individual cómoda")
+                .tipoHabitacion(tipo1)
+                .build();
 
         when(habitacionService.buscarHabitacionPorId(1L)).thenReturn(habitacion1);
 

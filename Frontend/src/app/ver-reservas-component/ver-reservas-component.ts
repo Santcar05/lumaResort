@@ -7,6 +7,7 @@ import { Reserva } from '../Models/Reserva';
 import { catchError, of } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { ReservaService } from '../service/reserva/reserva-service';
+import { AuthService } from '../service/auth/auth.service';
 
 @Component({
   selector: 'app-ver-reservas-component',
@@ -38,21 +39,21 @@ export class VerReservasComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private reservaService: ReservaService
+    private reservaService: ReservaService,
+    private authService: AuthService
   ) {
     const today = new Date();
     this.fechaMinima = today.toISOString().split('T')[0];
   }
 
   ngOnInit(): void {
-    const userData = localStorage.getItem('userData');
-    if (userData) {
-      const usuario = JSON.parse(userData);
-      if (usuario && usuario.idUsuario) {
-        this.usuarioId = usuario.idUsuario;
-        this.cargarReservas();
-      }
+    // Usar AuthService para obtener el usuario autenticado
+    const usuario = this.authService.getUser();
+    if (usuario && usuario.idUsuario) {
+      this.usuarioId = usuario.idUsuario;
+      this.cargarReservas();
     } else {
+      // Si no hay usuario autenticado, redirigir a login
       this.router.navigate(['/login']);
     }
   }

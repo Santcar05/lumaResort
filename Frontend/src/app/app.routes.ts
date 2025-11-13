@@ -18,14 +18,17 @@ import { NavOperadorComponent } from './nav-operador-component/nav-operador-comp
 import { ServiciosOperadorComponent } from './servicios-operador-component/servicios-operador-component';
 import { OperadorComponent } from './operador-component/operador-component';
 import { EstadiaOperadorComponent } from './estadia-operador-component/estadia-operador-component';
+import { adminGuard, clienteGuard, operadorGuard, publicGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // por defecto muestra Landing
-  { path: 'login', component: LoginComponent }, // muestra login
+  { path: 'login', component: LoginComponent, canActivate: [publicGuard] },
+  { path: 'signup', component: SignUpComponent, canActivate: [publicGuard] },
   { path: 'perfil/:id', component: PerfilComponent }, // muestra perfil
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [adminGuard],
     children: [
       { path: 'tiposHabitacion', component: TipoHabitacionAdminComponent },
       { path: 'clientes', component: ClienteAdminComponent },
@@ -36,7 +39,8 @@ export const routes: Routes = [
   },
   {
     path: 'operador',
-    component: OperadorComponent, // O crear un OperadorComponent específico
+    component: OperadorComponent,
+    canActivate: [operadorGuard],
     children: [
       { path: '', redirectTo: 'reservas', pathMatch: 'full' }, // Portal operador
       { path: 'reservas', component: ReservasOperadorComponent },
@@ -61,6 +65,11 @@ export const routes: Routes = [
   { path: 'reservar/:id', component: ReservasComponent },
   { path: 'reservas/:id', component: VerReservasComponent },
   { path: 'reservas', component: ReservasComponent },
-  { path: 'signup', component: SignUpComponent },
-  { path: '**', redirectTo: '' }, // redirección en caso de ruta no válida COLOCAR SIEMPRE AL FINAL
+  // Ruta para clientes
+  {
+    path: 'cliente',
+    component: LandingPageComponent,
+    canActivate: [clienteGuard],
+  },
+  { path: '**', redirectTo: '' }, // redirección en caso de ruta
 ];

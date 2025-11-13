@@ -1,25 +1,33 @@
 package com.example.lumaresort.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
 import com.example.lumaresort.entities.Administrador;
+import com.example.lumaresort.entities.Cliente;
 import com.example.lumaresort.entities.Comentario;
+import com.example.lumaresort.entities.ERole;
 import com.example.lumaresort.entities.Habitacion;
+import com.example.lumaresort.entities.Operador;
 import com.example.lumaresort.entities.Reserva;
+import com.example.lumaresort.entities.Role;
 import com.example.lumaresort.entities.Servicio;
 import com.example.lumaresort.entities.TipoHabitacion;
 import com.example.lumaresort.entities.Usuario;
 import com.example.lumaresort.repository.AdministradorRepository;
+import com.example.lumaresort.repository.ClienteRepository;
 import com.example.lumaresort.repository.CuentaHabitacionRepository;
 import com.example.lumaresort.repository.HabitacionRepository;
 import com.example.lumaresort.repository.OperadorRepository;
 import com.example.lumaresort.repository.ReservaRepository;
+import com.example.lumaresort.repository.RoleRepository;
 import com.example.lumaresort.repository.ServicioRepository;
 import com.example.lumaresort.repository.TipoHabitacionRepository;
 import com.example.lumaresort.repository.UsuarioRepository;
@@ -44,9 +52,15 @@ public class DatabaseInitTest implements ApplicationRunner {
     @Autowired
     private AdministradorRepository administradorRepository;
     @Autowired
+    private ClienteRepository clienteRepository;
+    @Autowired
     private OperadorRepository operadorRepository;
     @Autowired
     private ReservaRepository reservaRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(org.springframework.boot.ApplicationArguments args) throws Exception {
@@ -56,13 +70,60 @@ public class DatabaseInitTest implements ApplicationRunner {
     }
 
     public void init() {
-        // Lógica de inicialización de la base de datos
-        //Crear 50 habitaciones, 5 tipos de habitaciones y 10 usuarios
-        TipoHabitacion tipo1 = new TipoHabitacion("Individual", "Habitación para una persona", java.util.Arrays.asList("https://example.com/imagen_individual.jpg"), java.util.Arrays.asList("Cama individual, Baño privado, Wi-Fi gratuito"), 50.0);
-        TipoHabitacion tipo2 = new TipoHabitacion("Doble", "Habitación para dos personas", java.util.Arrays.asList("https://example.com/imagen_doble.jpg"), java.util.Arrays.asList("Cama doble, Baño privado, Wi-Fi gratuito, TV por cable", "Cama doble, Baño privado, Wi-Fi gratuito, TV por cable"), 100.0);
-        TipoHabitacion tipo3 = new TipoHabitacion("Suite", "Habitación de lujo con sala de estar", java.util.Arrays.asList("https://example.com/imagen_suite.jpg"), java.util.Arrays.asList("Cama king size, Sala de estar, Baño con jacuzzi, Wi-Fi gratuito, TV por cable", "Cama king size, Sala de estar, Baño con jacuzzi, Wi-Fi gratuito, TV por cable"), 200.0);
-        TipoHabitacion tipo4 = new TipoHabitacion("Familiar", "Habitación para toda la familia", java.util.Arrays.asList("https://example.com/imagen_familiar.jpg"), java.util.Arrays.asList("Dos camas dobles, Sofá cama, Baño privado, Wi-Fi gratuito, TV por cable"), 300.0);
-        TipoHabitacion tipo5 = new TipoHabitacion("Presidencial", "Habitación de máxima categoría", java.util.Arrays.asList("https://example.com/imagen_presidencial.jpg"), java.util.Arrays.asList("Cama king size, Sala de estar, Comedor, Cocina pequeña, Baño con jacuzzi y ducha separada, Wi-Fi gratuito, TV por cable"), 500.0);
+        // ============================
+        //  CREAR ROLES
+        // ============================
+        Role roleCliente = roleRepository.findByNombre(ERole.ROLE_CLIENTE)
+                .orElseGet(() -> roleRepository.save(new Role(ERole.ROLE_CLIENTE)));
+
+        Role roleOperador = roleRepository.findByNombre(ERole.ROLE_OPERADOR)
+                .orElseGet(() -> roleRepository.save(new Role(ERole.ROLE_OPERADOR)));
+
+        Role roleAdministrador = roleRepository.findByNombre(ERole.ROLE_ADMINISTRADOR)
+                .orElseGet(() -> roleRepository.save(new Role(ERole.ROLE_ADMINISTRADOR)));
+
+        // ============================
+        //  CREAR TIPOS DE HABITACIÓN
+        // ============================
+        TipoHabitacion tipo1 = TipoHabitacion.builder()
+                .nombre("Individual")
+                .descripcion("Habitación para una persona")
+                .imagenes(java.util.Arrays.asList("https://example.com/imagen_individual.jpg"))
+                .caracteristicas(java.util.Arrays.asList("Cama individual, Baño privado, Wi-Fi gratuito"))
+                .precio(50.0)
+                .build();
+
+        TipoHabitacion tipo2 = TipoHabitacion.builder()
+                .nombre("Doble")
+                .descripcion("Habitación para dos personas")
+                .imagenes(java.util.Arrays.asList("https://example.com/imagen_doble.jpg"))
+                .caracteristicas(java.util.Arrays.asList("Cama doble, Baño privado, Wi-Fi gratuito, TV por cable"))
+                .precio(100.0)
+                .build();
+
+        TipoHabitacion tipo3 = TipoHabitacion.builder()
+                .nombre("Suite")
+                .descripcion("Habitación de lujo con sala de estar")
+                .imagenes(java.util.Arrays.asList("https://example.com/imagen_suite.jpg"))
+                .caracteristicas(java.util.Arrays.asList("Cama king size, Sala de estar, Baño con jacuzzi, Wi-Fi gratuito, TV por cable"))
+                .precio(200.0)
+                .build();
+
+        TipoHabitacion tipo4 = TipoHabitacion.builder()
+                .nombre("Familiar")
+                .descripcion("Habitación para toda la familia")
+                .imagenes(java.util.Arrays.asList("https://example.com/imagen_familiar.jpg"))
+                .caracteristicas(java.util.Arrays.asList("Dos camas dobles, Sofá cama, Baño privado, Wi-Fi gratuito, TV por cable"))
+                .precio(300.0)
+                .build();
+
+        TipoHabitacion tipo5 = TipoHabitacion.builder()
+                .nombre("Presidencial")
+                .descripcion("Habitación de máxima categoría")
+                .imagenes(java.util.Arrays.asList("https://example.com/imagen_presidencial.jpg"))
+                .caracteristicas(java.util.Arrays.asList("Cama king size, Sala de estar, Comedor, Cocina pequeña, Baño con jacuzzi y ducha separada, Wi-Fi gratuito, TV por cable"))
+                .precio(500.0)
+                .build();
 
         tipoHabitacionRepository.save(tipo1);
         tipoHabitacionRepository.save(tipo2);
@@ -70,148 +131,118 @@ public class DatabaseInitTest implements ApplicationRunner {
         tipoHabitacionRepository.save(tipo4);
         tipoHabitacionRepository.save(tipo5);
 
-        // Aquí puedes agregar más lógica para crear habitaciones y usuarios
-        // public Habitacion(String numero, float precioPorNoche, String estado, Integer capacidad, String descripcion, TipoHabitacion tipoHabitacion)
-        Habitacion habitacion1 = new Habitacion("101", 100.0f, "Ocupada", 1, "Habitación individual cómoda", tipo1);
-        Habitacion habitacion2 = new Habitacion("102", 150.0f, "Ocupada", 2, "Habitación doble con vista al mar", tipo2);
-        Habitacion habitacion3 = new Habitacion("201", 300.0f, "Ocupada", 4, "Suite de lujo con jacuzzi", tipo3);
-        Habitacion habitacion4 = new Habitacion("202", 200.0f, "Ocupada", 4, "Habitación familiar espaciosa", tipo4);
-        Habitacion habitacion5 = new Habitacion("301", 500.0f, "Ocupada", 2, "Habitación presidencial con todas las comodidades", tipo5);
-        Habitacion habitacion6 = new Habitacion("103", 120.0f, "Ocupada", 1, "Habitación individual con balcón", tipo1);
-        Habitacion habitacion7 = new Habitacion("104", 160.0f, "Ocupada", 2, "Habitación doble con cama king size", tipo2);
-        Habitacion habitacion8 = new Habitacion("203", 320.0f, "Ocupada", 4, "Suite con vista panorámica", tipo3);
-        Habitacion habitacion9 = new Habitacion("204", 220.0f, "Ocupada", 4, "Habitación familiar con dos baños", tipo4);
-        Habitacion habitacion10 = new Habitacion("302", 520.0f, "Ocupada", 2, "Habitación presidencial con terraza privada", tipo5);
-        Habitacion habitacion11 = new Habitacion("105", 130.0f, "Ocupada", 1, "Habitación individual con escritorio de trabajo", tipo1);
-        Habitacion habitacion12 = new Habitacion("106", 170.0f, "Ocupada", 2, "Habitación doble con sofá cama", tipo2);
-        Habitacion habitacion13 = new Habitacion("205", 340.0f, "Ocupada", 4, "Suite con sala de estar independiente", tipo3);
-        Habitacion habitacion14 = new Habitacion("206", 240.0f, "Ocupada", 4, "Habitación familiar con cocina pequeña", tipo4);
-        Habitacion habitacion15 = new Habitacion("303", 540.0f, "Ocupada", 2, "Habitación presidencial con chimenea", tipo5);
-        Habitacion habitacion16 = new Habitacion("107", 140.0f, "Ocupada", 1, "Habitación individual con vista al jardín", tipo1);
-        Habitacion habitacion17 = new Habitacion("108", 180.0f, "Disponible", 2, "Habitación doble con balcón privado", tipo2);
-        Habitacion habitacion18 = new Habitacion("207", 360.0f, "Disponible", 4, "Suite con bañera de hidromasaje", tipo3);
-        Habitacion habitacion19 = new Habitacion("208", 260.0f, "Ocupada", 4, "Habitación familiar con área de juegos para niños", tipo4);
-        Habitacion habitacion20 = new Habitacion("304", 560.0f, "Disponible", 2, "Habitación presidencial con servicio de mayordomo", tipo5);
-        Habitacion habitacion21 = new Habitacion("109", 150.0f, "Disponible", 1, "Habitación individual con aire acondicionado", tipo1);
-        Habitacion habitacion22 = new Habitacion("110", 190.0f, "Ocupada", 2, "Habitación doble con cafetera", tipo2);
-        Habitacion habitacion23 = new Habitacion("209", 380.0f, "Disponible", 4, "Suite con comedor privado", tipo3);
-        Habitacion habitacion24 = new Habitacion("210", 280.0f, "Disponible", 4, "Habitación familiar con dos camas matrimoniales", tipo4);
-        Habitacion habitacion25 = new Habitacion("305", 580.0f, "Ocupada", 2, "Habitación presidencial con jacuzzi privado", tipo5);
-        Habitacion habitacion26 = new Habitacion("111", 160.0f, "Disponible", 1, "Habitación individual con televisión de pantalla plana", tipo1);
-        Habitacion habitacion27 = new Habitacion("112", 200.0f, "Disponible", 2, "Habitación doble con minibar", tipo2);
-        Habitacion habitacion28 = new Habitacion("211", 400.0f, "Ocupada", 4, "Suite con balcón y vista al mar", tipo3);
-        Habitacion habitacion29 = new Habitacion("212", 300.0f, "Disponible", 4, "Habitación familiar con sofá cama adicional", tipo4);
-        Habitacion habitacion30 = new Habitacion("306", 600.0f, "Disponible", 2, "Habitación presidencial con sala de reuniones", tipo5);
-        Habitacion habitacion31 = new Habitacion("113", 170.0f, "Ocupada", 1, "Habitación individual con caja fuerte", tipo1);
-        Habitacion habitacion32 = new Habitacion("114", 210.0f, "Disponible", 2, "Habitación doble con escritorio", tipo2);
-        Habitacion habitacion33 = new Habitacion("213", 420.0f, "Disponible", 4, "Suite con chimenea y bañera de hidromasaje", tipo3);
-        Habitacion habitacion34 = new Habitacion("214", 320.0f, "Ocupada", 4, "Habitación familiar con dos habitaciones separadas", tipo4);
-        Habitacion habitacion35 = new Habitacion("307", 620.0f, "Disponible", 2, "Habitación presidencial con terraza y vista panorámica", tipo5);
-        Habitacion habitacion36 = new Habitacion("115", 180.0f, "Disponible", 1, "Habitación individual con conexión Wi-Fi gratuita", tipo1);
-        Habitacion habitacion37 = new Habitacion("116", 220.0f, "Ocupada", 2, "Habitación doble con cafetera y tetera", tipo2);
-        Habitacion habitacion38 = new Habitacion("215", 440.0f, "Disponible", 4, "Suite con comedor y sala de estar", tipo3);
-        Habitacion habitacion39 = new Habitacion("216", 340.0f, "Disponible", 4, "Habitación familiar con área de juegos para niños", tipo4);
-        Habitacion habitacion40 = new Habitacion("308", 640.0f, "Ocupada", 2, "Habitación presidencial con servicio de mayordomo las 24 horas", tipo5);
-        Habitacion habitacion41 = new Habitacion("117", 190.0f, "Disponible", 1, "Habitación individual con aire acondicionado y calefacción", tipo1);
-        Habitacion habitacion42 = new Habitacion("118", 230.0f, "Ocupada", 2, "Habitación doble con balcón y vista al jardín", tipo2);
-        Habitacion habitacion43 = new Habitacion("217", 460.0f, "Disponible", 4, "Suite con bañera de hidromasaje y ducha separada", tipo3);
-        Habitacion habitacion44 = new Habitacion("218", 360.0f, "Disponible", 4, "Habitación familiar con dos camas matrimoniales y sofá cama", tipo4);
-        Habitacion habitacion45 = new Habitacion("309", 660.0f, "Ocupada", 2, "Habitación presidencial con jacuzzi y sala de reuniones", tipo5);
-        Habitacion habitacion46 = new Habitacion("119", 200.0f, "Disponible", 1, "Habitación individual con televisión de pantalla plana y canales por cable", tipo1);
-        Habitacion habitacion47 = new Habitacion("120", 240.0f, "Ocupada", 2, "Habitación doble con minibar y cafetera", tipo2);
-        Habitacion habitacion48 = new Habitacion("219", 480.0f, "Disponible", 4, "Suite con balcón y vista al mar", tipo3);
-        Habitacion habitacion49 = new Habitacion("220", 380.0f, "Disponible", 4, "Habitación familiar con sofá cama adicional y área de juegos para niños", tipo4);
-        Habitacion habitacion50 = new Habitacion("310", 680.0f, "Ocupada", 2, "Habitación presidencial con terraza privada y servicio de mayordomo las 24 horas", tipo5);
+        // ============================
+        //  CREAR HABITACIONES (simplificado para TEST)
+        // ============================
+        Habitacion habitacion1 = Habitacion.builder()
+                .numero("101")
+                .precioPorNoche(100.0f)
+                .estado("Ocupada")
+                .capacidad(1)
+                .descripcion("Habitación individual cómoda")
+                .tipoHabitacion(tipo1)
+                .build();
 
-        habitacionRepository.save(habitacion1);
-        habitacionRepository.save(habitacion2);
-        habitacionRepository.save(habitacion3);
-        habitacionRepository.save(habitacion4);
-        habitacionRepository.save(habitacion5);
-        habitacionRepository.save(habitacion6);
-        habitacionRepository.save(habitacion7);
-        habitacionRepository.save(habitacion8);
-        habitacionRepository.save(habitacion9);
-        habitacionRepository.save(habitacion10);
-        habitacionRepository.save(habitacion11);
-        habitacionRepository.save(habitacion12);
-        habitacionRepository.save(habitacion13);
-        habitacionRepository.save(habitacion14);
-        habitacionRepository.save(habitacion15);
-        habitacionRepository.save(habitacion16);
-        habitacionRepository.save(habitacion17);
-        habitacionRepository.save(habitacion18);
-        habitacionRepository.save(habitacion19);
-        habitacionRepository.save(habitacion20);
-        habitacionRepository.save(habitacion21);
-        habitacionRepository.save(habitacion22);
-        habitacionRepository.save(habitacion23);
-        habitacionRepository.save(habitacion24);
-        habitacionRepository.save(habitacion25);
-        habitacionRepository.save(habitacion26);
-        habitacionRepository.save(habitacion27);
-        habitacionRepository.save(habitacion28);
-        habitacionRepository.save(habitacion29);
-        habitacionRepository.save(habitacion30);
-        habitacionRepository.save(habitacion31);
-        habitacionRepository.save(habitacion32);
-        habitacionRepository.save(habitacion33);
-        habitacionRepository.save(habitacion34);
-        habitacionRepository.save(habitacion35);
-        habitacionRepository.save(habitacion36);
-        habitacionRepository.save(habitacion37);
-        habitacionRepository.save(habitacion38);
-        habitacionRepository.save(habitacion39);
-        habitacionRepository.save(habitacion40);
-        habitacionRepository.save(habitacion41);
-        habitacionRepository.save(habitacion42);
-        habitacionRepository.save(habitacion43);
-        habitacionRepository.save(habitacion44);
-        habitacionRepository.save(habitacion45);
-        habitacionRepository.save(habitacion46);
-        habitacionRepository.save(habitacion47);
-        habitacionRepository.save(habitacion48);
-        habitacionRepository.save(habitacion49);
-        habitacionRepository.save(habitacion50);
+        Habitacion habitacion2 = Habitacion.builder()
+                .numero("102")
+                .precioPorNoche(150.0f)
+                .estado("Disponible")
+                .capacidad(2)
+                .descripcion("Habitación doble con vista al mar")
+                .tipoHabitacion(tipo2)
+                .build();
 
-        //Crear 10 usuarios
-        //public Usuario(String correo, String contrasena, boolean esAdmin)
-        usuarioRepository.save(new Usuario("Usaurio1@gmail.com", "pass1", false));
-        usuarioRepository.save(new Usuario("Usaurio2@gmail.com", "pass2", false));
-        usuarioRepository.save(new Usuario("Usaurio3@gmail.com", "pass3", false));
-        usuarioRepository.save(new Usuario("Usaurio4@gmail.com", "pass4", false));
-        usuarioRepository.save(new Usuario("Usaurio5@gmail.com", "pass5", false));
-        usuarioRepository.save(new Usuario("Usaurio6@gmail.com", "pass6", false));
-        usuarioRepository.save(new Usuario("Usaurio7@gmail.com", "pass7", false));
-        usuarioRepository.save(new Usuario("Usaurio8@gmail.com", "pass8", false));
-        usuarioRepository.save(new Usuario("Usaurio9@gmail.com", "pass9", false));
-        usuarioRepository.save(new Usuario("Usaurio10@gmail.com", "pass10", false));
-        //Crear 5 usuarios que serán operadores
-        usuarioRepository.save(new Usuario("Operador1@gmail.com", "op1", false, true));
-        usuarioRepository.save(new Usuario("Operador2@gmail.com", "op2", false, true));
-        usuarioRepository.save(new Usuario("Operador3@gmail.com", "op3", false, true));
-        usuarioRepository.save(new Usuario("Operador4@gmail.com", "op4", false, true));
-        usuarioRepository.save(new Usuario("Operador5@gmail.com", "op5", false, true));
+        Habitacion habitacion3 = Habitacion.builder()
+                .numero("201")
+                .precioPorNoche(300.0f)
+                .estado("Ocupada")
+                .capacidad(4)
+                .descripcion("Suite de lujo con jacuzzi")
+                .tipoHabitacion(tipo3)
+                .build();
 
-        //Crear 5 admins
-        usuarioRepository.save(new Usuario("admin1@gmail.com", "admin1", true));
-        usuarioRepository.save(new Usuario("admin2@gmail.com", "admin2", true));
-        usuarioRepository.save(new Usuario("admin3@gmail.com", "admin3", true));
-        usuarioRepository.save(new Usuario("admin4@gmail.com", "admin4", true));
-        usuarioRepository.save(new Usuario("admin5@gmail.com", "admin5", true));
+        Habitacion habitacion4 = Habitacion.builder()
+                .numero("202")
+                .precioPorNoche(200.0f)
+                .estado("Disponible")
+                .capacidad(4)
+                .descripcion("Habitación familiar espaciosa")
+                .tipoHabitacion(tipo4)
+                .build();
 
-        //vincular los 5 admins con la tabla administrador
-        Administrador admin1 = new Administrador(usuarioRepository.findByCorreoAndContrasena("admin1@gmail.com", "admin1"));
-        Administrador admin2 = new Administrador(usuarioRepository.findByCorreoAndContrasena("admin2@gmail.com", "admin2"));
-        Administrador admin3 = new Administrador(usuarioRepository.findByCorreoAndContrasena("admin3@gmail.com", "admin3"));
-        Administrador admin4 = new Administrador(usuarioRepository.findByCorreoAndContrasena("admin4@gmail.com", "admin4"));
-        Administrador admin5 = new Administrador(usuarioRepository.findByCorreoAndContrasena("admin5@gmail.com", "admin5"));
+        Habitacion habitacion5 = Habitacion.builder()
+                .numero("301")
+                .precioPorNoche(500.0f)
+                .estado("Ocupada")
+                .capacidad(2)
+                .descripcion("Habitación presidencial con todas las comodidades")
+                .tipoHabitacion(tipo5)
+                .build();
 
-        administradorRepository.save(admin1);
-        administradorRepository.save(admin2);
-        administradorRepository.save(admin3);
-        administradorRepository.save(admin4);
-        administradorRepository.save(admin5);
+        habitacionRepository.saveAll(List.of(habitacion1, habitacion2, habitacion3, habitacion4, habitacion5));
+
+        // ============================
+        //  CREAR USUARIOS CLIENTES
+        // ============================
+        for (int i = 1; i <= 10; i++) {
+            Usuario usuario = Usuario.builder()
+                    .nombre("Usuario" + i)
+                    .apellido("Test")
+                    .correo("usuario" + i + "@gmail.com")
+                    .contrasena(passwordEncoder.encode("pass" + i))
+                    .cedula("100000000" + i)
+                    .telefono("300000000" + i)
+                    .roles(new ArrayList<>(List.of(roleCliente)))
+                    .build();
+            Usuario savedUsuario = usuarioRepository.save(usuario);
+
+            // Crear perfil de cliente
+            Cliente cliente = new Cliente();
+            cliente.setUsuario(savedUsuario);
+            clienteRepository.save(cliente);
+        }
+
+        // ============================
+        //  CREAR USUARIOS OPERADORES
+        // ============================
+        for (int i = 1; i <= 5; i++) {
+            Usuario usuario = Usuario.builder()
+                    .nombre("Operador" + i)
+                    .apellido("Soporte")
+                    .correo("operador" + i + "@gmail.com")
+                    .contrasena(passwordEncoder.encode("op" + i))
+                    .cedula("200000000" + i)
+                    .telefono("310000000" + i)
+                    .roles(new ArrayList<>(List.of(roleOperador)))
+                    .build();
+            Usuario savedUsuario = usuarioRepository.save(usuario);
+
+            // Crear perfil de operador
+            Operador operador = new Operador();
+            operador.setUsuario(savedUsuario);
+            operadorRepository.save(operador);
+        }
+
+        // ============================
+        //  CREAR USUARIOS ADMINISTRADORES
+        // ============================
+        for (int i = 1; i <= 5; i++) {
+            Usuario usuario = Usuario.builder()
+                    .nombre("Admin" + i)
+                    .apellido("Luma")
+                    .correo("admin" + i + "@gmail.com")
+                    .contrasena(passwordEncoder.encode("admin" + i))
+                    .cedula("300000000" + i)
+                    .telefono("320000000" + i)
+                    .roles(new ArrayList<>(List.of(roleAdministrador)))
+                    .build();
+            Usuario savedUsuario = usuarioRepository.save(usuario);
+
+            // Crear perfil de administrador
+            Administrador admin = new Administrador();
+            admin.setUsuario(savedUsuario);
+            administradorRepository.save(admin);
+        }
 
         //Crear 10 CuentaHabitacion
         /* 
@@ -652,38 +683,27 @@ public class Operador {
                 private Cliente cliente;
                 }
          */
-        //Crear 10 reservas
-        Reserva reserva1 = new Reserva(new Date(2023, 10, 1), new Date(2023, 10, 5), 2, "CONFIRMADA",
-                null, habitacion1);
-        Reserva reserva2 = new Reserva(new Date(2023, 11, 10), new Date(2023, 11, 15), 4, "PENDIENTE",
-                null, habitacion2);
-        Reserva reserva3 = new Reserva(new Date(2023, 12, 20), new Date(2023, 12, 25), 1, "CANCELADA",
-                null, habitacion3);
-        Reserva reserva4 = new Reserva(new Date(2024, 1, 5), new Date(2024, 1, 10), 3, "CONFIRMADA",
-                null, habitacion4);
-        Reserva reserva5 = new Reserva(new Date(2024, 2, 14), new Date(2024, 2, 18), 2, "PENDIENTE",
-                null, habitacion5);
-        Reserva reserva6 = new Reserva(new Date(2024, 3, 1), new Date(2024, 3, 5), 5, "CONFIRMADA",
-                null, habitacion6);
-        Reserva reserva7 = new Reserva(new Date(2024, 4, 10), new Date(2024, 4, 15), 2, "CANCELADA",
-                null, habitacion7);
-        Reserva reserva8 = new Reserva(new Date(2024, 5, 20), new Date(2024, 5, 25), 4, "CONFIRMADA",
-                null, habitacion8);
-        Reserva reserva9 = new Reserva(new Date(2024, 6, 15), new Date(2024, 6, 20), 1, "PENDIENTE",
-                null, habitacion9);
-        Reserva reserva10 = new Reserva(new Date(2024, 7, 1), new Date(2024, 7, 5), 3, "CONFIRMADA",
-                null, habitacion10);
-        // Aquí puedes guardar las reservas en su repositorio correspondiente si lo tienes
-        reservaRepository.save(reserva1);
-        reservaRepository.save(reserva2);
-        reservaRepository.save(reserva3);
-        reservaRepository.save(reserva4);
-        reservaRepository.save(reserva5);
-        reservaRepository.save(reserva6);
-        reservaRepository.save(reserva7);
-        reservaRepository.save(reserva8);
-        reservaRepository.save(reserva9);
-        reservaRepository.save(reserva10);
+        // ============================
+        //  CREAR RESERVAS
+        // ============================
+        Usuario usuario1 = usuarioRepository.findByCorreo("usuario1@gmail.com");
+        Usuario usuario2 = usuarioRepository.findByCorreo("usuario2@gmail.com");
+        Usuario usuario3 = usuarioRepository.findByCorreo("usuario3@gmail.com");
+
+        Reserva reserva1 = new Reserva(new Date(2023 - 1900, 10, 1), new Date(2023 - 1900, 10, 5), 2, "CONFIRMADA",
+                usuario1, habitacion1);
+        Reserva reserva2 = new Reserva(new Date(2023 - 1900, 11, 10), new Date(2023 - 1900, 11, 15), 4, "PENDIENTE",
+                usuario2, habitacion2);
+        Reserva reserva3 = new Reserva(new Date(2023 - 1900, 12, 20), new Date(2023 - 1900, 12, 25), 1, "CANCELADA",
+                usuario3, habitacion3);
+        Reserva reserva4 = new Reserva(new Date(2024 - 1900, 1, 5), new Date(2024 - 1900, 1, 10), 3, "CONFIRMADA",
+                usuario1, habitacion4);
+        Reserva reserva5 = new Reserva(new Date(2024 - 1900, 2, 14), new Date(2024 - 1900, 2, 18), 2, "PENDIENTE",
+                usuario2, habitacion5);
+
+        reservaRepository.saveAll(List.of(reserva1, reserva2, reserva3, reserva4, reserva5));
+
+        System.out.println("Inicialización de base de datos TEST completada");
 
     }
 

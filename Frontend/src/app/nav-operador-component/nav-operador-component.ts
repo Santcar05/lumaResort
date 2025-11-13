@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../service/auth/auth.service';
 
 @Component({
   selector: 'app-nav-operador-component',
@@ -9,4 +10,14 @@ import { RouterModule } from '@angular/router';
   templateUrl: './nav-operador-component.html',
   styleUrls: ['./nav-operador-component.css'],
 })
-export class NavOperadorComponent {}
+export class NavOperadorComponent {
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+}

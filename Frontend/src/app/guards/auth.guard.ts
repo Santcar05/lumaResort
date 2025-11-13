@@ -19,49 +19,131 @@ export const authGuard: CanActivateFn = (route, state) => {
 };
 
 /**
- * Guard para proteger rutas de ADMINISTRADOR
+ * Guard para proteger rutas EXCLUSIVAS de ADMINISTRADOR
+ * No permite acceso a OPERADOR ni CLIENTE
  */
 export const adminGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isAuthenticated() && authService.isAdmin()) {
+  if (!authService.isAuthenticated()) {
+    router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    return false;
+  }
+
+  if (authService.isAdmin()) {
     return true;
   }
 
-  // Redirigir a home si no es admin
-  router.navigate(['/']);
+  // Redirigir según el rol del usuario
+  if (authService.isOperador()) {
+    router.navigate(['/operador/dashboard']);
+  } else if (authService.isCliente()) {
+    router.navigate(['/']);
+  } else {
+    router.navigate(['/']);
+  }
+
   return false;
 };
 
 /**
- * Guard para proteger rutas de OPERADOR
+ * Guard para proteger rutas EXCLUSIVAS de OPERADOR
+ * No permite acceso a ADMIN ni CLIENTE
  */
 export const operadorGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isAuthenticated() && (authService.isOperador() || authService.isAdmin())) {
+  if (!authService.isAuthenticated()) {
+    router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    return false;
+  }
+
+  if (authService.isOperador()) {
     return true;
   }
 
-  // Redirigir a home si no es operador o admin
-  router.navigate(['/']);
+  // Redirigir según el rol del usuario
+  if (authService.isAdmin()) {
+    router.navigate(['/admin/dashboard']);
+  } else if (authService.isCliente()) {
+    router.navigate(['/']);
+  } else {
+    router.navigate(['/']);
+  }
+
   return false;
 };
 
 /**
- * Guard para proteger rutas de CLIENTE
+ * Guard para proteger rutas EXCLUSIVAS de CLIENTE
+ * No permite acceso a ADMIN ni OPERADOR
  */
 export const clienteGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isAuthenticated() && authService.isCliente()) {
+  if (!authService.isAuthenticated()) {
+    router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    return false;
+  }
+
+  if (authService.isCliente()) {
     return true;
   }
 
-  // Redirigir a home si no es cliente
-  router.navigate(['/']);
+  // Redirigir según el rol del usuario
+  if (authService.isAdmin()) {
+    router.navigate(['/admin/dashboard']);
+  } else if (authService.isOperador()) {
+    router.navigate(['/operador/dashboard']);
+  } else {
+    router.navigate(['/']);
+  }
+
+  return false;
+};
+
+/**
+ * Guard para páginas públicas
+ * Solo permite acceso si NO está autenticado
+ * Útil para login/register (evita que usuarios logueados accedan)
+ */
+export const publicGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  if (!authService.isAuthenticated()) {
+    return true;
+  }
+
+  // Si ya está autenticado, redirigir según su rol
+  if (authService.isAdmin()) {
+    router.navigate(['/admin/dashboard']);
+  } else if (authService.isOperador()) {
+    router.navigate(['/operador/dashboard']);
+  } else if (authService.isCliente()) {
+    router.navigate(['/']);
+  } else {
+    router.navigate(['/']);
+  }
+
+  return false;
+};
+
+/**
+ * Guard para rutas que cualquier usuario autenticado puede ver
+ * (sin importar el rol)
+ */
+export const authenticatedGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  if (authService.isAuthenticated()) {
+    return true;
+  }
+
+  router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
   return false;
 };

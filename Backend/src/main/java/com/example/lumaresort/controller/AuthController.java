@@ -207,7 +207,7 @@ public class AuthController {
      */
     @PutMapping("/perfil")
     public ResponseEntity<?> updateProfile(@Valid @RequestBody UpdateProfileRequest updateRequest,
-                                          Authentication authentication) {
+            Authentication authentication) {
         try {
             // Verificar que el usuario esté autenticado
             if (authentication == null || !authentication.isAuthenticated()) {

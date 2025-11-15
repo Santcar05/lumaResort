@@ -7,7 +7,7 @@
 
 header {
   height: 100px;
-  background: rgba(25, 25, 25, 0.8);
+  /*background: rgba(25, 25, 25, 0.8);*/
   backdrop-filter: blur(8px);
   position: fixed;
   top: 0;
@@ -18,6 +18,7 @@ header {
 
 header nav {
   display: flex;
+  /*background: rgba(25, 25, 25, 0.8);*/
   flex-direction: row;
   align-items: center;
   /*Distribuir los tres espacios de manera equitativa*/
@@ -26,6 +27,8 @@ header nav {
   height: 100%;
 }
 header nav ul {
+  background: rgba(25, 25, 25, 0.8);
+
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -108,6 +111,11 @@ header nav div {
   width: 100%;
   /*LetraCurveado*/
   font-style: italic;
+  background: rgba(25, 25, 25, 0.8);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .PrimerLi {
   border-right: 1px solid rgb(186, 186, 186);

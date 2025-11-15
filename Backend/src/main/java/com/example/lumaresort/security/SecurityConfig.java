@@ -63,6 +63,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                 .requestMatchers("/h2/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers("/actividades").permitAll()
+                .requestMatchers("/actividades/**").permitAll()
                 //ENDPOINTS DE AUTENTICACIÓN 
                 .requestMatchers(HttpMethod.GET, "/api/auth/actual").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/api/auth/perfil").authenticated()

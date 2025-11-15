@@ -6,10 +6,11 @@ import { Servicio } from '../../Models/Servicio';
 import { HttpClient } from '@angular/common/http';
 import { ActividadesService } from '../../service/actividades/actividades';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-actividades-component',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './actividades-component.html',
   styleUrl: './actividades-component.css',
   animations: [

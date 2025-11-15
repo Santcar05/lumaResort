@@ -88,5 +88,45 @@
       "SCHEDULE": "Schedule",
       "SCHEDULE_TEXT": "Mon - Fri: 8:00 - 20:00 • Sat - Sun: 9:00 - 18:00"
     }
+  },
+  "ACTIVITIES": {
+    "TITLE": "ACTIVITIES",
+    "SUBTITLE_1": "We have everything.",
+    "SUBTITLE_2": "You need.",
+    "EXPLORE": "EXPLORE"
+  },
+
+  "FOOTER": {
+    "DESCRIPTION": "Experience luxury redefined at our world-class resort. Where every moment becomes an unforgettable memory.",
+    "DISCOVER": "Discover",
+    "SERVICES": "Services",
+    "SUPPORT": "Support",
+    "NEWSLETTER_TITLE": "Stay Updated",
+    "NEWSLETTER_DESCRIPTION": "Subscribe to our newsletter to receive exclusive offers and news.",
+    "NEWSLETTER_PLACEHOLDER": "Your email address",
+    "SUBSCRIBE": "Subscribe",
+    "RIGHTS": "All rights reserved.",
+    "PRIVACY": "Privacy Policy",
+    "TERMS": "Terms of Service",
+    "COOKIES": "Cookies"
+  },
+
+  "SERVICES": {
+    "CATALOG_IMAGE_ALT": "Background image of services catalog",
+    "TITLE": "Services Catalog",
+    "DESCRIPTION": "Live unique experiences at Luma Resort with a wide range of services designed for your comfort and enjoyment.",
+    "SEE_DETAILS": "See details",
+    "SPA_TITLE": "Spa & Wellness",
+    "SPA_DESC": "Exclusive treatments, massages, and relaxing rituals by the sea.",
+    "GASTRO_TITLE": "Gastronomy",
+    "GASTRO_DESC": "Enjoy international gourmet cuisine and exceptional local flavors.",
+    "AQUA_TITLE": "Water Sports",
+    "AQUA_DESC": "From snorkeling to surfing, an exciting adventure awaits.",
+    "EVENTS_TITLE": "Events & Weddings",
+    "EVENTS_DESC": "The perfect setting for your most important celebrations.",
+    "MORE_SERVICES_TITLE": "More Services",
+    "MORE_SERVICES_DESC": "Discover more exclusive services at Luma Resort.",
+    "NIGHT_TITLE": "Night Activities",
+    "NIGHT_DESC": "Discover nightlife with unforgettable activities."
   }
 }

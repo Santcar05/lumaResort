@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model; 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +29,7 @@ public class TipoHabitacionController {
     @Autowired
     private TipoHabitacionService tipoHabitacionService;
 
-    //http://localhost:8080/tiposHabitacion  (GET)
+    //http://localhost:8080/clientes  (GET)
     @GetMapping("/tiposHabitacion")
     public List<TipoHabitacion> tiposHabitacion(Model model) {
         return tipoHabitacionService.findAll();
@@ -50,6 +50,7 @@ public class TipoHabitacionController {
         redirectAttributes.addFlashAttribute("mensaje", "Tipo de habitación actualizado exitosamente.");
         return tipoActualizado;
     }
+
     //http://localhost:8080/tiposHabitacion/{id}  (DELETE)
     @DeleteMapping("/tiposHabitacion/{id}")
     public void eliminarTipoHabitacion(@PathVariable Long id, RedirectAttributes redirectAttributes) {
@@ -60,8 +61,5 @@ public class TipoHabitacionController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
     }
-
-
-
 
 }

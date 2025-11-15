@@ -1,102 +1,114 @@
 <div class="admin-container">
-  <h2 class="titulo">Dashboard Administrativo</h2>
-
-  <!-- Estadísticas principales -->
-  <div class="estadisticas-grid" [class.animar]="animarEstadisticas">
-    <div class="stat-card stat-card-1">
-      <div class="stat-icon">📅</div>
-      <div class="stat-info">
-        <h3 class="stat-numero">{{ totalReservas }}</h3>
-        <p class="stat-label">Total Reservas</p>
-      </div>
-    </div>
-
-    <div class="stat-card stat-card-2">
-      <div class="stat-icon">👥</div>
-      <div class="stat-info">
-        <h3 class="stat-numero">{{ totalUsuarios }}</h3>
-        <p class="stat-label">Usuarios Registrados</p>
-      </div>
-    </div>
-
-    <div class="stat-card stat-card-3">
-      <div class="stat-icon">🏨</div>
-      <div class="stat-info">
-        <h3 class="stat-numero">{{ totalHabitaciones }}</h3>
-        <p class="stat-label">Habitaciones</p>
-      </div>
-    </div>
-
-    <div class="stat-card stat-card-4">
-      <div class="stat-icon">📊</div>
-      <div class="stat-info">
-        <h3 class="stat-numero">{{ ocupacionActual }}%</h3>
-        <p class="stat-label">Ocupación Actual</p>
-      </div>
-    </div>
-
-    <div class="stat-card stat-card-5">
-      <div class="stat-icon">💰</div>
-      <div class="stat-info">
-        <h3 class="stat-numero">${{ ingresosMes.toLocaleString() }}</h3>
-        <p class="stat-label">Ingresos del Mes</p>
-      </div>
-    </div>
+  <!-- Loader -->
+  <div class="loader-container" *ngIf="cargandoDatos">
+    <div class="loader"></div>
+    <p>Cargando datos del dashboard...</p>
   </div>
 
-  <!-- Botón para personalizar gráficos -->
-  <div class="acciones-dashboard">
-    <button class="btn btn-primary" (click)="abrirModalGraficos()">📊 Personalizar Gráficos</button>
-  </div>
+  <div *ngIf="!cargandoDatos">
+    <h2 class="titulo">Dashboard Administrativo</h2>
 
-  <!-- Grid de gráficos -->
-  <div class="graficos-grid">
-    <div class="grafico-card" *ngFor="let chart of getSelectedChartsList()">
-      <div class="card">
-        <div class="card-header">
-          <span class="chart-title">{{ chart.name }}</span>
-          <span class="chart-badge">{{ chart.category }}</span>
+    <!-- Estadísticas principales -->
+    <div class="estadisticas-grid" [class.animar]="animarEstadisticas">
+      <div class="stat-card stat-card-1">
+        <div class="stat-icon">📅</div>
+        <div class="stat-info">
+          <h3 class="stat-numero">{{ totalReservas }}</h3>
+          <p class="stat-label">Total Reservas</p>
         </div>
-        <div class="card-body grafico-contenedor">
-          <canvas [id]="chart.id"></canvas>
+      </div>
+
+      <div class="stat-card stat-card-2">
+        <div class="stat-icon">👥</div>
+        <div class="stat-info">
+          <h3 class="stat-numero">{{ totalUsuarios }}</h3>
+          <p class="stat-label">Usuarios Registrados</p>
+        </div>
+      </div>
+
+      <div class="stat-card stat-card-3">
+        <div class="stat-icon">🏨</div>
+        <div class="stat-info">
+          <h3 class="stat-numero">{{ totalHabitaciones }}</h3>
+          <p class="stat-label">Habitaciones</p>
+        </div>
+      </div>
+
+      <div class="stat-card stat-card-4">
+        <div class="stat-icon">📊</div>
+        <div class="stat-info">
+          <h3 class="stat-numero">{{ ocupacionActual }}%</h3>
+          <p class="stat-label">Ocupación Actual</p>
+        </div>
+      </div>
+
+      <div class="stat-card stat-card-5">
+        <div class="stat-icon">💰</div>
+        <div class="stat-info">
+          <h3 class="stat-numero">${{ ingresosMes.toLocaleString() }}</h3>
+          <p class="stat-label">Ingresos del Mes</p>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Mensaje si no hay gráficos seleccionados -->
-  <div class="no-graficos" *ngIf="selectedCharts.size === 0">
-    <p>No hay gráficos seleccionados. Haz clic en "Personalizar Gráficos" para añadir algunos.</p>
-  </div>
+    <!-- Botón para personalizar gráficos -->
+    <div class="acciones-dashboard">
+      <button class="btn btn-primary" (click)="abrirModalGraficos()">
+        📊 Personalizar Gráficos
+      </button>
+    </div>
 
-  <!-- Modal de selección de gráficos -->
-  <div class="modal" *ngIf="modalGraficosAbierto">
-    <div class="modal-overlay" (click)="cerrarModalGraficos()"></div>
-    <div class="modal-content modal-graficos">
-      <h3>Selecciona los Gráficos a Mostrar</h3>
-
-      <div class="categorias-container">
-        <div class="categoria-seccion" *ngFor="let category of getCategories()">
-          <h4 class="categoria-titulo">{{ category }}</h4>
-          <div class="checkbox-grid">
-            <label class="checkbox-item" *ngFor="let chart of getChartsByCategory(category)">
-              <input
-                type="checkbox"
-                [checked]="isChartSelected(chart.id)"
-                (change)="toggleChart(chart.id)"
-              />
-              <span class="checkbox-label">{{ chart.name }}</span>
-              <span class="chart-type-badge">{{ chart.type }}</span>
-            </label>
+    <!-- Grid de gráficos -->
+    <div class="graficos-grid">
+      <div class="grafico-card" *ngFor="let chart of getSelectedChartsList()">
+        <div class="card">
+          <div class="card-header">
+            <span class="chart-title">{{ chart.name }}</span>
+            <span class="chart-badge">{{ chart.category }}</span>
+          </div>
+          <div class="card-body grafico-contenedor">
+            <canvas [id]="chart.id"></canvas>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="modal-buttons">
-        <button type="button" class="btn btn-success" (click)="aplicarSeleccion()">Aplicar</button>
-        <button type="button" class="btn btn-secondary" (click)="cerrarModalGraficos()">
-          Cancelar
-        </button>
+    <!-- Mensaje si no hay gráficos seleccionados -->
+    <div class="no-graficos" *ngIf="selectedCharts.size === 0">
+      <p>No hay gráficos seleccionados. Haz clic en "Personalizar Gráficos" para añadir algunos.</p>
+    </div>
+
+    <!-- Modal de selección de gráficos -->
+    <div class="modal" *ngIf="modalGraficosAbierto">
+      <div class="modal-overlay" (click)="cerrarModalGraficos()"></div>
+      <div class="modal-content modal-graficos">
+        <h3>Selecciona los Gráficos a Mostrar</h3>
+
+        <div class="categorias-container">
+          <div class="categoria-seccion" *ngFor="let category of getCategories()">
+            <h4 class="categoria-titulo">{{ category }}</h4>
+            <div class="checkbox-grid">
+              <label class="checkbox-item" *ngFor="let chart of getChartsByCategory(category)">
+                <input
+                  type="checkbox"
+                  [checked]="isChartSelected(chart.id)"
+                  (change)="toggleChart(chart.id)"
+                />
+                <span class="checkbox-label">{{ chart.name }}</span>
+                <span class="chart-type-badge">{{ chart.type }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-buttons">
+          <button type="button" class="btn btn-success" (click)="aplicarSeleccion()">
+            Aplicar
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="cerrarModalGraficos()">
+            Cancelar
+          </button>
+        </div>
       </div>
     </div>
   </div>

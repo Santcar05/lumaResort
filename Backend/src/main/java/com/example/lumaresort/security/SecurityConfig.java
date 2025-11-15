@@ -58,69 +58,60 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-
-                        //  ENDPOINTS PÚBLICOS 
-                        .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
-                        .requestMatchers("/h2/**").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-
-                        //ENDPOINTS DE AUTENTICACIÓN 
-                        .requestMatchers(HttpMethod.GET, "/api/auth/actual").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/api/auth/perfil").authenticated()
-
-                        // ENDPOINTS EXCLUSIVOS DE ADMINISTRADOR 
-                        .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
-                        .requestMatchers("/clientes/**").hasRole("ADMINISTRADOR")
-
-                        // Gestión de habitaciones: solo ADMIN puede crear/modificar/eliminar
-                        .requestMatchers(HttpMethod.POST, "/habitaciones/**").hasRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.PUT, "/habitaciones/**").hasRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.DELETE, "/habitaciones/**").hasRole("ADMINISTRADOR")
-                        // Ver habitaciones y disponibilidad: público (para que clientes puedan reservar)
-                        .requestMatchers(HttpMethod.GET, "/habitaciones/disponibles").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/habitaciones/**").permitAll()
-
-                        // Gestión de tipos de habitación: solo ADMIN puede crear/modificar/eliminar
-                        .requestMatchers(HttpMethod.POST, "/tipoHabitacion/**").hasRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.POST, "/tiposHabitacion/**").hasRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.PUT, "/tipoHabitacion/**").hasRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.PUT, "/tiposHabitacion/**").hasRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.DELETE, "/tipoHabitacion/**").hasRole("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.DELETE, "/tiposHabitacion/**").hasRole("ADMINISTRADOR")
-                        // Ver tipos de habitación: público
-                        .requestMatchers(HttpMethod.GET, "/tipoHabitacion/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/tiposHabitacion/**").permitAll()
-
-                        // ========== ENDPOINTS EXCLUSIVOS DE OPERADOR ==========
-                        .requestMatchers("/operador/**").hasRole("OPERADOR")
-
-                        // Gestión de pagos (solo OPERADOR)
-                        .requestMatchers("/pagos/**").hasRole("OPERADOR")
-
-                        // Gestión de servicios: POST/PUT/DELETE solo OPERADOR, GET público
-                        .requestMatchers(HttpMethod.POST, "/servicios/**").hasRole("OPERADOR")
-                        .requestMatchers(HttpMethod.PUT, "/servicios/**").hasRole("OPERADOR")
-                        .requestMatchers(HttpMethod.DELETE, "/servicios/**").hasRole("OPERADOR")
-                        .requestMatchers(HttpMethod.GET, "/servicios/**").permitAll()
-
-                        // ========== ENDPOINTS DE RESERVAS ==========
-                        // Ver TODAS las reservas (OPERADOR y ADMINISTRADOR)
-                        .requestMatchers(HttpMethod.GET, "/reservas").hasAnyRole("OPERADOR", "ADMINISTRADOR")
-
-                        // Crear nueva reserva (cualquier usuario autenticado)
-                        .requestMatchers(HttpMethod.POST, "/reservas").authenticated()
-
-                        // Buscar mis reservas (cualquier usuario autenticado)
-                        .requestMatchers(HttpMethod.GET, "/reservas/buscar/**").authenticated()
-
-                        // Ver detalles de una reserva, modificar, cancelar (cualquier autenticado)
-                        .requestMatchers(HttpMethod.GET, "/reservas/**").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/reservas/**").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/reservas/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/reservas/**").authenticated()
-
-                        .anyRequest().authenticated()
+                //  ENDPOINTS PÚBLICOS 
+                .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
+                .requestMatchers("/h2/**").permitAll()
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                //ENDPOINTS DE AUTENTICACIÓN 
+                .requestMatchers(HttpMethod.GET, "/api/auth/actual").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/api/auth/perfil").authenticated()
+                // ENDPOINTS EXCLUSIVOS DE ADMINISTRADOR 
+                .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
+                .requestMatchers("/clientes/**").hasRole("ADMINISTRADOR")
+                // Gestión de habitaciones: solo ADMIN puede crear/modificar/eliminar
+                .requestMatchers(HttpMethod.POST, "/habitaciones/**").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.PUT, "/habitaciones/**").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.DELETE, "/habitaciones/**").hasRole("ADMINISTRADOR")
+                // Ver habitaciones y disponibilidad: público (para que clientes puedan reservar)
+                .requestMatchers(HttpMethod.GET, "/habitaciones/disponibles").permitAll()
+                .requestMatchers(HttpMethod.GET, "/habitaciones/**").permitAll()
+                // Gestión de tipos de habitación: solo ADMIN puede crear/modificar/eliminar
+                .requestMatchers(HttpMethod.POST, "/tipoHabitacion/**").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.POST, "/tiposHabitacion/**").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.PUT, "/tipoHabitacion/**").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.PUT, "/tiposHabitacion/**").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.DELETE, "/tipoHabitacion/**").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.DELETE, "/tiposHabitacion/**").hasRole("ADMINISTRADOR")
+                // Ver tipos de habitación: público
+                .requestMatchers(HttpMethod.GET, "/tipoHabitacion/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/tiposHabitacion/**").permitAll()
+                // ========== ENDPOINTS EXCLUSIVOS DE OPERADOR ==========
+                .requestMatchers("/operador/**").hasRole("OPERADOR")
+                // Gestión de pagos (solo OPERADOR)
+                .requestMatchers("/pagos/**").hasRole("OPERADOR")
+                // Gestión de servicios: POST/PUT/DELETE solo OPERADOR, GET público
+                .requestMatchers(HttpMethod.POST, "/servicios/**").hasRole("OPERADOR")
+                .requestMatchers(HttpMethod.PUT, "/servicios/**").hasRole("OPERADOR")
+                .requestMatchers(HttpMethod.DELETE, "/servicios/**").hasRole("OPERADOR")
+                .requestMatchers(HttpMethod.GET, "/servicios/**").permitAll()
+                // ========== ENDPOINTS DE RESERVAS ==========
+                // Ver TODAS las reservas (OPERADOR y ADMINISTRADOR)
+                .requestMatchers(HttpMethod.GET, "/reservas").hasAnyRole("OPERADOR", "ADMINISTRADOR")
+                // Crear nueva reserva (cualquier usuario autenticado)
+                .requestMatchers(HttpMethod.POST, "/reservas").authenticated()
+                // Buscar mis reservas (cualquier usuario autenticado)
+                .requestMatchers(HttpMethod.GET, "/reservas/buscar/**").authenticated()
+                // Ver detalles de una reserva, modificar, cancelar (cualquier autenticado)
+                .requestMatchers(HttpMethod.GET, "/reservas/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/reservas/**").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/reservas/**").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/reservas/**").authenticated()
+                // Ver el usuario actual si está autenticado
+                .requestMatchers(HttpMethod.GET, "/usuario").hasAnyRole("OPERADOR", "ADMINISTRADOR")
+                .requestMatchers(HttpMethod.GET, "/usuario/**").hasAnyRole("OPERADOR", "ADMINISTRADOR")
+                // Cualquier otra solicitud requiere autenticación
+                .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

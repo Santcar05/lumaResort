@@ -1,0 +1,91 @@
+{
+  "BANNER": {
+    "IMAGE_ALT": "Image du ciel en arrière-plan",
+    "TITLE": "Découvrez le paradis à Luma Resort",
+    "DESCRIPTION": "Une expérience de luxe dans un emplacement privilégié sur la plage de Luma Resort.",
+    "MORE_INFO": "Plus d'informations"
+  },
+  "HEADER": {
+    "LANGUAGES": "Langues",
+    "LANG_ES": "Espagnol",
+    "LANG_EN": "Anglais",
+    "LANG_FR": "Français",
+    "LANG_DE": "Allemand",
+
+    "MENU": "Menu",
+    "CONTACT": "Contact",
+    "THEME": "Thème visuel",
+    "ROOMS": "Chambres",
+    "RESTAURANTS": "Restaurants",
+    "SERVICES": "Services",
+    "HOME": "Accueil",
+
+    "BOOKING": "Réservations",
+    "LOGIN": "Connexion",
+    "PROFILE": "Profil",
+    "VIEW_PROFILE": "Voir le profil",
+    "VIEW_BOOKINGS": "Voir les réservations",
+    "LOGOUT": "Déconnexion"
+  },
+  "DISCOVERY": {
+    "TITLE": "Découvrez LumaResort",
+    "SUBTITLE": "Une expérience unique où le luxe rencontre la nature",
+    "CARD1": {
+      "TITLE": "Emplacement Privilégié",
+      "DESC": "Profitez de vues panoramiques sur l'océan."
+    },
+    "CARD2": {
+      "TITLE": "Expériences Uniques",
+      "DESC": "Du spa de classe mondiale aux aventures aquatiques."
+    },
+    "CARD3": {
+      "TITLE": "Service Premium",
+      "DESC": "Notre équipe est disponible 24h/24."
+    },
+    "CARD4": {
+      "TITLE": "Chambres de Luxe",
+      "DESC": "Chaque suite offre un refuge privé."
+    },
+    "CARD5": {
+      "TITLE": "Gastronomie Exceptionnelle",
+      "DESC": "Restaurants gastronomiques avec des chefs internationaux."
+    },
+    "CTA_TEXT": "Prêt à vivre l'expérience LumaResort ?",
+    "CTA_BUTTON": "Découvrir plus"
+  },
+  "CONTACT": {
+    "TITLE": "CONTACT",
+    "SUBTITLE": "Intéressé par LumaResort ?",
+    "DESCRIPTION": "Remplissez le formulaire et notre équipe vous répondra en moins de 24 heures.",
+    "FORM": {
+      "NAME": "Nom Complet",
+      "EMAIL": "E-mail",
+      "PHONE": "Téléphone (Optionnel)",
+      "SUBJECT": "Sujet",
+      "MESSAGE": "Message",
+      "SEND": "Envoyer"
+    },
+    "ERROR": {
+      "INVALID_EMAIL": "Veuillez entrer un e-mail valide"
+    },
+    "SUCCESS": {
+      "TITLE": "Message envoyé avec succès !",
+      "MSG": "Merci de nous avoir contactés."
+    },
+    "SCHEDULE": {
+      "TITLE": "Horaires Disponibles",
+      "DAY": "Jour",
+      "TIME": "Horaire",
+      "WEEK": "Lundi - Vendredi",
+      "WEEKEND": "Samedi - Dimanche"
+    },
+    "INFO": {
+      "LOCATION": "Localisation",
+      "LOCATION_TEXT": "Av. Costera 123, Bahía Luma, Puerto Vallarta, Mexique",
+      "FORM": "Formulaire",
+      "FORM_TEXT": "Cliquez ici pour envoyer un message",
+      "SCHEDULE": "Horaire",
+      "SCHEDULE_TEXT": "Lun - Ven: 8h00 - 20h00 • Sam - Dim: 9h00 - 18h00"
+    }
+  }
+}

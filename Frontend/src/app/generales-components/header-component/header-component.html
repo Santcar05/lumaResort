@@ -4,37 +4,91 @@
     <div class="menu-container" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
       <ul>
         <li class="PrimerLi">
-          <a (click)="toggleMenu()">Menu</a>
+          <a (click)="toggleMenu()">{{ 'HEADER.MENU' | translate }}</a>
+
           <ul class="dropdown" [class.show]="menuVisible">
-            <li><a href="#">Idiomas</a></li>
-            <li><a href="#">Tema Visual</a></li>
-            <li><a href="#">Habitaciones</a></li>
-            <li><a href="#">Restaurantes</a></li>
-            <li><a [routerLink]="['/servicios']">Servicios</a></li>
+            <li>
+              <a href="#">{{ 'HEADER.CONTACT' | translate }}</a>
+            </li>
+            <li>
+              <a href="#">{{ 'HEADER.THEME' | translate }}</a>
+            </li>
+            <li>
+              <a href="#">{{ 'HEADER.ROOMS' | translate }}</a>
+            </li>
+            <li>
+              <a href="#">{{ 'HEADER.RESTAURANTS' | translate }}</a>
+            </li>
+            <li>
+              <a [routerLink]="['/servicios']">{{ 'HEADER.SERVICES' | translate }}</a>
+            </li>
           </ul>
         </li>
-        <li><a routerLink="/">Inicio</a></li>
+
+        <li>
+          <a routerLink="/">{{ 'HEADER.HOME' | translate }}</a>
+        </li>
       </ul>
     </div>
 
     <!-- Nombre -->
-    <div><h1 id="lumaResort">Luma Resort</h1></div>
+    <div>
+      <h1 id="lumaResort">{{ 'HEADER.TITLE' | translate }}</h1>
+    </div>
 
     <!-- Contacto y Reservas -->
     <div>
       <ul>
-        <li class="PrimerLi"><a href="#">Contacto</a></li>
-        <li class="PrimerLi"><a [routerLink]="['/reservas']">Reservas</a></li>
+        <!-- Idiomas -->
+        <li class="PrimerLi" (click)="toggleIdiomas()">
+          <a>{{ 'HEADER.LANGUAGES' | translate }}</a>
 
-        <li *ngIf="!isLoggedIn"><a [routerLink]="['/login']">Login</a></li>
-
-        <ng-container *ngIf="isLoggedIn">
-          <li><a (click)="togglePerfil()">Perfil</a></li>
-          <ul class="dropdown" [class.show]="perfilVisible">
-            <li><a href="#" [routerLink]="['/perfil', usuarioId]">Ver Perfil</a></li>
-            <li><a (click)="verReservas()">Ver Reservas</a></li>
+          <ul class="dropdown" [class.show]="idiomasVisible">
+            <li>
+              <a (click)="changeLanguage('es')">{{ 'HEADER.LANG_ES' | translate }}</a>
+            </li>
+            <li>
+              <a (click)="changeLanguage('en')">{{ 'HEADER.LANG_EN' | translate }}</a>
+            </li>
+            <li>
+              <a (click)="changeLanguage('fr')">{{ 'HEADER.LANG_FR' | translate }}</a>
+            </li>
+            <li>
+              <a (click)="changeLanguage('de')">{{ 'HEADER.LANG_DE' | translate }}</a>
+            </li>
           </ul>
-          <li><a (click)="logout()" style="cursor: pointer">Logout</a></li>
+        </li>
+
+        <!-- Reservas -->
+        <li class="PrimerLi">
+          <a [routerLink]="['/reservas']">{{ 'HEADER.BOOKING' | translate }}</a>
+        </li>
+
+        <!-- Login -->
+        <li *ngIf="!isLoggedIn">
+          <a [routerLink]="['/login']">{{ 'HEADER.LOGIN' | translate }}</a>
+        </li>
+
+        <!-- Usuario logeado -->
+        <ng-container *ngIf="isLoggedIn">
+          <li>
+            <a (click)="togglePerfil()">{{ 'HEADER.PROFILE' | translate }}</a>
+          </li>
+
+          <ul class="dropdown" [class.show]="perfilVisible">
+            <li>
+              <a [routerLink]="['/perfil', usuarioId]">
+                {{ 'HEADER.VIEW_PROFILE' | translate }}
+              </a>
+            </li>
+            <li>
+              <a (click)="verReservas()">{{ 'HEADER.VIEW_BOOKINGS' | translate }}</a>
+            </li>
+          </ul>
+
+          <li>
+            <a (click)="logout()">{{ 'HEADER.LOGOUT' | translate }}</a>
+          </li>
         </ng-container>
       </ul>
     </div>

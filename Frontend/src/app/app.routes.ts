@@ -19,6 +19,7 @@ import { ServiciosOperadorComponent } from './servicios-operador-component/servi
 import { OperadorComponent } from './operador-component/operador-component';
 import { EstadiaOperadorComponent } from './estadia-operador-component/estadia-operador-component';
 import { adminGuard, clienteGuard, operadorGuard, publicGuard } from './guards/auth.guard';
+import { AdminDashboardComponentComponent } from './admin-dashboard-component/admin-dashboard-component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // por defecto muestra Landing
@@ -30,6 +31,7 @@ export const routes: Routes = [
     component: AdminComponent,
     canActivate: [adminGuard],
     children: [
+      { path: '', component: AdminDashboardComponentComponent },
       { path: 'tiposHabitacion', component: TipoHabitacionAdminComponent },
       { path: 'clientes', component: ClienteAdminComponent },
       { path: 'servicios', component: ServiciosAdminComponent },

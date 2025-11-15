@@ -9,6 +9,12 @@
       <div class="title-divider"></div>
     </div>
 
+    <!-- Loading State -->
+    <div *ngIf="translating" class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <p>{{ 'TESTIMONIALS.TRANSLATING' | translate }}</p>
+    </div>
+
     <div class="testimonials-carousel">
       <div class="carousel-wrapper">
         <button
@@ -38,12 +44,14 @@
             >
               <div class="testimonial-content">
                 <div class="quote-icon">"</div>
-                <p class="testimonial-text">{{ testimonial.text }}</p>
+                <!-- ✅ Traducción dinámica del texto del testimonio -->
+                <p class="testimonial-text">{{ getTranslatedText(i) }}</p>
                 <div class="testimonial-author">
                   <img [src]="testimonial.avatar" [alt]="testimonial.name" class="author-avatar" />
                   <div class="author-info">
                     <h4 class="author-name">{{ testimonial.name }}</h4>
-                    <p class="author-title">{{ testimonial.title }}</p>
+                    <!-- ✅ Traducción dinámica del título -->
+                    <p class="author-title">{{ getTranslatedTitle(i) }}</p>
                   </div>
                 </div>
               </div>

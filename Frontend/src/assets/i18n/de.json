@@ -1,0 +1,244 @@
+{
+  "BANNER": {
+    "IMAGE_ALT": "Hintergrundbild des Himmels",
+    "TITLE": "Entdecken Sie das Paradies im Luma Resort",
+    "DESCRIPTION": "Luxuserlebnis an einem privilegierten Standort am Strand des Luma Resorts.",
+    "MORE_INFO": "Mehr Informationen"
+  },
+  "HEADER": {
+    "LANGUAGES": "Sprachen",
+    "LANG_ES": "Spanisch",
+    "LANG_EN": "Englisch",
+    "LANG_FR": "Französisch",
+    "LANG_DE": "Deutsch",
+    "MENU": "Menü",
+    "CONTACT": "Kontakt",
+    "THEME": "Visuelles Thema",
+    "ROOMS": "Zimmer",
+    "RESTAURANTS": "Restaurants",
+    "SERVICES": "Dienstleistungen",
+    "HOME": "Startseite",
+    "BOOKING": "Reservierungen",
+    "LOGIN": "Anmelden",
+    "PROFILE": "Profil",
+    "VIEW_PROFILE": "Profil ansehen",
+    "VIEW_BOOKINGS": "Reservierungen ansehen",
+    "LOGOUT": "Abmelden"
+  },
+  "DISCOVERY": {
+    "TITLE": "Entdecke LumaResort",
+    "SUBTITLE": "Ein einzigartiges Erlebnis, wo Luxus auf Natur trifft",
+    "CARD1": {
+      "TITLE": "Bevorzugte Lage",
+      "DESC": "Genießen Sie einen Panorama-Meerblick."
+    },
+    "CARD2": {
+      "TITLE": "Einzigartige Erlebnisse",
+      "DESC": "Vom Weltklasse-Spa bis zu Wasserabenteuern."
+    },
+    "CARD3": {
+      "TITLE": "Premium-Service",
+      "DESC": "Unser Team ist 24/7 verfügbar."
+    },
+    "CARD4": {
+      "TITLE": "Luxuriöse Zimmer",
+      "DESC": "Jede Suite bietet einen privaten Rückzugsort."
+    },
+    "CARD5": {
+      "TITLE": "Außergewöhnliche Gastronomie",
+      "DESC": "Gourmetrestaurants mit internationalen Köchen."
+    },
+    "CTA_TEXT": "Bereit für die LumaResort-Erfahrung?",
+    "CTA_BUTTON": "Mehr entdecken"
+  },
+  "CONTACT": {
+    "TITLE": "KONTAKT",
+    "SUBTITLE": "Interessiert an LumaResort?",
+    "DESCRIPTION": "Füllen Sie das Formular aus und wir melden uns innerhalb von 24 Stunden.",
+    "FORM": {
+      "NAME": "Vollständiger Name",
+      "EMAIL": "E-Mail",
+      "PHONE": "Telefon (Optional)",
+      "SUBJECT": "Betreff",
+      "MESSAGE": "Nachricht",
+      "SEND": "Nachricht senden"
+    },
+    "ERROR": {
+      "INVALID_EMAIL": "Bitte geben Sie eine gültige E-Mail ein"
+    },
+    "SUCCESS": {
+      "TITLE": "Nachricht erfolgreich gesendet!",
+      "MSG": "Vielen Dank für Ihre Kontaktaufnahme."
+    },
+    "SCHEDULE": {
+      "TITLE": "Verfügbare Zeiten",
+      "DAY": "Tag",
+      "TIME": "Zeit",
+      "WEEK": "Montag - Freitag",
+      "WEEKEND": "Samstag - Sonntag"
+    },
+    "INFO": {
+      "LOCATION": "Standort",
+      "LOCATION_TEXT": "Av. Costera 123, Bahía Luma, Puerto Vallarta, Mexiko",
+      "FORM": "Formular",
+      "FORM_TEXT": "Klicken Sie hier, um uns eine Nachricht zu senden",
+      "SCHEDULE": "Zeitplan",
+      "SCHEDULE_TEXT": "Mo - Fr: 8:00 - 20:00 • Sa - So: 9:00 - 18:00"
+    }
+  },
+  "ACTIVITIES": {
+    "TITLE": "AKTIVITÄTEN",
+    "SUBTITLE_1": "Wir haben alles.",
+    "SUBTITLE_2": "Was du brauchst.",
+    "EXPLORE": "ERKUNDEN"
+  },
+  "FOOTER": {
+    "DESCRIPTION": "Erleben Sie neu definierten Luxus in unserem Weltklasse-Resort. Wo jeder Moment zu einer unbezahlbaren Erinnerung wird.",
+    "DISCOVER": "Entdecken",
+    "SERVICES": "Dienstleistungen",
+    "SUPPORT": "Support",
+    "NEWSLETTER_TITLE": "Bleiben Sie auf dem Laufenden",
+    "NEWSLETTER_DESCRIPTION": "Abonnieren Sie unseren Newsletter, um exklusive Angebote und Neuigkeiten zu erhalten.",
+    "NEWSLETTER_PLACEHOLDER": "Ihre E-Mail",
+    "SUBSCRIBE": "Abonnieren",
+    "RIGHTS": "Alle Rechte vorbehalten.",
+    "PRIVACY": "Datenschutzrichtlinie",
+    "TERMS": "Nutzungsbedingungen",
+    "COOKIES": "Cookies"
+  },
+  "SERVICES": {
+    "CATALOG_IMAGE_ALT": "Hintergrundbild des Dienstleistungskatalogs",
+    "TITLE": "Dienstleistungskatalog",
+    "DESCRIPTION": "Erleben Sie einzigartige Momente im Luma Resort mit einer großen Auswahl an Komfort- und Freizeitservices.",
+    "SEE_DETAILS": "Details ansehen",
+    "LOADING": "Services werden geladen...",
+    "NO_SERVICES": "Momentan sind keine Dienstleistungen verfügbar."
+  },
+  "MY_BOOKINGS": {
+    "BACK": "Zurück",
+    "SECTION_LABEL": "MEINE RESERVIERUNGEN",
+    "TITLE_PART1": "Reservierungs",
+    "TITLE_PART2": "verlauf",
+    "SUBTITLE": "Sehen Sie alle Ihre vergangenen, aktiven oder zukünftigen Reservierungen",
+    "LOADING": "Ihre Reservierungen werden geladen...",
+    "ERROR_TITLE": "Fehler",
+    "RETRY": "Erneut versuchen",
+    "FILTER_BY_STATUS": "Nach Status filtern",
+    "SELECT_STATUS": "Wählen Sie den Status, den Sie sehen möchten",
+    "STATUS_ALL": "Alle",
+    "STATUS_CONFIRMED": "Bestätigt",
+    "STATUS_CANCELLED": "Storniert",
+    "STATUS_COMPLETED": "Abgeschlossen",
+    "SHOWING": "Anzeige von",
+    "OF": "von",
+    "BOOKINGS": "Reservierungen",
+    "NO_BOOKINGS": "Sie haben keine registrierten Reservierungen.",
+    "ROOM": "Zimmer",
+    "PERSON": "Person",
+    "PEOPLE": "Personen",
+    "SERVICE": "Service",
+    "SERVICES": "Services",
+    "INCLUDED": "inklusive",
+    "ESTIMATED_TOTAL": "Geschätzte Gesamtsumme",
+    "UPDATE_BOOKING": "Reservierung aktualisieren",
+    "CANCEL_BOOKING": "Reservierung stornieren",
+    "UPDATE_DATES_TITLE": "Reservierungsdaten Aktualisieren",
+    "BOOKING": "Reservierung",
+    "PREVIOUS_DATES": "Vorherige Daten",
+    "SELECT_NEW_DATES": "Wählen Sie die neuen Daten",
+    "NEW_CHECK_IN": "Neues Check-in-Datum",
+    "NEW_CHECK_OUT": "Neues Check-out-Datum",
+    "NIGHT": "Nacht",
+    "NIGHTS": "Nächte",
+    "STAY": "Aufenthalt",
+    "CANCEL": "Abbrechen",
+    "UPDATING": "Wird aktualisiert...",
+    "CONFIRM_CHANGES": "Änderungen Bestätigen"
+  },
+  "LOGIN": {
+    "WELCOME": "Willkommen",
+    "SUBTITLE": "Melden Sie sich bei Ihrem Konto an",
+    "EMAIL_PLACEHOLDER": "E-Mail-Adresse",
+    "PASSWORD_PLACEHOLDER": "Passwort",
+    "SUBMIT": "Anmelden",
+    "LOGGING_IN": "Anmeldung läuft...",
+    "ERROR_TITLE": "Anmeldefehler",
+    "RETRY": "Erneut versuchen",
+    "NO_ACCOUNT": "Sie haben noch kein Konto?",
+    "SIGN_UP": "Registrieren"
+  },
+  "SERVICES_PAGE": {
+    "SECTION_LABEL": "UNSERE DIENSTLEISTUNGEN",
+    "TITLE_PART1": "Exklusive",
+    "TITLE_PART2": "Erlebnisse",
+    "SUBTITLE": "Entdecken Sie unsere Premium-Auswahl an Services, die für Sie entwickelt wurden",
+    "REFRESH": "Aktualisieren",
+    "LOADING": "Services werden geladen...",
+    "ERROR_TITLE": "Fehler beim Laden der Services",
+    "RETRY": "Erneut versuchen",
+    "EMPTY_TITLE": "Keine Services verfügbar",
+    "EMPTY_MESSAGE": "Es wurden noch keine Services im System registriert",
+    "SEARCH_PLACEHOLDER": "Services suchen...",
+    "FILTER_BY_TYPE": "Nach Typ filtern",
+    "ALL_TYPES": "Alle Typen",
+    "SERVICES_FOUND": "Service(s) gefunden",
+    "TOTAL_SERVICES": "Gesamt Services",
+    "AVG_RATING": "Durchschnittsbewertung",
+    "AVG_PRICE": "Durchschnittspreis",
+    "TABLE_IMAGE": "Bild",
+    "TABLE_NAME": "Name",
+    "TABLE_TYPE": "Typ",
+    "TABLE_PRICE": "Preis",
+    "TABLE_RATING": "Bewertung",
+    "TABLE_REVIEWS": "Bewertungen",
+    "TABLE_ACTIONS": "Aktionen",
+    "BTN_VIEW": "Ansehen",
+    "BTN_RESERVE": "Reservieren"
+  },
+  "SERVICE_DETAIL": {
+    "BACK": "Zurück",
+    "BACK_TO_LIST": "Zurück zur Liste",
+    "FROM": "Ab",
+    "RESERVE_NOW": "Jetzt Reservieren",
+    "FEATURED_REVIEWS": "Hervorgehobene Bewertungen",
+    "NO_REVIEWS_YET": "Noch keine Bewertungen. Seien Sie der Erste, der bucht und Ihre Erfahrung teilt.",
+    "REVIEWS": "Bewertungen",
+    "RESERVE_EXPERIENCE": "Erlebnis Reservieren",
+    "EXPLORE_MORE": "Mehr Erkunden",
+    "DESCRIPTION": "Beschreibung",
+    "DETAILS": "Details",
+    "DURATION": "Dauer",
+    "DURATION_VALUE": "Ca. 2 Stunden",
+    "LANGUAGE": "Sprache",
+    "LANGUAGE_VALUE": "Spanisch / Englisch",
+    "CAPACITY": "Kapazität",
+    "CAPACITY_VALUE": "Max. 6 Personen"
+  },
+  "ROOM_TYPES": {
+    "TITLE": "Zimmertypen",
+    "FROM": "Ab",
+    "PER_NIGHT": "Nacht",
+    "BOOK_NOW": "Jetzt buchen"
+  },
+  "TESTIMONIALS": {
+    "TITLE": "ERFAHRUNGSBERICHTE",
+    "SUBTITLE_PART1": "Was unsere Gäste",
+    "SUBTITLE_PART2": "über uns sagen"
+  },
+  "SIGNUP": {
+    "TITLE": "Konto Erstellen",
+    "SUBTITLE": "Registrieren Sie sich, um Ihre Erfahrung zu beginnen",
+    "FIRST_NAME_PLACEHOLDER": "Vorname",
+    "LAST_NAME_PLACEHOLDER": "Nachname",
+    "EMAIL_PLACEHOLDER": "E-Mail-Adresse",
+    "PASSWORD_PLACEHOLDER": "Passwort",
+    "ID_PLACEHOLDER": "Ausweisnummer",
+    "PHONE_PLACEHOLDER": "Telefon",
+    "SUBMIT": "Registrieren",
+    "REGISTERING": "Registrierung läuft...",
+    "SUCCESS_TITLE": "Registrierung erfolgreich",
+    "ERROR_TITLE": "Registrierungsfehler",
+    "ALREADY_HAVE_ACCOUNT": "Sie haben bereits ein Konto?",
+    "SIGN_IN": "Anmelden"
+  }
+}

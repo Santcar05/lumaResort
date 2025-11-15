@@ -4,8 +4,8 @@
   <div class="overlay"></div>
 
   <div class="login-card animate-fade-in">
-    <h2 class="title">Crear Cuenta</h2>
-    <p class="subtitle">Regístrate para comenzar tu experiencia</p>
+    <h2 class="title">{{ 'SIGNUP.TITLE' | translate }}</h2>
+    <p class="subtitle">{{ 'SIGNUP.SUBTITLE' | translate }}</p>
 
     <form (ngSubmit)="onRegister()">
       <div class="input-group">
@@ -13,7 +13,7 @@
           type="text"
           [(ngModel)]="registerData.nombre"
           name="nombre"
-          placeholder="Nombre"
+          placeholder="{{ 'SIGNUP.FIRST_NAME_PLACEHOLDER' | translate }}"
           required
         />
       </div>
@@ -23,7 +23,7 @@
           type="text"
           [(ngModel)]="registerData.apellido"
           name="apellido"
-          placeholder="Apellido"
+          placeholder="{{ 'SIGNUP.LAST_NAME_PLACEHOLDER' | translate }}"
           required
         />
       </div>
@@ -33,7 +33,7 @@
           type="email"
           [(ngModel)]="registerData.correo"
           name="correo"
-          placeholder="Correo electrónico"
+          placeholder="{{ 'SIGNUP.EMAIL_PLACEHOLDER' | translate }}"
           required
         />
       </div>
@@ -43,28 +43,38 @@
           type="password"
           [(ngModel)]="registerData.contrasena"
           name="contrasena"
-          placeholder="Contraseña"
+          placeholder="{{ 'SIGNUP.PASSWORD_PLACEHOLDER' | translate }}"
           required
         />
       </div>
 
       <div class="input-group">
-        <input type="text" [(ngModel)]="registerData.cedula" name="cedula" placeholder="Cédula" />
+        <input
+          type="text"
+          [(ngModel)]="registerData.cedula"
+          name="cedula"
+          placeholder="{{ 'SIGNUP.ID_PLACEHOLDER' | translate }}"
+        />
       </div>
 
       <div class="input-group">
-        <input type="text" [(ngModel)]="registerData.telefono" name="telefono" placeholder="Teléfono" />
+        <input
+          type="text"
+          [(ngModel)]="registerData.telefono"
+          name="telefono"
+          placeholder="{{ 'SIGNUP.PHONE_PLACEHOLDER' | translate }}"
+        />
       </div>
 
       <button type="submit" class="white-btn animate-pulse" [disabled]="loading">
-        {{ loading ? 'Registrando...' : 'Registrarse' }}
+        {{ loading ? ('SIGNUP.REGISTERING' | translate) : ('SIGNUP.SUBMIT' | translate) }}
       </button>
     </form>
 
     <!-- Mensaje de éxito -->
     <div *ngIf="successMsg && !loading" class="success-state">
       <div class="success-content">
-        <h3>✅ Registro exitoso</h3>
+        <h3>✅ {{ 'SIGNUP.SUCCESS_TITLE' | translate }}</h3>
         <p>{{ successMsg }}</p>
       </div>
     </div>
@@ -73,14 +83,14 @@
     <div *ngIf="errorMsg && !loading" class="error-state">
       <div class="error-content">
         <div class="error-icon">⚠</div>
-        <h3>Error al registrarse</h3>
+        <h3>{{ 'SIGNUP.ERROR_TITLE' | translate }}</h3>
         <p>{{ errorMsg }}</p>
       </div>
     </div>
 
     <p class="footer-text">
-      ¿Ya tienes una cuenta?
-      <a routerLink="/login" class="link">Inicia sesión</a>
+      {{ 'SIGNUP.ALREADY_HAVE_ACCOUNT' | translate }}
+      <a routerLink="/login" class="link">{{ 'SIGNUP.SIGN_IN' | translate }}</a>
     </p>
   </div>
 </div>

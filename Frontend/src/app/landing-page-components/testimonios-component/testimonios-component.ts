@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, HostListener, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-testimonios-component',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './testimonios-component.html',
   styleUrl: './testimonios-component.css',
 })

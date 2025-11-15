@@ -8,9 +8,7 @@
   </div>
 
   <div class="footer-container">
-    <!-- Main Footer Content -->
     <div class="footer-main">
-      <!-- Brand Section -->
       <div class="footer-brand">
         <div class="brand-logo">
           <svg width="40" height="40" viewBox="0 0 50 50">
@@ -19,10 +17,11 @@
           </svg>
           <span class="logo-text">LumaResort</span>
         </div>
+
         <p class="brand-description">
-          Experimente el lujo redefine en nuestro resort de clase mundial. Donde cada momento se
-          convierte en un recuerdo invaluable.
+          {{ 'FOOTER.DESCRIPTION' | translate }}
         </p>
+
         <div class="social-links">
           <a
             *ngFor="let social of socialLinks"
@@ -43,56 +42,52 @@
         </div>
       </div>
 
-      <!-- Discover Links -->
       <div class="footer-links">
-        <h3 class="links-title">Descubrir</h3>
+        <h3 class="links-title">{{ 'FOOTER.DISCOVER' | translate }}</h3>
         <ul class="links-list">
           <li *ngFor="let link of footerLinks.discover">
             <a [href]="link.url" class="footer-link">
               <span class="link-icon">→</span>
-              {{ link.name }}
+              {{ link.name | translate }}
             </a>
           </li>
         </ul>
       </div>
 
-      <!-- Services Links -->
       <div class="footer-links">
-        <h3 class="links-title">Servicios</h3>
+        <h3 class="links-title">{{ 'FOOTER.SERVICES' | translate }}</h3>
         <ul class="links-list">
           <li *ngFor="let link of footerLinks.services">
             <a [href]="link.url" class="footer-link">
               <span class="link-icon">→</span>
-              {{ link.name }}
+              {{ link.name | translate }}
             </a>
           </li>
         </ul>
       </div>
 
-      <!-- Support Links -->
       <div class="footer-links">
-        <h3 class="links-title">Soporte</h3>
+        <h3 class="links-title">{{ 'FOOTER.SUPPORT' | translate }}</h3>
         <ul class="links-list">
           <li *ngFor="let link of footerLinks.support">
             <a [href]="link.url" class="footer-link">
               <span class="link-icon">→</span>
-              {{ link.name }}
+              {{ link.name | translate }}
             </a>
           </li>
         </ul>
       </div>
 
-      <!-- Newsletter Section -->
       <div class="footer-newsletter">
-        <h3 class="newsletter-title">Manténgase Actualizado</h3>
+        <h3 class="newsletter-title">{{ 'FOOTER.NEWSLETTER_TITLE' | translate }}</h3>
         <p class="newsletter-description">
-          Suscríbase a nuestro newsletter para recibir ofertas exclusivas y noticias.
+          {{ 'FOOTER.NEWSLETTER_DESCRIPTION' | translate }}
         </p>
 
         <div class="newsletter-form" [class.subscribed]="isSubscribed">
           <input
             type="email"
-            placeholder="Su correo electrónico"
+            [placeholder]="'FOOTER.NEWSLETTER_PLACEHOLDER' | translate"
             [(ngModel)]="newsletterEmail"
             class="newsletter-input"
             [disabled]="isLoading || isSubscribed"
@@ -107,9 +102,7 @@
             [class.loading]="isLoading"
             [class.success]="isSubscribed"
           >
-            <span class="btn-text">
-              {{ isLoading ? 'Enviando...' : isSubscribed ? '¡Gracias!' : 'Suscribirse' }}
-            </span>
+            <span class="btn-text">{{ 'FOOTER.SUBSCRIBE' | translate }}</span>
 
             <div class="btn-loader" *ngIf="isLoading">
               <div class="loader-dot"></div>
@@ -117,61 +110,30 @@
               <div class="loader-dot"></div>
             </div>
 
-            <svg
-              class="success-icon"
-              *ngIf="isSubscribed"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="M20 6L9 17L4 12"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+            <svg class="success-icon" *ngIf="isSubscribed" width="16" height="16">
+              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" />
             </svg>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Footer Bottom -->
     <div class="footer-bottom">
       <div class="footer-bottom-content">
         <div class="copyright">
-          <p>&copy; {{ currentYear }} LumaResort. Todos los derechos reservados.</p>
+          <p>&copy; {{ currentYear }} LumaResort. {{ 'FOOTER.RIGHTS' | translate }}</p>
         </div>
 
         <div class="legal-links">
-          <a href="#" class="legal-link">Política de Privacidad</a>
+          <a href="#" class="legal-link">{{ 'FOOTER.PRIVACY' | translate }}</a>
           <span class="separator">•</span>
-          <a href="#" class="legal-link">Términos de Servicio</a>
+          <a href="#" class="legal-link">{{ 'FOOTER.TERMS' | translate }}</a>
           <span class="separator">•</span>
-          <a href="#" class="legal-link">Cookies</a>
+          <a href="#" class="legal-link">{{ 'FOOTER.COOKIES' | translate }}</a>
         </div>
 
-        <button class="back-to-top" (click)="scrollToTop()" aria-label="Volver arriba">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M18 15L12 9L6 15"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
+        <button class="back-to-top" (click)="scrollToTop()">↑</button>
       </div>
-    </div>
-
-    <!-- Decorative Elements -->
-    <div class="footer-decoration">
-      <div class="decoration-item item-1">✨</div>
-      <div class="decoration-item item-2">🌟</div>
-      <div class="decoration-item item-3">💫</div>
     </div>
   </div>
 </footer>

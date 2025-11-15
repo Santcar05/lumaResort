@@ -3,8 +3,8 @@
 <div class="login-background">
   <div class="overlay"></div>
   <div class="login-card animate-fade-in">
-    <h2 class="title">Bienvenido</h2>
-    <p class="subtitle">Inicia sesión en tu cuenta</p>
+    <h2 class="title">{{ 'LOGIN.WELCOME' | translate }}</h2>
+    <p class="subtitle">{{ 'LOGIN.SUBTITLE' | translate }}</p>
 
     <form (ngSubmit)="onLogin()">
       <div class="input-group">
@@ -12,7 +12,7 @@
           type="email"
           [(ngModel)]="email"
           name="email"
-          placeholder="Correo electrónico"
+          placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}"
           required
         />
       </div>
@@ -22,13 +22,13 @@
           type="password"
           [(ngModel)]="password"
           name="password"
-          placeholder="Contraseña"
+          placeholder="{{ 'LOGIN.PASSWORD_PLACEHOLDER' | translate }}"
           required
         />
       </div>
 
       <button type="submit" class="white-btn animate-pulse" [disabled]="loading">
-        {{ loading ? 'Iniciando...' : 'Iniciar Sesión' }}
+        {{ loading ? ('LOGIN.LOGGING_IN' | translate) : ('LOGIN.SUBMIT' | translate) }}
       </button>
     </form>
 
@@ -36,18 +36,18 @@
     <div *ngIf="errorMsg && !loading" class="error-state">
       <div class="error-content">
         <div class="error-icon">⚠</div>
-        <h3>Error al iniciar sesión</h3>
+        <h3>{{ 'LOGIN.ERROR_TITLE' | translate }}</h3>
         <p>{{ errorMsg }}</p>
         <button class="btn-retry" (click)="onLogin()">
           <span class="retry-icon">↻</span>
-          Reintentar
+          {{ 'LOGIN.RETRY' | translate }}
         </button>
       </div>
     </div>
 
     <p class="footer-text">
-      ¿No tienes cuenta?
-      <a [routerLink]="['/signup']" class="link">Regístrate</a>
+      {{ 'LOGIN.NO_ACCOUNT' | translate }}
+      <a [routerLink]="['/signup']" class="link">{{ 'LOGIN.SIGN_UP' | translate }}</a>
     </p>
   </div>
 </div>

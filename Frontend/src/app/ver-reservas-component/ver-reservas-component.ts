@@ -8,11 +8,11 @@ import { catchError, of } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { ReservaService } from '../service/reserva/reserva-service';
 import { AuthService } from '../service/auth/auth.service';
-
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-ver-reservas-component',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, FormsModule],
+  imports: [CommonModule, HeaderComponent, FormsModule, TranslateModule],
   templateUrl: './ver-reservas-component.html',
   styleUrls: ['./ver-reservas-component.css'],
 })

@@ -6,11 +6,19 @@ import { HeaderComponent } from '../../generales-components/header-component/hea
 import { AuthService } from '../../service/auth/auth.service';
 import { RouterOutlet } from '@angular/router';
 import { LoginRequest } from '../../Models/LoginRequest';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login-component',
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, RouterOutlet, RouterModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    HeaderComponent,
+    RouterOutlet,
+    RouterModule,
+    TranslateModule,
+  ],
   templateUrl: './login-component.html',
   styleUrls: ['./login-component.css'],
 })
@@ -34,7 +42,7 @@ export class LoginComponent {
 
     const loginRequest: LoginRequest = {
       correo: this.email,
-      contrasena: this.password
+      contrasena: this.password,
     };
 
     this.authService.login(loginRequest).subscribe({

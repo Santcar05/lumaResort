@@ -1,8 +1,10 @@
-<!-- activities.component.html -->
 <section class="activities-section">
   <div class="activities-header">
-    <h2 class="section-title">ACTIVIDADES</h2>
-    <h3 class="section-subtitle">Tenemos todo. <span>Lo que necesitas.</span></h3>
+    <h2 class="section-title">{{ 'ACTIVITIES.TITLE' | translate }}</h2>
+    <h3 class="section-subtitle">
+      {{ 'ACTIVITIES.SUBTITLE_1' | translate }}
+      <span>{{ 'ACTIVITIES.SUBTITLE_2' | translate }}</span>
+    </h3>
   </div>
 
   <div class="activities-container">
@@ -13,24 +15,26 @@
         [class.active]="activeCategory === category.id"
         (click)="selectCategory(category.id)"
       >
-        {{ category.nombre }}
+        {{ category.nombre | translate }}
       </button>
     </div>
 
-    <!-- Carrusel de imágenes -->
     <div class="carousel-container">
       <div class="main-carousel">
         <div class="main-image-container">
           <img
             [src]="getCurrentCategory().images?.[selectedImageIndex]"
-            [alt]="getCurrentCategory()?.title"
+            [alt]="getCurrentCategory()?.title | translate"
             class="main-image"
           />
 
-          <!-- Información superpuesta en la imagen principal -->
           <div class="image-info-overlay">
-            <div class="image-title">{{ getCurrentCategory().imageNames[selectedImageIndex] }}</div>
-            <button class="btn" (click)="explorarServicio()">EXPLORAR</button>
+            <div class="image-title">
+              {{ getCurrentCategory().imageNames[selectedImageIndex] | translate }}
+            </div>
+            <button class="btn" (click)="explorarServicio()">
+              {{ 'ACTIVITIES.EXPLORE' | translate }}
+            </button>
           </div>
 
           <div class="thumbnail-container">
@@ -42,7 +46,7 @@
             >
               <img
                 [src]="image"
-                [alt]="getCurrentCategory().title + ' ' + (i + 1)"
+                [alt]="(getCurrentCategory().title | translate) + ' ' + (i + 1)"
                 class="thumbnail-image"
               />
             </div>
@@ -50,7 +54,5 @@
         </div>
       </div>
     </div>
-
-    <!-- Panel de información debajo del carrusel -->
   </div>
 </section>

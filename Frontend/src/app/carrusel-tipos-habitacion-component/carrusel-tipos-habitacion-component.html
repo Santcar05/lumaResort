@@ -1,8 +1,7 @@
-<!-- room-types.component.html -->
 <section class="room-types-section">
   <div class="background-overlay">
     <div class="container">
-      <h2 class="section-title">Tipos de Habitaciones</h2>
+      <h2 class="section-title">{{ 'ROOM_TYPES.TITLE' | translate }}</h2>
 
       <div class="rooms-carousel">
         <!-- Contenedor principal del carrusel -->
@@ -62,8 +61,12 @@
                       }}</span>
                     </div>
                     <div class="room-price">
-                      <span class="price">Desde {{ room.price }}/noche</span>
-                      <button class="book-btn">Reservar ahora</button>
+                      <span class="price"
+                        >{{ 'ROOM_TYPES.FROM' | translate }} {{ room.price }}/{{
+                          'ROOM_TYPES.PER_NIGHT' | translate
+                        }}</span
+                      >
+                      <button class="book-btn">{{ 'ROOM_TYPES.BOOK_NOW' | translate }}</button>
                     </div>
                   </div>
                 </div>

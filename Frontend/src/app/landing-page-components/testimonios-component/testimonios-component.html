@@ -1,8 +1,11 @@
 <section class="testimonials-section">
   <div class="testimonials-container">
     <div class="testimonials-header">
-      <h2 class="section-title">TESTIMONIOS</h2>
-      <h3 class="section-subtitle">Lo que nuestros huéspedes <span>dicen de nosotros</span></h3>
+      <h2 class="section-title">{{ 'TESTIMONIALS.TITLE' | translate }}</h2>
+      <h3 class="section-subtitle">
+        {{ 'TESTIMONIALS.SUBTITLE_PART1' | translate }}
+        <span>{{ 'TESTIMONIALS.SUBTITLE_PART2' | translate }}</span>
+      </h3>
       <div class="title-divider"></div>
     </div>
 
@@ -34,7 +37,7 @@
               (click)="selectTestimonial(i)"
             >
               <div class="testimonial-content">
-                <div class="quote-icon">“</div>
+                <div class="quote-icon">"</div>
                 <p class="testimonial-text">{{ testimonial.text }}</p>
                 <div class="testimonial-author">
                   <img [src]="testimonial.avatar" [alt]="testimonial.name" class="author-avatar" />

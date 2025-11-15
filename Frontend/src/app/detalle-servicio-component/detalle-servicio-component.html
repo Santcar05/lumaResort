@@ -5,7 +5,9 @@
     <div class="error-content">
       <div class="error-icon">⚠</div>
       <h2>{{ errorMsg }}</h2>
-      <button (click)="volverListado()" class="btn-back">Volver al listado</button>
+      <button (click)="volverListado()" class="btn-back">
+        {{ 'SERVICE_DETAIL.BACK_TO_LIST' | translate }}
+      </button>
     </div>
   </div>
 
@@ -13,8 +15,12 @@
   <div *ngIf="servicio" class="service-detail">
     <!-- Hero Section -->
     <div class="hero-section">
-      <button class="back-floating" (click)="volverListado()" title="Volver">
-        <span class="back-icon">←</span> Volver
+      <button
+        class="back-floating"
+        (click)="volverListado()"
+        title="{{ 'SERVICE_DETAIL.BACK' | translate }}"
+      >
+        <span class="back-icon">←</span> {{ 'SERVICE_DETAIL.BACK' | translate }}
       </button>
 
       <div class="hero-content">
@@ -31,7 +37,7 @@
 
             <!-- Price Badge -->
             <div class="price-badge">
-              <span class="price-from">Desde</span>
+              <span class="price-from">{{ 'SERVICE_DETAIL.FROM' | translate }}</span>
               <span class="price-value">
                 {{ servicio.precio | currency : 'COP' : 'symbol' : '1.0-0' }}
               </span>
@@ -40,31 +46,13 @@
             <!-- Reserve Floating Button -->
             <button class="reserve-floating" (click)="reservar()">
               <span class="reserve-icon">✓</span>
-              Reservar Ahora
+              {{ 'SERVICE_DETAIL.RESERVE_NOW' | translate }}
             </button>
           </div>
 
-          <!-- Thumbnails -->
-          <!--
-          <div class="thumbnails-wrapper" *ngIf="servicio.imagenURL">
-            <div
-              class="thumbnail-item"
-              *ngFor="let img of [servicio.imagenURL]; let i = index"
-              [class.active]="selectedImage === img"
-              (click)="selectedImage = img"
-            >
-              <img
-                [src]="img"
-                [alt]="servicio.nombre + ' thumbnail ' + (i + 1)"
-                (error)="onImageError($event)"
-              />
-              <div class="thumbnail-overlay"></div>
-            </div>
-          </div>
-          -->
           <!-- Comments Section -->
           <div class="comments-section">
-            <h3 class="section-heading">Opiniones Destacadas</h3>
+            <h3 class="section-heading">{{ 'SERVICE_DETAIL.FEATURED_REVIEWS' | translate }}</h3>
 
             <div class="comments-grid" *ngIf="servicio.comentarios?.length; else noComments">
               <div class="comment-card" *ngFor="let c of servicio.comentarios">
@@ -88,7 +76,7 @@
               <div class="no-comments-state">
                 <div class="no-comments-icon">💬</div>
                 <p class="no-comments-text">
-                  Aún no hay opiniones. Sé el primero en reservar y compartir tu experiencia.
+                  {{ 'SERVICE_DETAIL.NO_REVIEWS_YET' | translate }}
                 </p>
               </div>
             </ng-template>
@@ -114,7 +102,10 @@
             <div class="rating-info">
               <span class="rating-score">{{ promedioCalificacion() }}</span>
               <span class="rating-separator">·</span>
-              <span class="rating-count">{{ servicio.comentarios?.length || 0 }} opiniones</span>
+              <span class="rating-count"
+                >{{ servicio.comentarios?.length || 0 }}
+                {{ 'SERVICE_DETAIL.REVIEWS' | translate }}</span
+              >
             </div>
           </div>
 
@@ -122,40 +113,48 @@
           <div class="action-buttons">
             <button class="btn-primary" (click)="reservar()">
               <span class="btn-icon">✓</span>
-              Reservar Experiencia
+              {{ 'SERVICE_DETAIL.RESERVE_EXPERIENCE' | translate }}
             </button>
-            <button class="btn-secondary" (click)="volverListado()">Explorar Más</button>
+            <button class="btn-secondary" (click)="volverListado()">
+              {{ 'SERVICE_DETAIL.EXPLORE_MORE' | translate }}
+            </button>
           </div>
 
           <!-- Description -->
           <div class="description-section">
-            <h3 class="section-heading">Descripción</h3>
+            <h3 class="section-heading">{{ 'SERVICE_DETAIL.DESCRIPTION' | translate }}</h3>
             <div class="description-content" [innerHTML]="servicio.descripcion"></div>
           </div>
 
           <!-- Features -->
           <div class="features-section">
-            <h3 class="section-heading">Detalles</h3>
+            <h3 class="section-heading">{{ 'SERVICE_DETAIL.DETAILS' | translate }}</h3>
             <ul class="features-list">
               <li class="feature-item">
                 <span class="feature-icon">🕐</span>
                 <div class="feature-content">
-                  <span class="feature-label">Duración:</span>
-                  <span class="feature-value">2 horas aprox.</span>
+                  <span class="feature-label">{{ 'SERVICE_DETAIL.DURATION' | translate }}:</span>
+                  <span class="feature-value">{{
+                    'SERVICE_DETAIL.DURATION_VALUE' | translate
+                  }}</span>
                 </div>
               </li>
               <li class="feature-item">
                 <span class="feature-icon">🌍</span>
                 <div class="feature-content">
-                  <span class="feature-label">Idioma:</span>
-                  <span class="feature-value">Español / English</span>
+                  <span class="feature-label">{{ 'SERVICE_DETAIL.LANGUAGE' | translate }}:</span>
+                  <span class="feature-value">{{
+                    'SERVICE_DETAIL.LANGUAGE_VALUE' | translate
+                  }}</span>
                 </div>
               </li>
               <li class="feature-item">
                 <span class="feature-icon">👥</span>
                 <div class="feature-content">
-                  <span class="feature-label">Capacidad:</span>
-                  <span class="feature-value">Máx. 6 personas</span>
+                  <span class="feature-label">{{ 'SERVICE_DETAIL.CAPACITY' | translate }}:</span>
+                  <span class="feature-value">{{
+                    'SERVICE_DETAIL.CAPACITY_VALUE' | translate
+                  }}</span>
                 </div>
               </li>
             </ul>

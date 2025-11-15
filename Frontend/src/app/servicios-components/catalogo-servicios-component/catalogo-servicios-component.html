@@ -9,16 +9,27 @@
 
     <p>{{ 'SERVICES.DESCRIPTION' | translate }}</p>
 
-    <div *ngIf="loading" class="loading">Cargando servicios...</div>
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading">{{ 'SERVICES.LOADING' | translate }}</div>
+
+    <!-- Error State -->
     <div *ngIf="error" class="error">{{ error }}</div>
 
+    <!-- Grid de Servicios -->
     <div class="servicios-grid" *ngIf="!loading && !error">
       <!-- Repeatable cards (solo los primeros 5) -->
       <div class="servicio-card" *ngFor="let card of servicesCards">
-        <h3>{{ card.nombre | translate }}</h3>
-        <p>{{ card.descripcion | translate }}</p>
+        <!-- NO usar | translate en datos de BD -->
+        <h3>{{ card.nombre }}</h3>
+        <p>{{ card.descripcion }}</p>
         <a href="#" class="btn">{{ 'SERVICES.SEE_DETAILS' | translate }}</a>
       </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && !error && servicesCards.length === 0" class="empty-state">
+      <span class="empty-icon">📦</span>
+      <p>{{ 'SERVICES.NO_SERVICES' | translate }}</p>
     </div>
   </div>
 </section>

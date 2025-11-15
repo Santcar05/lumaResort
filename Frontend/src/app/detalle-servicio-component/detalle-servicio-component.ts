@@ -6,12 +6,12 @@ import { Servicio } from '../Models/Servicio';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../generales-components/header-component/header-component';
 import { FooterComponent } from '../generales-components/footer-component/footer-component';
-
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-detalle-servicio-component',
   templateUrl: './detalle-servicio-component.html',
   styleUrls: ['./detalle-servicio-component.css'],
-  imports: [CommonModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, HeaderComponent, FooterComponent, TranslateModule],
   standalone: true,
 })
 export class DetalleServicioComponent implements OnInit {

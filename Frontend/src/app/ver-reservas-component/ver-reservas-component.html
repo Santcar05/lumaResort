@@ -3,51 +3,60 @@
 <div class="reservas-container">
   <!-- Header -->
   <div class="header-section">
-    <button class="back-btn" (click)="volver()"><span class="back-icon">←</span> Volver</button>
+    <button class="back-btn" (click)="volver()">
+      <span class="back-icon">←</span> {{ 'MY_BOOKINGS.BACK' | translate }}
+    </button>
 
     <div class="header-content">
-      <span class="section-label">MIS RESERVAS</span>
-      <h1 class="main-title">Historial de <span class="highlight">Reservas</span></h1>
-      <p class="subtitle">Consulta todas tus reservas pasadas, activas o futuras</p>
+      <span class="section-label">{{ 'MY_BOOKINGS.SECTION_LABEL' | translate }}</span>
+      <h1 class="main-title">
+        {{ 'MY_BOOKINGS.TITLE_PART1' | translate }}
+        <span class="highlight">{{ 'MY_BOOKINGS.TITLE_PART2' | translate }}</span>
+      </h1>
+      <p class="subtitle">{{ 'MY_BOOKINGS.SUBTITLE' | translate }}</p>
     </div>
   </div>
 
   <!-- Loading -->
   <div *ngIf="loading" class="loading-state">
     <div class="loading-spinner"></div>
-    <p class="loading-text">Cargando tus reservas...</p>
+    <p class="loading-text">{{ 'MY_BOOKINGS.LOADING' | translate }}</p>
   </div>
 
   <!-- Error -->
   <div *ngIf="errorMsg && !loading" class="error-state">
     <div class="error-content">
       <div class="error-icon">⚠</div>
-      <h3>Error</h3>
+      <h3>{{ 'MY_BOOKINGS.ERROR_TITLE' | translate }}</h3>
       <p>{{ errorMsg }}</p>
       <button class="btn-retry" (click)="cargarReservas()">
-        <span class="retry-icon">↻</span> Reintentar
+        <span class="retry-icon">↻</span> {{ 'MY_BOOKINGS.RETRY' | translate }}
       </button>
     </div>
   </div>
 
-  <!-- Filtro de Reservas (basado en reserva-component) -->
+  <!-- Filtro de Reservas -->
   <div *ngIf="!loading && !errorMsg" class="filtro-section">
     <div class="form-section-group">
-      <h3 class="section-subtitle">Filtrar por Estado</h3>
+      <h3 class="section-subtitle">{{ 'MY_BOOKINGS.FILTER_BY_STATUS' | translate }}</h3>
       <div class="form-group">
         <label class="form-label">
           <span class="label-icon">🏷️</span>
-          Selecciona el estado que deseas ver
+          {{ 'MY_BOOKINGS.SELECT_STATUS' | translate }}
         </label>
         <select class="form-input" [(ngModel)]="filtroEstado" (change)="aplicarFiltro()">
-          <option value="TODAS">Todas</option>
-          <option value="CONFIRMADA">Confirmada</option>
-          <option value="CANCELADA">Cancelada</option>
-          <option value="FINALIZADA">Finalizada</option>
+          <option value="TODAS">{{ 'MY_BOOKINGS.STATUS_ALL' | translate }}</option>
+          <option value="CONFIRMADA">{{ 'MY_BOOKINGS.STATUS_CONFIRMED' | translate }}</option>
+          <option value="CANCELADA">{{ 'MY_BOOKINGS.STATUS_CANCELLED' | translate }}</option>
+          <option value="FINALIZADA">{{ 'MY_BOOKINGS.STATUS_COMPLETED' | translate }}</option>
         </select>
       </div>
       <div class="filtro-info">
-        <p>Mostrando {{ reservasFiltradas.length }} de {{ reservas.length }} reservas</p>
+        <p>
+          {{ 'MY_BOOKINGS.SHOWING' | translate }} {{ reservasFiltradas.length }}
+          {{ 'MY_BOOKINGS.OF' | translate }} {{ reservas.length }}
+          {{ 'MY_BOOKINGS.BOOKINGS' | translate }}
+        </p>
       </div>
     </div>
   </div>
@@ -56,7 +65,7 @@
   <div *ngIf="!loading && !errorMsg" class="reservas-lista">
     <div *ngIf="reservas.length === 0" class="empty-message">
       <span class="empty-icon">🛏️</span>
-      No tienes reservas registradas.
+      {{ 'MY_BOOKINGS.NO_BOOKINGS' | translate }}
     </div>
 
     <div class="reservas-grid" *ngIf="reservas.length > 0">
@@ -70,24 +79,34 @@
 
         <div class="reserva-body">
           <h3 class="reserva-habitacion">
-            Habitación {{ r.habitacion?.numero }} - {{ r.habitacion?.tipoHabitacion?.nombre }}
+            {{ 'MY_BOOKINGS.ROOM' | translate }} {{ r.habitacion?.numero }} -
+            {{ r.habitacion?.tipoHabitacion?.nombre }}
           </h3>
           <p class="reserva-fechas">
             <span>📅 {{ formatoFecha(r.fechaInicio) }} → {{ formatoFecha(r.fechaFin) }}</span>
           </p>
           <p class="reserva-personas">
-            👥 {{ r.cantidadPersonas }} {{ r.cantidadPersonas === 1 ? 'persona' : 'personas' }}
+            👥 {{ r.cantidadPersonas }}
+            {{
+              r.cantidadPersonas === 1
+                ? ('MY_BOOKINGS.PERSON' | translate)
+                : ('MY_BOOKINGS.PEOPLE' | translate)
+            }}
           </p>
           <p class="reserva-servicios" *ngIf="r.servicios?.length">
-            ✨ {{ r.servicios.length }} servicio{{ r.servicios.length > 1 ? 's' : '' }} incluido{{
-              r.servicios.length > 1 ? 's' : ''
+            ✨ {{ r.servicios.length }}
+            {{
+              r.servicios.length > 1
+                ? ('MY_BOOKINGS.SERVICES' | translate)
+                : ('MY_BOOKINGS.SERVICE' | translate)
             }}
+            {{ 'MY_BOOKINGS.INCLUDED' | translate }}
           </p>
         </div>
 
         <div class="reserva-footer">
           <span class="reserva-total">
-            💰 Total estimado:
+            💰 {{ 'MY_BOOKINGS.ESTIMATED_TOTAL' | translate }}:
             <strong>{{
               r.habitacion?.precioPorNoche || 0 | currency : 'COP' : 'symbol' : '1.0-0'
             }}</strong>
@@ -100,7 +119,7 @@
               class="btn-actualizar"
               (click)="abrirCalendarioActualizar(r)"
             >
-              ✏️ Actualizar reserva
+              ✏️ {{ 'MY_BOOKINGS.UPDATE_BOOKING' | translate }}
             </button>
 
             <!-- Botón Cancelar Reserva -->
@@ -109,7 +128,7 @@
               class="btn-cancelar"
               (click)="cancelarReserva(r.idReserva)"
             >
-              ❌ Cancelar reserva
+              ❌ {{ 'MY_BOOKINGS.CANCEL_BOOKING' | translate }}
             </button>
           </div>
         </div>
@@ -125,31 +144,34 @@
   >
     <div class="modal-content actualizar-modal" (click)="$event.stopPropagation()">
       <div class="modal-header">
-        <h3 class="modal-title">📅 Actualizar Fechas de Reserva</h3>
+        <h3 class="modal-title">📅 {{ 'MY_BOOKINGS.UPDATE_DATES_TITLE' | translate }}</h3>
         <button class="modal-close" (click)="cerrarCalendarioActualizar()">×</button>
       </div>
 
       <div class="modal-body" *ngIf="reservaAActualizar">
         <div class="reserva-info">
           <p>
-            <strong>Reserva #{{ reservaAActualizar.idReserva }}</strong>
+            <strong
+              >{{ 'MY_BOOKINGS.BOOKING' | translate }} #{{ reservaAActualizar.idReserva }}</strong
+            >
           </p>
           <p>
-            Habitación {{ reservaAActualizar.habitacion?.numero }} -
+            {{ 'MY_BOOKINGS.ROOM' | translate }} {{ reservaAActualizar.habitacion?.numero }} -
             {{ reservaAActualizar.habitacion?.tipoHabitacion?.nombre }}
           </p>
           <p class="fechas-anteriores">
-            Fechas anteriores: {{ formatoFecha(reservaAActualizar.fechaInicio) }} -
+            {{ 'MY_BOOKINGS.PREVIOUS_DATES' | translate }}:
+            {{ formatoFecha(reservaAActualizar.fechaInicio) }} -
             {{ formatoFecha(reservaAActualizar.fechaFin) }}
           </p>
         </div>
 
         <div class="calendario-actualizar">
-          <h4>Selecciona las nuevas fechas:</h4>
+          <h4>{{ 'MY_BOOKINGS.SELECT_NEW_DATES' | translate }}:</h4>
 
           <div class="date-grid">
             <div class="form-group">
-              <label class="form-label">Nueva fecha de entrada</label>
+              <label class="form-label">{{ 'MY_BOOKINGS.NEW_CHECK_IN' | translate }}</label>
               <input
                 type="date"
                 class="form-input"
@@ -160,7 +182,7 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label">Nueva fecha de salida</label>
+              <label class="form-label">{{ 'MY_BOOKINGS.NEW_CHECK_OUT' | translate }}</label>
               <input
                 type="date"
                 class="form-input"
@@ -173,8 +195,13 @@
 
           <div class="info-badge" *ngIf="diasEstanciaActualizar > 0">
             <span class="info-icon">🌙</span>
-            {{ diasEstanciaActualizar }} {{ diasEstanciaActualizar === 1 ? 'noche' : 'noches' }} de
-            estadía
+            {{ diasEstanciaActualizar }}
+            {{
+              diasEstanciaActualizar === 1
+                ? ('MY_BOOKINGS.NIGHT' | translate)
+                : ('MY_BOOKINGS.NIGHTS' | translate)
+            }}
+            {{ 'MY_BOOKINGS.STAY' | translate }}
           </div>
         </div>
       </div>
@@ -185,7 +212,7 @@
           (click)="cerrarCalendarioActualizar()"
           [disabled]="procesandoActualizacion"
         >
-          Cancelar
+          {{ 'MY_BOOKINGS.CANCEL' | translate }}
         </button>
         <button
           class="btn-actualizar-modal"
@@ -198,7 +225,11 @@
           "
         >
           <span class="loading-mini" *ngIf="procesandoActualizacion"></span>
-          {{ procesandoActualizacion ? 'Actualizando...' : 'Confirmar Cambios' }}
+          {{
+            procesandoActualizacion
+              ? ('MY_BOOKINGS.UPDATING' | translate)
+              : ('MY_BOOKINGS.CONFIRM_CHANGES' | translate)
+          }}
         </button>
       </div>
     </div>

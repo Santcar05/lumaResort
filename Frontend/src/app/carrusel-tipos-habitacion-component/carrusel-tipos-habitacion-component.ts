@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { TipoHabitacionService } from '../service/tipo-habitacion';
 import { TipoHabitacion } from '../Models/TipoHabitacion';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-carrusel-tipos-habitacion-component',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './carrusel-tipos-habitacion-component.html',
   styleUrl: './carrusel-tipos-habitacion-component.css',
 })

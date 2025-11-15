@@ -7,11 +7,11 @@ import { FormsModule } from '@angular/forms';
 import { Servicio } from '../Models/Servicio';
 import { HeaderComponent } from '../generales-components/header-component/header-component';
 import { FooterComponent } from '../generales-components/footer-component/footer-component';
-
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-lista-servicios',
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent, TranslateModule],
   templateUrl: './lista-servicios-component.html',
   styleUrls: ['./lista-servicios-component.css'],
 })

@@ -4,15 +4,18 @@
   <div class="header-section">
     <div class="header-content">
       <div class="title-group">
-        <span class="section-label">NUESTROS SERVICIOS</span>
-        <h1 class="main-title">Experiencias <span class="highlight">Exclusivas</span></h1>
-        <p class="subtitle">Descubre nuestra selección premium de servicios diseñados para ti</p>
+        <span class="section-label">{{ 'SERVICES_PAGE.SECTION_LABEL' | translate }}</span>
+        <h1 class="main-title">
+          {{ 'SERVICES_PAGE.TITLE_PART1' | translate }}
+          <span class="highlight">{{ 'SERVICES_PAGE.TITLE_PART2' | translate }}</span>
+        </h1>
+        <p class="subtitle">{{ 'SERVICES_PAGE.SUBTITLE' | translate }}</p>
       </div>
 
       <div class="actions-group">
         <button class="btn-refresh" (click)="cargarServicios()" [disabled]="loading">
           <span class="refresh-icon">↻</span>
-          Actualizar
+          {{ 'SERVICES_PAGE.REFRESH' | translate }}
         </button>
       </div>
     </div>
@@ -21,18 +24,18 @@
   <!-- Loading State -->
   <div *ngIf="loading" class="loading-state">
     <div class="loading-spinner"></div>
-    <p class="loading-text">Cargando servicios...</p>
+    <p class="loading-text">{{ 'SERVICES_PAGE.LOADING' | translate }}</p>
   </div>
 
   <!-- Error State -->
   <div *ngIf="errorMsg && !loading" class="error-state">
     <div class="error-content">
       <div class="error-icon">⚠</div>
-      <h3>Error al cargar servicios</h3>
+      <h3>{{ 'SERVICES_PAGE.ERROR_TITLE' | translate }}</h3>
       <p>{{ errorMsg }}</p>
       <button class="btn-retry" (click)="cargarServicios()">
         <span class="retry-icon">↻</span>
-        Reintentar
+        {{ 'SERVICES_PAGE.RETRY' | translate }}
       </button>
     </div>
   </div>
@@ -41,8 +44,8 @@
   <div *ngIf="!loading && !errorMsg && servicios.length === 0" class="empty-state">
     <div class="empty-content">
       <div class="empty-icon">📦</div>
-      <h3>No hay servicios disponibles</h3>
-      <p>Aún no se han registrado servicios en el sistema</p>
+      <h3>{{ 'SERVICES_PAGE.EMPTY_TITLE' | translate }}</h3>
+      <p>{{ 'SERVICES_PAGE.EMPTY_MESSAGE' | translate }}</p>
     </div>
   </div>
 
@@ -53,23 +56,23 @@
       <input
         type="text"
         class="search-input"
-        placeholder="Buscar servicios..."
+        placeholder="{{ 'SERVICES_PAGE.SEARCH_PLACEHOLDER' | translate }}"
         [(ngModel)]="filtroTexto"
         (input)="aplicarFiltros()"
       />
     </div>
 
     <div class="filter-group">
-      <label class="filter-label">Filtrar por tipo:</label>
+      <label class="filter-label">{{ 'SERVICES_PAGE.FILTER_BY_TYPE' | translate }}:</label>
       <select class="filter-select" [(ngModel)]="filtroTipo" (change)="aplicarFiltros()">
-        <option value="">Todos los tipos</option>
+        <option value="">{{ 'SERVICES_PAGE.ALL_TYPES' | translate }}</option>
         <option *ngFor="let tipo of tiposUnicos" [value]="tipo">{{ tipo }}</option>
       </select>
     </div>
 
     <div class="results-count">
       <span class="count-number">{{ serviciosFiltrados.length }}</span>
-      <span class="count-text">servicio(s) encontrado(s)</span>
+      <span class="count-text">{{ 'SERVICES_PAGE.SERVICES_FOUND' | translate }}</span>
     </div>
   </div>
 
@@ -79,14 +82,14 @@
       <div class="stat-icon">📊</div>
       <div class="stat-content">
         <span class="stat-value">{{ servicios.length }}</span>
-        <span class="stat-label">Total Servicios</span>
+        <span class="stat-label">{{ 'SERVICES_PAGE.TOTAL_SERVICES' | translate }}</span>
       </div>
     </div>
     <div class="stat-card">
       <div class="stat-icon">⭐</div>
       <div class="stat-content">
         <span class="stat-value">{{ calcularPromedioGlobal() }}</span>
-        <span class="stat-label">Rating Promedio</span>
+        <span class="stat-label">{{ 'SERVICES_PAGE.AVG_RATING' | translate }}</span>
       </div>
     </div>
     <div class="stat-card">
@@ -95,7 +98,7 @@
         <span class="stat-value">{{
           calcularPrecioPromedio() | currency : 'COP' : 'symbol' : '1.0-0'
         }}</span>
-        <span class="stat-label">Precio Promedio</span>
+        <span class="stat-label">{{ 'SERVICES_PAGE.AVG_PRICE' | translate }}</span>
       </div>
     </div>
   </div>
@@ -105,10 +108,10 @@
       <table class="services-table">
         <thead>
           <tr>
-            <th class="th-image">Imagen</th>
+            <th class="th-image">{{ 'SERVICES_PAGE.TABLE_IMAGE' | translate }}</th>
             <th class="th-name" (click)="ordenarPor('nombre')">
               <div class="th-content">
-                Nombre
+                {{ 'SERVICES_PAGE.TABLE_NAME' | translate }}
                 <span class="sort-icon" *ngIf="columnaOrden === 'nombre'">
                   {{ ordenAscendente ? '▲' : '▼' }}
                 </span>
@@ -116,7 +119,7 @@
             </th>
             <th class="th-type" (click)="ordenarPor('tipo')">
               <div class="th-content">
-                Tipo
+                {{ 'SERVICES_PAGE.TABLE_TYPE' | translate }}
                 <span class="sort-icon" *ngIf="columnaOrden === 'tipo'">
                   {{ ordenAscendente ? '▲' : '▼' }}
                 </span>
@@ -124,15 +127,15 @@
             </th>
             <th class="th-price" (click)="ordenarPor('precio')">
               <div class="th-content">
-                Precio
+                {{ 'SERVICES_PAGE.TABLE_PRICE' | translate }}
                 <span class="sort-icon" *ngIf="columnaOrden === 'precio'">
                   {{ ordenAscendente ? '▲' : '▼' }}
                 </span>
               </div>
             </th>
-            <th class="th-rating">Rating</th>
-            <th class="th-comments">Opiniones</th>
-            <th class="th-actions">Acciones</th>
+            <th class="th-rating">{{ 'SERVICES_PAGE.TABLE_RATING' | translate }}</th>
+            <th class="th-comments">{{ 'SERVICES_PAGE.TABLE_REVIEWS' | translate }}</th>
+            <th class="th-actions">{{ 'SERVICES_PAGE.TABLE_ACTIONS' | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -182,18 +185,18 @@
                 <button
                   class="btn-view"
                   (click)="verDetalle(servicio.idServicio)"
-                  title="Ver detalles"
+                  title="{{ 'SERVICES_PAGE.BTN_VIEW' | translate }}"
                 >
                   <span class="btn-icon">👁</span>
-                  Ver
+                  {{ 'SERVICES_PAGE.BTN_VIEW' | translate }}
                 </button>
                 <button
                   class="btn-reserve"
                   (click)="reservar(servicio.idServicio)"
-                  title="Reservar"
+                  title="{{ 'SERVICES_PAGE.BTN_RESERVE' | translate }}"
                 >
                   <span class="btn-icon">✓</span>
-                  Reservar
+                  {{ 'SERVICES_PAGE.BTN_RESERVE' | translate }}
                 </button>
               </div>
             </td>

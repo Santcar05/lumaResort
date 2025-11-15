@@ -31,15 +31,14 @@ export class CatalogoServiciosComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    // Opción A: pedir todos y limitar en cliente (funciona siempre)
     this.serviciosService
       .findAll()
       .pipe(
-        // coger solo los primeros maxToShow
+        // Coger solo los primeros maxToShow
         map((arr) => (Array.isArray(arr) ? arr.slice(0, this.maxToShow) : [])),
         catchError((err) => {
           this.error = 'Error al cargar servicios';
-          console.error(err);
+          console.error('Error al obtener servicios:', err);
           return of([]);
         })
       )
@@ -47,9 +46,5 @@ export class CatalogoServiciosComponent implements OnInit {
         this.servicesCards = result;
         this.loading = false;
       });
-
-    // Opción B (alternativa): si tu backend soporta límite por query, puedes usar:
-    // this.serviciosService.findTop(this.maxToShow).subscribe(...)
-    // y comentar la llamada anterior.
   }
 }

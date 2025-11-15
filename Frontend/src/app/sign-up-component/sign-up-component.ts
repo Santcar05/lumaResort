@@ -6,11 +6,11 @@ import { HeaderComponent } from '../generales-components/header-component/header
 import { FooterComponent } from '../generales-components/footer-component/footer-component';
 import { RegisterRequest } from '../Models/RegisterRequest';
 import { AuthService } from '../service/auth/auth.service';
-
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-sign-up-component',
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent],
+  imports: [CommonModule, FormsModule, HeaderComponent, TranslateModule],
   templateUrl: './sign-up-component.html',
   styleUrls: ['./sign-up-component.css'],
 })
@@ -21,7 +21,7 @@ export class SignUpComponent {
     correo: '',
     contrasena: '',
     cedula: '',
-    telefono: ''
+    telefono: '',
   };
 
   loading = false;

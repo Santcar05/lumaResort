@@ -1,13 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { catchError, of } from 'rxjs';
+import { catchError, of, Subscription, forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Servicio } from '../Models/Servicio';
 import { HeaderComponent } from '../generales-components/header-component/header-component';
 import { FooterComponent } from '../generales-components/footer-component/footer-component';
-import { TranslateModule } from '@ngx-translate/core';
+import { AutoTranslateService } from '../service/translation/auto-translate-service';
+
+interface TranslatedService {
+  nombre: string;
+  descripcion: string;
+  tipo: string;
+}
+
 @Component({
   selector: 'app-lista-servicios',
   standalone: true,
@@ -15,11 +23,15 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './lista-servicios-component.html',
   styleUrls: ['./lista-servicios-component.css'],
 })
-export class ListaServiciosComponent implements OnInit {
+export class ListaServiciosComponent implements OnInit, OnDestroy {
   servicios: Servicio[] = [];
   serviciosFiltrados: Servicio[] = [];
   loading = true;
+  translating = false;
   errorMsg = '';
+
+  // Mapa de traducciones
+  translatedServices: Map<number, TranslatedService> = new Map();
 
   // Filtros
   filtroTexto = '';
@@ -31,11 +43,26 @@ export class ListaServiciosComponent implements OnInit {
   ordenAscendente = true;
 
   private baseUrl = 'http://localhost:8080/servicios';
+  private langChangeSubscription?: Subscription;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private translate: TranslateService,
+    private autoTranslate: AutoTranslateService
+  ) {}
 
   ngOnInit(): void {
     this.cargarServicios();
+
+    // Suscribirse a cambios de idioma
+    this.langChangeSubscription = this.translate.onLangChange.subscribe((event) => {
+      this.translateAllServices(event.lang);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.langChangeSubscription?.unsubscribe();
   }
 
   /**
@@ -61,7 +88,100 @@ export class ListaServiciosComponent implements OnInit {
         this.serviciosFiltrados = [...data];
         this.extraerTiposUnicos();
         this.loading = false;
+
+        // Traducir al idioma actual
+        const currentLang = this.translate.currentLang ?? this.translate.getDefaultLang() ?? 'es';
+        this.translateAllServices(currentLang);
       });
+  }
+
+  /**
+   * Traduce todos los servicios al idioma especificado
+   */
+  private translateAllServices(targetLang: string): void {
+    if (targetLang === 'es') {
+      this.translatedServices.clear();
+      return;
+    }
+
+    this.translating = true;
+
+    // Traducir cada servicio (nombre, descripción y tipo)
+    const translations$ = this.servicios.map((servicio) => {
+      return forkJoin({
+        nombre: this.autoTranslate.translate(servicio.nombre, targetLang),
+        descripcion: this.autoTranslate.translate(servicio.descripcion, targetLang),
+        tipo: this.autoTranslate.translate(servicio.tipo, targetLang),
+      });
+    });
+
+    // Ejecutar todas las traducciones en paralelo
+    forkJoin(translations$).subscribe({
+      next: (results) => {
+        results.forEach((translation, index) => {
+          const servicioId = this.servicios[index].idServicio;
+          if (servicioId) {
+            this.translatedServices.set(servicioId, translation);
+          }
+        });
+        this.translating = false;
+      },
+      error: (err) => {
+        console.error('Error traduciendo servicios:', err);
+        this.translating = false;
+      },
+    });
+  }
+
+  /**
+   * Obtiene el nombre traducido del servicio
+   */
+  getTranslatedName(servicio: Servicio): string {
+    const currentLang = this.translate.currentLang || this.translate.getDefaultLang();
+    if (currentLang === 'es') {
+      return servicio.nombre;
+    }
+    return this.translatedServices.get(servicio.idServicio!)?.nombre || servicio.nombre;
+  }
+
+  /**
+   * Obtiene el tipo traducido del servicio
+   */
+  getTranslatedType(servicio: Servicio): string {
+    const currentLang = this.translate.currentLang || this.translate.getDefaultLang();
+    if (currentLang === 'es') {
+      return servicio.tipo;
+    }
+    return this.translatedServices.get(servicio.idServicio!)?.tipo || servicio.tipo;
+  }
+
+  /**
+   * Obtiene la descripción traducida del servicio
+   */
+  getTranslatedDescription(servicio: Servicio): string {
+    const currentLang = this.translate.currentLang || this.translate.getDefaultLang();
+    if (currentLang === 'es') {
+      return servicio.descripcion;
+    }
+    return this.translatedServices.get(servicio.idServicio!)?.descripcion || servicio.descripcion;
+  }
+
+  /**
+   * Obtener descripción corta traducida (primeros 100 caracteres)
+   */
+  obtenerDescripcionCortaTraducida(servicio: Servicio): string {
+    const descripcionCompleta = this.getTranslatedDescription(servicio);
+
+    if (!descripcionCompleta) return '';
+
+    // Eliminar etiquetas HTML
+    const textoLimpio = descripcionCompleta.replace(/<[^>]*>/g, '');
+
+    if (textoLimpio.length <= 100) {
+      return textoLimpio;
+    }
+
+    return textoLimpio.substring(0, 100) + '...';
   }
 
   /**
@@ -78,14 +198,14 @@ export class ListaServiciosComponent implements OnInit {
   aplicarFiltros(): void {
     let resultado = [...this.servicios];
 
-    // Filtro por texto (nombre o descripción)
+    // Filtro por texto (nombre o descripción traducidos)
     if (this.filtroTexto.trim()) {
       const textoLower = this.filtroTexto.toLowerCase().trim();
-      resultado = resultado.filter(
-        (s) =>
-          s.nombre?.toLowerCase().includes(textoLower) ||
-          s.descripcion?.toLowerCase().includes(textoLower)
-      );
+      resultado = resultado.filter((s) => {
+        const nombreTraducido = this.getTranslatedName(s).toLowerCase();
+        const descripcionTraducida = this.getTranslatedDescription(s).toLowerCase();
+        return nombreTraducido.includes(textoLower) || descripcionTraducida.includes(textoLower);
+      });
     }
 
     // Filtro por tipo
@@ -116,7 +236,7 @@ export class ListaServiciosComponent implements OnInit {
   }
 
   /**
-   * Aplicar ordenamiento
+   * Aplicar ordenamiento (usa texto traducido para nombre y tipo)
    */
   private aplicarOrden(): void {
     this.serviciosFiltrados.sort((a, b) => {
@@ -125,12 +245,12 @@ export class ListaServiciosComponent implements OnInit {
 
       switch (this.columnaOrden) {
         case 'nombre':
-          valorA = a.nombre?.toLowerCase() || '';
-          valorB = b.nombre?.toLowerCase() || '';
+          valorA = this.getTranslatedName(a).toLowerCase();
+          valorB = this.getTranslatedName(b).toLowerCase();
           break;
         case 'tipo':
-          valorA = a.tipo?.toLowerCase() || '';
-          valorB = b.tipo?.toLowerCase() || '';
+          valorA = this.getTranslatedType(a).toLowerCase();
+          valorB = this.getTranslatedType(b).toLowerCase();
           break;
         case 'precio':
           valorA = a.precio || 0;
@@ -164,7 +284,6 @@ export class ListaServiciosComponent implements OnInit {
    */
   reservar(idServicio?: number): void {
     if (idServicio) {
-      // Navegar a la página de reserva (ajusta la ruta según tu aplicación)
       this.router.navigate(['/reservar', idServicio]);
     }
   }
@@ -203,12 +322,11 @@ export class ListaServiciosComponent implements OnInit {
   }
 
   /**
-   * Obtener descripción corta (primeros 100 caracteres)
+   * Obtener descripción corta (primeros 100 caracteres) - versión sin traducir
    */
   obtenerDescripcionCorta(descripcion?: string): string {
     if (!descripcion) return '';
 
-    // Eliminar etiquetas HTML
     const textoLimpio = descripcion.replace(/<[^>]*>/g, '');
 
     if (textoLimpio.length <= 100) {

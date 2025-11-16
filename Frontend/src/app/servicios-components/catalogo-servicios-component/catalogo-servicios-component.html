@@ -17,11 +17,10 @@
 
     <!-- Grid de Servicios -->
     <div class="servicios-grid" *ngIf="!loading && !error">
-      <!-- Repeatable cards (solo los primeros 5) -->
       <div class="servicio-card" *ngFor="let card of servicesCards">
-        <!-- NO usar | translate en datos de BD -->
-        <h3>{{ card.nombre }}</h3>
-        <p>{{ card.descripcion }}</p>
+        <!-- Traducción automática en tiempo real -->
+        <h3>{{ getTranslatedName(card) }}</h3>
+        <p>{{ getTranslatedDescription(card) }}</p>
         <a href="#" class="btn">{{ 'SERVICES.SEE_DETAILS' | translate }}</a>
       </div>
     </div>

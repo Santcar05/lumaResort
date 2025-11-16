@@ -90,7 +90,25 @@
             >
               <div class="message-avatar" *ngIf="!message.esUsuario">🤖</div>
               <div class="message-content">
-                <div class="message-bubble" [innerHTML]="formatearMensaje(message.contenido)"></div>
+                <!-- Mensaje de Texto -->
+                <div
+                  *ngIf="message.tipo === 'texto'"
+                  class="message-bubble"
+                  [innerHTML]="formatearMensaje(message.contenido)"
+                ></div>
+
+                <!-- Mensaje con Imagen -->
+                <div *ngIf="message.tipo === 'imagen'" class="message-bubble message-image">
+                  <img [src]="message.archivoUrl" alt="Imagen enviada" class="chat-image" />
+                  <p class="image-caption">{{ message.contenido }}</p>
+                </div>
+
+                <!-- Mensaje con Audio -->
+                <div *ngIf="message.tipo === 'audio'" class="message-bubble message-audio">
+                  <audio [src]="message.archivoUrl" controls class="chat-audio"></audio>
+                  <p class="audio-caption">{{ message.contenido }}</p>
+                </div>
+
                 <div class="message-time">{{ message.timestamp | date : 'HH:mm' }}</div>
               </div>
               <div class="message-avatar" *ngIf="message.esUsuario">👤</div>
@@ -134,16 +152,25 @@
                 class="microphone-btn"
                 (click)="toggleGrabacion()"
                 [class.recording]="grabando"
+                [disabled]="enviando"
               >
-                <span class="mic-icon">🎤</span>
+                <span class="mic-icon">{{ grabando ? '⏹️' : '🎤' }}</span>
                 {{
                   grabando ? ('CHATBOT.STOP_RECORDING' | translate) : ('CHATBOT.RECORD' | translate)
                 }}
               </button>
-              <button class="attachment-btn">
+              <button class="attachment-btn" (click)="abrirSelectorArchivo()" [disabled]="enviando">
                 <span class="attach-icon">📎</span>
                 {{ 'CHATBOT.ATTACH' | translate }}
               </button>
+              <!-- Input oculto para seleccionar archivos -->
+              <input
+                type="file"
+                #fileInput
+                accept="image/*"
+                style="display: none"
+                (change)="onFileSelected($event)"
+              />
             </div>
           </div>
         </div>

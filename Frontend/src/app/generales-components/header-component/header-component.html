@@ -1,9 +1,10 @@
 <header>
   <nav>
     <!-- Menú -->
-    <div class="menu-container" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+    <div class="menu-container">
       <ul>
-        <li class="PrimerLi">
+        <li class="PrimerLi" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+          <!-- BOTÓN MENÚ (funciona igual que antes) -->
           <a (click)="toggleMenu()">{{ 'HEADER.MENU' | translate }}</a>
 
           <ul class="dropdown" [class.show]="menuVisible">
@@ -22,6 +23,7 @@
           </ul>
         </li>
 
+        <!-- BOTÓN INICIO (YA NO TRIGGEREA EL MENÚ) -->
         <li>
           <a routerLink="/">{{ 'HEADER.HOME' | translate }}</a>
         </li>
@@ -37,8 +39,8 @@
     <div>
       <ul>
         <!-- Idiomas -->
-        <li class="PrimerLi" (click)="toggleIdiomas()">
-          <a>{{ 'HEADER.LANGUAGES' | translate }}</a>
+        <li class="PrimerLi">
+          <a (click)="toggleIdiomas()">{{ 'HEADER.LANGUAGES' | translate }}</a>
 
           <ul class="dropdown" [class.show]="idiomasVisible">
             <li>

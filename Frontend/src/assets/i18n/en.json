@@ -31,23 +31,27 @@
     "SUBTITLE": "A unique experience where luxury meets nature",
     "CARD1": {
       "TITLE": "Privileged Location",
-      "DESC": "Enjoy panoramic ocean views from every corner."
+      "DESC": "Enjoy panoramic ocean views from every corner of our resort."
     },
     "CARD2": {
       "TITLE": "Unique Experiences",
-      "DESC": "From world-class spa to aquatic adventures."
+      "DESC": "From world-class spa services to exciting water adventures."
     },
     "CARD3": {
       "TITLE": "Premium Service",
-      "DESC": "Our concierge team is available 24/7."
+      "DESC": "Our team is available to provide you with 24/7 assistance."
     },
     "CARD4": {
       "TITLE": "Luxury Rooms",
-      "DESC": "Each suite offers a private retreat."
+      "DESC": "Each suite offers a private refuge overflowing with comfort."
     },
     "CARD5": {
       "TITLE": "Exceptional Gastronomy",
       "DESC": "Gourmet restaurants with international chefs."
+    },
+    "CARD6": {
+      "TITLE": "Transportation available",
+      "DESC": "Private transfer service to and from the airport."
     },
     "CTA_TEXT": "Ready to live the LumaResort experience?",
     "CTA_BUTTON": "Discover more"

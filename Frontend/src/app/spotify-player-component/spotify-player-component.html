@@ -1,0 +1,11 @@
+<!-- BOTÓN FLOTANTE -->
+<div class="spotify-button" (click)="toggleQR()">
+  <img src="https://m.media-amazon.com/images/I/51rttY7a+9L._h1_.png" alt="Spotify Logo" />
+</div>
+
+<!-- QR (solo aparece al dar click) -->
+<div class="qr-container" *ngIf="showQR" (click)="toggleQR()">
+  <a [href]="playlistUrl" target="_blank">
+    <img class="qr-img" [src]="qrImage" alt="Playlist QR" />
+  </a>
+</div>

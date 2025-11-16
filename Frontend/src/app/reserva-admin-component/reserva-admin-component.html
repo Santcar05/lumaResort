@@ -1,4 +1,5 @@
 <div class="admin-container">
+
   <!-- Notificación flotante -->
   <div
     class="notificacion"
@@ -8,6 +9,7 @@
     {{ mensaje }}
   </div>
 
+  <!-- Header -->
   <div class="header-section">
     <h2 class="titulo">Gestión de Reservas</h2>
     <button class="btn btn-success btn-crear" (click)="abrirModal()">
@@ -15,7 +17,7 @@
     </button>
   </div>
 
-  <!-- Barra de búsqueda optimizada -->
+  <!-- Barra de búsqueda -->
   <div class="filtros-container">
     <div class="filtro-grupo">
       <label class="filtro-label">Buscar por:</label>
@@ -58,71 +60,71 @@
       <span>Lista de Reservas</span>
       <span class="total-count">Total: {{ reservasFiltradas.length }}</span>
     </div>
+
     <div class="card-body">
       <div class="tabla-container">
         <table class="tabla">
           <thead>
             <tr>
-              <th class="col-id">ID</th>
-              <th class="col-cliente">Cliente</th>
-              <th class="col-habitacion">Habitación</th>
-              <th class="col-fecha">Fecha Inicio</th>
-              <th class="col-fecha">Fecha Fin</th>
-              <th class="col-personas">Personas</th>
-              <th class="col-estado">Estado</th>
-              <th class="col-acciones">Acciones</th>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Habitación</th>
+              <th>Fecha Inicio</th>
+              <th>Fecha Fin</th>
+              <th>Personas</th>
+              <th>Estado</th>
+              <th>Acciones</th>
             </tr>
           </thead>
+
           <tbody>
             <tr *ngFor="let reserva of reservasFiltradas" [class.editing]="editando?.idReserva === reserva.idReserva">
-              <td class="col-id">{{ reserva.idReserva }}</td>
+
+              <td>{{ reserva.idReserva }}</td>
 
               <!-- Cliente -->
-              <td class="col-cliente">
+              <td>
                 {{ reserva.usuario.nombre }} {{ reserva.usuario.apellido }}
               </td>
 
               <!-- Habitación -->
-              <td class="col-habitacion">
-                <span class="habitacion-numero">{{ reserva.habitacion.numero }}</span>
+              <td>
+                {{ reserva.habitacion.numero }}
               </td>
 
               <!-- Fecha Inicio -->
-              <td class="col-fecha">
+              <td>
                 <span *ngIf="editando?.idReserva !== reserva.idReserva">
-                  {{ reserva.fechaInicio | date: 'dd/MM/yyyy' }}
+                    {{ reserva.fechaInicio | date:'dd/MM/yyyy' }}
                 </span>
                 <input *ngIf="editando?.idReserva === reserva.idReserva"
-                  type="date"
-                  [(ngModel)]="editando!.fechaInicio"
-                  class="input-inline" />
+                       type="date" [(ngModel)]="editando!.fechaInicio"
+                       class="input-inline"/>
               </td>
 
               <!-- Fecha Fin -->
-              <td class="col-fecha">
+              <td>
                 <span *ngIf="editando?.idReserva !== reserva.idReserva">
-                  {{ reserva.fechaFin | date: 'dd/MM/yyyy' }}
+                    {{ reserva.fechaFin | date:'dd/MM/yyyy' }}
                 </span>
                 <input *ngIf="editando?.idReserva === reserva.idReserva"
-                  type="date"
-                  [(ngModel)]="editando!.fechaFin"
-                  class="input-inline" />
+                       type="date" [(ngModel)]="editando!.fechaFin"
+                       class="input-inline"/>
               </td>
 
               <!-- Personas -->
-              <td class="col-personas">
+              <td>
                 <span *ngIf="editando?.idReserva !== reserva.idReserva">
-                  {{ reserva.cantidadPersonas }} pers.
+                    {{ reserva.cantidadPersonas }} pers.
                 </span>
                 <input *ngIf="editando?.idReserva === reserva.idReserva"
-                  type="number"
-                  min="1"
-                  [(ngModel)]="editando!.cantidadPersonas"
-                  class="input-inline input-small" />
+                       type="number" min="1"
+                       [(ngModel)]="editando!.cantidadPersonas"
+                       class="input-inline input-small"/>
               </td>
 
-              <!-- Estado con badge -->
-              <td class="col-estado">
+              <!-- Estado con badges -->
+              <td>
                 <span class="badge"
                   [ngClass]="{
                     'badge-pendiente': reserva.estado?.toLowerCase() === 'pendiente',
@@ -135,34 +137,28 @@
               </td>
 
               <!-- Acciones -->
-              <td class="col-acciones">
+              <td>
                 <div class="btn-group">
+
                   <ng-container *ngIf="editando?.idReserva !== reserva.idReserva">
                     <button class="btn btn-warning btn-sm btn-icon"
-                      (click)="editarReserva(reserva)"
-                      title="Editar">
-                      ✏️
-                    </button>
+                            (click)="editarReserva(reserva)">✏️</button>
+
                     <button class="btn btn-danger btn-sm btn-icon"
-                      (click)="eliminarReserva(reserva.idReserva)"
-                      title="Eliminar">
-                      🗑️
-                    </button>
+                            (click)="eliminarReserva(reserva.idReserva)">🗑️</button>
                   </ng-container>
+
                   <ng-container *ngIf="editando?.idReserva === reserva.idReserva">
                     <button class="btn btn-success btn-sm btn-icon"
-                      (click)="guardarEdicion()"
-                      title="Guardar">
-                      ✓
-                    </button>
+                            (click)="guardarEdicion()">✓</button>
+
                     <button class="btn btn-secondary btn-sm btn-icon"
-                      (click)="cancelarEdicion()"
-                      title="Cancelar">
-                      ✗
-                    </button>
+                            (click)="cancelarEdicion()">✗</button>
                   </ng-container>
+
                 </div>
               </td>
+
             </tr>
           </tbody>
         </table>
@@ -177,9 +173,12 @@
   <!-- Modal para crear nueva reserva -->
   <div class="modal" *ngIf="modalAbierto">
     <div class="modal-overlay" (click)="cerrarModal()"></div>
+
     <div class="modal-content">
       <h3>Nueva Reserva</h3>
-      <form (ngSubmit)="crearReserva()">
+
+      <form (ngSubmit)="crearReserva()" #reservaForm="ngForm">
+
         <div class="form-group">
           <label>Cliente:</label>
           <select [(ngModel)]="nuevaReserva.usuario" name="usuario" required>
@@ -202,30 +201,26 @@
 
         <div class="form-group">
           <label>Fecha Inicio:</label>
-          <input type="date" [(ngModel)]="nuevaReserva.fechaInicio" name="fechaInicio" required />
+          <input type="date" name="fechaInicio" [(ngModel)]="nuevaReserva.fechaInicio" required />
         </div>
 
         <div class="form-group">
           <label>Fecha Fin:</label>
-          <input type="date" [(ngModel)]="nuevaReserva.fechaFin" name="fechaFin" required />
+          <input type="date" name="fechaFin" [(ngModel)]="nuevaReserva.fechaFin" required />
         </div>
 
         <div class="form-group">
           <label>Cantidad de Personas:</label>
-          <input
-            type="number"
-            min="1"
-            [(ngModel)]="nuevaReserva.cantidadPersonas"
-            name="cantidadPersonas"
-            required
-          />
+          <input type="number" min="1" name="cantidadPersonas" [(ngModel)]="nuevaReserva.cantidadPersonas" required />
         </div>
 
         <div class="modal-buttons">
-          <button type="submit" class="btn btn-success">Crear Reserva</button>
+          <button type="submit" class="btn btn-success" [disabled]="reservaForm.invalid">Crear Reserva</button>
           <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
         </div>
+
       </form>
     </div>
   </div>
+
 </div>

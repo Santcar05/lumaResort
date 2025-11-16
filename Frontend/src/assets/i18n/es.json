@@ -39,15 +39,19 @@
     },
     "CARD3": {
       "TITLE": "Servicio Premium",
-      "DESC": "Nuestro equipo está disponible 24/7."
+      "DESC": "Nuestro equipo está disponible para brindarte servicio 24/7."
     },
     "CARD4": {
       "TITLE": "Habitaciones de Lujo",
-      "DESC": "Cada suite ofrece un refugio privado."
+      "DESC": "Cada suite ofrece un refugio privado que desborda comodidad."
     },
     "CARD5": {
       "TITLE": "Gastronomía Excepcional",
       "DESC": "Restaurantes gourmet con chefs internacionales."
+    },
+    "CARD6": {
+      "TITLE": "Transporte disponible",
+      "DESC": "Servicio privado de traslado desde y hacia el aeropuerto."
     },
     "CTA_TEXT": "¿Listo para vivir la experiencia LumaResort?",
     "CTA_BUTTON": "Descubre más"

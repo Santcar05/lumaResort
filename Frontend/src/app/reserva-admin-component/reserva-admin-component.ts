@@ -1,8 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Reserva } from '../Models/Reserva';
-import { ReservaService } from '../service/reserva/reserva-service';
+
+interface Usuario {
+  idUsuario: number;
+  nombre: string;
+  rol: string;
+}
+
+interface Habitacion {
+  idHabitacion: number;
+  numero: string;
+  precioPorNoche?: number;
+}
+
+interface Reserva {
+  idReserva: number;
+  fechaInicio: string;
+  fechaFin: string;
+  cantidadPersonas: number;
+  estado: string;
+  usuario: Usuario;
+  habitacion: Habitacion;
+  servicios?: any[];
+}
 
 @Component({
   selector: 'app-reserva-admin-component',
@@ -12,88 +33,136 @@ import { ReservaService } from '../service/reserva/reserva-service';
   styleUrls: ['./reserva-admin-component.css'],
 })
 export class ReservaAdminComponent implements OnInit {
-  habitaciones = [
-    { idHabitacion: 1, numero: '101', tipo: 'Suite', precioPorNoche: 300 },
-    { idHabitacion: 2, numero: '102', tipo: 'Doble', precioPorNoche: 200 },
-    { idHabitacion: 3, numero: '103', tipo: 'Individual', precioPorNoche: 150 },
-  ];
-
-  usuarios = [
-    { idUsuario: 1, nombre: 'Juan Pérez', rol: 'Cliente' },
-    { idUsuario: 2, nombre: 'María Gómez', rol: 'Cliente' },
-    { idUsuario: 3, nombre: 'Carlos Ruiz', rol: 'Cliente' },
-  ];
-
   reservas: Reserva[] = [];
+  reservasFiltradas: Reserva[] = [];
   nuevaReserva: Reserva = this.crearReservaVacia();
   editando: Reserva | null = null;
 
-  constructor(private reservaService: ReservaService) {}
+  filtro: string = '';
+  criterio: string = 'cliente'; // criterio por defecto: cliente
+
+  mensaje: string = '';
+  mostrarMensaje: boolean = false;
+
+  modalAbierto: boolean = false;
 
   ngOnInit(): void {
     this.cargarReservas();
   }
 
-  // 🔹 Cargar todas las reservas desde el backend
-  cargarReservas(): void {
-    this.reservaService.findAll().subscribe({
-      next: (data) => (this.reservas = data),
-      error: (err) => console.error('Error al cargar reservas:', err),
+  private cargarReservas(): void {
+    this.reservas = [
+      {
+        idReserva: 1,
+        fechaInicio: '2025-11-20',
+        fechaFin: '2025-11-25',
+        cantidadPersonas: 2,
+        estado: 'Pendiente',
+        usuario: { idUsuario: 1, nombre: 'Juan Pérez', rol: 'Cliente' },
+        habitacion: { idHabitacion: 101, numero: '101', precioPorNoche: 300 },
+      },
+      {
+        idReserva: 2,
+        fechaInicio: '2025-12-01',
+        fechaFin: '2025-12-05',
+        cantidadPersonas: 1,
+        estado: 'Confirmada',
+        usuario: { idUsuario: 2, nombre: 'María Gómez', rol: 'Cliente' },
+        habitacion: { idHabitacion: 102, numero: '102', precioPorNoche: 200 },
+      },
+    ];
+    this.reservasFiltradas = [...this.reservas];
+  }
+
+  buscarReservas(): void {
+    const filtroLower = this.filtro.toLowerCase();
+
+    this.reservasFiltradas = this.reservas.filter((r) => {
+      switch (this.criterio) {
+        case 'cliente':
+          return r.usuario.nombre.toLowerCase().includes(filtroLower);
+        case 'id':
+          return r.idReserva.toString().includes(filtroLower);
+        case 'habitacion':
+          return r.habitacion.numero.toLowerCase().includes(filtroLower);
+        case 'estado':
+          return r.estado.toLowerCase().includes(filtroLower);
+        default:
+          return true;
+      }
     });
   }
 
-  // 🔹 Crear una nueva reserva
+  limpiarFiltro(): void {
+    this.filtro = '';
+    this.reservasFiltradas = [...this.reservas];
+  }
+
   crearReserva(): void {
-    if (!this.nuevaReserva.usuario || !this.nuevaReserva.habitacion) return;
-
-    this.reservaService.create(this.nuevaReserva).subscribe({
-      next: () => {
-        this.cargarReservas();
-        this.resetFormulario();
-      },
-      error: (err) => console.error('Error al crear reserva:', err),
-    });
-  }
-
-  // 🔹 Guardar cambios en una reserva editada
-  guardarEdicion(): void {
-    if (!this.editando) return;
-
-    this.reservaService.update(this.editando).subscribe({
-      next: () => {
-        this.cargarReservas();
-        this.editando = null;
-      },
-      error: (err) => console.error('Error al actualizar reserva:', err),
-    });
-  }
-
-  // 🔹 Eliminar una reserva
-  eliminarReserva(id: number): void {
-    if (confirm('¿Seguro que deseas eliminar esta reserva?')) {
-      this.reservaService.delete(id).subscribe({
-        next: () => this.cargarReservas(),
-        error: (err) => console.error('Error al eliminar reserva:', err),
-      });
+    if (
+      !this.nuevaReserva.usuario.nombre.trim() ||
+      !this.nuevaReserva.habitacion.numero.trim() ||
+      !this.nuevaReserva.fechaInicio ||
+      !this.nuevaReserva.fechaFin ||
+      this.nuevaReserva.cantidadPersonas < 1
+    ) {
+      this.mostrarConfirmacion('❌ Completa todos los campos obligatorios');
+      return;
     }
+
+    const nuevoId = this.reservas.length
+      ? Math.max(...this.reservas.map((r) => r.idReserva)) + 1
+      : 1;
+    this.nuevaReserva.idReserva = nuevoId;
+
+    this.reservas.push({ ...this.nuevaReserva });
+    this.reservasFiltradas = [...this.reservas];
+    this.nuevaReserva = this.crearReservaVacia();
+    this.cerrarModal();
+    this.mostrarConfirmacion('✅ Reserva creada correctamente');
   }
 
-  // 🔹 Cancelar edición
-  cancelarEdicion(): void {
-    this.editando = null;
-  }
-
-  // 🔹 Seleccionar reserva para editar
   editarReserva(reserva: Reserva): void {
     this.editando = { ...reserva };
   }
 
-  // 🔹 Limpiar formulario
-  resetFormulario(): void {
-    this.nuevaReserva = this.crearReservaVacia();
+  guardarEdicion(): void {
+    if (!this.editando) return;
+    const index = this.reservas.findIndex((r) => r.idReserva === this.editando!.idReserva);
+    if (index !== -1) {
+      this.reservas[index] = { ...this.editando };
+      this.reservasFiltradas = [...this.reservas];
+      this.editando = null;
+      this.mostrarConfirmacion('✏️ Reserva actualizada correctamente');
+    }
   }
 
-  // 🔹 Crear plantilla vacía para una nueva reserva
+  cancelarEdicion(): void {
+    this.editando = null;
+  }
+
+  eliminarReserva(id: number): void {
+    if (confirm('¿Seguro que deseas eliminar esta reserva?')) {
+      this.reservas = this.reservas.filter((r) => r.idReserva !== id);
+      this.reservasFiltradas = [...this.reservas];
+      this.mostrarConfirmacion('🗑️ Reserva eliminada correctamente');
+    }
+  }
+
+  mostrarConfirmacion(texto: string): void {
+    this.mensaje = texto;
+    this.mostrarMensaje = true;
+    setTimeout(() => (this.mostrarMensaje = false), 3000);
+  }
+
+  abrirModal(): void {
+    this.modalAbierto = true;
+  }
+
+  cerrarModal(): void {
+    this.modalAbierto = false;
+  }
+
   private crearReservaVacia(): Reserva {
     return {
       idReserva: 0,
@@ -101,26 +170,8 @@ export class ReservaAdminComponent implements OnInit {
       fechaFin: '',
       cantidadPersonas: 1,
       estado: 'Pendiente',
-      usuario: {
-        idUsuario: 0,
-        nombre: '',
-        apellido: '',
-        correo: '',
-        contrasena: '',
-        cedula: '',
-        telefono: '',
-        esOperador: false,
-        esAdministrador: false,
-        rol: 'Cliente',
-      },
-      habitacion: {
-        idHabitacion: 0,
-        numero: '',
-        precioPorNoche: 0,
-        estado: 'Disponible',
-        capacidad: 1,
-        descripcion: '',
-      },
+      usuario: { idUsuario: 0, nombre: '', rol: 'Cliente' },
+      habitacion: { idHabitacion: 0, numero: '', precioPorNoche: 0 },
       servicios: [],
     };
   }

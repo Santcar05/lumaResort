@@ -2,14 +2,17 @@
 <div class="chatbot-container">
   <!-- Header Section -->
   <div class="header-section">
-    <button class="back-btn" (click)="volver()" title="Volver">
-      <span class="back-icon">←</span> Volver
+    <button class="back-btn" (click)="volver()" title="{{ 'CHATBOT.BACK' | translate }}">
+      <span class="back-icon">←</span> {{ 'CHATBOT.BACK' | translate }}
     </button>
 
     <div class="header-content">
-      <span class="section-label">ASISTENTE VIRTUAL</span>
-      <h1 class="main-title">Luma <span class="highlight">Assistant</span></h1>
-      <p class="subtitle">Tu asistente personal para una experiencia hotelera excepcional</p>
+      <span class="section-label">{{ 'CHATBOT.SECTION_LABEL' | translate }}</span>
+      <h1 class="main-title">
+        {{ 'CHATBOT.TITLE_PART1' | translate }}
+        <span class="highlight">{{ 'CHATBOT.TITLE_PART2' | translate }}</span>
+      </h1>
+      <p class="subtitle">{{ 'CHATBOT.SUBTITLE' | translate }}</p>
     </div>
   </div>
 
@@ -25,18 +28,26 @@
               <div class="avatar-icon">🤖</div>
               <div class="avatar-status">
                 <span class="status-dot"></span>
-                <span class="status-text">En línea</span>
+                <span class="status-text">{{ 'CHATBOT.STATUS_ONLINE' | translate }}</span>
               </div>
             </div>
             <div class="bot-info">
-              <h2 class="bot-name">Luma Assistant</h2>
-              <p class="bot-description">Asistente IA del Hotel Luma</p>
+              <h2 class="bot-name">{{ 'CHATBOT.BOT_NAME' | translate }}</h2>
+              <p class="bot-description">{{ 'CHATBOT.BOT_DESCRIPTION' | translate }}</p>
             </div>
             <div class="header-actions">
-              <button class="action-btn" (click)="limpiarChat()" title="Limpiar chat">
+              <button
+                class="action-btn"
+                (click)="limpiarChat()"
+                title="{{ 'CHATBOT.CLEAR_CHAT' | translate }}"
+              >
                 <span class="action-icon">🗑️</span>
               </button>
-              <button class="action-btn" (click)="toggleTheme()" title="Cambiar tema">
+              <button
+                class="action-btn"
+                (click)="toggleTheme()"
+                title="{{ 'CHATBOT.TOGGLE_THEME' | translate }}"
+              >
                 <span class="action-icon">🌙</span>
               </button>
             </div>
@@ -49,23 +60,20 @@
               <div class="message-avatar">🤖</div>
               <div class="message-content">
                 <div class="message-bubble">
-                  <h4>¡Hola! Soy Luma, tu asistente virtual</h4>
-                  <p>Estoy aquí para ayudarte con:</p>
+                  <h4>{{ 'CHATBOT.WELCOME_TITLE' | translate }}</h4>
+                  <p>{{ 'CHATBOT.WELCOME_TEXT' | translate }}</p>
                   <div class="quick-actions">
-                    <button
-                      class="quick-btn"
-                      (click)="sugerirConsulta('Reservas y disponibilidad')"
-                    >
-                      📅 Reservas
+                    <button class="quick-btn" (click)="sugerirConsulta(quickBookings)">
+                      📅 {{ 'CHATBOT.QUICK_BOOKINGS' | translate }}
                     </button>
-                    <button class="quick-btn" (click)="sugerirConsulta('Servicios del hotel')">
-                      🏨 Servicios
+                    <button class="quick-btn" (click)="sugerirConsulta(quickServices)">
+                      🏨 {{ 'CHATBOT.QUICK_SERVICES' | translate }}
                     </button>
-                    <button class="quick-btn" (click)="sugerirConsulta('Información turística')">
-                      🗺️ Turismo
+                    <button class="quick-btn" (click)="sugerirConsulta(quickTourism)">
+                      🗺️ {{ 'CHATBOT.QUICK_TOURISM' | translate }}
                     </button>
-                    <button class="quick-btn" (click)="sugerirConsulta('Restaurantes y comida')">
-                      🍽️ Restaurantes
+                    <button class="quick-btn" (click)="sugerirConsulta(quickRestaurants)">
+                      🍽️ {{ 'CHATBOT.QUICK_RESTAURANTS' | translate }}
                     </button>
                   </div>
                 </div>
@@ -107,7 +115,7 @@
               <textarea
                 #mensajeInput
                 class="chat-input"
-                placeholder="Escribe tu mensaje..."
+                placeholder="{{ 'CHATBOT.INPUT_PLACEHOLDER' | translate }}"
                 [(ngModel)]="mensajeActual"
                 (keydown.enter)="enviarMensaje($event)"
                 rows="1"
@@ -128,11 +136,13 @@
                 [class.recording]="grabando"
               >
                 <span class="mic-icon">🎤</span>
-                {{ grabando ? 'Detener' : 'Grabar' }}
+                {{
+                  grabando ? ('CHATBOT.STOP_RECORDING' | translate) : ('CHATBOT.RECORD' | translate)
+                }}
               </button>
               <button class="attachment-btn">
                 <span class="attach-icon">📎</span>
-                Adjuntar
+                {{ 'CHATBOT.ATTACH' | translate }}
               </button>
             </div>
           </div>
@@ -146,24 +156,24 @@
           <div class="actions-card">
             <h3 class="actions-title">
               <span class="title-icon">⚡</span>
-              Acciones Rápidas
+              {{ 'CHATBOT.QUICK_ACTIONS_TITLE' | translate }}
             </h3>
             <div class="actions-grid">
-              <button class="action-card" (click)="sugerirConsulta('Hacer una reserva')">
+              <button class="action-card" (click)="sugerirConsulta(actionBookRoom)">
                 <span class="action-icon">📅</span>
-                <span class="action-text">Reservar Habitación</span>
+                <span class="action-text">{{ 'CHATBOT.ACTION_BOOK_ROOM' | translate }}</span>
               </button>
-              <button class="action-card" (click)="sugerirConsulta('Servicios del hotel')">
+              <button class="action-card" (click)="sugerirConsulta(actionHotelServices)">
                 <span class="action-icon">🏨</span>
-                <span class="action-text">Servicios Hotel</span>
+                <span class="action-text">{{ 'CHATBOT.ACTION_HOTEL_SERVICES' | translate }}</span>
               </button>
-              <button class="action-card" (click)="sugerirConsulta('Horario check-in check-out')">
+              <button class="action-card" (click)="sugerirConsulta(actionSchedules)">
                 <span class="action-icon">⏰</span>
-                <span class="action-text">Horarios</span>
+                <span class="action-text">{{ 'CHATBOT.ACTION_SCHEDULES' | translate }}</span>
               </button>
-              <button class="action-card" (click)="sugerirConsulta('Transporte aeropuerto')">
+              <button class="action-card" (click)="sugerirConsulta(actionTransport)">
                 <span class="action-icon">🚗</span>
-                <span class="action-text">Transporte</span>
+                <span class="action-text">{{ 'CHATBOT.ACTION_TRANSPORT' | translate }}</span>
               </button>
             </div>
           </div>
@@ -172,20 +182,20 @@
           <div class="info-card">
             <h3 class="info-title">
               <span class="title-icon">🏨</span>
-              Hotel Luma
+              {{ 'CHATBOT.HOTEL_INFO_TITLE' | translate }}
             </h3>
             <div class="info-content">
               <div class="info-item">
                 <span class="info-icon">📍</span>
-                <span class="info-text">Calle Principal #123, Ciudad</span>
+                <span class="info-text">{{ 'CHATBOT.HOTEL_ADDRESS' | translate }}</span>
               </div>
               <div class="info-item">
                 <span class="info-icon">📞</span>
-                <span class="info-text">+1 234 567 890</span>
+                <span class="info-text">{{ 'CHATBOT.HOTEL_PHONE' | translate }}</span>
               </div>
               <div class="info-item">
                 <span class="info-icon">✉️</span>
-                <span class="info-text">info@hotelluma.com</span>
+                <span class="info-text">{{ 'CHATBOT.HOTEL_EMAIL' | translate }}</span>
               </div>
             </div>
           </div>
@@ -194,7 +204,7 @@
           <div class="weather-card" *ngIf="clima">
             <h3 class="weather-title">
               <span class="title-icon">🌤️</span>
-              Clima Actual
+              {{ 'CHATBOT.WEATHER_TITLE' | translate }}
             </h3>
             <div class="weather-content">
               <div class="weather-main">
@@ -203,7 +213,9 @@
               </div>
               <div class="weather-details">
                 <div class="weather-desc">{{ clima.descripcion }}</div>
-                <div class="weather-humidity">Humedad: {{ clima.humedad }}%</div>
+                <div class="weather-humidity">
+                  {{ 'CHATBOT.WEATHER_HUMIDITY' | translate }}: {{ clima.humedad }}%
+                </div>
               </div>
             </div>
           </div>

@@ -30,23 +30,27 @@
     "SUBTITLE": "Ein einzigartiges Erlebnis, wo Luxus auf Natur trifft",
     "CARD1": {
       "TITLE": "Bevorzugte Lage",
-      "DESC": "Genießen Sie einen Panorama-Meerblick."
+      "DESC": "Genießen Sie einen Panoramablick auf das Meer aus jedem Winkel unseres Resorts."
     },
     "CARD2": {
       "TITLE": "Einzigartige Erlebnisse",
-      "DESC": "Vom Weltklasse-Spa bis zu Wasserabenteuern."
+      "DESC": "Von erstklassigen Spa-Angeboten bis zu spannenden Wasserabenteuern."
     },
     "CARD3": {
       "TITLE": "Premium-Service",
-      "DESC": "Unser Team ist 24/7 verfügbar."
+      "DESC": "Unser Team steht Ihnen rund um die Uhr zur Verfügung."
     },
     "CARD4": {
       "TITLE": "Luxuriöse Zimmer",
-      "DESC": "Jede Suite bietet einen privaten Rückzugsort."
+      "DESC": "Jede Suite bietet einen privaten Rückzugsort voller Komfort."
     },
     "CARD5": {
       "TITLE": "Außergewöhnliche Gastronomie",
       "DESC": "Gourmetrestaurants mit internationalen Köchen."
+    },
+    "CARD6": {
+      "TITLE": "Transport verfügbar",
+      "DESC": "Privater Transferservice zum und vom Flughafen."
     },
     "CTA_TEXT": "Bereit für die LumaResort-Erfahrung?",
     "CTA_BUTTON": "Mehr entdecken"

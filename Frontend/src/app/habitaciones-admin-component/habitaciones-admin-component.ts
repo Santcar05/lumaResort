@@ -29,6 +29,10 @@ export class HabitacionesAdminComponent {
   // Control del modal
   modalAbierto: boolean = false;
 
+  // Control del modal de descripción
+  descripcionModal: boolean = false;
+  habitacionSeleccionada: Habitacion | null = null;
+
   // Control de notificación flotante
   mensaje: string = '';
   mostrarNotificacion: boolean = false;
@@ -192,5 +196,17 @@ export class HabitacionesAdminComponent {
         error: () => this.mostrarMensaje('Error al eliminar habitación', 'error'),
       });
     }
+  }
+
+  verDescripcion(habitacion: Habitacion) {
+    this.habitacionSeleccionada = habitacion;
+    this.descripcionModal = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  cerrarDescripcionModal() {
+    this.descripcionModal = false;
+    this.habitacionSeleccionada = null;
+    document.body.style.overflow = 'auto';
   }
 }

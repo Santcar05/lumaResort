@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
+@ToString(exclude = {"tipoHabitacion"})
 public class Habitacion {
 
     @Id

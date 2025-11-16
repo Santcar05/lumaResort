@@ -65,6 +65,15 @@ public class SecurityConfig {
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers("/actividades").permitAll()
                 .requestMatchers("/actividades/**").permitAll()
+                // Chatbot de contacto
+                .requestMatchers("/api/chatbot/**").permitAll()
+                .requestMatchers("/api/chatbot").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/chatbot/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/chatbot/**").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/api/chatbot/**").permitAll()
+                // ========== CLIMA ==========
+                .requestMatchers("/api/clima/**").permitAll()
+                .requestMatchers("/api/clima").permitAll()
                 //ENDPOINTS DE AUTENTICACIÓN 
                 .requestMatchers(HttpMethod.GET, "/api/auth/actual").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/api/auth/perfil").authenticated()

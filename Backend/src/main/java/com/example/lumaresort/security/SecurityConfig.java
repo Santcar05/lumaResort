@@ -74,6 +74,9 @@ public class SecurityConfig {
                 // ========== CLIMA ==========
                 .requestMatchers("/api/clima/**").permitAll()
                 .requestMatchers("/api/clima").permitAll()
+                // ========== SERVIR ARCHIVOS SUBIDOS - PÚBLICO ==========
+                .requestMatchers("/uploads/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
                 //ENDPOINTS DE AUTENTICACIÓN 
                 .requestMatchers(HttpMethod.GET, "/api/auth/actual").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/api/auth/perfil").authenticated()

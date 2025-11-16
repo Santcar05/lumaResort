@@ -17,12 +17,19 @@ export class ServiciosAdminComponent {
   nuevoServicio: Servicio = this.crearNuevoServicio();
   editando: Servicio | null = null;
 
-  filtro: string = '';
+  // Filtros
+  filtroBusqueda: string = '';
+  categoriaBusqueda: string = 'nombre';
 
-  mensaje: string = '';
-  mostrarMensaje: boolean = false;
-
+  // Modal
   modalAbierto: boolean = false;
+  descripcionModal: boolean = false;
+  servicioSeleccionado: Servicio | null = null;
+
+  // Notificaciones
+  mensaje: string = '';
+  mostrarNotificacion: boolean = false;
+  tipoNotificacion: 'exito' | 'error' = 'exito';
 
   constructor(private servicioService: CRUDServiciosService) {}
 
@@ -48,25 +55,35 @@ export class ServiciosAdminComponent {
         this.servicios = data;
         this.serviciosFiltrados = data;
       },
-      error: (err) => console.error('Error al cargar servicios:', err),
+      error: () => this.mostrarMensaje('Error al cargar servicios', 'error'),
     });
   }
 
-  // 🔍 Filtrar servicios por nombre o tipo
-  buscarServicios(): void {
-    const filtroLower = this.filtro.toLowerCase();
-    this.serviciosFiltrados = this.servicios.filter(
-      (s) =>
-        s.nombre.toLowerCase().includes(filtroLower) || s.tipo.toLowerCase().includes(filtroLower)
-    );
+  // 🔍 Filtrar servicios
+  filtrarServicios(): void {
+    const filtro = this.filtroBusqueda.toLowerCase().trim();
+
+    this.serviciosFiltrados = this.servicios.filter((s) => {
+      switch (this.categoriaBusqueda) {
+        case 'id':
+          return s.idServicio?.toString().includes(filtro);
+        case 'nombre':
+          return s.nombre?.toLowerCase().includes(filtro);
+        case 'tipo':
+          return s.tipo?.toLowerCase().includes(filtro);
+        default:
+          return true;
+      }
+    });
   }
 
   limpiarFiltro(): void {
-    this.filtro = '';
-    this.serviciosFiltrados = [...this.servicios];
+    this.filtroBusqueda = '';
+    this.categoriaBusqueda = 'nombre';
+    this.serviciosFiltrados = this.servicios;
   }
 
-  // 🟢 Crear servicio
+  // Crear servicio
   crearServicio(): void {
     if (!this.nuevoServicio.nombre.trim() || !this.nuevoServicio.tipo.trim()) return;
 
@@ -74,10 +91,9 @@ export class ServiciosAdminComponent {
       next: () => {
         this.cargarServicios();
         this.cerrarModal();
-        this.nuevoServicio = this.crearNuevoServicio();
-        this.mostrarConfirmacion('✅ Servicio creado correctamente');
+        this.mostrarMensaje('Servicio creado correctamente');
       },
-      error: (err) => console.error('Error al crear servicio:', err),
+      error: () => this.mostrarMensaje('Error al crear servicio', 'error'),
     });
   }
 
@@ -93,9 +109,9 @@ export class ServiciosAdminComponent {
       next: () => {
         this.cargarServicios();
         this.editando = null;
-        this.mostrarConfirmacion('✏️ Servicio actualizado correctamente');
+        this.mostrarMensaje('Servicio actualizado correctamente');
       },
-      error: (err) => console.error('Error al actualizar servicio:', err),
+      error: () => this.mostrarMensaje('Error al actualizar servicio', 'error'),
     });
   }
 
@@ -109,26 +125,43 @@ export class ServiciosAdminComponent {
       this.servicioService.delete(id).subscribe({
         next: () => {
           this.cargarServicios();
-          this.mostrarConfirmacion('🗑️ Servicio eliminado correctamente');
+          this.mostrarMensaje('Servicio eliminado correctamente');
         },
-        error: (err) => console.error('Error al eliminar servicio:', err),
+        error: () => this.mostrarMensaje('Error al eliminar servicio', 'error'),
       });
     }
   }
 
-  // 🔔 Mostrar mensaje tipo toast
-  mostrarConfirmacion(mensaje: string): void {
-    this.mensaje = mensaje;
-    this.mostrarMensaje = true;
-    setTimeout(() => (this.mostrarMensaje = false), 3000);
+  // Ver descripción completa
+  verDescripcion(servicio: Servicio): void {
+    this.servicioSeleccionado = servicio;
+    this.descripcionModal = true;
+    document.body.style.overflow = 'hidden';
   }
 
-  // 🪟 Control del modal
+  cerrarDescripcionModal(): void {
+    this.descripcionModal = false;
+    this.servicioSeleccionado = null;
+    document.body.style.overflow = 'auto';
+  }
+
+  // Notificaciones
+  mostrarMensaje(texto: string, tipo: 'exito' | 'error' = 'exito'): void {
+    this.mensaje = texto;
+    this.tipoNotificacion = tipo;
+    this.mostrarNotificacion = true;
+    setTimeout(() => (this.mostrarNotificacion = false), 2500);
+  }
+
+  // Control del modal
   abrirModal(): void {
     this.modalAbierto = true;
+    document.body.style.overflow = 'hidden';
   }
 
   cerrarModal(): void {
     this.modalAbierto = false;
+    document.body.style.overflow = 'auto';
+    this.nuevoServicio = this.crearNuevoServicio();
   }
 }

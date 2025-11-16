@@ -18,11 +18,14 @@ export class TipoHabitacionAdminComponent {
   nuevoTipo: TipoHabitacion = { id: 0, nombre: '', descripcion: '' };
   editando: TipoHabitacion | null = null;
 
-  filtroId: string = '';
-  filtroNombre: string = '';
+  // Filtros
+  filtroBusqueda: string = '';
+  categoriaBusqueda: string = 'nombre';
 
   // Modal
   modalAbierto: boolean = false;
+  descripcionModal: boolean = false;
+  tipoSeleccionado: TipoHabitacion | null = null;
 
   // Notificación flotante
   mensaje: string = '';
@@ -49,19 +52,23 @@ export class TipoHabitacionAdminComponent {
   }
 
   filtrarTipos(): void {
-    const idFiltro = this.filtroId.trim().toLowerCase();
-    const nombreFiltro = this.filtroNombre.trim().toLowerCase();
+    const filtro = this.filtroBusqueda.toLowerCase().trim();
 
     this.tiposFiltrados = this.tipos.filter((t) => {
-      const coincideId = idFiltro ? t.id.toString().includes(idFiltro) : true;
-      const coincideNombre = nombreFiltro ? t.nombre.toLowerCase().includes(nombreFiltro) : true;
-      return coincideId && coincideNombre;
+      switch (this.categoriaBusqueda) {
+        case 'id':
+          return t.id?.toString().includes(filtro);
+        case 'nombre':
+          return t.nombre?.toLowerCase().includes(filtro);
+        default:
+          return true;
+      }
     });
   }
 
   limpiarFiltro(): void {
-    this.filtroId = '';
-    this.filtroNombre = '';
+    this.filtroBusqueda = '';
+    this.categoriaBusqueda = 'nombre';
     this.tiposFiltrados = this.tipos;
   }
 
@@ -120,6 +127,19 @@ export class TipoHabitacionAdminComponent {
 
   cancelarEdicion(): void {
     this.editando = null;
+  }
+
+  // Ver descripción completa
+  verDescripcion(tipo: TipoHabitacion): void {
+    this.tipoSeleccionado = tipo;
+    this.descripcionModal = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  cerrarDescripcionModal(): void {
+    this.descripcionModal = false;
+    this.tipoSeleccionado = null;
+    document.body.style.overflow = 'auto';
   }
 
   eliminarTipo(id: number): void {

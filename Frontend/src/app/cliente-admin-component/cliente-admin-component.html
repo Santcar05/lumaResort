@@ -8,109 +8,167 @@
     {{ mensaje }}
   </div>
 
-  <h2 class="titulo">Gestión de Clientes</h2>
-
-  <!-- Barra de búsqueda -->
-  <div class="form-group" style="text-align: center; margin-bottom: 1.5rem">
-    <p style="font-weight: 600; color: #003366">Buscar clientes por:</p>
-
-    <select
-      [(ngModel)]="categoriaBusqueda"
-      style="width: 25%; display: inline-block; margin-right: 1rem"
-    >
-      <option value="nombre">Nombre</option>
-      <option value="apellido">Apellido</option>
-      <option value="correo">Correo</option>
-      <option value="id">ID</option>
-      <option value="cedula">Cédula</option>
-      <option value="telefono">Teléfono</option>
-    </select>
-
-    <input
-      type="text"
-      placeholder="Ingrese su búsqueda..."
-      [(ngModel)]="filtroBusqueda"
-      class="form-control"
-      style="width: 30%; display: inline-block; margin-right: 1rem"
-    />
-
-    <button class="btn btn-primary" (click)="filtrarClientes()">Buscar</button>
-    <button class="btn btn-secondary" (click)="limpiarFiltro()">Limpiar</button>
+  <div class="header-section">
+    <h2 class="titulo">Gestión de Clientes</h2>
+    <button class="btn btn-success btn-crear" (click)="abrirModal()">
+      + Nuevo Cliente
+    </button>
   </div>
 
-  <!-- Crear cliente -->
-  <div class="crear-cliente" style="text-align: center; margin-bottom: 2rem">
-    <p>Si deseas crear un nuevo cliente <span style="font-size: 1.5rem">⬇️</span></p>
-    <button class="btn btn-success" (click)="abrirModal()">Crear cliente</button>
+  <!-- Barra de búsqueda optimizada -->
+  <div class="filtros-container">
+    <div class="filtro-grupo">
+      <label class="filtro-label">Buscar por:</label>
+      <select [(ngModel)]="categoriaBusqueda" class="filtro-select">
+        <option value="nombre">Nombre</option>
+        <option value="apellido">Apellido</option>
+        <option value="correo">Correo</option>
+        <option value="id">ID</option>
+        <option value="cedula">Cédula</option>
+        <option value="telefono">Teléfono</option>
+      </select>
+    </div>
+
+    <div class="filtro-grupo">
+      <input
+        type="text"
+        placeholder="Buscar..."
+        [(ngModel)]="filtroBusqueda"
+        class="filtro-input"
+      />
+    </div>
+
+    <div class="filtro-acciones">
+      <button class="btn btn-primary btn-sm" (click)="filtrarClientes()">Buscar</button>
+      <button class="btn btn-secondary btn-sm" (click)="limpiarFiltro()">Limpiar</button>
+    </div>
   </div>
 
   <!-- Lista de clientes -->
   <div class="card mt-4">
-    <div class="card-header">Lista de Clientes</div>
+    <div class="card-header">
+      <span>Lista de Clientes</span>
+      <span class="total-count">Total: {{ clientesFiltrados.length }}</span>
+    </div>
     <div class="card-body">
-      <table class="tabla">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Correo</th>
-            <th>Cédula</th>
-            <th>Teléfono</th>
-            <th>Rol</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let cliente of clientesFiltrados">
-            <td>{{ cliente.idUsuario }}</td>
+      <div class="tabla-container">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th class="col-id">ID</th>
+              <th class="col-nombre">Nombre</th>
+              <th class="col-apellido">Apellido</th>
+              <th class="col-correo">Correo</th>
+              <th class="col-cedula">Cédula</th>
+              <th class="col-telefono">Teléfono</th>
+              <th class="col-rol">Rol</th>
+              <th class="col-acciones">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cliente of clientesFiltrados" [class.editing]="editando?.idUsuario === cliente.idUsuario">
+              <td class="col-id">{{ cliente.idUsuario }}</td>
 
-            <td *ngIf="editando?.idUsuario !== cliente.idUsuario">{{ cliente.nombre }}</td>
-            <td *ngIf="editando?.idUsuario === cliente.idUsuario">
-              <input [(ngModel)]="editando!.nombre" />
-            </td>
+              <!-- Nombre -->
+              <td class="col-nombre">
+                <span *ngIf="editando?.idUsuario !== cliente.idUsuario">
+                  {{ cliente.nombre }}
+                </span>
+                <input *ngIf="editando?.idUsuario === cliente.idUsuario"
+                  [(ngModel)]="editando!.nombre"
+                  class="input-inline" />
+              </td>
 
-            <td *ngIf="editando?.idUsuario !== cliente.idUsuario">{{ cliente.apellido }}</td>
-            <td *ngIf="editando?.idUsuario === cliente.idUsuario">
-              <input [(ngModel)]="editando!.apellido" />
-            </td>
+              <!-- Apellido -->
+              <td class="col-apellido">
+                <span *ngIf="editando?.idUsuario !== cliente.idUsuario">
+                  {{ cliente.apellido }}
+                </span>
+                <input *ngIf="editando?.idUsuario === cliente.idUsuario"
+                  [(ngModel)]="editando!.apellido"
+                  class="input-inline" />
+              </td>
 
-            <td *ngIf="editando?.idUsuario !== cliente.idUsuario">{{ cliente.correo }}</td>
-            <td *ngIf="editando?.idUsuario === cliente.idUsuario">
-              <input [(ngModel)]="editando!.correo" />
-            </td>
+              <!-- Correo -->
+              <td class="col-correo">
+                <span *ngIf="editando?.idUsuario !== cliente.idUsuario" class="email-text">
+                  {{ cliente.correo }}
+                </span>
+                <input *ngIf="editando?.idUsuario === cliente.idUsuario"
+                  type="email"
+                  [(ngModel)]="editando!.correo"
+                  class="input-inline" />
+              </td>
 
-            <td *ngIf="editando?.idUsuario !== cliente.idUsuario">{{ cliente.cedula }}</td>
-            <td *ngIf="editando?.idUsuario === cliente.idUsuario">
-              <input [(ngModel)]="editando!.cedula" />
-            </td>
+              <!-- Cédula -->
+              <td class="col-cedula">
+                <span *ngIf="editando?.idUsuario !== cliente.idUsuario">
+                  {{ cliente.cedula }}
+                </span>
+                <input *ngIf="editando?.idUsuario === cliente.idUsuario"
+                  [(ngModel)]="editando!.cedula"
+                  class="input-inline" />
+              </td>
 
-            <td *ngIf="editando?.idUsuario !== cliente.idUsuario">{{ cliente.telefono }}</td>
-            <td *ngIf="editando?.idUsuario === cliente.idUsuario">
-              <input [(ngModel)]="editando!.telefono" />
-            </td>
+              <!-- Teléfono -->
+              <td class="col-telefono">
+                <span *ngIf="editando?.idUsuario !== cliente.idUsuario">
+                  {{ cliente.telefono || 'N/A' }}
+                </span>
+                <input *ngIf="editando?.idUsuario === cliente.idUsuario"
+                  [(ngModel)]="editando!.telefono"
+                  class="input-inline" />
+              </td>
 
-            <td>{{ cliente.rol }}</td>
+              <!-- Rol con badge -->
+              <td class="col-rol">
+                <span class="badge"
+                  [ngClass]="{
+                    'badge-cliente': cliente.rol === 'Cliente',
+                    'badge-admin': cliente.rol === 'Administrador' || cliente.esAdministrador,
+                    'badge-operador': cliente.rol === 'Operador' || cliente.esOperador
+                  }">
+                  {{ cliente.rol || 'Cliente' }}
+                </span>
+              </td>
 
-            <td>
-              <ng-container *ngIf="editando?.idUsuario !== cliente.idUsuario">
-                <button class="btn btn-warning btn-sm" (click)="editarCliente(cliente)">
-                  Editar
-                </button>
-                <button class="btn btn-danger btn-sm" (click)="eliminarCliente(cliente.idUsuario)">
-                  Eliminar
-                </button>
-              </ng-container>
-              <ng-container *ngIf="editando?.idUsuario === cliente.idUsuario">
-                <button class="btn btn-success btn-sm" (click)="guardarEdicion()">Guardar</button>
-                <button class="btn btn-secondary btn-sm" (click)="cancelarEdicion()">
-                  Cancelar
-                </button>
-              </ng-container>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <!-- Acciones -->
+              <td class="col-acciones">
+                <div class="btn-group">
+                  <ng-container *ngIf="editando?.idUsuario !== cliente.idUsuario">
+                    <button class="btn btn-warning btn-sm btn-icon"
+                      (click)="editarCliente(cliente)"
+                      title="Editar">
+                      ✏️
+                    </button>
+                    <button class="btn btn-danger btn-sm btn-icon"
+                      (click)="eliminarCliente(cliente.idUsuario)"
+                      title="Eliminar">
+                      🗑️
+                    </button>
+                  </ng-container>
+                  <ng-container *ngIf="editando?.idUsuario === cliente.idUsuario">
+                    <button class="btn btn-success btn-sm btn-icon"
+                      (click)="guardarEdicion()"
+                      title="Guardar">
+                      ✓
+                    </button>
+                    <button class="btn btn-secondary btn-sm btn-icon"
+                      (click)="cancelarEdicion()"
+                      title="Cancelar">
+                      ✗
+                    </button>
+                  </ng-container>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="clientesFiltrados.length === 0" class="no-results">
+        No se encontraron clientes con los criterios seleccionados.
+      </div>
     </div>
   </div>
 

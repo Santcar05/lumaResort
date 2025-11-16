@@ -13,7 +13,7 @@
       </div>
 
       <div class="actions-group">
-        <button class="btn-refresh" (click)="cargarServicios()" [disabled]="loading">
+        <button class="btn-refresh" (click)="cargarServicios()" [disabled]="loading || translating">
           <span class="refresh-icon">↻</span>
           {{ 'SERVICES_PAGE.REFRESH' | translate }}
         </button>
@@ -25,6 +25,12 @@
   <div *ngIf="loading" class="loading-state">
     <div class="loading-spinner"></div>
     <p class="loading-text">{{ 'SERVICES_PAGE.LOADING' | translate }}</p>
+  </div>
+
+  <!-- Translating State -->
+  <div *ngIf="translating && !loading" class="translating-state">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">{{ 'SERVICES_PAGE.TRANSLATING' | translate }}</p>
   </div>
 
   <!-- Error State -->
@@ -102,6 +108,7 @@
       </div>
     </div>
   </div>
+
   <!-- Table Section -->
   <div *ngIf="!loading && serviciosFiltrados.length > 0" class="table-container">
     <div class="table-wrapper">
@@ -139,12 +146,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let servicio of serviciosFiltrados" class="table-row">
+          <tr *ngFor="let servicio of serviciosFiltrados; let i = index" class="table-row">
             <td class="td-image">
               <div class="image-cell">
                 <img
                   [src]="servicio.imagenURL"
-                  [alt]="servicio.nombre"
+                  [alt]="getTranslatedName(servicio)"
                   (error)="onImageError($event)"
                   class="service-thumbnail"
                 />
@@ -153,15 +160,18 @@
             </td>
             <td class="td-name">
               <div class="name-cell">
-                <span class="service-name">{{ servicio.nombre }}</span>
+                <!-- ✅ Traducción dinámica del nombre -->
+                <span class="service-name">{{ getTranslatedName(servicio) }}</span>
+                <!-- ✅ Traducción dinámica de la descripción corta -->
                 <span
                   class="service-description"
-                  [innerHTML]="obtenerDescripcionCorta(servicio.descripcion)"
+                  [innerHTML]="obtenerDescripcionCortaTraducida(servicio)"
                 ></span>
               </div>
             </td>
             <td class="td-type">
-              <span class="type-badge">{{ servicio.tipo }}</span>
+              <!-- ✅ Traducción dinámica del tipo -->
+              <span class="type-badge">{{ getTranslatedType(servicio) }}</span>
             </td>
             <td class="td-price">
               <span class="price-value">{{

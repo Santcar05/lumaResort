@@ -244,5 +244,45 @@
     "ERROR_TITLE": "Erreur d'inscription",
     "ALREADY_HAVE_ACCOUNT": "Vous avez déjà un compte ?",
     "SIGN_IN": "Se connecter"
+  },
+  "CHATBOT": {
+    "BACK": "Retour",
+    "SECTION_LABEL": "ASSISTANT VIRTUEL",
+    "TITLE_PART1": "Luma",
+    "TITLE_PART2": "Assistant",
+    "SUBTITLE": "Votre assistant personnel pour une expérience hôtelière exceptionnelle",
+
+    "STATUS_ONLINE": "En ligne",
+    "BOT_NAME": "Luma Assistant",
+    "BOT_DESCRIPTION": "Assistant IA de l'Hôtel Luma",
+    "CLEAR_CHAT": "Effacer le chat",
+    "TOGGLE_THEME": "Changer de thème",
+
+    "WELCOME_TITLE": "Bonjour! Je suis Luma, votre assistant virtuel",
+    "WELCOME_TEXT": "Je suis là pour vous aider avec:",
+
+    "QUICK_BOOKINGS": "Réservations",
+    "QUICK_SERVICES": "Services de l'hôtel",
+    "QUICK_TOURISM": "Informations touristiques",
+    "QUICK_RESTAURANTS": "Restaurants et nourriture",
+
+    "INPUT_PLACEHOLDER": "Tapez votre message...",
+    "RECORD": "Enregistrer",
+    "STOP_RECORDING": "Arrêter",
+    "ATTACH": "Joindre",
+
+    "QUICK_ACTIONS_TITLE": "Actions Rapides",
+    "ACTION_BOOK_ROOM": "Réserver Chambre",
+    "ACTION_HOTEL_SERVICES": "Services Hôtel",
+    "ACTION_SCHEDULES": "Horaires",
+    "ACTION_TRANSPORT": "Transport",
+
+    "HOTEL_INFO_TITLE": "Hôtel Luma",
+    "HOTEL_ADDRESS": "Rue 123, Carthagène, Colombie",
+    "HOTEL_PHONE": "+1 234 567 890",
+    "HOTEL_EMAIL": "info@hotelluma.com",
+
+    "WEATHER_TITLE": "Météo Actuelle",
+    "WEATHER_HUMIDITY": "Humidité"
   }
 }

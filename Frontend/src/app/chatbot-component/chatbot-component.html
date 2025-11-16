@@ -1,0 +1,253 @@
+<app-header-component></app-header-component>
+<div class="chatbot-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <button class="back-btn" (click)="volver()" title="{{ 'CHATBOT.BACK' | translate }}">
+      <span class="back-icon">←</span> {{ 'CHATBOT.BACK' | translate }}
+    </button>
+
+    <div class="header-content">
+      <span class="section-label">{{ 'CHATBOT.SECTION_LABEL' | translate }}</span>
+      <h1 class="main-title">
+        {{ 'CHATBOT.TITLE_PART1' | translate }}
+        <span class="highlight">{{ 'CHATBOT.TITLE_PART2' | translate }}</span>
+      </h1>
+      <p class="subtitle">{{ 'CHATBOT.SUBTITLE' | translate }}</p>
+    </div>
+  </div>
+
+  <!-- Chat Container -->
+  <div class="chat-section">
+    <div class="chat-grid">
+      <!-- Left Column - Chat Interface -->
+      <div class="chat-column">
+        <div class="chat-card">
+          <!-- Chat Header -->
+          <div class="chat-header">
+            <div class="bot-avatar">
+              <div class="avatar-icon">🤖</div>
+              <div class="avatar-status">
+                <span class="status-dot"></span>
+                <span class="status-text">{{ 'CHATBOT.STATUS_ONLINE' | translate }}</span>
+              </div>
+            </div>
+            <div class="bot-info">
+              <h2 class="bot-name">{{ 'CHATBOT.BOT_NAME' | translate }}</h2>
+              <p class="bot-description">{{ 'CHATBOT.BOT_DESCRIPTION' | translate }}</p>
+            </div>
+            <div class="header-actions">
+              <button
+                class="action-btn"
+                (click)="limpiarChat()"
+                title="{{ 'CHATBOT.CLEAR_CHAT' | translate }}"
+              >
+                <span class="action-icon">🗑️</span>
+              </button>
+              <button
+                class="action-btn"
+                (click)="toggleTheme()"
+                title="{{ 'CHATBOT.TOGGLE_THEME' | translate }}"
+              >
+                <span class="action-icon">🌙</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Chat Messages -->
+          <div class="chat-messages" #chatMessages>
+            <!-- Welcome Message -->
+            <div class="message bot-message welcome-message">
+              <div class="message-avatar">🤖</div>
+              <div class="message-content">
+                <div class="message-bubble">
+                  <h4>{{ 'CHATBOT.WELCOME_TITLE' | translate }}</h4>
+                  <p>{{ 'CHATBOT.WELCOME_TEXT' | translate }}</p>
+                  <div class="quick-actions">
+                    <button class="quick-btn" (click)="sugerirConsulta(quickBookings)">
+                      📅 {{ 'CHATBOT.QUICK_BOOKINGS' | translate }}
+                    </button>
+                    <button class="quick-btn" (click)="sugerirConsulta(quickServices)">
+                      🏨 {{ 'CHATBOT.QUICK_SERVICES' | translate }}
+                    </button>
+                    <button class="quick-btn" (click)="sugerirConsulta(quickTourism)">
+                      🗺️ {{ 'CHATBOT.QUICK_TOURISM' | translate }}
+                    </button>
+                    <button class="quick-btn" (click)="sugerirConsulta(quickRestaurants)">
+                      🍽️ {{ 'CHATBOT.QUICK_RESTAURANTS' | translate }}
+                    </button>
+                  </div>
+                </div>
+                <div class="message-time">{{ getCurrentTime() }}</div>
+              </div>
+            </div>
+
+            <!-- Chat Messages List -->
+            <div
+              *ngFor="let message of mensajes"
+              class="message"
+              [class.user-message]="message.esUsuario"
+              [class.bot-message]="!message.esUsuario"
+            >
+              <div class="message-avatar" *ngIf="!message.esUsuario">🤖</div>
+              <div class="message-content">
+                <!-- Mensaje de Texto -->
+                <div
+                  *ngIf="message.tipo === 'texto'"
+                  class="message-bubble"
+                  [innerHTML]="formatearMensaje(message.contenido)"
+                ></div>
+
+                <!-- Mensaje con Imagen -->
+                <div *ngIf="message.tipo === 'imagen'" class="message-bubble message-image">
+                  <img [src]="message.archivoUrl" alt="Imagen enviada" class="chat-image" />
+                  <p class="image-caption">{{ message.contenido }}</p>
+                </div>
+
+                <!-- Mensaje con Audio -->
+                <div *ngIf="message.tipo === 'audio'" class="message-bubble message-audio">
+                  <audio [src]="message.archivoUrl" controls class="chat-audio"></audio>
+                  <p class="audio-caption">{{ message.contenido }}</p>
+                </div>
+
+                <div class="message-time">{{ message.timestamp | date : 'HH:mm' }}</div>
+              </div>
+              <div class="message-avatar" *ngIf="message.esUsuario">👤</div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div class="message bot-message" *ngIf="escribiendo">
+              <div class="message-avatar">🤖</div>
+              <div class="message-content">
+                <div class="message-bubble typing-indicator">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Input -->
+          <div class="chat-input-container">
+            <div class="input-wrapper">
+              <textarea
+                #mensajeInput
+                class="chat-input"
+                placeholder="{{ 'CHATBOT.INPUT_PLACEHOLDER' | translate }}"
+                [(ngModel)]="mensajeActual"
+                (keydown.enter)="enviarMensaje($event)"
+                rows="1"
+              ></textarea>
+              <button
+                class="send-btn"
+                (click)="enviarMensaje()"
+                [disabled]="!mensajeActual.trim() || enviando"
+              >
+                <span class="send-icon" *ngIf="!enviando">➤</span>
+                <div class="loading-mini" *ngIf="enviando"></div>
+              </button>
+            </div>
+            <div class="input-actions">
+              <button
+                class="microphone-btn"
+                (click)="toggleGrabacion()"
+                [class.recording]="grabando"
+                [disabled]="enviando"
+              >
+                <span class="mic-icon">{{ grabando ? '⏹️' : '🎤' }}</span>
+                {{
+                  grabando ? ('CHATBOT.STOP_RECORDING' | translate) : ('CHATBOT.RECORD' | translate)
+                }}
+              </button>
+              <button class="attachment-btn" (click)="abrirSelectorArchivo()" [disabled]="enviando">
+                <span class="attach-icon">📎</span>
+                {{ 'CHATBOT.ATTACH' | translate }}
+              </button>
+              <!-- Input oculto para seleccionar archivos -->
+              <input
+                type="file"
+                #fileInput
+                accept="image/*"
+                style="display: none"
+                (change)="onFileSelected($event)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column - Quick Actions & Info -->
+      <div class="actions-column">
+        <div class="sticky-wrapper">
+          <!-- Quick Actions -->
+          <div class="actions-card">
+            <h3 class="actions-title">
+              <span class="title-icon">⚡</span>
+              {{ 'CHATBOT.QUICK_ACTIONS_TITLE' | translate }}
+            </h3>
+            <div class="actions-grid">
+              <button class="action-card" (click)="sugerirConsulta(actionBookRoom)">
+                <span class="action-icon">📅</span>
+                <span class="action-text">{{ 'CHATBOT.ACTION_BOOK_ROOM' | translate }}</span>
+              </button>
+              <button class="action-card" (click)="sugerirConsulta(actionHotelServices)">
+                <span class="action-icon">🏨</span>
+                <span class="action-text">{{ 'CHATBOT.ACTION_HOTEL_SERVICES' | translate }}</span>
+              </button>
+              <button class="action-card" (click)="sugerirConsulta(actionSchedules)">
+                <span class="action-icon">⏰</span>
+                <span class="action-text">{{ 'CHATBOT.ACTION_SCHEDULES' | translate }}</span>
+              </button>
+              <button class="action-card" (click)="sugerirConsulta(actionTransport)">
+                <span class="action-icon">🚗</span>
+                <span class="action-text">{{ 'CHATBOT.ACTION_TRANSPORT' | translate }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Hotel Information -->
+          <div class="info-card">
+            <h3 class="info-title">
+              <span class="title-icon">🏨</span>
+              {{ 'CHATBOT.HOTEL_INFO_TITLE' | translate }}
+            </h3>
+            <div class="info-content">
+              <div class="info-item">
+                <span class="info-icon">📍</span>
+                <span class="info-text">{{ 'CHATBOT.HOTEL_ADDRESS' | translate }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-icon">📞</span>
+                <span class="info-text">{{ 'CHATBOT.HOTEL_PHONE' | translate }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-icon">✉️</span>
+                <span class="info-text">{{ 'CHATBOT.HOTEL_EMAIL' | translate }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Weather Widget -->
+          <div class="weather-card" *ngIf="clima">
+            <h3 class="weather-title">
+              <span class="title-icon">🌤️</span>
+              {{ 'CHATBOT.WEATHER_TITLE' | translate }}
+            </h3>
+            <div class="weather-content">
+              <div class="weather-main">
+                <div class="weather-icon">{{ clima.icono }}</div>
+                <div class="weather-temp">{{ clima.temperatura }}°C</div>
+              </div>
+              <div class="weather-details">
+                <div class="weather-desc">{{ clima.descripcion }}</div>
+                <div class="weather-humidity">
+                  {{ 'CHATBOT.WEATHER_HUMIDITY' | translate }}: {{ clima.humedad }}%
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

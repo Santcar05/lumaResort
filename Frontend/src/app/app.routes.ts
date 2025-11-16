@@ -20,12 +20,14 @@ import { OperadorComponent } from './operador-component/operador-component';
 import { EstadiaOperadorComponent } from './estadia-operador-component/estadia-operador-component';
 import { adminGuard, clienteGuard, operadorGuard, publicGuard } from './guards/auth.guard';
 import { AdminDashboardComponentComponent } from './admin-dashboard-component/admin-dashboard-component';
+import { ChatbotComponent } from './chatbot-component/chatbot-component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // por defecto muestra Landing
   { path: 'login', component: LoginComponent, canActivate: [publicGuard] },
   { path: 'signup', component: SignUpComponent, canActivate: [publicGuard] },
   { path: 'perfil/:id', component: PerfilComponent }, // muestra perfil
+  { path: 'contacto', component: ChatbotComponent }, // muestra chatbot
   {
     path: 'admin',
     component: AdminComponent,

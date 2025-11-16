@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ReservaService } from '../services/reserva.service';
 
 interface Usuario {
   idUsuario: number;
@@ -38,66 +39,88 @@ export class ReservaAdminComponent implements OnInit {
   nuevaReserva: Reserva = this.crearReservaVacia();
   editando: Reserva | null = null;
 
-  filtro: string = '';
-  criterio: string = 'cliente'; // criterio por defecto: cliente
+  // Filtros unificados
+  filtroBusqueda: string = '';
+  categoriaBusqueda: string = 'cliente';
+  filtroEstado: string = '';
 
-  mensaje: string = '';
-  mostrarMensaje: boolean = false;
-
+  // Modal
   modalAbierto: boolean = false;
+
+  // Notificaciones unificadas
+  mensaje: string = '';
+  mostrarNotificacion: boolean = false;
+  tipoNotificacion: 'exito' | 'error' = 'exito';
+
+  constructor(private reservaService: ReservaService) {}
 
   ngOnInit(): void {
     this.cargarReservas();
   }
 
-  private cargarReservas(): void {
-    this.reservas = [
-      {
-        idReserva: 1,
-        fechaInicio: '2025-11-20',
-        fechaFin: '2025-11-25',
-        cantidadPersonas: 2,
-        estado: 'Pendiente',
-        usuario: { idUsuario: 1, nombre: 'Juan Pérez', rol: 'Cliente' },
-        habitacion: { idHabitacion: 101, numero: '101', precioPorNoche: 300 },
+  // Cargar reservas desde backend
+  cargarReservas(): void {
+    this.reservaService.findAll().subscribe({
+      next: (data) => {
+        this.reservas = data;
+        this.reservasFiltradas = data;
       },
-      {
-        idReserva: 2,
-        fechaInicio: '2025-12-01',
-        fechaFin: '2025-12-05',
-        cantidadPersonas: 1,
-        estado: 'Confirmada',
-        usuario: { idUsuario: 2, nombre: 'María Gómez', rol: 'Cliente' },
-        habitacion: { idHabitacion: 102, numero: '102', precioPorNoche: 200 },
-      },
-    ];
-    this.reservasFiltradas = [...this.reservas];
+      error: () => this.mostrarMensaje('Error al cargar reservas', 'error'),
+    });
   }
 
-  buscarReservas(): void {
-    const filtroLower = this.filtro.toLowerCase();
+  // Filtrado combinado
+  filtrarReservas(): void {
+    const filtro = this.filtroBusqueda.toLowerCase().trim();
+    const estado = this.filtroEstado.toLowerCase().trim();
 
     this.reservasFiltradas = this.reservas.filter((r) => {
-      switch (this.criterio) {
-        case 'cliente':
-          return r.usuario.nombre.toLowerCase().includes(filtroLower);
+      let coincideCategoria = false;
+
+      switch (this.categoriaBusqueda) {
         case 'id':
-          return r.idReserva.toString().includes(filtroLower);
+          coincideCategoria = r.idReserva.toString().includes(filtro);
+          break;
+        case 'cliente':
+          coincideCategoria = r.usuario.nombre.toLowerCase().includes(filtro);
+          break;
         case 'habitacion':
-          return r.habitacion.numero.toLowerCase().includes(filtroLower);
-        case 'estado':
-          return r.estado.toLowerCase().includes(filtroLower);
-        default:
-          return true;
+          coincideCategoria = r.habitacion.numero.toLowerCase().includes(filtro);
+          break;
       }
+
+      const coincideEstado = !estado || r.estado.toLowerCase() === estado;
+
+      return coincideCategoria && coincideEstado;
     });
   }
 
   limpiarFiltro(): void {
-    this.filtro = '';
-    this.reservasFiltradas = [...this.reservas];
+    this.filtroBusqueda = '';
+    this.categoriaBusqueda = 'cliente';
+    this.filtroEstado = '';
+    this.reservasFiltradas = this.reservas;
   }
 
+  // Modal
+  abrirModal(): void {
+    this.modalAbierto = true;
+    this.nuevaReserva = this.crearReservaVacia();
+  }
+
+  cerrarModal(): void {
+    this.modalAbierto = false;
+  }
+
+  // Notificaciones
+  mostrarMensaje(texto: string, tipo: 'exito' | 'error' = 'exito'): void {
+    this.mensaje = texto;
+    this.tipoNotificacion = tipo;
+    this.mostrarNotificacion = true;
+    setTimeout(() => (this.mostrarNotificacion = false), 2500);
+  }
+
+  // Crear reserva
   crearReserva(): void {
     if (
       !this.nuevaReserva.usuario.nombre.trim() ||
@@ -106,61 +129,53 @@ export class ReservaAdminComponent implements OnInit {
       !this.nuevaReserva.fechaFin ||
       this.nuevaReserva.cantidadPersonas < 1
     ) {
-      this.mostrarConfirmacion('❌ Completa todos los campos obligatorios');
+      this.mostrarMensaje('Completa todos los campos obligatorios', 'error');
       return;
     }
 
-    const nuevoId = this.reservas.length
-      ? Math.max(...this.reservas.map((r) => r.idReserva)) + 1
-      : 1;
-    this.nuevaReserva.idReserva = nuevoId;
-
-    this.reservas.push({ ...this.nuevaReserva });
-    this.reservasFiltradas = [...this.reservas];
-    this.nuevaReserva = this.crearReservaVacia();
-    this.cerrarModal();
-    this.mostrarConfirmacion('✅ Reserva creada correctamente');
+    this.reservaService.create(this.nuevaReserva).subscribe({
+      next: () => {
+        this.cargarReservas();
+        this.cerrarModal();
+        this.mostrarMensaje('Reserva creada correctamente', 'exito');
+      },
+      error: () => this.mostrarMensaje('Error al crear reserva', 'error'),
+    });
   }
 
+  // Seleccionar reserva para editar
   editarReserva(reserva: Reserva): void {
     this.editando = { ...reserva };
+    this.abrirModal();
+    this.nuevaReserva = this.editando;
   }
 
+  // Guardar edición
   guardarEdicion(): void {
     if (!this.editando) return;
-    const index = this.reservas.findIndex((r) => r.idReserva === this.editando!.idReserva);
-    if (index !== -1) {
-      this.reservas[index] = { ...this.editando };
-      this.reservasFiltradas = [...this.reservas];
-      this.editando = null;
-      this.mostrarConfirmacion('✏️ Reserva actualizada correctamente');
-    }
+
+    this.reservaService.update(this.editando).subscribe({
+      next: () => {
+        this.cargarReservas();
+        this.editando = null;
+        this.cerrarModal();
+        this.mostrarMensaje('Reserva actualizada correctamente', 'exito');
+      },
+      error: () => this.mostrarMensaje('Error al actualizar reserva', 'error'),
+    });
   }
 
-  cancelarEdicion(): void {
-    this.editando = null;
-  }
-
+  // Eliminar reserva
   eliminarReserva(id: number): void {
-    if (confirm('¿Seguro que deseas eliminar esta reserva?')) {
-      this.reservas = this.reservas.filter((r) => r.idReserva !== id);
-      this.reservasFiltradas = [...this.reservas];
-      this.mostrarConfirmacion('🗑️ Reserva eliminada correctamente');
-    }
-  }
+    if (!confirm('¿Seguro que deseas eliminar esta reserva?')) return;
 
-  mostrarConfirmacion(texto: string): void {
-    this.mensaje = texto;
-    this.mostrarMensaje = true;
-    setTimeout(() => (this.mostrarMensaje = false), 3000);
-  }
-
-  abrirModal(): void {
-    this.modalAbierto = true;
-  }
-
-  cerrarModal(): void {
-    this.modalAbierto = false;
+    this.reservaService.delete(id).subscribe({
+      next: () => {
+        this.cargarReservas();
+        this.mostrarMensaje('Reserva eliminada correctamente', 'exito');
+      },
+      error: () => this.mostrarMensaje('Error al eliminar reserva', 'error'),
+    });
   }
 
   private crearReservaVacia(): Reserva {

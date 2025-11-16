@@ -1,128 +1,222 @@
 <div class="admin-container">
-  <!-- Mensaje de confirmación -->
-  <div class="toast" *ngIf="mostrarMensaje">{{ mensaje }}</div>
-  <h2 class="titulo">Gestión de Servicios</h2>
-  <!-- Barra de búsqueda -->
-  <div class="form-group" style="text-align: center; margin-bottom: 1.5rem">
-    <input
-      type="text"
-      placeholder="Buscar por tipo o nombre..."
-      [(ngModel)]="filtro"
-      class="form-control"
-      style="width: 60%; display: inline-block"
-    />
-    <button class="btn btn-primary" (click)="buscarServicios()">Buscar</button>
-    <button class="btn btn-secondary" (click)="limpiarFiltro()">Limpiar</button>
+  <!-- Notificación flotante -->
+  <div
+    class="notificacion"
+    *ngIf="mostrarNotificacion"
+    [ngClass]="{ exito: tipoNotificacion === 'exito', error: tipoNotificacion === 'error' }"
+  >
+    {{ mensaje }}
   </div>
-  <!-- Botón para crear nuevo servicio -->
-  <div class="crear-servicio" style="text-align: center; margin-bottom: 2rem">
-    <p>Si deseas crear un nuevo servicio <span style="font-size: 1.5rem">⬇️</span></p>
-    <button class="btn btn-success" (click)="abrirModal()">Crear servicio</button>
+
+  <div class="header-section">
+    <h2 class="titulo">Gestión de Servicios</h2>
+    <button class="btn btn-success btn-crear" (click)="abrirModal()">
+      + Nuevo Servicio
+    </button>
   </div>
-  <!-- Lista de servicios -->
-  <div class="card mt-4">
-    <div class="card-header">Lista de Servicios</div>
-    <div class="card-body">
-      <table class="tabla">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Tipo</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Precio</th>
-            <th>Imagen</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let servicio of serviciosFiltrados">
-            <td>{{ servicio.idServicio }}</td>
-            <!-- Tipo -->
-            <td *ngIf="editando?.idServicio !== servicio.idServicio">{{ servicio.tipo }}</td>
-            <td *ngIf="editando?.idServicio === servicio.idServicio">
-              <input [(ngModel)]="editando!.tipo" />
-            </td>
-            <!-- Nombre -->
-            <td *ngIf="editando?.idServicio !== servicio.idServicio">{{ servicio.nombre }}</td>
-            <td *ngIf="editando?.idServicio === servicio.idServicio">
-              <input [(ngModel)]="editando!.nombre" />
-            </td>
-            <!-- Descripción -->
-            <td *ngIf="editando?.idServicio !== servicio.idServicio">{{ servicio.descripcion }}</td>
-            <td *ngIf="editando?.idServicio === servicio.idServicio">
-              <textarea [(ngModel)]="editando!.descripcion"></textarea>
-            </td>
-            <!-- Precio -->
-            <td *ngIf="editando?.idServicio !== servicio.idServicio">
-              {{ servicio.precio | currency }}
-            </td>
-            <td *ngIf="editando?.idServicio === servicio.idServicio">
-              <input type="number" [(ngModel)]="editando!.precio" />
-            </td>
-            <!-- Imagen -->
-            <td>
-              <img
-                [src]="servicio.imagenURL"
-                alt="Imagen servicio"
-                width="80"
-                *ngIf="servicio.imagenURL"
-              />
-            </td>
-            <td>
-              <ng-container *ngIf="editando?.idServicio !== servicio.idServicio">
-                <button class="btn btn-warning btn-sm" (click)="editarServicio(servicio)">
-                  Editar
-                </button>
-                <button
-                  class="btn btn-danger btn-sm"
-                  (click)="eliminarServicio(servicio.idServicio)"
-                >
-                  Eliminar
-                </button>
-              </ng-container>
-              <ng-container *ngIf="editando?.idServicio === servicio.idServicio">
-                <button class="btn btn-success btn-sm" (click)="guardarEdicion()">Guardar</button>
-                <button class="btn btn-secondary btn-sm" (click)="cancelarEdicion()">
-                  Cancelar
-                </button>
-              </ng-container>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+  <!-- Barra de búsqueda optimizada -->
+  <div class="filtros-container">
+    <div class="filtro-grupo">
+      <label class="filtro-label">Buscar por:</label>
+      <select [(ngModel)]="categoriaBusqueda" class="filtro-select">
+        <option value="id">ID</option>
+        <option value="nombre">Nombre</option>
+        <option value="tipo">Tipo</option>
+      </select>
+    </div>
+
+    <div class="filtro-grupo">
+      <input
+        type="text"
+        placeholder="Buscar..."
+        [(ngModel)]="filtroBusqueda"
+        class="filtro-input"
+      />
+    </div>
+
+    <div class="filtro-acciones">
+      <button class="btn btn-primary btn-sm" (click)="filtrarServicios()">Buscar</button>
+      <button class="btn btn-secondary btn-sm" (click)="limpiarFiltro()">Limpiar</button>
     </div>
   </div>
+
+  <!-- Lista de servicios -->
+  <div class="card mt-4">
+    <div class="card-header">
+      <span>Lista de Servicios</span>
+      <span class="total-count">Total: {{ serviciosFiltrados.length }}</span>
+    </div>
+    <div class="card-body">
+      <div class="tabla-container">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th class="col-id">ID</th>
+              <th class="col-tipo">Tipo</th>
+              <th class="col-nombre">Nombre</th>
+              <th class="col-descripcion">Descripción</th>
+              <th class="col-precio">Precio</th>
+              <th class="col-imagen">Imagen</th>
+              <th class="col-acciones">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let servicio of serviciosFiltrados" [class.editing]="editando?.idServicio === servicio.idServicio">
+              <td class="col-id">{{ servicio.idServicio }}</td>
+
+              <!-- Tipo -->
+              <td class="col-tipo">
+                <span *ngIf="editando?.idServicio !== servicio.idServicio">
+                  <span class="badge badge-tipo">{{ servicio.tipo }}</span>
+                </span>
+                <input *ngIf="editando?.idServicio === servicio.idServicio"
+                  [(ngModel)]="editando!.tipo"
+                  class="input-inline" />
+              </td>
+
+              <!-- Nombre -->
+              <td class="col-nombre">
+                <span *ngIf="editando?.idServicio !== servicio.idServicio" class="nombre-servicio">
+                  {{ servicio.nombre }}
+                </span>
+                <input *ngIf="editando?.idServicio === servicio.idServicio"
+                  [(ngModel)]="editando!.nombre"
+                  class="input-inline" />
+              </td>
+
+              <!-- Descripción -->
+              <td class="col-descripcion">
+                <span *ngIf="editando?.idServicio !== servicio.idServicio"
+                  class="descripcion-preview"
+                  [title]="servicio.descripcion"
+                  (click)="verDescripcion(servicio)">
+                  {{ servicio.descripcion ? (servicio.descripcion.length > 40 ? servicio.descripcion.substring(0, 40) + '...' : servicio.descripcion) : 'Sin descripción' }}
+                </span>
+                <textarea *ngIf="editando?.idServicio === servicio.idServicio"
+                  [(ngModel)]="editando!.descripcion"
+                  class="input-inline"
+                  rows="2"></textarea>
+              </td>
+
+              <!-- Precio -->
+              <td class="col-precio">
+                <span *ngIf="editando?.idServicio !== servicio.idServicio" class="precio">
+                  {{ servicio.precio | currency }}
+                </span>
+                <input *ngIf="editando?.idServicio === servicio.idServicio"
+                  type="number"
+                  [(ngModel)]="editando!.precio"
+                  class="input-inline input-small" />
+              </td>
+
+              <!-- Imagen -->
+              <td class="col-imagen">
+                <div class="imagen-container" *ngIf="servicio.imagenURL">
+                  <img [src]="servicio.imagenURL" alt="{{ servicio.nombre }}" class="servicio-imagen" />
+                </div>
+                <span *ngIf="!servicio.imagenURL" class="sin-imagen">Sin imagen</span>
+              </td>
+
+              <!-- Acciones -->
+              <td class="col-acciones">
+                <div class="btn-group">
+                  <ng-container *ngIf="editando?.idServicio !== servicio.idServicio">
+                    <button class="btn btn-warning btn-sm btn-icon"
+                      (click)="editarServicio(servicio)"
+                      title="Editar">
+                      ✏️
+                    </button>
+                    <button class="btn btn-danger btn-sm btn-icon"
+                      (click)="eliminarServicio(servicio.idServicio)"
+                      title="Eliminar">
+                      🗑️
+                    </button>
+                  </ng-container>
+                  <ng-container *ngIf="editando?.idServicio === servicio.idServicio">
+                    <button class="btn btn-success btn-sm btn-icon"
+                      (click)="guardarEdicion()"
+                      title="Guardar">
+                      ✓
+                    </button>
+                    <button class="btn btn-secondary btn-sm btn-icon"
+                      (click)="cancelarEdicion()"
+                      title="Cancelar">
+                      ✗
+                    </button>
+                  </ng-container>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="serviciosFiltrados.length === 0" class="no-results">
+        No se encontraron servicios con los criterios seleccionados.
+      </div>
+    </div>
+  </div>
+
   <!-- Modal para crear servicio -->
   <div class="modal" *ngIf="modalAbierto">
+    <div class="modal-overlay" (click)="cerrarModal()"></div>
     <div class="modal-content">
       <h3>Nuevo Servicio</h3>
       <form (ngSubmit)="crearServicio()">
         <div class="form-group">
           <label>Tipo:</label>
-          <input type="text" [(ngModel)]="nuevoServicio.tipo" name="tipo" required />
+          <input type="text" [(ngModel)]="nuevoServicio.tipo" name="tipo" required placeholder="Ej: Spa, Restaurant, Deporte" />
         </div>
+
         <div class="form-group">
           <label>Nombre:</label>
-          <input type="text" [(ngModel)]="nuevoServicio.nombre" name="nombre" required />
+          <input type="text" [(ngModel)]="nuevoServicio.nombre" name="nombre" required placeholder="Ej: Masaje Relajante" />
         </div>
+
         <div class="form-group">
           <label>Descripción:</label>
-          <textarea [(ngModel)]="nuevoServicio.descripcion" name="descripcion"></textarea>
+          <textarea [(ngModel)]="nuevoServicio.descripcion" name="descripcion" rows="3" placeholder="Descripción del servicio..."></textarea>
         </div>
+
         <div class="form-group">
           <label>Precio:</label>
-          <input type="number" [(ngModel)]="nuevoServicio.precio" name="precio" required />
+          <input type="number" [(ngModel)]="nuevoServicio.precio" name="precio" required min="0" step="0.01" />
         </div>
+
         <div class="form-group">
-          <label>Imagen URL:</label>
-          <input type="text" [(ngModel)]="nuevoServicio.imagenURL" name="imagenURL" />
+          <label>URL de Imagen:</label>
+          <input type="text" [(ngModel)]="nuevoServicio.imagenURL" name="imagenURL" placeholder="https://ejemplo.com/imagen.jpg" />
         </div>
+
         <div class="modal-buttons">
-          <button type="submit" class="btn btn-success">Crear</button>
+          <button type="submit" class="btn btn-success">Crear Servicio</button>
           <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Modal para ver descripción completa -->
+  <div class="modal" *ngIf="descripcionModal">
+    <div class="modal-overlay" (click)="cerrarDescripcionModal()"></div>
+    <div class="modal-content modal-descripcion">
+      <h3>{{ servicioSeleccionado?.nombre }}</h3>
+      <div class="descripcion-tipo">
+        <span class="badge badge-tipo">{{ servicioSeleccionado?.tipo }}</span>
+        <span class="precio-modal">{{ servicioSeleccionado?.precio | currency }}</span>
+      </div>
+      <p class="descripcion-completa">
+        {{ servicioSeleccionado?.descripcion || 'No hay descripción disponible' }}
+      </p>
+      <div *ngIf="servicioSeleccionado?.imagenURL" class="imagen-modal">
+        <img [src]="servicioSeleccionado!.imagenURL" [alt]="servicioSeleccionado!.nombre" />
+      </div>
+      <div class="modal-buttons">
+        <button type="button" class="btn btn-secondary" (click)="cerrarDescripcionModal()">
+          Cerrar
+        </button>
+      </div>
     </div>
   </div>
 </div>

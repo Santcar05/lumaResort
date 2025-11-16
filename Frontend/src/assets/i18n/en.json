@@ -245,5 +245,45 @@
     "ERROR_TITLE": "Registration error",
     "ALREADY_HAVE_ACCOUNT": "Already have an account?",
     "SIGN_IN": "Sign in"
+  },
+  "CHATBOT": {
+    "BACK": "Back",
+    "SECTION_LABEL": "VIRTUAL ASSISTANT",
+    "TITLE_PART1": "Luma",
+    "TITLE_PART2": "Assistant",
+    "SUBTITLE": "Your personal assistant for an exceptional hotel experience",
+
+    "STATUS_ONLINE": "Online",
+    "BOT_NAME": "Luma Assistant",
+    "BOT_DESCRIPTION": "Hotel Luma AI Assistant",
+    "CLEAR_CHAT": "Clear chat",
+    "TOGGLE_THEME": "Toggle theme",
+
+    "WELCOME_TITLE": "Hello! I'm Luma, your virtual assistant",
+    "WELCOME_TEXT": "I'm here to help you with:",
+
+    "QUICK_BOOKINGS": "Bookings",
+    "QUICK_SERVICES": "Hotel services",
+    "QUICK_TOURISM": "Tourist information",
+    "QUICK_RESTAURANTS": "Restaurants and food",
+
+    "INPUT_PLACEHOLDER": "Type your message...",
+    "RECORD": "Record",
+    "STOP_RECORDING": "Stop",
+    "ATTACH": "Attach",
+
+    "QUICK_ACTIONS_TITLE": "Quick Actions",
+    "ACTION_BOOK_ROOM": "Book Room",
+    "ACTION_HOTEL_SERVICES": "Hotel Services",
+    "ACTION_SCHEDULES": "Schedules",
+    "ACTION_TRANSPORT": "Transport",
+
+    "HOTEL_INFO_TITLE": "Hotel Luma",
+    "HOTEL_ADDRESS": "123 Street, Cartagena, Colombia",
+    "HOTEL_PHONE": "+1 234 567 890",
+    "HOTEL_EMAIL": "info@hotelluma.com",
+
+    "WEATHER_TITLE": "Current Weather",
+    "WEATHER_HUMIDITY": "Humidity"
   }
 }

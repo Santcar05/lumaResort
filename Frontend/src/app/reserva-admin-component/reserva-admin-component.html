@@ -1,216 +1,226 @@
 <div class="admin-container">
-  <!-- Mensaje de confirmación -->
-  <div class="toast" *ngIf="mostrarMensaje">{{ mensaje }}</div>
 
-  <h2 class="titulo">Gestión de Reservas</h2>
-
-  <!-- Barra de búsqueda con select -->
+  <!-- Notificación flotante -->
   <div
-    class="form-group"
-    style="
-      text-align: center;
-      margin-bottom: 1.5rem;
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    "
+    class="notificacion"
+    *ngIf="mostrarNotificacion"
+    [ngClass]="{ exito: tipoNotificacion === 'exito', error: tipoNotificacion === 'error' }"
   >
-    <select [(ngModel)]="criterio" class="form-control" style="width: 200px">
-      <option value="cliente">Cliente</option>
-      <option value="id">ID</option>
-      <option value="habitacion">Habitación</option>
-      <option value="estado">Estado</option>
-    </select>
-    <input
-      type="text"
-      [(ngModel)]="filtro"
-      class="form-control"
-      placeholder="Escribe para buscar..."
-      style="width: 250px"
-    />
-    <button class="btn btn-primary" (click)="buscarReservas()">Buscar</button>
-    <button class="btn btn-secondary" (click)="limpiarFiltro()">Limpiar</button>
+    {{ mensaje }}
   </div>
 
-  <!-- Botón para crear nueva reserva -->
-  <div class="crear-servicio" style="text-align: center; margin-bottom: 2rem">
-    <p>Si deseas crear una nueva reserva <span style="font-size: 1.5rem">⬇️</span></p>
-    <button class="btn btn-success" (click)="abrirModal()">Crear reserva</button>
+  <!-- Header -->
+  <div class="header-section">
+    <h2 class="titulo">Gestión de Reservas</h2>
+    <button class="btn btn-success btn-crear" (click)="abrirModal()">
+      + Nueva Reserva
+    </button>
+  </div>
+
+  <!-- Barra de búsqueda -->
+  <div class="filtros-container">
+    <div class="filtro-grupo">
+      <label class="filtro-label">Buscar por:</label>
+      <select [(ngModel)]="categoriaBusqueda" class="filtro-select">
+        <option value="id">ID</option>
+        <option value="cliente">Cliente</option>
+        <option value="habitacion">Habitación</option>
+      </select>
+    </div>
+
+    <div class="filtro-grupo">
+      <input
+        type="text"
+        placeholder="Buscar..."
+        [(ngModel)]="filtroBusqueda"
+        class="filtro-input"
+      />
+    </div>
+
+    <div class="filtro-grupo">
+      <label class="filtro-label">Estado:</label>
+      <select [(ngModel)]="filtroEstado" class="filtro-select">
+        <option value="">Todos</option>
+        <option value="pendiente">Pendiente</option>
+        <option value="confirmada">Confirmada</option>
+        <option value="cancelada">Cancelada</option>
+        <option value="completada">Completada</option>
+      </select>
+    </div>
+
+    <div class="filtro-acciones">
+      <button class="btn btn-primary btn-sm" (click)="filtrarReservas()">Buscar</button>
+      <button class="btn btn-secondary btn-sm" (click)="limpiarFiltro()">Limpiar</button>
+    </div>
   </div>
 
   <!-- Lista de reservas -->
   <div class="card mt-4">
-    <div class="card-header">Lista de Reservas</div>
+    <div class="card-header">
+      <span>Lista de Reservas</span>
+      <span class="total-count">Total: {{ reservasFiltradas.length }}</span>
+    </div>
+
     <div class="card-body">
-      <table class="tabla">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Cliente</th>
-            <th>Habitación</th>
-            <th>Inicio</th>
-            <th>Fin</th>
-            <th>Personas</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let reserva of reservasFiltradas">
-            <td>{{ reserva.idReserva }}</td>
+      <div class="tabla-container">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Habitación</th>
+              <th>Fecha Inicio</th>
+              <th>Fecha Fin</th>
+              <th>Personas</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
 
-            <!-- Cliente -->
-            <td *ngIf="editando?.idReserva !== reserva.idReserva">{{ reserva.usuario.nombre }}</td>
-            <td *ngIf="editando?.idReserva === reserva.idReserva">
-              <input [(ngModel)]="editando!.usuario.nombre" />
-            </td>
+          <tbody>
+            <tr *ngFor="let reserva of reservasFiltradas" [class.editing]="editando?.idReserva === reserva.idReserva">
 
-            <!-- Habitación -->
-            <td *ngIf="editando?.idReserva !== reserva.idReserva">
-              {{ reserva.habitacion.numero }}
-            </td>
-            <td *ngIf="editando?.idReserva === reserva.idReserva">
-              <input [(ngModel)]="editando!.habitacion.numero" />
-            </td>
+              <td>{{ reserva.idReserva }}</td>
 
-            <!-- Fechas -->
-            <td *ngIf="editando?.idReserva !== reserva.idReserva">
-              {{ reserva.fechaInicio | date }}
-            </td>
-            <td *ngIf="editando?.idReserva === reserva.idReserva">
-              <input type="date" [(ngModel)]="editando!.fechaInicio" />
-            </td>
-            <td *ngIf="editando?.idReserva !== reserva.idReserva">{{ reserva.fechaFin | date }}</td>
-            <td *ngIf="editando?.idReserva === reserva.idReserva">
-              <input type="date" [(ngModel)]="editando!.fechaFin" />
-            </td>
+              <!-- Cliente -->
+              <td>
+                {{ reserva.usuario.nombre }} {{ reserva.usuario.apellido }}
+              </td>
 
-            <!-- Cantidad de personas -->
-            <td *ngIf="editando?.idReserva !== reserva.idReserva">
-              {{ reserva.cantidadPersonas }}
-            </td>
-            <td *ngIf="editando?.idReserva === reserva.idReserva">
-              <input type="number" [(ngModel)]="editando!.cantidadPersonas" />
-            </td>
+              <!-- Habitación -->
+              <td>
+                {{ reserva.habitacion.numero }}
+              </td>
 
-            <!-- Estado -->
-            <td *ngIf="editando?.idReserva !== reserva.idReserva">{{ reserva.estado }}</td>
-            <td *ngIf="editando?.idReserva === reserva.idReserva">
-              <input [(ngModel)]="editando!.estado" />
-            </td>
+              <!-- Fecha Inicio -->
+              <td>
+                <span *ngIf="editando?.idReserva !== reserva.idReserva">
+                    {{ reserva.fechaInicio | date:'dd/MM/yyyy' }}
+                </span>
+                <input *ngIf="editando?.idReserva === reserva.idReserva"
+                       type="date" [(ngModel)]="editando!.fechaInicio"
+                       class="input-inline"/>
+              </td>
 
-            <!-- Acciones -->
-            <td>
-              <ng-container *ngIf="editando?.idReserva !== reserva.idReserva">
-                <button class="btn btn-warning btn-sm" (click)="editarReserva(reserva)">
-                  Editar
-                </button>
-                <button class="btn btn-danger btn-sm" (click)="eliminarReserva(reserva.idReserva)">
-                  Eliminar
-                </button>
-              </ng-container>
-              <ng-container *ngIf="editando?.idReserva === reserva.idReserva">
-                <button class="btn btn-success btn-sm" (click)="guardarEdicion()">Guardar</button>
-                <button class="btn btn-secondary btn-sm" (click)="cancelarEdicion()">
-                  Cancelar
-                </button>
-              </ng-container>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <!-- Fecha Fin -->
+              <td>
+                <span *ngIf="editando?.idReserva !== reserva.idReserva">
+                    {{ reserva.fechaFin | date:'dd/MM/yyyy' }}
+                </span>
+                <input *ngIf="editando?.idReserva === reserva.idReserva"
+                       type="date" [(ngModel)]="editando!.fechaFin"
+                       class="input-inline"/>
+              </td>
+
+              <!-- Personas -->
+              <td>
+                <span *ngIf="editando?.idReserva !== reserva.idReserva">
+                    {{ reserva.cantidadPersonas }} pers.
+                </span>
+                <input *ngIf="editando?.idReserva === reserva.idReserva"
+                       type="number" min="1"
+                       [(ngModel)]="editando!.cantidadPersonas"
+                       class="input-inline input-small"/>
+              </td>
+
+              <!-- Estado con badges -->
+              <td>
+                <span class="badge"
+                  [ngClass]="{
+                    'badge-pendiente': reserva.estado?.toLowerCase() === 'pendiente',
+                    'badge-confirmada': reserva.estado?.toLowerCase() === 'confirmada',
+                    'badge-cancelada': reserva.estado?.toLowerCase() === 'cancelada',
+                    'badge-completada': reserva.estado?.toLowerCase() === 'completada'
+                  }">
+                  {{ reserva.estado }}
+                </span>
+              </td>
+
+              <!-- Acciones -->
+              <td>
+                <div class="btn-group">
+
+                  <ng-container *ngIf="editando?.idReserva !== reserva.idReserva">
+                    <button class="btn btn-warning btn-sm btn-icon"
+                            (click)="editarReserva(reserva)">✏️</button>
+
+                    <button class="btn btn-danger btn-sm btn-icon"
+                            (click)="eliminarReserva(reserva.idReserva)">🗑️</button>
+                  </ng-container>
+
+                  <ng-container *ngIf="editando?.idReserva === reserva.idReserva">
+                    <button class="btn btn-success btn-sm btn-icon"
+                            (click)="guardarEdicion()">✓</button>
+
+                    <button class="btn btn-secondary btn-sm btn-icon"
+                            (click)="cancelarEdicion()">✗</button>
+                  </ng-container>
+
+                </div>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="reservasFiltradas.length === 0" class="no-results">
+        No se encontraron reservas con los criterios seleccionados.
+      </div>
     </div>
   </div>
 
-  <!-- Modal para crear reserva -->
+  <!-- Modal para crear nueva reserva -->
   <div class="modal" *ngIf="modalAbierto">
+    <div class="modal-overlay" (click)="cerrarModal()"></div>
+
     <div class="modal-content">
       <h3>Nueva Reserva</h3>
-      <form #reservaForm="ngForm" (ngSubmit)="crearReserva()">
+
+      <form (ngSubmit)="crearReserva()" #reservaForm="ngForm">
+
         <div class="form-group">
           <label>Cliente:</label>
-          <input
-            type="text"
-            [(ngModel)]="nuevaReserva.usuario.nombre"
-            name="cliente"
-            required
-            #clienteInput="ngModel"
-          />
-          <div *ngIf="clienteInput.invalid && clienteInput.touched" style="color: red">
-            Debes ingresar el nombre del cliente
-          </div>
+          <select [(ngModel)]="nuevaReserva.usuario" name="usuario" required>
+            <option [ngValue]="null">-- Selecciona un cliente --</option>
+            <option *ngFor="let u of usuarios" [ngValue]="u">
+              {{ u.nombre }} (ID: {{ u.idUsuario }})
+            </option>
+          </select>
         </div>
 
         <div class="form-group">
           <label>Habitación:</label>
-          <input
-            type="text"
-            [(ngModel)]="nuevaReserva.habitacion.numero"
-            name="habitacion"
-            required
-            #habitacionInput="ngModel"
-          />
-          <div *ngIf="habitacionInput.invalid && habitacionInput.touched" style="color: red">
-            Debes ingresar el número de la habitación
-          </div>
+          <select [(ngModel)]="nuevaReserva.habitacion" name="habitacion" required>
+            <option [ngValue]="null">-- Selecciona una habitación --</option>
+            <option *ngFor="let h of habitaciones" [ngValue]="h">
+              Hab. {{ h.numero }} - {{ h.tipo }} ({{ h.precioPorNoche | currency }})
+            </option>
+          </select>
         </div>
 
         <div class="form-group">
-          <label>Fecha de Inicio:</label>
-          <input
-            type="date"
-            [(ngModel)]="nuevaReserva.fechaInicio"
-            name="inicio"
-            required
-            #inicioInput="ngModel"
-          />
-          <div *ngIf="inicioInput.invalid && inicioInput.touched" style="color: red">
-            Debes ingresar la fecha de inicio
-          </div>
+          <label>Fecha Inicio:</label>
+          <input type="date" name="fechaInicio" [(ngModel)]="nuevaReserva.fechaInicio" required />
         </div>
 
         <div class="form-group">
-          <label>Fecha de Fin:</label>
-          <input
-            type="date"
-            [(ngModel)]="nuevaReserva.fechaFin"
-            name="fin"
-            required
-            #finInput="ngModel"
-          />
-          <div *ngIf="finInput.invalid && finInput.touched" style="color: red">
-            Debes ingresar la fecha de fin
-          </div>
+          <label>Fecha Fin:</label>
+          <input type="date" name="fechaFin" [(ngModel)]="nuevaReserva.fechaFin" required />
         </div>
 
         <div class="form-group">
           <label>Cantidad de Personas:</label>
-          <input
-            type="number"
-            [(ngModel)]="nuevaReserva.cantidadPersonas"
-            name="personas"
-            required
-            min="1"
-            #personasInput="ngModel"
-          />
-          <div *ngIf="personasInput.invalid && personasInput.touched" style="color: red">
-            Debes ingresar al menos 1 persona
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Estado:</label>
-          <input type="text" [(ngModel)]="nuevaReserva.estado" name="estado" />
+          <input type="number" min="1" name="cantidadPersonas" [(ngModel)]="nuevaReserva.cantidadPersonas" required />
         </div>
 
         <div class="modal-buttons">
-          <button type="submit" class="btn btn-success" [disabled]="reservaForm.invalid">
-            Crear
-          </button>
+          <button type="submit" class="btn btn-success" [disabled]="reservaForm.invalid">Crear Reserva</button>
           <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
         </div>
+
       </form>
     </div>
   </div>
+
 </div>

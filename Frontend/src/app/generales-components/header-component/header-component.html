@@ -8,13 +8,10 @@
 
           <ul class="dropdown" [class.show]="menuVisible">
             <li>
-              <a href="#">{{ 'HEADER.CONTACT' | translate }}</a>
+              <a [routerLink]="['/contacto']">{{ 'HEADER.CONTACT' | translate }}</a>
             </li>
             <li>
               <a href="#">{{ 'HEADER.THEME' | translate }}</a>
-            </li>
-            <li>
-              <a href="#">{{ 'HEADER.ROOMS' | translate }}</a>
             </li>
             <li>
               <a href="#">{{ 'HEADER.RESTAURANTS' | translate }}</a>

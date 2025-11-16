@@ -65,6 +65,18 @@ public class SecurityConfig {
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers("/actividades").permitAll()
                 .requestMatchers("/actividades/**").permitAll()
+                // Chatbot de contacto
+                .requestMatchers("/api/chatbot/**").permitAll()
+                .requestMatchers("/api/chatbot").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/chatbot/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/chatbot/**").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/api/chatbot/**").permitAll()
+                // ========== CLIMA ==========
+                .requestMatchers("/api/clima/**").permitAll()
+                .requestMatchers("/api/clima").permitAll()
+                // ========== SERVIR ARCHIVOS SUBIDOS - PÚBLICO ==========
+                .requestMatchers("/uploads/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
                 //ENDPOINTS DE AUTENTICACIÓN 
                 .requestMatchers(HttpMethod.GET, "/api/auth/actual").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/api/auth/perfil").authenticated()
@@ -93,9 +105,9 @@ public class SecurityConfig {
                 // Gestión de pagos (solo OPERADOR)
                 .requestMatchers("/pagos/**").hasRole("OPERADOR")
                 // Gestión de servicios: POST/PUT/DELETE solo OPERADOR, GET público
-                .requestMatchers(HttpMethod.POST, "/servicios/**").hasRole("OPERADOR")
-                .requestMatchers(HttpMethod.PUT, "/servicios/**").hasRole("OPERADOR")
-                .requestMatchers(HttpMethod.DELETE, "/servicios/**").hasRole("OPERADOR")
+                .requestMatchers(HttpMethod.POST, "/servicios/**").hasAnyRole("OPERADOR", "ADMINISTRADOR")
+                .requestMatchers(HttpMethod.PUT, "/servicios/**").hasAnyRole("OPERADOR", "ADMINISTRADOR")
+                .requestMatchers(HttpMethod.DELETE, "/servicios/**").hasAnyRole("OPERADOR", "ADMINISTRADOR")
                 .requestMatchers(HttpMethod.GET, "/servicios/**").permitAll()
                 // ========== ENDPOINTS DE RESERVAS ==========
                 // Ver TODAS las reservas (OPERADOR y ADMINISTRADOR)

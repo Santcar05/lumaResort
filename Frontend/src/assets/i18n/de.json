@@ -244,5 +244,45 @@
     "ERROR_TITLE": "Registrierungsfehler",
     "ALREADY_HAVE_ACCOUNT": "Sie haben bereits ein Konto?",
     "SIGN_IN": "Anmelden"
+  },
+  "CHATBOT": {
+    "BACK": "Zurück",
+    "SECTION_LABEL": "VIRTUELLER ASSISTENT",
+    "TITLE_PART1": "Luma",
+    "TITLE_PART2": "Assistent",
+    "SUBTITLE": "Ihr persönlicher Assistent für ein außergewöhnliches Hotelerlebnis",
+
+    "STATUS_ONLINE": "Online",
+    "BOT_NAME": "Luma Assistent",
+    "BOT_DESCRIPTION": "KI-Assistent des Hotel Luma",
+    "CLEAR_CHAT": "Chat löschen",
+    "TOGGLE_THEME": "Design wechseln",
+
+    "WELCOME_TITLE": "Hallo! Ich bin Luma, Ihr virtueller Assistent",
+    "WELCOME_TEXT": "Ich bin hier, um Ihnen zu helfen mit:",
+
+    "QUICK_BOOKINGS": "Reservierungen",
+    "QUICK_SERVICES": "Hoteldienstleistungen",
+    "QUICK_TOURISM": "Touristeninformation",
+    "QUICK_RESTAURANTS": "Restaurants und Essen",
+
+    "INPUT_PLACEHOLDER": "Geben Sie Ihre Nachricht ein...",
+    "RECORD": "Aufnehmen",
+    "STOP_RECORDING": "Stoppen",
+    "ATTACH": "Anhängen",
+
+    "QUICK_ACTIONS_TITLE": "Schnellaktionen",
+    "ACTION_BOOK_ROOM": "Zimmer Buchen",
+    "ACTION_HOTEL_SERVICES": "Hotel Services",
+    "ACTION_SCHEDULES": "Zeitpläne",
+    "ACTION_TRANSPORT": "Transport",
+
+    "HOTEL_INFO_TITLE": "Hotel Luma",
+    "HOTEL_ADDRESS": "Straße 123, Cartagena, Kolumbien",
+    "HOTEL_PHONE": "+1 234 567 890",
+    "HOTEL_EMAIL": "info@hotelluma.com",
+
+    "WEATHER_TITLE": "Aktuelles Wetter",
+    "WEATHER_HUMIDITY": "Luftfeuchtigkeit"
   }
 }

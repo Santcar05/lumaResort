@@ -1,12 +1,27 @@
 import { Component, OnInit, OnDestroy, HostListener, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { AutoTranslateService } from '../../service/translation/auto-translate-service';
+import { Subscription, forkJoin } from 'rxjs';
+
+interface Testimonial {
+  text: string;
+  name: string;
+  title: string;
+  avatar: string;
+}
+
+interface TranslatedTestimonial {
+  text: string;
+  title: string;
+}
+
 @Component({
   selector: 'app-testimonios-component',
   standalone: true,
   imports: [CommonModule, TranslateModule],
   templateUrl: './testimonios-component.html',
-  styleUrl: './testimonios-component.css',
+  styleUrls: ['./testimonios-component.css'],
 })
 export class TestimoniosComponent implements OnInit, OnDestroy {
   currentIndex: number = 0;
@@ -14,8 +29,9 @@ export class TestimoniosComponent implements OnInit, OnDestroy {
   visibleCards: number = 3;
   totalTestimonials: number = 0;
   isBrowser: boolean = false;
+  translating = false;
 
-  testimonials = [
+  testimonials: Testimonial[] = [
     {
       text: 'Mi estancia en LumaResort fue simplemente increíble. El servicio excepcional, las instalaciones de primera categoría y las vistas al mar hicieron de mis vacaciones una experiencia inolvidable. ¡Definitivamente volveré!',
       name: 'María González',
@@ -54,7 +70,14 @@ export class TestimoniosComponent implements OnInit, OnDestroy {
     },
   ];
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  translatedTestimonials: Map<number, TranslatedTestimonial> = new Map();
+  private langChangeSubscription?: Subscription;
+
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private translate: TranslateService,
+    private autoTranslate: AutoTranslateService
+  ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
@@ -65,10 +88,20 @@ export class TestimoniosComponent implements OnInit, OnDestroy {
       this.calculateVisibleCards();
       this.startAutoPlay();
     }
+
+    // Traducir al idioma actual
+    const currentLang = this.translate.currentLang ?? this.translate.getDefaultLang() ?? 'es';
+    this.translateAllTestimonials(currentLang);
+
+    // Suscribirse a cambios de idioma
+    this.langChangeSubscription = this.translate.onLangChange.subscribe((event) => {
+      this.translateAllTestimonials(event.lang);
+    });
   }
 
   ngOnDestroy(): void {
     this.stopAutoPlay();
+    this.langChangeSubscription?.unsubscribe();
   }
 
   @HostListener('window:resize')
@@ -77,6 +110,65 @@ export class TestimoniosComponent implements OnInit, OnDestroy {
       this.calculateVisibleCards();
     }
   }
+
+  /**
+   * Traduce todos los testimonios al idioma especificado
+   */
+  private translateAllTestimonials(targetLang: string): void {
+    if (targetLang === 'es') {
+      // Si es español, limpiar traducciones
+      this.translatedTestimonials.clear();
+      return;
+    }
+
+    this.translating = true;
+
+    // Traducir cada testimonio
+    const translations$ = this.testimonials.map((testimonial, index) => {
+      return forkJoin({
+        text: this.autoTranslate.translate(testimonial.text, targetLang),
+        title: this.autoTranslate.translate(testimonial.title, targetLang),
+      });
+    });
+
+    // Ejecutar todas las traducciones en paralelo
+    forkJoin(translations$).subscribe({
+      next: (results) => {
+        results.forEach((translation, index) => {
+          this.translatedTestimonials.set(index, translation);
+        });
+        this.translating = false;
+      },
+      error: (err) => {
+        console.error('Error traduciendo testimonios:', err);
+        this.translating = false;
+      },
+    });
+  }
+
+  /**
+   * Obtiene el texto traducido del testimonio
+   */
+  getTranslatedText(index: number): string {
+    const currentLang = this.translate.currentLang ?? this.translate.getDefaultLang() ?? 'es';
+    if (currentLang === 'es') {
+      return this.testimonials[index].text;
+    }
+    return this.translatedTestimonials.get(index)?.text || this.testimonials[index].text;
+  }
+
+  /**
+   * Obtiene el título traducido del testimonio
+   */
+  getTranslatedTitle(index: number): string {
+    const currentLang = this.translate.currentLang ?? this.translate.getDefaultLang() ?? 'es';
+    if (currentLang === 'es') {
+      return this.testimonials[index].title;
+    }
+    return this.translatedTestimonials.get(index)?.title || this.testimonials[index].title;
+  }
+
+  // ========== Métodos del carrusel (sin cambios) ==========
 
   calculateVisibleCards() {
     if (!this.isBrowser) return;
@@ -108,7 +200,7 @@ export class TestimoniosComponent implements OnInit, OnDestroy {
     if (this.currentIndex + this.visibleCards < this.totalTestimonials) {
       this.currentIndex++;
     } else {
-      this.currentIndex = 0; // Volver al inicio
+      this.currentIndex = 0;
     }
   }
 

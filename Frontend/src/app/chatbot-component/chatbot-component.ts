@@ -1,9 +1,18 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewChecked,
+  OnDestroy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HeaderComponent } from '../generales-components/header-component/header-component';
+import { Subscription } from 'rxjs';
 
 // Modelos
 interface Mensaje {
@@ -22,11 +31,11 @@ interface Clima {
 @Component({
   selector: 'app-chatbot-component',
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent],
+  imports: [CommonModule, FormsModule, HeaderComponent, TranslateModule],
   templateUrl: './chatbot-component.html',
   styleUrls: ['./chatbot-component.css'],
 })
-export class ChatbotComponent implements OnInit, AfterViewChecked {
+export class ChatbotComponent implements OnInit, AfterViewChecked, OnDestroy {
   /** ------------------ VARIABLES PRINCIPALES ------------------ **/
 
   // Estado del chat
@@ -40,6 +49,18 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
   temaOscuro: boolean = true;
   clima: Clima | null = null;
 
+  // Textos traducidos para usar en (click)
+  quickBookings: string = '';
+  quickServices: string = '';
+  quickTourism: string = '';
+  quickRestaurants: string = '';
+  actionBookRoom: string = '';
+  actionHotelServices: string = '';
+  actionSchedules: string = '';
+  actionTransport: string = '';
+
+  private langChangeSubscription?: Subscription;
+
   // Referencias del DOM
   @ViewChild('chatMessages') private chatMessagesContainer!: ElementRef;
   @ViewChild('mensajeInput') private mensajeInput!: ElementRef;
@@ -48,16 +69,55 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
   private baseUrlChatbot = 'http://localhost:8080/api/chatbot';
   private baseUrlClima = 'http://localhost:8080/api/clima';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private translate: TranslateService
+  ) {}
 
   /** ------------------ CICLO DE VIDA ------------------ **/
   ngOnInit(): void {
     this.cargarClima();
     this.inicializarReconocimientoVoz();
+    this.loadTranslations();
+
+    // Suscribirse a cambios de idioma
+    this.langChangeSubscription = this.translate.onLangChange.subscribe(() => {
+      this.loadTranslations();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.langChangeSubscription?.unsubscribe();
   }
 
   ngAfterViewChecked(): void {
     this.scrollToBottom();
+  }
+
+  /** ------------------ CARGAR TRADUCCIONES ------------------ **/
+  private loadTranslations(): void {
+    this.translate
+      .get([
+        'CHATBOT.QUICK_BOOKINGS',
+        'CHATBOT.QUICK_SERVICES',
+        'CHATBOT.QUICK_TOURISM',
+        'CHATBOT.QUICK_RESTAURANTS',
+        'CHATBOT.ACTION_BOOK_ROOM',
+        'CHATBOT.ACTION_HOTEL_SERVICES',
+        'CHATBOT.ACTION_SCHEDULES',
+        'CHATBOT.ACTION_TRANSPORT',
+      ])
+      .subscribe((translations) => {
+        this.quickBookings = translations['CHATBOT.QUICK_BOOKINGS'];
+        this.quickServices = translations['CHATBOT.QUICK_SERVICES'];
+        this.quickTourism = translations['CHATBOT.QUICK_TOURISM'];
+        this.quickRestaurants = translations['CHATBOT.QUICK_RESTAURANTS'];
+        this.actionBookRoom = translations['CHATBOT.ACTION_BOOK_ROOM'];
+        this.actionHotelServices = translations['CHATBOT.ACTION_HOTEL_SERVICES'];
+        this.actionSchedules = translations['CHATBOT.ACTION_SCHEDULES'];
+        this.actionTransport = translations['CHATBOT.ACTION_TRANSPORT'];
+      });
   }
 
   /** ------------------ FUNCIONES DEL CHAT ------------------ **/
@@ -88,10 +148,9 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
       error: () => {
         this.escribiendo = false;
         this.enviando = false;
-        this.agregarMensaje(
-          'Lo siento, estoy teniendo problemas para conectarme. Por favor, intenta nuevamente en unos momentos.',
-          false
-        );
+        this.translate.get('CHATBOT.ERROR_MESSAGE').subscribe((errorMsg: string) => {
+          this.agregarMensaje(errorMsg, false);
+        });
       },
     });
   }
@@ -111,11 +170,6 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
 
   limpiarChat(): void {
     this.mensajes = [];
-    // Mantener solo el mensaje de bienvenida
-    this.agregarMensaje(
-      '¡Hola! Soy Luma, tu asistente virtual. ¿En qué puedo ayudarte hoy?',
-      false
-    );
   }
 
   formatearMensaje(contenido: string): string {
@@ -182,10 +236,9 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
 
   toggleGrabacion(): void {
     if (!this.recognition) {
-      this.agregarMensaje(
-        'Tu navegador no soporta reconocimiento de voz. Por favor, usa Chrome o Edge.',
-        false
-      );
+      this.translate.get('CHATBOT.VOICE_NOT_SUPPORTED').subscribe((msg: string) => {
+        this.agregarMensaje(msg, false);
+      });
       return;
     }
 

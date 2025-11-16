@@ -28,7 +28,7 @@ export class AutoTranslateService {
     const params = new HttpParams()
       .set('q', text)
       .set('langpair', `es|${targetLang}`)
-      .set('de', 'santcar05@lumaresort.com');
+      .set('de', 'info@lumaresort.com');
 
     return this.http.get<any>(this.apiUrl, { params }).pipe(
       map((response) => {

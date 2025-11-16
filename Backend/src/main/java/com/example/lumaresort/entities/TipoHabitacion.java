@@ -11,6 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
+@ToString(exclude = {"habitaciones"})
 public class TipoHabitacion {
 
     @Id

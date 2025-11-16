@@ -1,0 +1,214 @@
+<app-header-component></app-header-component>
+<div class="chatbot-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <button class="back-btn" (click)="volver()" title="Volver">
+      <span class="back-icon">←</span> Volver
+    </button>
+
+    <div class="header-content">
+      <span class="section-label">ASISTENTE VIRTUAL</span>
+      <h1 class="main-title">Luma <span class="highlight">Assistant</span></h1>
+      <p class="subtitle">Tu asistente personal para una experiencia hotelera excepcional</p>
+    </div>
+  </div>
+
+  <!-- Chat Container -->
+  <div class="chat-section">
+    <div class="chat-grid">
+      <!-- Left Column - Chat Interface -->
+      <div class="chat-column">
+        <div class="chat-card">
+          <!-- Chat Header -->
+          <div class="chat-header">
+            <div class="bot-avatar">
+              <div class="avatar-icon">🤖</div>
+              <div class="avatar-status">
+                <span class="status-dot"></span>
+                <span class="status-text">En línea</span>
+              </div>
+            </div>
+            <div class="bot-info">
+              <h2 class="bot-name">Luma Assistant</h2>
+              <p class="bot-description">Asistente IA del Hotel Luma</p>
+            </div>
+            <div class="header-actions">
+              <button class="action-btn" (click)="limpiarChat()" title="Limpiar chat">
+                <span class="action-icon">🗑️</span>
+              </button>
+              <button class="action-btn" (click)="toggleTheme()" title="Cambiar tema">
+                <span class="action-icon">🌙</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Chat Messages -->
+          <div class="chat-messages" #chatMessages>
+            <!-- Welcome Message -->
+            <div class="message bot-message welcome-message">
+              <div class="message-avatar">🤖</div>
+              <div class="message-content">
+                <div class="message-bubble">
+                  <h4>¡Hola! Soy Luma, tu asistente virtual</h4>
+                  <p>Estoy aquí para ayudarte con:</p>
+                  <div class="quick-actions">
+                    <button
+                      class="quick-btn"
+                      (click)="sugerirConsulta('Reservas y disponibilidad')"
+                    >
+                      📅 Reservas
+                    </button>
+                    <button class="quick-btn" (click)="sugerirConsulta('Servicios del hotel')">
+                      🏨 Servicios
+                    </button>
+                    <button class="quick-btn" (click)="sugerirConsulta('Información turística')">
+                      🗺️ Turismo
+                    </button>
+                    <button class="quick-btn" (click)="sugerirConsulta('Restaurantes y comida')">
+                      🍽️ Restaurantes
+                    </button>
+                  </div>
+                </div>
+                <div class="message-time">{{ getCurrentTime() }}</div>
+              </div>
+            </div>
+
+            <!-- Chat Messages List -->
+            <div
+              *ngFor="let message of mensajes"
+              class="message"
+              [class.user-message]="message.esUsuario"
+              [class.bot-message]="!message.esUsuario"
+            >
+              <div class="message-avatar" *ngIf="!message.esUsuario">🤖</div>
+              <div class="message-content">
+                <div class="message-bubble" [innerHTML]="formatearMensaje(message.contenido)"></div>
+                <div class="message-time">{{ message.timestamp | date : 'HH:mm' }}</div>
+              </div>
+              <div class="message-avatar" *ngIf="message.esUsuario">👤</div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div class="message bot-message" *ngIf="escribiendo">
+              <div class="message-avatar">🤖</div>
+              <div class="message-content">
+                <div class="message-bubble typing-indicator">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Input -->
+          <div class="chat-input-container">
+            <div class="input-wrapper">
+              <textarea
+                #mensajeInput
+                class="chat-input"
+                placeholder="Escribe tu mensaje..."
+                [(ngModel)]="mensajeActual"
+                (keydown.enter)="enviarMensaje($event)"
+                rows="1"
+              ></textarea>
+              <button
+                class="send-btn"
+                (click)="enviarMensaje()"
+                [disabled]="!mensajeActual.trim() || enviando"
+              >
+                <span class="send-icon" *ngIf="!enviando">➤</span>
+                <div class="loading-mini" *ngIf="enviando"></div>
+              </button>
+            </div>
+            <div class="input-actions">
+              <button
+                class="microphone-btn"
+                (click)="toggleGrabacion()"
+                [class.recording]="grabando"
+              >
+                <span class="mic-icon">🎤</span>
+                {{ grabando ? 'Detener' : 'Grabar' }}
+              </button>
+              <button class="attachment-btn">
+                <span class="attach-icon">📎</span>
+                Adjuntar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column - Quick Actions & Info -->
+      <div class="actions-column">
+        <div class="sticky-wrapper">
+          <!-- Quick Actions -->
+          <div class="actions-card">
+            <h3 class="actions-title">
+              <span class="title-icon">⚡</span>
+              Acciones Rápidas
+            </h3>
+            <div class="actions-grid">
+              <button class="action-card" (click)="sugerirConsulta('Hacer una reserva')">
+                <span class="action-icon">📅</span>
+                <span class="action-text">Reservar Habitación</span>
+              </button>
+              <button class="action-card" (click)="sugerirConsulta('Servicios del hotel')">
+                <span class="action-icon">🏨</span>
+                <span class="action-text">Servicios Hotel</span>
+              </button>
+              <button class="action-card" (click)="sugerirConsulta('Horario check-in check-out')">
+                <span class="action-icon">⏰</span>
+                <span class="action-text">Horarios</span>
+              </button>
+              <button class="action-card" (click)="sugerirConsulta('Transporte aeropuerto')">
+                <span class="action-icon">🚗</span>
+                <span class="action-text">Transporte</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Hotel Information -->
+          <div class="info-card">
+            <h3 class="info-title">
+              <span class="title-icon">🏨</span>
+              Hotel Luma
+            </h3>
+            <div class="info-content">
+              <div class="info-item">
+                <span class="info-icon">📍</span>
+                <span class="info-text">Calle Principal #123, Ciudad</span>
+              </div>
+              <div class="info-item">
+                <span class="info-icon">📞</span>
+                <span class="info-text">+1 234 567 890</span>
+              </div>
+              <div class="info-item">
+                <span class="info-icon">✉️</span>
+                <span class="info-text">info@hotelluma.com</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Weather Widget -->
+          <div class="weather-card" *ngIf="clima">
+            <h3 class="weather-title">
+              <span class="title-icon">🌤️</span>
+              Clima Actual
+            </h3>
+            <div class="weather-content">
+              <div class="weather-main">
+                <div class="weather-icon">{{ clima.icono }}</div>
+                <div class="weather-temp">{{ clima.temperatura }}°C</div>
+              </div>
+              <div class="weather-details">
+                <div class="weather-desc">{{ clima.descripcion }}</div>
+                <div class="weather-humidity">Humedad: {{ clima.humedad }}%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

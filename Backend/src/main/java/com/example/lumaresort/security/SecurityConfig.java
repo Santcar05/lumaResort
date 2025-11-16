@@ -105,9 +105,9 @@ public class SecurityConfig {
                 // Gestión de pagos (solo OPERADOR)
                 .requestMatchers("/pagos/**").hasRole("OPERADOR")
                 // Gestión de servicios: POST/PUT/DELETE solo OPERADOR, GET público
-                .requestMatchers(HttpMethod.POST, "/servicios/**").hasRole("OPERADOR")
-                .requestMatchers(HttpMethod.PUT, "/servicios/**").hasRole("OPERADOR")
-                .requestMatchers(HttpMethod.DELETE, "/servicios/**").hasRole("OPERADOR")
+                .requestMatchers(HttpMethod.POST, "/servicios/**").hasAnyRole("OPERADOR", "ADMINISTRADOR")
+                .requestMatchers(HttpMethod.PUT, "/servicios/**").hasAnyRole("OPERADOR", "ADMINISTRADOR")
+                .requestMatchers(HttpMethod.DELETE, "/servicios/**").hasAnyRole("OPERADOR", "ADMINISTRADOR")
                 .requestMatchers(HttpMethod.GET, "/servicios/**").permitAll()
                 // ========== ENDPOINTS DE RESERVAS ==========
                 // Ver TODAS las reservas (OPERADOR y ADMINISTRADOR)

@@ -25,8 +25,22 @@ export class ReservaAdminComponent implements OnInit {
   ];
 
   reservas: Reserva[] = [];
+  reservasFiltradas: Reserva[] = [];
   nuevaReserva: Reserva = this.crearReservaVacia();
   editando: Reserva | null = null;
+
+  // Filtros
+  filtroBusqueda: string = '';
+  categoriaBusqueda: string = 'cliente';
+  filtroEstado: string = '';
+
+  // Modal
+  modalAbierto: boolean = false;
+
+  // Notificaciones
+  mensaje: string = '';
+  mostrarNotificacion: boolean = false;
+  tipoNotificacion: 'exito' | 'error' = 'exito';
 
   constructor(private reservaService: ReservaService) {}
 
@@ -37,9 +51,61 @@ export class ReservaAdminComponent implements OnInit {
   // 🔹 Cargar todas las reservas desde el backend
   cargarReservas(): void {
     this.reservaService.findAll().subscribe({
-      next: (data) => (this.reservas = data),
-      error: (err) => console.error('Error al cargar reservas:', err),
+      next: (data) => {
+        this.reservas = data;
+        this.reservasFiltradas = data;
+      },
+      error: () => this.mostrarMensaje('Error al cargar reservas', 'error'),
     });
+  }
+
+  // 🔹 Filtrar reservas
+  filtrarReservas(): void {
+    const filtro = this.filtroBusqueda.toLowerCase().trim();
+    const estadoSeleccionado = this.filtroEstado.toLowerCase().trim();
+
+    this.reservasFiltradas = this.reservas.filter((r) => {
+      let coincideCategoria = false;
+
+      if (this.categoriaBusqueda === 'id') {
+        coincideCategoria = r.idReserva?.toString().includes(filtro);
+      } else if (this.categoriaBusqueda === 'cliente') {
+        coincideCategoria = r.usuario.nombre?.toLowerCase().includes(filtro);
+      } else if (this.categoriaBusqueda === 'habitacion') {
+        coincideCategoria = r.habitacion.numero?.toLowerCase().includes(filtro);
+      }
+
+      const coincideEstado = !estadoSeleccionado || r.estado?.toLowerCase() === estadoSeleccionado;
+
+      return coincideCategoria && coincideEstado;
+    });
+  }
+
+  limpiarFiltro(): void {
+    this.filtroBusqueda = '';
+    this.categoriaBusqueda = 'cliente';
+    this.filtroEstado = '';
+    this.reservasFiltradas = this.reservas;
+  }
+
+  // 🔹 Modal
+  abrirModal(): void {
+    this.modalAbierto = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  cerrarModal(): void {
+    this.modalAbierto = false;
+    document.body.style.overflow = 'auto';
+    this.resetFormulario();
+  }
+
+  // 🔹 Notificaciones
+  mostrarMensaje(texto: string, tipo: 'exito' | 'error' = 'exito'): void {
+    this.mensaje = texto;
+    this.tipoNotificacion = tipo;
+    this.mostrarNotificacion = true;
+    setTimeout(() => (this.mostrarNotificacion = false), 2500);
   }
 
   // 🔹 Crear una nueva reserva
@@ -49,9 +115,10 @@ export class ReservaAdminComponent implements OnInit {
     this.reservaService.create(this.nuevaReserva).subscribe({
       next: () => {
         this.cargarReservas();
-        this.resetFormulario();
+        this.cerrarModal();
+        this.mostrarMensaje('Reserva creada correctamente');
       },
-      error: (err) => console.error('Error al crear reserva:', err),
+      error: () => this.mostrarMensaje('Error al crear reserva', 'error'),
     });
   }
 
@@ -63,8 +130,9 @@ export class ReservaAdminComponent implements OnInit {
       next: () => {
         this.cargarReservas();
         this.editando = null;
+        this.mostrarMensaje('Reserva actualizada correctamente');
       },
-      error: (err) => console.error('Error al actualizar reserva:', err),
+      error: () => this.mostrarMensaje('Error al actualizar reserva', 'error'),
     });
   }
 
@@ -72,8 +140,11 @@ export class ReservaAdminComponent implements OnInit {
   eliminarReserva(id: number): void {
     if (confirm('¿Seguro que deseas eliminar esta reserva?')) {
       this.reservaService.delete(id).subscribe({
-        next: () => this.cargarReservas(),
-        error: (err) => console.error('Error al eliminar reserva:', err),
+        next: () => {
+          this.cargarReservas();
+          this.mostrarMensaje('Reserva eliminada correctamente');
+        },
+        error: () => this.mostrarMensaje('Error al eliminar reserva', 'error'),
       });
     }
   }

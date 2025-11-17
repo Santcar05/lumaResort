@@ -1,53 +1,63 @@
 <section class="discovery-section">
   <div class="discovery-container">
-    <div class="discovery-header">
-      <h2 class="discovery-title">{{ 'DISCOVERY.TITLE' | translate }}</h2>
-      <p class="discovery-subtitle">{{ 'DISCOVERY.SUBTITLE' | translate }}</p>
-      <div class="title-divider"></div>
-    </div>
+    <div class="discovery-main-layout">
+      <!-- COLUMNA IZQUIERDA (TÍTULO + IMAGEN + CTA) -->
+      <div class="discovery-left">
+        <div class="discovery-header">
+          <h2 class="discovery-title">{{ 'DISCOVERY.TITLE' | translate }}</h2>
+          <p class="discovery-subtitle">{{ 'DISCOVERY.SUBTITLE' | translate }}</p>
+          <div class="title-divider"></div>
+        </div>
 
-    <!-- GRID CORREGIDO, TODAS LAS TARJETAS MISMO TAMAÑO -->
-    <div class="discovery-grid">
-      <app-tarjeta-descubrimiento
-        imageUrl="https://img.freepik.com/foto-gratis/al-atardecer-playa-tropical-mar-palmeras-coco_74190-1075.jpg?semt=ais_hybrid&w=740&q=80"
-        title="{{ 'DISCOVERY.CARD1.TITLE' | translate }}"
-        description="{{ 'DISCOVERY.CARD1.DESC' | translate }}"
-      ></app-tarjeta-descubrimiento>
+        <img src="assets/images/LumaRela.png" alt="Luma Resort" class="discovery-side-image" />
 
-      <app-tarjeta-descubrimiento
-        imageUrl="https://www.aquahotel.com/content/imgsxml/galerias/panel_slideinteriorcorporativo/1/13-spa-cabecera-op2356.jpg"
-        title="{{ 'DISCOVERY.CARD2.TITLE' | translate }}"
-        description="{{ 'DISCOVERY.CARD2.DESC' | translate }}"
-      ></app-tarjeta-descubrimiento>
+        <p class="side-cta-text">¿Listo para vivir la experiencia LumaResort?</p>
 
-      <app-tarjeta-descubrimiento
-        imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsWr9CCrUgMSOMAJJT2rtJvw04rjTauvoswg&s"
-        title="{{ 'DISCOVERY.CARD3.TITLE' | translate }}"
-        description="{{ 'DISCOVERY.CARD3.DESC' | translate }}"
-      ></app-tarjeta-descubrimiento>
+        <a routerLink="/servicios" class="cta-button side-cta-button">
+          {{ 'DISCOVERY.CTA_BUTTON' | translate }}
+        </a>
+      </div>
 
-      <app-tarjeta-descubrimiento
-        imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnyN4bwks2RChRVnfY-L4gqBk_Z_ZNrb4gpQ&s"
-        title="{{ 'DISCOVERY.CARD4.TITLE' | translate }}"
-        description="{{ 'DISCOVERY.CARD4.DESC' | translate }}"
-      ></app-tarjeta-descubrimiento>
+      <!-- COLUMNA DERECHA (6 TARJETAS - 2/3 DEL ANCHO) -->
+      <div class="discovery-right">
+        <div class="discovery-grid">
+          <app-tarjeta-descubrimiento
+            imageUrl="https://img.freepik.com/foto-gratis/al-atardecer-playa-tropical-mar-palmeras-coco_74190-1075.jpg?semt=ais_hybrid&w=740&q=80"
+            title="{{ 'DISCOVERY.CARD1.TITLE' | translate }}"
+            description="{{ 'DISCOVERY.CARD1.DESC' | translate }}"
+          ></app-tarjeta-descubrimiento>
 
-      <app-tarjeta-descubrimiento
-        imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTvlsfRNxus9DtA6nSK8fV8lzTEo3x9mJ0bg&s"
-        title="{{ 'DISCOVERY.CARD5.TITLE' | translate }}"
-        description="{{ 'DISCOVERY.CARD5.DESC' | translate }}"
-      ></app-tarjeta-descubrimiento>
+          <app-tarjeta-descubrimiento
+            imageUrl="https://www.aquahotel.com/content/imgsxml/galerias/panel_slideinteriorcorporativo/1/13-spa-cabecera-op2356.jpg"
+            title="{{ 'DISCOVERY.CARD2.TITLE' | translate }}"
+            description="{{ 'DISCOVERY.CARD2.DESC' | translate }}"
+          ></app-tarjeta-descubrimiento>
 
-      <app-tarjeta-descubrimiento
-        imageUrl="https://www.teletrans.com/wp-content/uploads/2020/03/taxi-aeropuerto.jpg"
-        title="{{ 'DISCOVERY.CARD6.TITLE' | translate }}"
-        description="{{ 'DISCOVERY.CARD6.DESC' | translate }}"
-      ></app-tarjeta-descubrimiento>
-    </div>
+          <app-tarjeta-descubrimiento
+            imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsWr9CCrUgMSOMAJJT2rtJvw04rjTauvoswg&s"
+            title="{{ 'DISCOVERY.CARD3.TITLE' | translate }}"
+            description="{{ 'DISCOVERY.CARD3.DESC' | translate }}"
+          ></app-tarjeta-descubrimiento>
 
-    <div class="discovery-cta">
-      <p>{{ 'DISCOVERY.CTA_TEXT' | translate }}</p>
-      <a href="#" class="cta-button">{{ 'DISCOVERY.CTA_BUTTON' | translate }}</a>
+          <app-tarjeta-descubrimiento
+            imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnyN4bwks2RChRVnfY-L4gqBk_Z_ZNrb4gpQ&s"
+            title="{{ 'DISCOVERY.CARD4.TITLE' | translate }}"
+            description="{{ 'DISCOVERY.CARD4.DESC' | translate }}"
+          ></app-tarjeta-descubrimiento>
+
+          <app-tarjeta-descubrimiento
+            imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTvlsfRNxus9DtA6nSK8fV8lzTEo3x9mJ0bg&s"
+            title="{{ 'DISCOVERY.CARD5.TITLE' | translate }}"
+            description="{{ 'DISCOVERY.CARD5.DESC' | translate }}"
+          ></app-tarjeta-descubrimiento>
+
+          <app-tarjeta-descubrimiento
+            imageUrl="https://www.teletrans.com/wp-content/uploads/2020/03/taxi-aeropuerto.jpg"
+            title="{{ 'DISCOVERY.CARD6.TITLE' | translate }}"
+            description="{{ 'DISCOVERY.CARD6.DESC' | translate }}"
+          ></app-tarjeta-descubrimiento>
+        </div>
+      </div>
     </div>
   </div>
 </section>

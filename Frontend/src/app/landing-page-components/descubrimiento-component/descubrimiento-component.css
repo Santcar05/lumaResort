@@ -296,5 +296,162 @@
     font-size: 0.92rem;
   }
 }
+/* --- SECCIÓN (ESPACIOS SUPERIOR E INFERIOR MÍNIMOS) --- */
+.discovery-section {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important; /* 🔥 QUITA ESPACIO INFERIOR */
+  margin: 0 !important;
+}
 
-/* Utility: si tu componente usa shadow DOM, puedes necesitar poner estas reglas en global styles (styles.scss) o usar ::ng-deep */
+.discovery-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-bottom: 0 !important; /* 🔥 GARANTIZA SIN ESPACIO */
+}
+
+/* --- LAYOUT IZQUIERDA (1/3) + DERECHA (2/3) --- */
+.discovery-main-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  align-items: center;
+  margin: 0 !important; /* 🔥 QUITA MARGEN INFERIOR */
+  padding: 0 !important;
+}
+
+/* ================================
+   COLUMNA IZQUIERDA — CENTRADA
+   ================================ */
+.discovery-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.3rem;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.discovery-header {
+  text-align: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.discovery-title {
+  font-size: 2.25rem;
+  margin: 0;
+}
+
+.discovery-subtitle {
+  font-size: 1.15rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.title-divider {
+  width: 65px;
+  height: 3px;
+  background: #ffffff;
+  margin: 0.35rem auto 0;
+}
+
+/* Imagen Luma centrada */
+.discovery-side-image {
+  width: 100%;
+  max-width: 330px;
+  border-radius: 14px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+}
+
+/* CTA izquierda */
+.side-cta-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0.5rem 0 0.3rem;
+}
+
+.side-cta-button {
+  font-size: 1.05rem;
+  padding: 0.8rem 2rem;
+}
+
+/* ================================
+   TARJETAS — GRID
+   ================================ */
+.discovery-right {
+  width: 100%;
+  margin: 0 !important; /* 🔥 QUITA ESPACIO INFERIOR */
+  padding: 0 !important;
+}
+
+.discovery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+  margin: 0 !important; /* 🔥 SIN ESPACIO DEBAJO DEL GRID */
+  padding: 0 !important;
+}
+
+/* ======================================
+   TARJETAS — PRIORIDAD AL TEXTO + IMÁGENES MÁS PEQUEÑAS
+   ====================================== */
+
+app-tarjeta-descubrimiento ::ng-deep .discovery-card,
+app-tarjeta-descubrimiento ::ng-deep .card {
+  display: flex;
+  flex-direction: column;
+  height: auto !important;
+  margin-bottom: 0 !important; /* 🔥 QUITA ESPACIO DEBAJO DE CADA TARJETA */
+}
+
+/* Imagen MUCHO más pequeña */
+app-tarjeta-descubrimiento ::ng-deep .card-image {
+  height: 150px !important; /* Mantiene tu tamaño correcto */
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+/* Imagen interna recortada */
+app-tarjeta-descubrimiento ::ng-deep .card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+@media (max-width: 1200px) {
+  .discovery-main-layout {
+    grid-template-columns: 1fr 1.4fr;
+  }
+}
+
+@media (max-width: 1000px) {
+  .discovery-main-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .discovery-left {
+    align-items: center;
+  }
+
+  .discovery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .discovery-side-image {
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 650px) {
+  .discovery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .discovery-side-image {
+    max-width: 220px;
+  }
+}

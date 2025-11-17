@@ -32,15 +32,15 @@
     "MENU_TESTIMONIALS": "Testimonials"
   },
   "DISCOVERY": {
-    "TITLE": "Discover LumaResort",
+    "TITLE": "Discover Luma Resort",
     "SUBTITLE": "A unique experience where luxury meets nature",
     "CARD1": {
       "TITLE": "Privileged Location",
-      "DESC": "Enjoy panoramic ocean views from every corner of our resort."
+      "DESC": "Enjoy panoramic views to the see from every corner of our resort."
     },
     "CARD2": {
       "TITLE": "Unique Experiences",
-      "DESC": "From world-class spa services to exciting water adventures."
+      "DESC": "We offer everything from a world-class spa to aquatic adventures."
     },
     "CARD3": {
       "TITLE": "Premium Service",

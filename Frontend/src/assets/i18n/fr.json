@@ -31,15 +31,15 @@
     "MENU_TESTIMONIALS": "Témoignages"
   },
   "DISCOVERY": {
-    "TITLE": "Découvrez LumaResort",
+    "TITLE": "Découvrez Luma Resort",
     "SUBTITLE": "Une expérience unique où le luxe rencontre la nature",
     "CARD1": {
       "TITLE": "Emplacement Privilégié",
-      "DESC": "Profitez de vues panoramiques sur la mer depuis chaque coin de notre complexe."
+      "DESC": "Vues panoramiques depuis tout le complexe."
     },
     "CARD2": {
       "TITLE": "Expériences Uniques",
-      "DESC": "Du spa de classe mondiale aux aventures aquatiques passionnantes."
+      "DESC": "Nous offrons d'un spa de classe mondiale à des aventures aquatiques."
     },
     "CARD3": {
       "TITLE": "Service Premium",
@@ -51,11 +51,11 @@
     },
     "CARD5": {
       "TITLE": "Gastronomie Exceptionnelle",
-      "DESC": "Restaurants gastronomiques avec des chefs internationaux."
+      "DESC": "Gastronomie & Chefs Internationaux."
     },
     "CARD6": {
       "TITLE": "Transport disponible",
-      "DESC": "Service de transfert privé vers et depuis l'aéroport."
+      "DESC": "Service de transfert privé depuis et vers l'aéroport dans la ville."
     },
     "CTA_TEXT": "Prêt à vivre l'expérience LumaResort ?",
     "CTA_BUTTON": "Découvrir plus"

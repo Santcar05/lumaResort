@@ -1,43 +1,52 @@
 <header>
   <nav>
-    <!-- Menú -->
-    <div class="menu-container" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+    <!-- MENÚ PRINCIPAL -->
+    <div class="menu-container">
       <ul>
-        <li class="PrimerLi">
+        <!-- BOTÓN MENÚ (hover + clic) -->
+        <li class="PrimerLi" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
           <a (click)="toggleMenu()">{{ 'HEADER.MENU' | translate }}</a>
 
           <ul class="dropdown" [class.show]="menuVisible">
             <li>
-              <a [routerLink]="['/contacto']">{{ 'HEADER.CONTACT' | translate }}</a>
+              <a [routerLink]="['/chatbot']">{{ 'HEADER.MENU_CHATBOT' | translate }}</a>
             </li>
             <li>
-              <a href="#">{{ 'HEADER.THEME' | translate }}</a>
+              <a [routerLink]="['/tema-visual']">{{ 'HEADER.MENU_THEME' | translate }}</a>
             </li>
             <li>
-              <a href="#">{{ 'HEADER.RESTAURANTS' | translate }}</a>
+              <a [routerLink]="['/servicios']">{{ 'HEADER.MENU_SERVICES' | translate }}</a>
             </li>
             <li>
-              <a [routerLink]="['/servicios']">{{ 'HEADER.SERVICES' | translate }}</a>
+              <a [routerLink]="['/restaurantes']">{{ 'HEADER.MENU_RESTAURANTS' | translate }}</a>
+            </li>
+            <li>
+              <a [routerLink]="['/testimonios']">{{ 'HEADER.MENU_TESTIMONIALS' | translate }}</a>
             </li>
           </ul>
         </li>
 
+        <!-- INICIO  -->
         <li>
           <a routerLink="/">{{ 'HEADER.HOME' | translate }}</a>
         </li>
       </ul>
     </div>
 
-    <!-- Nombre -->
+    <!-- TÍTULO -->
     <div>
       <h1 id="lumaResort">{{ 'HEADER.TITLE' | translate }}</h1>
     </div>
 
-    <!-- Contacto y Reservas -->
+    <!-- LADO DERECHO -->
     <div>
       <ul>
-        <!-- Idiomas -->
-        <li class="PrimerLi" (click)="toggleIdiomas()">
+        <!-- IDIOMAS (AHORA FUNCIONA CON HOVER) -->
+        <li
+          class="PrimerLi"
+          (mouseenter)="idiomasVisible = true"
+          (mouseleave)="idiomasVisible = false"
+        >
           <a>{{ 'HEADER.LANGUAGES' | translate }}</a>
 
           <ul class="dropdown" [class.show]="idiomasVisible">
@@ -56,20 +65,20 @@
           </ul>
         </li>
 
-        <!-- Reservas -->
+        <!-- RESERVAS -->
         <li class="PrimerLi">
           <a [routerLink]="['/reservas']">{{ 'HEADER.BOOKING' | translate }}</a>
         </li>
 
-        <!-- Login -->
+        <!-- LOGIN -->
         <li *ngIf="!isLoggedIn">
           <a [routerLink]="['/login']">{{ 'HEADER.LOGIN' | translate }}</a>
         </li>
 
-        <!-- Usuario logeado -->
+        <!-- PERFIL -->
         <ng-container *ngIf="isLoggedIn">
-          <li>
-            <a (click)="togglePerfil()">{{ 'HEADER.PROFILE' | translate }}</a>
+          <li (mouseenter)="perfilVisible = true" (mouseleave)="perfilVisible = false">
+            <a>{{ 'HEADER.PROFILE' | translate }}</a>
           </li>
 
           <ul class="dropdown" [class.show]="perfilVisible">

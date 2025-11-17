@@ -1,5 +1,4 @@
 <div class="admin-container">
-
   <!-- Notificación flotante -->
   <div
     class="notificacion"
@@ -9,15 +8,12 @@
     {{ mensaje }}
   </div>
 
-  <!-- Header -->
   <div class="header-section">
     <h2 class="titulo">Gestión de Reservas</h2>
-    <button class="btn btn-success btn-crear" (click)="abrirModal()">
-      + Nueva Reserva
-    </button>
+    <button class="btn btn-success btn-crear" (click)="abrirModal()">+ Nueva Reserva</button>
   </div>
 
-  <!-- Barra de búsqueda -->
+  <!-- Barra de búsqueda optimizada -->
   <div class="filtros-container">
     <div class="filtro-grupo">
       <label class="filtro-label">Buscar por:</label>
@@ -60,105 +56,130 @@
       <span>Lista de Reservas</span>
       <span class="total-count">Total: {{ reservasFiltradas.length }}</span>
     </div>
-
     <div class="card-body">
       <div class="tabla-container">
         <table class="tabla">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Cliente</th>
-              <th>Habitación</th>
-              <th>Fecha Inicio</th>
-              <th>Fecha Fin</th>
-              <th>Personas</th>
-              <th>Estado</th>
-              <th>Acciones</th>
+              <th class="col-id">ID</th>
+              <th class="col-cliente">Cliente</th>
+              <th class="col-habitacion">Habitación</th>
+              <th class="col-fecha">Fecha Inicio</th>
+              <th class="col-fecha">Fecha Fin</th>
+              <th class="col-personas">Personas</th>
+              <th class="col-estado">Estado</th>
+              <th class="col-acciones">Acciones</th>
             </tr>
           </thead>
-
           <tbody>
-            <tr *ngFor="let reserva of reservasFiltradas" [class.editing]="editando?.idReserva === reserva.idReserva">
-
-              <td>{{ reserva.idReserva }}</td>
+            <tr
+              *ngFor="let reserva of reservasFiltradas"
+              [class.editing]="editando?.idReserva === reserva.idReserva"
+            >
+              <td class="col-id">{{ reserva.idReserva }}</td>
 
               <!-- Cliente -->
-              <td>
+              <td class="col-cliente">
                 {{ reserva.usuario.nombre }} {{ reserva.usuario.apellido }}
               </td>
 
               <!-- Habitación -->
-              <td>
-                {{ reserva.habitacion.numero }}
+              <td class="col-habitacion">
+                <span class="habitacion-numero">{{ reserva.habitacion.numero }}</span>
               </td>
 
               <!-- Fecha Inicio -->
-              <td>
+              <td class="col-fecha">
                 <span *ngIf="editando?.idReserva !== reserva.idReserva">
-                    {{ reserva.fechaInicio | date:'dd/MM/yyyy' }}
+                  {{ reserva.fechaInicio | date : 'dd/MM/yyyy' }}
                 </span>
-                <input *ngIf="editando?.idReserva === reserva.idReserva"
-                       type="date" [(ngModel)]="editando!.fechaInicio"
-                       class="input-inline"/>
+                <input
+                  *ngIf="editando?.idReserva === reserva.idReserva"
+                  type="date"
+                  [(ngModel)]="editando!.fechaInicio"
+                  class="input-inline"
+                />
               </td>
 
               <!-- Fecha Fin -->
-              <td>
+              <td class="col-fecha">
                 <span *ngIf="editando?.idReserva !== reserva.idReserva">
-                    {{ reserva.fechaFin | date:'dd/MM/yyyy' }}
+                  {{ reserva.fechaFin | date : 'dd/MM/yyyy' }}
                 </span>
-                <input *ngIf="editando?.idReserva === reserva.idReserva"
-                       type="date" [(ngModel)]="editando!.fechaFin"
-                       class="input-inline"/>
+                <input
+                  *ngIf="editando?.idReserva === reserva.idReserva"
+                  type="date"
+                  [(ngModel)]="editando!.fechaFin"
+                  class="input-inline"
+                />
               </td>
 
               <!-- Personas -->
-              <td>
+              <td class="col-personas">
                 <span *ngIf="editando?.idReserva !== reserva.idReserva">
-                    {{ reserva.cantidadPersonas }} pers.
+                  {{ reserva.cantidadPersonas }} pers.
                 </span>
-                <input *ngIf="editando?.idReserva === reserva.idReserva"
-                       type="number" min="1"
-                       [(ngModel)]="editando!.cantidadPersonas"
-                       class="input-inline input-small"/>
+                <input
+                  *ngIf="editando?.idReserva === reserva.idReserva"
+                  type="number"
+                  min="1"
+                  [(ngModel)]="editando!.cantidadPersonas"
+                  class="input-inline input-small"
+                />
               </td>
 
-              <!-- Estado con badges -->
-              <td>
-                <span class="badge"
+              <!-- Estado con badge -->
+              <td class="col-estado">
+                <span
+                  class="badge"
                   [ngClass]="{
                     'badge-pendiente': reserva.estado?.toLowerCase() === 'pendiente',
                     'badge-confirmada': reserva.estado?.toLowerCase() === 'confirmada',
                     'badge-cancelada': reserva.estado?.toLowerCase() === 'cancelada',
                     'badge-completada': reserva.estado?.toLowerCase() === 'completada'
-                  }">
+                  }"
+                >
                   {{ reserva.estado }}
                 </span>
               </td>
 
               <!-- Acciones -->
-              <td>
+              <td class="col-acciones">
                 <div class="btn-group">
-
                   <ng-container *ngIf="editando?.idReserva !== reserva.idReserva">
-                    <button class="btn btn-warning btn-sm btn-icon"
-                            (click)="editarReserva(reserva)">✏️</button>
-
-                    <button class="btn btn-danger btn-sm btn-icon"
-                            (click)="eliminarReserva(reserva.idReserva)">🗑️</button>
+                    <button
+                      class="btn btn-warning btn-sm btn-icon"
+                      (click)="editarReserva(reserva)"
+                      title="Editar"
+                    >
+                      ✏️
+                    </button>
+                    <button
+                      class="btn btn-danger btn-sm btn-icon"
+                      (click)="eliminarReserva(reserva.idReserva)"
+                      title="Eliminar"
+                    >
+                      🗑️
+                    </button>
                   </ng-container>
-
                   <ng-container *ngIf="editando?.idReserva === reserva.idReserva">
-                    <button class="btn btn-success btn-sm btn-icon"
-                            (click)="guardarEdicion()">✓</button>
-
-                    <button class="btn btn-secondary btn-sm btn-icon"
-                            (click)="cancelarEdicion()">✗</button>
+                    <button
+                      class="btn btn-success btn-sm btn-icon"
+                      (click)="guardarEdicion()"
+                      title="Guardar"
+                    >
+                      ✓
+                    </button>
+                    <button
+                      class="btn btn-secondary btn-sm btn-icon"
+                      (click)="cancelarEdicion()"
+                      title="Cancelar"
+                    >
+                      ✗
+                    </button>
                   </ng-container>
-
                 </div>
               </td>
-
             </tr>
           </tbody>
         </table>
@@ -173,12 +194,9 @@
   <!-- Modal para crear nueva reserva -->
   <div class="modal" *ngIf="modalAbierto">
     <div class="modal-overlay" (click)="cerrarModal()"></div>
-
     <div class="modal-content">
       <h3>Nueva Reserva</h3>
-
-      <form (ngSubmit)="crearReserva()" #reservaForm="ngForm">
-
+      <form (ngSubmit)="crearReserva()">
         <div class="form-group">
           <label>Cliente:</label>
           <select [(ngModel)]="nuevaReserva.usuario" name="usuario" required>
@@ -201,26 +219,30 @@
 
         <div class="form-group">
           <label>Fecha Inicio:</label>
-          <input type="date" name="fechaInicio" [(ngModel)]="nuevaReserva.fechaInicio" required />
+          <input type="date" [(ngModel)]="nuevaReserva.fechaInicio" name="fechaInicio" required />
         </div>
 
         <div class="form-group">
           <label>Fecha Fin:</label>
-          <input type="date" name="fechaFin" [(ngModel)]="nuevaReserva.fechaFin" required />
+          <input type="date" [(ngModel)]="nuevaReserva.fechaFin" name="fechaFin" required />
         </div>
 
         <div class="form-group">
           <label>Cantidad de Personas:</label>
-          <input type="number" min="1" name="cantidadPersonas" [(ngModel)]="nuevaReserva.cantidadPersonas" required />
+          <input
+            type="number"
+            min="1"
+            [(ngModel)]="nuevaReserva.cantidadPersonas"
+            name="cantidadPersonas"
+            required
+          />
         </div>
 
         <div class="modal-buttons">
-          <button type="submit" class="btn btn-success" [disabled]="reservaForm.invalid">Crear Reserva</button>
+          <button type="submit" class="btn btn-success">Crear Reserva</button>
           <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
         </div>
-
       </form>
     </div>
   </div>
-
 </div>

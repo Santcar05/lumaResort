@@ -3,12 +3,12 @@
     "IMAGE_ALT": "Background image of the sky",
     "TITLE": "Discover paradise at Luma Resort",
     "DESCRIPTION": "Luxury experience in a privileged location on the beach of Luma Resort.",
-    "MORE_INFO": "More information"
+    "MORE_INFO": "Ask for more information here"
   },
   "HEADER": {
     "TITLE": "Luma Resort",
     "MENU": "Menu",
-    "CONTACT": "Contact",
+    "CONTACT": "Chatbot",
     "THEME": "Visual Theme",
     "ROOMS": "Rooms",
     "RESTAURANTS": "Restaurants",
@@ -24,7 +24,12 @@
     "PROFILE": "Profile",
     "VIEW_PROFILE": "View Profile",
     "VIEW_BOOKINGS": "View Bookings",
-    "LOGOUT": "Logout"
+    "LOGOUT": "Logout",
+    "MENU_CHATBOT": "Chatbot",
+    "MENU_THEME": "Visual Theme",
+    "MENU_SERVICES": "Services",
+    "MENU_RESTAURANTS": "Rooms",
+    "MENU_TESTIMONIALS": "Testimonials"
   },
   "DISCOVERY": {
     "TITLE": "Discover LumaResort",
@@ -84,7 +89,7 @@
     },
     "INFO": {
       "LOCATION": "Location",
-      "LOCATION_TEXT": "Av. Costera 123, Bahía Luma, Puerto Vallarta, Mexico",
+      "LOCATION_TEXT": "Cra. 1a #10-10, Cartagena de Indias, Province of Cartagena, Bolivar",
       "FORM": "Form",
       "FORM_TEXT": "Click here to send us a direct message",
       "SCHEDULE": "Schedule",

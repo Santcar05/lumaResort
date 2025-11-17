@@ -1,30 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ReservaService } from '../services/reserva.service';
-
-interface Usuario {
-  idUsuario: number;
-  nombre: string;
-  rol: string;
-}
-
-interface Habitacion {
-  idHabitacion: number;
-  numero: string;
-  precioPorNoche?: number;
-}
-
-interface Reserva {
-  idReserva: number;
-  fechaInicio: string;
-  fechaFin: string;
-  cantidadPersonas: number;
-  estado: string;
-  usuario: Usuario;
-  habitacion: Habitacion;
-  servicios?: any[];
-}
+import { Reserva } from '../Models/Reserva';
+import { ReservaService } from '../service/reserva/reserva-service';
 
 @Component({
   selector: 'app-reserva-admin-component',
@@ -34,12 +12,24 @@ interface Reserva {
   styleUrls: ['./reserva-admin-component.css'],
 })
 export class ReservaAdminComponent implements OnInit {
+  habitaciones = [
+    { idHabitacion: 1, numero: '101', tipo: 'Suite', precioPorNoche: 300 },
+    { idHabitacion: 2, numero: '102', tipo: 'Doble', precioPorNoche: 200 },
+    { idHabitacion: 3, numero: '103', tipo: 'Individual', precioPorNoche: 150 },
+  ];
+
+  usuarios = [
+    { idUsuario: 1, nombre: 'Juan Pérez', rol: 'Cliente' },
+    { idUsuario: 2, nombre: 'María Gómez', rol: 'Cliente' },
+    { idUsuario: 3, nombre: 'Carlos Ruiz', rol: 'Cliente' },
+  ];
+
   reservas: Reserva[] = [];
   reservasFiltradas: Reserva[] = [];
   nuevaReserva: Reserva = this.crearReservaVacia();
   editando: Reserva | null = null;
 
-  // Filtros unificados
+  // Filtros
   filtroBusqueda: string = '';
   categoriaBusqueda: string = 'cliente';
   filtroEstado: string = '';
@@ -47,7 +37,7 @@ export class ReservaAdminComponent implements OnInit {
   // Modal
   modalAbierto: boolean = false;
 
-  // Notificaciones unificadas
+  // Notificaciones
   mensaje: string = '';
   mostrarNotificacion: boolean = false;
   tipoNotificacion: 'exito' | 'error' = 'exito';
@@ -58,7 +48,7 @@ export class ReservaAdminComponent implements OnInit {
     this.cargarReservas();
   }
 
-  // Cargar reservas desde backend
+  // 🔹 Cargar todas las reservas desde el backend
   cargarReservas(): void {
     this.reservaService.findAll().subscribe({
       next: (data) => {
@@ -69,27 +59,23 @@ export class ReservaAdminComponent implements OnInit {
     });
   }
 
-  // Filtrado combinado
+  // 🔹 Filtrar reservas
   filtrarReservas(): void {
     const filtro = this.filtroBusqueda.toLowerCase().trim();
-    const estado = this.filtroEstado.toLowerCase().trim();
+    const estadoSeleccionado = this.filtroEstado.toLowerCase().trim();
 
     this.reservasFiltradas = this.reservas.filter((r) => {
       let coincideCategoria = false;
 
-      switch (this.categoriaBusqueda) {
-        case 'id':
-          coincideCategoria = r.idReserva.toString().includes(filtro);
-          break;
-        case 'cliente':
-          coincideCategoria = r.usuario.nombre.toLowerCase().includes(filtro);
-          break;
-        case 'habitacion':
-          coincideCategoria = r.habitacion.numero.toLowerCase().includes(filtro);
-          break;
+      if (this.categoriaBusqueda === 'id') {
+        coincideCategoria = r.idReserva?.toString().includes(filtro);
+      } else if (this.categoriaBusqueda === 'cliente') {
+        coincideCategoria = r.usuario.nombre?.toLowerCase().includes(filtro);
+      } else if (this.categoriaBusqueda === 'habitacion') {
+        coincideCategoria = r.habitacion.numero?.toLowerCase().includes(filtro);
       }
 
-      const coincideEstado = !estado || r.estado.toLowerCase() === estado;
+      const coincideEstado = !estadoSeleccionado || r.estado?.toLowerCase() === estadoSeleccionado;
 
       return coincideCategoria && coincideEstado;
     });
@@ -102,17 +88,19 @@ export class ReservaAdminComponent implements OnInit {
     this.reservasFiltradas = this.reservas;
   }
 
-  // Modal
+  // 🔹 Modal
   abrirModal(): void {
     this.modalAbierto = true;
-    this.nuevaReserva = this.crearReservaVacia();
+    document.body.style.overflow = 'hidden';
   }
 
   cerrarModal(): void {
     this.modalAbierto = false;
+    document.body.style.overflow = 'auto';
+    this.resetFormulario();
   }
 
-  // Notificaciones
+  // 🔹 Notificaciones
   mostrarMensaje(texto: string, tipo: 'exito' | 'error' = 'exito'): void {
     this.mensaje = texto;
     this.tipoNotificacion = tipo;
@@ -120,37 +108,21 @@ export class ReservaAdminComponent implements OnInit {
     setTimeout(() => (this.mostrarNotificacion = false), 2500);
   }
 
-  // Crear reserva
+  // 🔹 Crear una nueva reserva
   crearReserva(): void {
-    if (
-      !this.nuevaReserva.usuario.nombre.trim() ||
-      !this.nuevaReserva.habitacion.numero.trim() ||
-      !this.nuevaReserva.fechaInicio ||
-      !this.nuevaReserva.fechaFin ||
-      this.nuevaReserva.cantidadPersonas < 1
-    ) {
-      this.mostrarMensaje('Completa todos los campos obligatorios', 'error');
-      return;
-    }
+    if (!this.nuevaReserva.usuario || !this.nuevaReserva.habitacion) return;
 
     this.reservaService.create(this.nuevaReserva).subscribe({
       next: () => {
         this.cargarReservas();
         this.cerrarModal();
-        this.mostrarMensaje('Reserva creada correctamente', 'exito');
+        this.mostrarMensaje('Reserva creada correctamente');
       },
       error: () => this.mostrarMensaje('Error al crear reserva', 'error'),
     });
   }
 
-  // Seleccionar reserva para editar
-  editarReserva(reserva: Reserva): void {
-    this.editando = { ...reserva };
-    this.abrirModal();
-    this.nuevaReserva = this.editando;
-  }
-
-  // Guardar edición
+  // 🔹 Guardar cambios en una reserva editada
   guardarEdicion(): void {
     if (!this.editando) return;
 
@@ -158,26 +130,41 @@ export class ReservaAdminComponent implements OnInit {
       next: () => {
         this.cargarReservas();
         this.editando = null;
-        this.cerrarModal();
-        this.mostrarMensaje('Reserva actualizada correctamente', 'exito');
+        this.mostrarMensaje('Reserva actualizada correctamente');
       },
       error: () => this.mostrarMensaje('Error al actualizar reserva', 'error'),
     });
   }
 
-  // Eliminar reserva
+  // 🔹 Eliminar una reserva
   eliminarReserva(id: number): void {
-    if (!confirm('¿Seguro que deseas eliminar esta reserva?')) return;
-
-    this.reservaService.delete(id).subscribe({
-      next: () => {
-        this.cargarReservas();
-        this.mostrarMensaje('Reserva eliminada correctamente', 'exito');
-      },
-      error: () => this.mostrarMensaje('Error al eliminar reserva', 'error'),
-    });
+    if (confirm('¿Seguro que deseas eliminar esta reserva?')) {
+      this.reservaService.delete(id).subscribe({
+        next: () => {
+          this.cargarReservas();
+          this.mostrarMensaje('Reserva eliminada correctamente');
+        },
+        error: () => this.mostrarMensaje('Error al eliminar reserva', 'error'),
+      });
+    }
   }
 
+  // 🔹 Cancelar edición
+  cancelarEdicion(): void {
+    this.editando = null;
+  }
+
+  // 🔹 Seleccionar reserva para editar
+  editarReserva(reserva: Reserva): void {
+    this.editando = { ...reserva };
+  }
+
+  // 🔹 Limpiar formulario
+  resetFormulario(): void {
+    this.nuevaReserva = this.crearReservaVacia();
+  }
+
+  // 🔹 Crear plantilla vacía para una nueva reserva
   private crearReservaVacia(): Reserva {
     return {
       idReserva: 0,
@@ -185,8 +172,26 @@ export class ReservaAdminComponent implements OnInit {
       fechaFin: '',
       cantidadPersonas: 1,
       estado: 'Pendiente',
-      usuario: { idUsuario: 0, nombre: '', rol: 'Cliente' },
-      habitacion: { idHabitacion: 0, numero: '', precioPorNoche: 0 },
+      usuario: {
+        idUsuario: 0,
+        nombre: '',
+        apellido: '',
+        correo: '',
+        contrasena: '',
+        cedula: '',
+        telefono: '',
+        esOperador: false,
+        esAdministrador: false,
+        rol: 'Cliente',
+      },
+      habitacion: {
+        idHabitacion: 0,
+        numero: '',
+        precioPorNoche: 0,
+        estado: 'Disponible',
+        capacidad: 1,
+        descripcion: '',
+      },
       servicios: [],
     };
   }

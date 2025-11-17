@@ -27,7 +27,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [publicGuard] },
   { path: 'signup', component: SignUpComponent, canActivate: [publicGuard] },
   { path: 'perfil/:id', component: PerfilComponent }, // muestra perfil
-  { path: 'contacto', component: ChatbotComponent }, // muestra chatbot
+  { path: 'chatbot', component: ChatbotComponent }, // muestra chatbot
   {
     path: 'admin',
     component: AdminComponent,

@@ -1027,6 +1027,23 @@
 
 /* ===== GAMIFICACIÓN - RULETA DE PREMIOS ===== */
 
+/* Títulos de la ruleta */
+.ruleta-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+  text-shadow: 0 2px 10px rgba(90, 168, 255, 0.3);
+}
+
+.ruleta-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
 /* Contenedor principal de la ruleta */
 .ruleta-wrapper {
   position: relative;
@@ -1038,14 +1055,17 @@
 /* Flecha indicadora */
 .ruleta-arrow {
   position: absolute;
-  top: -40px;
+  top: -50px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 40px;
+  font-size: 50px;
   color: #ff6b6b;
   z-index: 10;
   animation: bounce 1s ease-in-out infinite;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 3px 8px rgba(255, 107, 107, 0.8));
+  text-shadow: 0 0 15px rgba(255, 107, 107, 0.9),
+               0 0 25px rgba(255, 107, 107, 0.6);
+  font-weight: bold;
 }
 
 /* Rueda de la ruleta */
@@ -1152,8 +1172,8 @@
   }
 
   .ruleta-arrow {
-    font-size: 32px;
-    top: -35px;
+    font-size: 40px;
+    top: -45px;
   }
 
   .segment-icon {
@@ -1184,6 +1204,11 @@
   .ruleta-wrapper {
     width: 280px;
     height: 280px;
+  }
+
+  .ruleta-arrow {
+    font-size: 35px;
+    top: -40px;
   }
 
   .segment-icon {
@@ -1324,6 +1349,11 @@
     height: 350px;
   }
 
+  .ruleta-arrow {
+    font-size: 40px;
+    top: -45px;
+  }
+
   .ruleta-wheel {
     width: 300px;
     height: 300px;
@@ -1364,6 +1394,11 @@
   .ruleta-wrapper {
     width: 280px;
     height: 280px;
+  }
+
+  .ruleta-arrow {
+    font-size: 35px;
+    top: -40px;
   }
 
   .ruleta-wheel {

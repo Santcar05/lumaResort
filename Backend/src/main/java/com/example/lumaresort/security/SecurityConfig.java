@@ -74,6 +74,17 @@ public class SecurityConfig {
                 // ========== CLIMA ==========
                 .requestMatchers("/api/clima/**").permitAll()
                 .requestMatchers("/api/clima").permitAll()
+                // ========== PAGOS CON STRIPE - OPERADOR ==========
+                // Todos los endpoints de pagos requieren rol OPERADOR
+                // IMPORTANTE: Las reglas más específicas van PRIMERO
+                .requestMatchers(HttpMethod.OPTIONS, "/api/pagos/**").permitAll() // CORS Preflight
+                .requestMatchers(HttpMethod.POST, "/api/pagos/create-payment-intent").hasRole("OPERADOR")
+                .requestMatchers(HttpMethod.POST, "/api/pagos/process-cash").hasRole("OPERADOR")
+                .requestMatchers(HttpMethod.POST, "/api/pagos/process-card").hasRole("OPERADOR")
+                .requestMatchers(HttpMethod.POST, "/api/pagos/confirm").hasRole("OPERADOR")
+                .requestMatchers(HttpMethod.GET, "/api/pagos/**").hasRole("OPERADOR")
+                .requestMatchers(HttpMethod.PUT, "/api/pagos/**").hasRole("OPERADOR")
+                .requestMatchers(HttpMethod.DELETE, "/api/pagos/**").hasRole("OPERADOR")
                 // ========== SERVIR ARCHIVOS SUBIDOS - PÚBLICO ==========
                 .requestMatchers("/uploads/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()

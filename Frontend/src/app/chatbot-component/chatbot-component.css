@@ -903,3 +903,140 @@ button:disabled {
     font-size: 1.3rem;
   }
 }
+/* ===== Contenedor horizontal para Info + Clima ===== */
+.info-weather-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+  gap: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Para que no tengan margen extra que las empuje */
+.info-weather-row .info-card,
+.info-weather-row .weather-card {
+  margin: 0 !important;
+  height: auto;
+  flex: 1;
+}
+
+/* Asegurar que elementos internos se ajusten */
+.info-weather-row .weather-content,
+.info-weather-row .info-content {
+  width: 100%;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .info-weather-row {
+    grid-template-columns: 1fr; /* Se apilan en tablets y móviles */
+  }
+}
+/* Header compactado y alineado */
+.header-section {
+  width: 100%;
+  padding: 0; /* antes tenía demasiado margen */
+  margin-bottom: 1rem;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* botón a la izquierda, título a la derecha */
+  width: 100%;
+}
+
+.header-top .main-title {
+  margin: 0;
+  padding: 0;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+/* Reducir tamaño del botón y hacerlo más compacto */
+.back-btn {
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  margin-right: 1rem;
+}
+
+.subtitle {
+  margin-top: 0.3rem;
+}
+/* Centrar título y subtítulo, hacerlo compacto */
+.header-section {
+  width: 100%;
+  text-align: center;
+  margin-top: -10px; /* sube todo un poco */
+}
+
+.header-section .main-title {
+  font-size: 2.3rem; /* ligeramente más pequeño */
+  line-height: 1.8;
+  margin: 0 auto;
+  max-width: 700px;
+}
+
+.header-section .subtitle {
+  font-size: 1.05rem;
+  margin-top: 0.3rem;
+  opacity: 0.9;
+}
+
+/* Asegurar que el botón quede alineado a la izquierda sin romper el centrado */
+.header-section {
+  position: relative;
+}
+
+.back-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+/* Items más pequeños dentro de Info */
+.info-item {
+  padding: 0.5rem 0 !important; /* antes 0.8rem */
+}
+
+/* Texto más compacto */
+.info-text {
+  font-size: 1rem !important;
+}
+
+/* Clima más pequeño */
+.weather-main {
+  margin-bottom: 0.5rem !important;
+}
+
+.weather-temp {
+  font-size: 1.8rem !important; /* antes 2.5rem */
+}
+
+.weather-icon {
+  font-size: 2.2rem !important; /* antes 3rem */
+}
+
+.weather-desc,
+.weather-humidity {
+  font-size: 1.1rem !important;
+}
+/* Reducir el tamaño total de las cards de la derecha */
+.actions-card,
+.info-card,
+.weather-card {
+  padding: 1rem !important; /* antes 1.5rem */
+  border-radius: 12px !important; /* más compactas */
+}
+
+/* Reducir espacio entre tarjetas */
+.sticky-wrapper {
+  gap: 1rem !important; /* antes 1.5rem */
+}
+
+/* Reducir títulos dentro de las cards */
+.actions-title,
+.info-title,
+.weather-title {
+  font-size: 1.8rem !important; /* antes 1.2rem */
+  margin-bottom: 0.9rem !important;
+}

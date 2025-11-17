@@ -3,7 +3,7 @@
     "IMAGE_ALT": "Hintergrundbild des Himmels",
     "TITLE": "Entdecken Sie das Paradies im Luma Resort",
     "DESCRIPTION": "Luxuserlebnis an einem privilegierten Standort am Strand des Luma Resorts.",
-    "MORE_INFO": "Mehr Informationen"
+    "MORE_INFO": "Fragen Sie hier nach weiteren Informationen"
   },
   "HEADER": {
     "LANGUAGES": "Sprachen",
@@ -27,8 +27,7 @@
     "MENU_CHATBOT": "Chatbot",
     "MENU_THEME": "Visuelles Thema",
     "MENU_SERVICES": "Dienstleistungen",
-    "MENU_ACTIVITIES": "Aktivitäten",
-    "MENU_RESTAURANTS": "Restaurants",
+    "MENU_RESTAURANTS": "Zimmer",
     "MENU_TESTIMONIALS": "Erfahrungsberichte"
   },
   "DISCOVERY": {

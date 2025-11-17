@@ -3,7 +3,7 @@
     "IMAGE_ALT": "Background image of the sky",
     "TITLE": "Discover paradise at Luma Resort",
     "DESCRIPTION": "Luxury experience in a privileged location on the beach of Luma Resort.",
-    "MORE_INFO": "More information"
+    "MORE_INFO": "Ask for more information here"
   },
   "HEADER": {
     "TITLE": "Luma Resort",
@@ -28,8 +28,7 @@
     "MENU_CHATBOT": "Chatbot",
     "MENU_THEME": "Visual Theme",
     "MENU_SERVICES": "Services",
-    "MENU_ACTIVITIES": "Activities",
-    "MENU_RESTAURANTS": "Restaurants",
+    "MENU_RESTAURANTS": "Rooms",
     "MENU_TESTIMONIALS": "Testimonials"
   },
   "DISCOVERY": {

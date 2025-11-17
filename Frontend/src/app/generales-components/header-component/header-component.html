@@ -8,16 +8,28 @@
           <a (click)="toggleMenu()">{{ 'HEADER.MENU' | translate }}</a>
 
           <ul class="dropdown" [class.show]="menuVisible">
-            <li><a [routerLink]="['/chatbot']">Chatbot</a></li>
-            <li><a [routerLink]="['/tema-visual']">Tema Visual</a></li>
-            <li><a [routerLink]="['/servicios']">Servicios</a></li>
-            <li><a [routerLink]="['/actividades']">Actividades</a></li>
-            <li><a [routerLink]="['/restaurantes']">Restaurantes</a></li>
-            <li><a [routerLink]="['/testimonios']">Testimonios</a></li>
+            <li>
+              <a [routerLink]="['/chatbot']">{{ 'HEADER.MENU_CHATBOT' | translate }}</a>
+            </li>
+            <li>
+              <a [routerLink]="['/tema-visual']">{{ 'HEADER.MENU_THEME' | translate }}</a>
+            </li>
+            <li>
+              <a [routerLink]="['/servicios']">{{ 'HEADER.MENU_SERVICES' | translate }}</a>
+            </li>
+            <li>
+              <a [routerLink]="['/actividades']">{{ 'HEADER.MENU_ACTIVITIES' | translate }}</a>
+            </li>
+            <li>
+              <a [routerLink]="['/restaurantes']">{{ 'HEADER.MENU_RESTAURANTS' | translate }}</a>
+            </li>
+            <li>
+              <a [routerLink]="['/testimonios']">{{ 'HEADER.MENU_TESTIMONIALS' | translate }}</a>
+            </li>
           </ul>
         </li>
 
-        <!-- INICIO SIN DROPDOWN -->
+        <!-- INICIO  -->
         <li>
           <a routerLink="/">{{ 'HEADER.HOME' | translate }}</a>
         </li>

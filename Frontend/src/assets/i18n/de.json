@@ -23,7 +23,13 @@
     "PROFILE": "Profil",
     "VIEW_PROFILE": "Profil ansehen",
     "VIEW_BOOKINGS": "Reservierungen ansehen",
-    "LOGOUT": "Abmelden"
+    "LOGOUT": "Abmelden",
+    "MENU_CHATBOT": "Chatbot",
+    "MENU_THEME": "Visuelles Thema",
+    "MENU_SERVICES": "Dienstleistungen",
+    "MENU_ACTIVITIES": "Aktivitäten",
+    "MENU_RESTAURANTS": "Restaurants",
+    "MENU_TESTIMONIALS": "Erfahrungsberichte"
   },
   "DISCOVERY": {
     "TITLE": "Entdecke LumaResort",

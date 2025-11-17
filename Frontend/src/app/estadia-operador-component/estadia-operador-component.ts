@@ -5,11 +5,11 @@ import { Reserva } from '../Models/Reserva';
 import { Pago } from '../Models/Pago';
 import { ReservaService } from '../service/reserva/reserva-service';
 import { PagoService } from '../service/pago/pago-service';
-
+import { Router, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-estadia-operador-component',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './estadia-operador-component.html',
   styleUrls: ['./estadia-operador-component.css'],
 })
@@ -50,7 +50,11 @@ export class EstadiaOperadorComponent implements OnInit {
   mostrarNotificacion: boolean = false;
   tipoNotificacion: 'exito' | 'error' | 'info' = 'exito';
 
-  constructor(private reservaService: ReservaService, private pagoService: PagoService) {}
+  constructor(
+    private reservaService: ReservaService,
+    private pagoService: PagoService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.cargarReservas();
@@ -159,6 +163,7 @@ export class EstadiaOperadorComponent implements OnInit {
   // Abrir modales
   abrirModalPagar(reserva: Reserva): void {
     this.reservaSeleccionada = reserva;
+    /*
     const saldoPendiente = this.getSaldoPendiente(reserva);
 
     this.datosPago = {
@@ -169,6 +174,11 @@ export class EstadiaOperadorComponent implements OnInit {
 
     this.modalPagarAbierto = true;
     document.body.style.overflow = 'hidden';
+    */
+    if (!this.reservaSeleccionada) return;
+    this.mostrarMensaje('Redirigiendo a la pasarela de pagos...', 'info');
+
+    this.router.navigate(['operador/pasarela-pagos', this.reservaSeleccionada.idReserva]);
   }
 
   abrirModalActivar(reserva: Reserva): void {
@@ -214,6 +224,7 @@ export class EstadiaOperadorComponent implements OnInit {
 
   // Acciones principales
   pagarCuenta(): void {
+    /*
     if (!this.reservaSeleccionada) return;
 
     const pago: Pago = {
@@ -233,6 +244,13 @@ export class EstadiaOperadorComponent implements OnInit {
       },
       error: () => this.mostrarMensaje('Error al procesar el pago', 'error'),
     });
+    */
+
+    //Ir a la pasarela de pagos con la reserva seleccionada
+    if (!this.reservaSeleccionada) return;
+    this.mostrarMensaje('Redirigiendo a la pasarela de pagos...', 'info');
+
+    this.router.navigate(['/pasarela-pagos']);
   }
 
   activarEstadia(): void {

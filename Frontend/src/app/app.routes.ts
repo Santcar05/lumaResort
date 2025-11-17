@@ -21,6 +21,7 @@ import { EstadiaOperadorComponent } from './estadia-operador-component/estadia-o
 import { adminGuard, clienteGuard, operadorGuard, publicGuard } from './guards/auth.guard';
 import { AdminDashboardComponentComponent } from './admin-dashboard-component/admin-dashboard-component';
 import { ChatbotComponent } from './chatbot-component/chatbot-component';
+import { OperadorPasarelaPagosComponent } from './operador-pasarela-pagos-component/operador-pasarela-pagos-component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // por defecto muestra Landing
@@ -49,7 +50,14 @@ export const routes: Routes = [
       { path: '', redirectTo: 'reservas', pathMatch: 'full' }, // Portal operador
       { path: 'reservas', component: ReservasOperadorComponent },
       { path: 'servicios', component: ServiciosOperadorComponent },
-      { path: 'pago', component: EstadiaOperadorComponent },
+      {
+        path: 'pago',
+        component: EstadiaOperadorComponent,
+      },
+      {
+        path: 'pasarela-pagos/:idReserva',
+        component: OperadorPasarelaPagosComponent,
+      },
       {
         path: 'limpiar-cuenta',
         component: ReservasOperadorComponent /* ComponentePagosComponent */,

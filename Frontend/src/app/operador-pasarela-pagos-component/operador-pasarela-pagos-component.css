@@ -1,0 +1,726 @@
+.operador-container {
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa, #dfe9f3);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header Section */
+.header-section {
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: fadeInDown 0.8s ease;
+}
+
+.titulo-principal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.titulo-texto {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #003366;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.titulo-decoracion {
+  font-size: 1.8rem;
+  animation: bounce 2s infinite;
+}
+
+.subtitulo {
+  color: #666;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Panel de Pago */
+.panel-pago {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  animation: slideInUp 0.6s ease;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Secciones */
+.seccion-reserva,
+.seccion-metodo-pago,
+.seccion-resumen {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.seccion-resumen {
+  border-bottom: none;
+}
+
+.seccion-header {
+  margin-bottom: 1.5rem;
+}
+
+.seccion-titulo {
+  color: #003366;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.subseccion-titulo {
+  color: #003366;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Detalles de Reserva */
+.reserva-detalles {
+  margin: 1rem 0;
+  animation: fadeIn 0.5s ease;
+}
+
+.detalle-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border-left: 4px solid #0055aa;
+}
+
+.detalle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.detalle-row:last-child {
+  border-bottom: none;
+}
+
+.detalle-label {
+  font-weight: 600;
+  color: #003366;
+  font-size: 0.9rem;
+}
+
+.detalle-valor {
+  color: #495057;
+  font-size: 0.95rem;
+}
+
+.badge-estado {
+  background: #d1ecf1;
+  color: #0055aa;
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Selector de Método de Pago */
+.metodos-pago-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.metodo-card {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.metodo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border-color: #0055aa;
+}
+
+.metodo-card.activo {
+  background: linear-gradient(135deg, #0055aa, #003366);
+  border-color: #003366;
+  color: white;
+  box-shadow: 0 8px 20px rgba(0, 85, 170, 0.3);
+}
+
+.metodo-card.activo::before {
+  content: '✓';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #2a9d8f;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.metodo-icono {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.metodo-nombre {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.metodo-descripcion {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.metodo-card.activo .metodo-descripcion {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Formularios */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  color: #003366;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #0055aa;
+  box-shadow: 0 0 0 3px rgba(0, 85, 170, 0.1);
+  background-color: #fff;
+  transform: translateY(-2px);
+}
+
+.form-control:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Input con icono */
+.input-con-icono {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.icono-input {
+  position: absolute;
+  left: 15px;
+  color: #003366;
+  font-weight: bold;
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+.form-control.with-icon {
+  padding-left: 2.5rem;
+}
+
+.helper-text {
+  display: block;
+  margin-top: 0.5rem;
+  color: #2a9d8f;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Form Row */
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+/* Info de Efectivo */
+.info-efectivo {
+  background: #d1ecf1;
+  border: 2px solid #0c5460;
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.info-icono {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.info-texto {
+  color: #0c5460;
+}
+
+.info-texto p {
+  margin: 0 0 0.5rem 0;
+}
+
+.info-texto ul {
+  margin: 0.5rem 0 0 1.5rem;
+  padding: 0;
+}
+
+.info-texto li {
+  margin: 0.3rem 0;
+  line-height: 1.5;
+}
+
+/* Stripe Elements */
+.stripe-info {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.stripe-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #635bff, #4338ca);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 12px rgba(99, 91, 255, 0.3);
+}
+
+.stripe-card-element {
+  padding: 0.75rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+  min-height: 45px;
+}
+
+.stripe-card-element:hover {
+  border-color: #0055aa;
+}
+
+.stripe-card-element.StripeElement--focus {
+  border-color: #0055aa;
+  box-shadow: 0 0 0 3px rgba(0, 85, 170, 0.1);
+  background-color: #fff;
+}
+
+.stripe-card-element.StripeElement--invalid {
+  border-color: #e63946;
+}
+
+.error-tarjeta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e63946;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.tarjetas-aceptadas {
+  margin-top: 0.5rem;
+  text-align: center;
+  color: #666;
+}
+
+/* Dirección de Facturación */
+.direccion-facturacion {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  border: 1px solid #e9ecef;
+}
+
+/* Resumen del Pago */
+.resumen-card {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border-left: 4px solid #2a9d8f;
+}
+
+.resumen-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.resumen-row:last-child {
+  border-bottom: none;
+}
+
+.resumen-row.total {
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+  border-top: 2px solid #2a9d8f;
+}
+
+.resumen-label {
+  font-weight: 600;
+  color: #003366;
+  font-size: 0.95rem;
+}
+
+.resumen-valor {
+  font-weight: 700;
+  color: #495057;
+  font-size: 0.95rem;
+}
+
+.resumen-row.total .resumen-label {
+  font-size: 1.2rem;
+  color: #2a9d8f;
+}
+
+.resumen-row.total .resumen-valor {
+  font-size: 1.5rem;
+  color: #2a9d8f;
+}
+
+/* Botones */
+.btn {
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  min-width: 180px;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-cancelar {
+  background: #6c757d;
+  color: #fff;
+}
+
+.btn-cancelar:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.btn-procesar-pago {
+  background: linear-gradient(135deg, #2a9d8f, #23857a);
+  color: #fff;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  min-width: 250px;
+}
+
+.btn-procesar-pago:hover:not(:disabled) {
+  background: linear-gradient(135deg, #23857a, #1d6d63);
+  box-shadow: 0 8px 20px rgba(42, 157, 143, 0.4);
+}
+
+/* Acciones de Pago */
+.acciones-pago {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid #f0f0f0;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Notificación */
+.notificacion {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  padding: 15px 25px;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  z-index: 3000;
+  opacity: 0;
+  animation: aparecer 0.4s forwards;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 300px;
+}
+
+.notificacion.exito {
+  background-color: #2a9d8f;
+}
+
+.notificacion.error {
+  background-color: #e63946;
+}
+
+.notificacion.info {
+  background-color: #0055aa;
+}
+
+.notificacion-icono {
+  font-size: 1.4rem;
+}
+
+@keyframes aparecer {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .operador-container {
+    padding: 1rem;
+  }
+
+  .panel-pago {
+    padding: 1.5rem;
+  }
+
+  .titulo-principal {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .titulo-texto {
+    font-size: 1.5rem;
+  }
+
+  .metodos-pago-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .acciones-pago {
+    flex-direction: column-reverse;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .notificacion {
+    left: 10px;
+    right: 10px;
+    min-width: auto;
+  }
+
+  .detalle-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .seccion-titulo {
+    font-size: 1.1rem;
+  }
+
+  .metodo-card {
+    padding: 1rem;
+  }
+
+  .metodo-icono {
+    font-size: 2rem;
+  }
+
+  .metodo-nombre {
+    font-size: 1rem;
+  }
+}
+
+/* Animaciones adicionales para mejor UX */
+.form-control,
+.metodo-card,
+.btn {
+  animation: fadeIn 0.5s ease;
+}
+
+/* Efecto de pulso para el botón de pago cuando está listo */
+.btn-procesar-pago:not(:disabled) {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(42, 157, 143, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(42, 157, 143, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(42, 157, 143, 0);
+  }
+}
+
+/* Estilo para select mejorado */
+select.form-control {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23003366' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 12px;
+  padding-right: 2.5rem;
+  appearance: none;
+}
+
+/* Efectos hover mejorados */
+.detalle-card:hover {
+  transform: translateX(5px);
+  transition: transform 0.3s ease;
+}
+
+.resumen-card {
+  animation: slideInUp 0.6s ease;
+}

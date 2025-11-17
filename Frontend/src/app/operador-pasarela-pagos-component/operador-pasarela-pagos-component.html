@@ -1,0 +1,310 @@
+<div class="operador-container">
+  <!-- Notificación flotante -->
+  <div
+    class="notificacion"
+    *ngIf="mostrarNotificacion"
+    [ngClass]="{
+      exito: tipoNotificacion === 'exito',
+      error: tipoNotificacion === 'error',
+      info: tipoNotificacion === 'info'
+    }"
+  >
+    <span class="notificacion-icono">
+      {{ tipoNotificacion === 'exito' ? '✅' : tipoNotificacion === 'error' ? '❌' : 'ℹ️' }}
+    </span>
+    {{ mensaje }}
+  </div>
+
+  <!-- Header -->
+  <div class="header-section">
+    <h2 class="titulo-principal">
+      <span class="titulo-texto">Pasarela de Pagos</span>
+      <span class="titulo-decoracion">💳</span>
+    </h2>
+    <p class="subtitulo">Procesa pagos en efectivo o con tarjeta de crédito</p>
+  </div>
+
+  <!-- Panel de Pago -->
+  <div class="panel-pago">
+    <!-- Sección de selección de reserva -->
+    <div class="seccion-reserva">
+      <div class="seccion-header">
+        <h3 class="seccion-titulo">📋 Información de la Reserva</h3>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Seleccionar Reserva *</label>
+        <select
+          [(ngModel)]="reservaSeleccionadaId"
+          (change)="onReservaChange()"
+          class="form-control"
+          [disabled]="procesandoPago"
+        >
+          <option [ngValue]="null">-- Seleccione una reserva --</option>
+          <option *ngFor="let reserva of reservasDisponibles" [ngValue]="reserva.idReserva">
+            {{ getDescripcionReserva(reserva) }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Detalles de la reserva seleccionada -->
+      <div class="reserva-detalles" *ngIf="reservaSeleccionada">
+        <div class="detalle-card">
+          <div class="detalle-row">
+            <span class="detalle-label">Cliente:</span>
+            <span class="detalle-valor"
+              >{{ reservaSeleccionada.usuario?.nombre }}
+              {{ reservaSeleccionada.usuario?.apellido }}</span
+            >
+          </div>
+          <div class="detalle-row">
+            <span class="detalle-label">Habitación:</span>
+            <span class="detalle-valor">{{ reservaSeleccionada.habitacion?.numero }}</span>
+          </div>
+          <div class="detalle-row">
+            <span class="detalle-label">Check-in:</span>
+            <span class="detalle-valor">{{ formatearFecha(reservaSeleccionada.fechaInicio) }}</span>
+          </div>
+          <div class="detalle-row">
+            <span class="detalle-label">Check-out:</span>
+            <span class="detalle-valor">{{ formatearFecha(reservaSeleccionada.fechaFin) }}</span>
+          </div>
+          <div class="detalle-row">
+            <span class="detalle-label">Estado:</span>
+            <span class="detalle-valor badge-estado">{{ reservaSeleccionada.estado }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Monto a Pagar *</label>
+
+        <small class="helper-text" *ngIf="monto > 0">Total: {{ formatearPrecio(monto) }}</small>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Descripción (Opcional)</label>
+        <textarea
+          [(ngModel)]="descripcion"
+          class="form-control"
+          rows="3"
+          placeholder="Añadir nota o descripción del pago..."
+          [disabled]="procesandoPago"
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- Sección de método de pago -->
+    <div class="seccion-metodo-pago">
+      <div class="seccion-header">
+        <h3 class="seccion-titulo">💰 Método de Pago</h3>
+      </div>
+
+      <div class="metodos-pago-selector">
+        <div
+          class="metodo-card"
+          [class.activo]="metodoPago === 'EFECTIVO'"
+          (click)="metodoPago = 'EFECTIVO'; onMetodoPagoChange()"
+        >
+          <div class="metodo-icono">💵</div>
+          <div class="metodo-nombre">Efectivo</div>
+          <div class="metodo-descripcion">Pago en efectivo al momento</div>
+        </div>
+
+        <div
+          class="metodo-card"
+          [class.activo]="metodoPago === 'TARJETA'"
+          (click)="metodoPago = 'TARJETA'; onMetodoPagoChange()"
+        >
+          <div class="metodo-icono">💳</div>
+          <div class="metodo-nombre">Tarjeta de Crédito</div>
+          <div class="metodo-descripcion">Pago seguro con Stripe</div>
+        </div>
+      </div>
+
+      <!-- Formulario de Efectivo -->
+      <div class="formulario-efectivo" *ngIf="metodoPago === 'EFECTIVO'">
+        <div class="info-efectivo">
+          <div class="info-icono">ℹ️</div>
+          <div class="info-texto">
+            <p><strong>Instrucciones para pago en efectivo:</strong></p>
+            <ul>
+              <li>El pago se registrará como pendiente de confirmación</li>
+              <li>El cliente debe realizar el pago en la recepción del hotel</li>
+              <li>El operador confirmará el pago una vez recibido</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario de Tarjeta -->
+      <div class="formulario-tarjeta" *ngIf="metodoPago === 'TARJETA'">
+        <div class="stripe-info">
+          <div class="stripe-badge">
+            <span>🔒</span>
+            <span>Pago seguro con Stripe</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Nombre del Titular *</label>
+          <input
+            type="text"
+            [(ngModel)]="cardholderName"
+            (ngModelChange)="validarFormulario()"
+            class="form-control"
+            placeholder="Nombre como aparece en la tarjeta"
+            [disabled]="procesandoPago"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input
+            type="email"
+            [(ngModel)]="email"
+            (ngModelChange)="validarFormulario()"
+            class="form-control"
+            placeholder="correo@ejemplo.com"
+            [disabled]="procesandoPago"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Información de la Tarjeta *</label>
+          <div id="card-element" class="stripe-card-element"></div>
+          <div class="error-tarjeta" *ngIf="errorTarjeta">
+            <span>⚠️</span>
+            <span>{{ errorTarjeta }}</span>
+          </div>
+          <div class="tarjetas-aceptadas">
+            <small>Aceptamos: Visa, Mastercard, American Express</small>
+          </div>
+        </div>
+
+        <!-- Dirección de Facturación -->
+        <div class="direccion-facturacion">
+          <h4 class="subseccion-titulo">📍 Dirección de Facturación</h4>
+
+          <div class="form-group">
+            <label class="form-label">Dirección *</label>
+            <input
+              type="text"
+              [(ngModel)]="billingAddress.street"
+              (ngModelChange)="validarFormulario()"
+              class="form-control"
+              placeholder="Calle y número"
+              [disabled]="procesandoPago"
+            />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Ciudad *</label>
+              <input
+                type="text"
+                [(ngModel)]="billingAddress.city"
+                (ngModelChange)="validarFormulario()"
+                class="form-control"
+                placeholder="Ciudad"
+                [disabled]="procesandoPago"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Estado/Provincia *</label>
+              <input
+                type="text"
+                [(ngModel)]="billingAddress.state"
+                (ngModelChange)="validarFormulario()"
+                class="form-control"
+                placeholder="Estado"
+                [disabled]="procesandoPago"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Código Postal *</label>
+              <input
+                type="text"
+                [(ngModel)]="billingAddress.zipCode"
+                (ngModelChange)="validarFormulario()"
+                class="form-control"
+                placeholder="00000"
+                [disabled]="procesandoPago"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">País *</label>
+              <select
+                [(ngModel)]="billingAddress.country"
+                class="form-control"
+                [disabled]="procesandoPago"
+              >
+                <option value="CO">Colombia</option>
+                <option value="US">Estados Unidos</option>
+                <option value="MX">México</option>
+                <option value="ES">España</option>
+                <option value="AR">Argentina</option>
+                <option value="CL">Chile</option>
+                <option value="PE">Perú</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resumen del Pago -->
+    <div class="seccion-resumen" *ngIf="reservaSeleccionada && monto > 0">
+      <div class="seccion-header">
+        <h3 class="seccion-titulo">📊 Resumen del Pago</h3>
+      </div>
+
+      <div class="resumen-card">
+        <div class="resumen-row">
+          <span class="resumen-label">Reserva:</span>
+          <span class="resumen-valor">#{{ reservaSeleccionada.idReserva }}</span>
+        </div>
+        <div class="resumen-row">
+          <span class="resumen-label">Método de Pago:</span>
+          <span class="resumen-valor">{{
+            metodoPago === 'EFECTIVO' ? '💵 Efectivo' : '💳 Tarjeta de Crédito'
+          }}</span>
+        </div>
+        <div class="resumen-row total">
+          <span class="resumen-label">Total a Pagar:</span>
+          <span class="resumen-valor">{{ formatearPrecio(monto) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de Acción -->
+    <div class="acciones-pago">
+      <button class="btn btn-cancelar" (click)="resetearFormulario()" [disabled]="procesandoPago">
+        ❌ Cancelar
+      </button>
+
+      <button
+        class="btn btn-procesar-pago"
+        (click)="procesarPago()"
+        [disabled]="!formularioValido || procesandoPago"
+      >
+        <span *ngIf="!procesandoPago">
+          {{
+            metodoPago === 'EFECTIVO'
+              ? '💵 Registrar Pago en Efectivo'
+              : '💳 Procesar Pago con Tarjeta'
+          }}
+        </span>
+        <span *ngIf="procesandoPago" class="loading-spinner">
+          <span class="spinner"></span>
+          Procesando...
+        </span>
+      </button>
+    </div>
+  </div>
+</div>

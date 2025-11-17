@@ -13,7 +13,7 @@ import com.example.lumaresort.service.ChatbotService;
 
 @RestController
 @RequestMapping("/api/chatbot")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class ChatbotController {
 
     private final ChatbotService chatbotService;

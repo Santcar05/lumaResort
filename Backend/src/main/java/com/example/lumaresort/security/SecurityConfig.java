@@ -77,6 +77,13 @@ public class SecurityConfig {
                 // ========== SERVIR ARCHIVOS SUBIDOS - PÚBLICO ==========
                 .requestMatchers("/uploads/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
+                // Translate API
+                .requestMatchers("/api/translate").permitAll()
+                .requestMatchers("/api/translate/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/translate").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/translate/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/translate").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/translate/**").permitAll()
                 //ENDPOINTS DE AUTENTICACIÓN 
                 .requestMatchers(HttpMethod.GET, "/api/auth/actual").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/api/auth/perfil").authenticated()
@@ -139,7 +146,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:3000", "https://jazzy-custard-700f04.netlify.app"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);

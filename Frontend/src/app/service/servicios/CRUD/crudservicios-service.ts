@@ -6,7 +6,7 @@ import { Servicio } from '../../../Models/Servicio';
   providedIn: 'root',
 })
 export class CRUDServiciosService {
-  private apiUrl = 'http://localhost:8080/servicios';
+  private apiUrl = 'https://backend-lumaresort.onrender.com/servicios';
 
   constructor(private http: HttpClient) {}
 

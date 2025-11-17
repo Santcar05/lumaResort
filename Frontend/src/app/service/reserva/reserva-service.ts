@@ -8,7 +8,7 @@ import { Habitacion } from '../../Models/Habitacion';
   providedIn: 'root',
 })
 export class ReservaService {
-  private apiUrl = 'http://localhost:8080/reservas';
+  private apiUrl = 'https://backend-lumaresort.onrender.com/reservas';
 
   constructor(private http: HttpClient) {}
 

@@ -42,7 +42,7 @@ export class ListaServiciosComponent implements OnInit, OnDestroy {
   columnaOrden: 'nombre' | 'tipo' | 'precio' | '' = '';
   ordenAscendente = true;
 
-  private baseUrl = 'http://localhost:8080/servicios';
+  private baseUrl = 'https://backend-lumaresort.onrender.com/servicios';
   private langChangeSubscription?: Subscription;
 
   constructor(
@@ -78,7 +78,7 @@ export class ListaServiciosComponent implements OnInit, OnDestroy {
         catchError((err) => {
           console.error('Error al cargar servicios:', err);
           this.errorMsg =
-            'No se pudieron cargar los servicios. Verifica que el backend esté corriendo en http://localhost:8080';
+            'No se pudieron cargar los servicios. Verifica que el backend esté corriendo en https://backend-lumaresort.onrender.com';
           this.loading = false;
           return of([]);
         })

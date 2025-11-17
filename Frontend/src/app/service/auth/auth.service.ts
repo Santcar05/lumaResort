@@ -8,10 +8,10 @@ import { RegisterRequest } from '../../Models/RegisterRequest';
 import { UserResponse } from '../../Models/UserResponse';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private apiUrl = 'https://backend-lumaresort.onrender.com/api/auth';
   private tokenKey = 'auth_token';
   private userKey = 'current_user';
   private isBrowser: boolean;
@@ -20,10 +20,7 @@ export class AuthService {
   private currentUserSubject!: BehaviorSubject<UserResponse | null>;
   public currentUser$!: Observable<UserResponse | null>;
 
-  constructor(
-    private http: HttpClient,
-    @Inject(PLATFORM_ID) platformId: Object
-  ) {
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) platformId: Object) {
     this.isBrowser = isPlatformBrowser(platformId);
     // Inicializar el BehaviorSubject después de establecer isBrowser
     this.currentUserSubject = new BehaviorSubject<UserResponse | null>(this.getUserFromStorage());
@@ -34,28 +31,26 @@ export class AuthService {
    * Login - Autenticar usuario
    */
   login(loginRequest: LoginRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, loginRequest)
-      .pipe(
-        tap(response => {
-          this.setToken(response.token);
-          this.setUser(response.usuario);
-          this.currentUserSubject.next(response.usuario);
-        })
-      );
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, loginRequest).pipe(
+      tap((response) => {
+        this.setToken(response.token);
+        this.setUser(response.usuario);
+        this.currentUserSubject.next(response.usuario);
+      })
+    );
   }
 
   /**
    * Register - Registrar nuevo usuario
    */
   register(registerRequest: RegisterRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, registerRequest)
-      .pipe(
-        tap(response => {
-          this.setToken(response.token);
-          this.setUser(response.usuario);
-          this.currentUserSubject.next(response.usuario);
-        })
-      );
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, registerRequest).pipe(
+      tap((response) => {
+        this.setToken(response.token);
+        this.setUser(response.usuario);
+        this.currentUserSubject.next(response.usuario);
+      })
+    );
   }
 
   /**
@@ -73,26 +68,29 @@ export class AuthService {
    * Obtener usuario actual del backend
    */
   getCurrentUser(): Observable<UserResponse> {
-    return this.http.get<UserResponse>(`${this.apiUrl}/actual`)
-      .pipe(
-        tap(user => {
-          this.setUser(user);
-          this.currentUserSubject.next(user);
-        })
-      );
+    return this.http.get<UserResponse>(`${this.apiUrl}/actual`).pipe(
+      tap((user) => {
+        this.setUser(user);
+        this.currentUserSubject.next(user);
+      })
+    );
   }
 
   /**
    * Actualizar perfil del usuario autenticado
    */
-  updateProfile(updateData: { nombre: string; apellido: string; cedula: string; telefono: string }): Observable<UserResponse> {
-    return this.http.put<UserResponse>(`${this.apiUrl}/perfil`, updateData)
-      .pipe(
-        tap(user => {
-          this.setUser(user);
-          this.currentUserSubject.next(user);
-        })
-      );
+  updateProfile(updateData: {
+    nombre: string;
+    apellido: string;
+    cedula: string;
+    telefono: string;
+  }): Observable<UserResponse> {
+    return this.http.put<UserResponse>(`${this.apiUrl}/perfil`, updateData).pipe(
+      tap((user) => {
+        this.setUser(user);
+        this.currentUserSubject.next(user);
+      })
+    );
   }
 
   /**

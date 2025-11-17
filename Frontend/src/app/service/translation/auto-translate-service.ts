@@ -8,7 +8,7 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class AutoTranslateService {
   // Usar TU backend como proxy
-  private apiUrl = 'http://localhost:8080/api/translate';
+  private apiUrl = 'https://backend-lumaresort.onrender.com/api/translate';
 
   private cache = new Map<string, string>();
 

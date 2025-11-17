@@ -34,7 +34,7 @@ export class VerReservasComponent implements OnInit {
   // Variables para el filtro (basado en reserva-component)
   filtroEstado: string = 'TODAS';
 
-  private baseUrlReservas = 'http://localhost:8080/reservas';
+  private baseUrlReservas = 'https://backend-lumaresort.onrender.com/reservas';
 
   constructor(
     private http: HttpClient,

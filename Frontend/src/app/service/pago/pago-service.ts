@@ -7,7 +7,7 @@ import { Pago } from '../../Models/Pago';
   providedIn: 'root',
 })
 export class PagoService {
-  private apiUrl = 'http://localhost:8080/pagos';
+  private apiUrl = 'https://backend-lumaresort.onrender.com/pagos';
 
   constructor(private http: HttpClient) {}
 

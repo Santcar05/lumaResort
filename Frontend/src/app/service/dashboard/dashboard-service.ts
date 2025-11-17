@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DashboardService {
-  private apiUrl = 'http://localhost:8080/api/dashboard'; // Ajusta según tu backend
+  private apiUrl = 'https://backend-lumaresort.onrender.com/api/dashboard'; // Ajusta según tu backend
 
   constructor(private http: HttpClient) {}
 

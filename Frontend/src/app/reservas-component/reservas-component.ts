@@ -25,7 +25,6 @@ import { AuthService } from '../service/auth/auth.service';
   styleUrls: ['./reservas-component.css'],
 })
 export class ReservasComponent implements OnInit {
-  
   // Datos del formulario
   fechaInicio: string = '';
   fechaFin: string = '';
@@ -66,10 +65,11 @@ export class ReservasComponent implements OnInit {
   totalConvertido: number | null = null;
 
   /** ------------------ URLs DEL BACKEND ------------------ **/
-  private baseUrlReservas = 'http://localhost:8080/reservas';
-  private baseUrlHabitaciones = 'http://localhost:8080/habitaciones';
-  private baseUrlHabitacionesDisponibles = 'http://localhost:8080/habitaciones/disponibles';
-  private baseUrlServicios = 'http://localhost:8080/servicios';
+  private baseUrlReservas = 'https://backend-lumaresort.onrender.com/reservas';
+  private baseUrlHabitaciones = 'https://backend-lumaresort.onrender.com/habitaciones';
+  private baseUrlHabitacionesDisponibles =
+    'https://backend-lumaresort.onrender.com/habitaciones/disponibles';
+  private baseUrlServicios = 'https://backend-lumaresort.onrender.com/servicios';
 
   /** ------------------ USUARIO SIMULADO ------------------ **/
   private usuarioActual: Usuario = {
@@ -213,7 +213,7 @@ export class ReservasComponent implements OnInit {
         console.error('Error al cargar habitaciones disponibles:', err);
         this.errorMsg = 'Error al cargar habitaciones disponibles';
         this.habitacionesFiltradas = [];
-      }
+      },
     });
   }
 

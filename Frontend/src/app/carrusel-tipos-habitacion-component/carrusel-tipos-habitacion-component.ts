@@ -76,7 +76,9 @@ export class CarruselTiposHabitacionComponent implements OnInit, OnDestroy {
   }
 
   findAll() {
-    return this.http.get<TipoHabitacion[]>('http://localhost:8080/tiposHabitacion');
+    return this.http.get<TipoHabitacion[]>(
+      'https://backend-lumaresort.onrender.com/tiposHabitacion'
+    );
   }
 
   buildRooms(tiposHabitacion: any[]): void {

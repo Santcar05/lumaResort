@@ -19,7 +19,7 @@ export class DetalleServicioComponent implements OnInit {
   loading = true;
   errorMsg = '';
   selectedImage = '';
-  private baseUrl = 'http://localhost:8080/servicios';
+  private baseUrl = 'https://backend-lumaresort.onrender.com/servicios';
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 

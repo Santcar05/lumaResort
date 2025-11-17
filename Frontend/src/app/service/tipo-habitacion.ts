@@ -7,7 +7,7 @@ import { TipoHabitacion } from '../Models/TipoHabitacion';
   providedIn: 'root',
 })
 export class TipoHabitacionService {
-  private apiUrl = 'http://localhost:8080/tiposHabitacion';
+  private apiUrl = 'https://backend-lumaresort.onrender.com/tiposHabitacion';
 
   constructor(private http: HttpClient) {}
 

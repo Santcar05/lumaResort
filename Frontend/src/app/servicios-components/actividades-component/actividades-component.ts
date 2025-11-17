@@ -50,7 +50,7 @@ export class ActividadesComponent {
   }
 
   findAll(): Observable<Servicio[]> {
-    return this.http.get<Servicio[]>('http://localhost:8080/actividades');
+    return this.http.get<Servicio[]>('https://backend-lumaresort.onrender.com/actividades');
   }
 
   buildCategories(servicios: Servicio[]): void {

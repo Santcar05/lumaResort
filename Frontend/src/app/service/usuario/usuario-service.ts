@@ -6,7 +6,7 @@ import { Usuario } from '../../Models/Usuario';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
-  private apiUrl = 'http://localhost:8080/usuario'; // debe coincidir con backend
+  private apiUrl = 'https://backend-lumaresort.onrender.com/usuario'; // debe coincidir con backend
 
   constructor(private http: HttpClient) {}
 

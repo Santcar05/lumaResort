@@ -75,9 +75,9 @@ export class ChatbotComponent implements OnInit, AfterViewChecked, OnDestroy {
   private audioChunks: Blob[] = [];
 
   /** ------------------ URLs DEL BACKEND ------------------ **/
-  private baseUrlChatbot = 'http://localhost:8080/api/chatbot';
-  private baseUrlClima = 'http://localhost:8080/api/clima';
-  private baseUrlUpload = 'http://localhost:8080/api/chatbot/upload';
+  private baseUrlChatbot = 'https://backend-lumaresort.onrender.com/api/chatbot';
+  private baseUrlClima = 'https://backend-lumaresort.onrender.com/api/clima';
+  private baseUrlUpload = 'https://backend-lumaresort.onrender.com/api/chatbot/upload';
 
   constructor(
     private http: HttpClient,

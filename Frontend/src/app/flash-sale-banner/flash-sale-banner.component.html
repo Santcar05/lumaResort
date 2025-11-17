@@ -1,0 +1,34 @@
+<div class="flash-banner-container" *ngIf="mostrarBanner && ofertaActual">
+  <div class="flash-banner">
+    <!-- Botón cerrar -->
+    <button class="close-btn" (click)="cerrarBanner()">✕</button>
+
+    <!-- Contenido del banner -->
+    <div class="banner-content">
+      <!-- Icono -->
+      <div class="banner-icon">
+        {{ ofertaActual.icono }}
+      </div>
+
+      <!-- Información de la oferta -->
+      <div class="banner-info">
+        <h3 class="banner-titulo">{{ ofertaActual.titulo }}</h3>
+        <p class="banner-descripcion">{{ ofertaActual.descripcion }}</p>
+      </div>
+
+      <!-- Temporizador -->
+      <div class="banner-timer">
+        <div class="timer-label">⏰ Termina en:</div>
+        <div class="timer-value">{{ tiempoRestante }}</div>
+      </div>
+
+      <!-- Botón de acción -->
+      <button class="banner-btn" (click)="irAReservas()">
+        ¡Reservar Ahora!
+      </button>
+    </div>
+
+    <!-- Animación de pulso -->
+    <div class="pulse-effect"></div>
+  </div>
+</div>

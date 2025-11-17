@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 
 import { HeaderComponent } from '../../generales-components/header-component/header-component';
+import { FlashSaleBannerComponent } from '../../flash-sale-banner-component/flash-sale-banner.component';
 import { BannerLandingPageComponent } from '../../landing-page-components/banner-landing-page-component/banner-landing-page-component';
 import { DescubrimientoComponent } from '../../landing-page-components/descubrimiento-component/descubrimiento-component';
 import { CatalogoServiciosComponent } from '../../servicios-components/catalogo-servicios-component/catalogo-servicios-component';
@@ -23,6 +24,7 @@ import { AuthService } from '../../service/auth/auth.service';
     CommonModule,
     RouterOutlet,
     HeaderComponent,
+    FlashSaleBannerComponent,
     BannerLandingPageComponent,
     DescubrimientoComponent,
     CatalogoServiciosComponent,

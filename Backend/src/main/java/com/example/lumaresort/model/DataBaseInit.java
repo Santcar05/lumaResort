@@ -42,6 +42,8 @@ public class DataBaseInit implements ApplicationRunner {
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
+    private OfertaFlashRepository ofertaFlashRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -1412,6 +1414,45 @@ public class DataBaseInit implements ApplicationRunner {
 
         reservaRepository.saveAll(reservas);
 
+         java.time.LocalDateTime ahora = java.time.LocalDateTime.now();
+
+        com.example.lumaresort.entities.OfertaFlash oferta1 = new com.example.lumaresort.entities.OfertaFlash(
+                "⚡ FLASH SALE: Upgrade 30% OFF",
+                "Mejora tu habitación al siguiente nivel con 30% de descuento. ¡Solo por 2 horas!",
+                "UPGRADE",
+                30,
+                ahora,
+                ahora.plusHours(2),
+                "#FF6B6B",
+                "⬆️"
+        );
+
+        com.example.lumaresort.entities.OfertaFlash oferta2 = new com.example.lumaresort.entities.OfertaFlash(
+                "🔥 Descuento Especial 25% en Habitaciones",
+                "Reserva ahora y ahorra 25% en cualquier tipo de habitación. ¡Oferta limitada!",
+                "DESCUENTO_HABITACION",
+                25,
+                ahora,
+                ahora.plusHours(3),
+                "#4ECDC4",
+                "🏨"
+        );
+
+        com.example.lumaresort.entities.OfertaFlash oferta3 = new com.example.lumaresort.entities.OfertaFlash(
+                "💆 Spa GRATIS con tu Reserva",
+                "Reserva hoy y recibe un servicio de Spa completamente gratis. ¡No te lo pierdas!",
+                "SERVICIO_GRATIS",
+                100,
+                ahora,
+                ahora.plusHours(4),
+                "#95E1D3",
+                "💆‍♀️"
+        );
+
+        ofertaFlashRepository.save(oferta1);
+        ofertaFlashRepository.save(oferta2);
+        ofertaFlashRepository.save(oferta3);
+
         System.out.println("==============================================");
         System.out.println("Inicialización de base de datos completada:");
         System.out.println("- 10 Tipos de Habitación");
@@ -1421,6 +1462,9 @@ public class DataBaseInit implements ApplicationRunner {
         System.out.println("- 10 Usuarios Clientes");
         System.out.println("- 5 Usuarios Operadores");
         System.out.println("- 5 Usuarios Administradores");
+        System.out.println("- 3 Ofertas Flash");
         System.out.println("==============================================");
     }
+
 }
+

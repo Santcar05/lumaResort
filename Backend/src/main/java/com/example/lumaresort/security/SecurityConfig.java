@@ -65,6 +65,10 @@ public class SecurityConfig {
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers("/actividades").permitAll()
                 .requestMatchers("/actividades/**").permitAll()
+                // ========== OFERTAS FLASH - PÚBLICO ==========
+                .requestMatchers(HttpMethod.GET, "/ofertas-flash/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/ofertas-flash/activas").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/ofertas-flash/**").permitAll()
                 // Chatbot de contacto
                 .requestMatchers("/api/chatbot/**").permitAll()
                 .requestMatchers("/api/chatbot").permitAll()

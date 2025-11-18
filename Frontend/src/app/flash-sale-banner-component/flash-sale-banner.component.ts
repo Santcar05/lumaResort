@@ -10,7 +10,7 @@ import { OfertaFlash } from '../Models/OfertaFlash';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './flash-sale-banner.component.html',
-  styleUrls: ['./flash-sale-banner.component.css']
+  styleUrls: ['./flash-sale-banner.component.css'],
 })
 export class FlashSaleBannerComponent implements OnInit, OnDestroy {
   ofertaActual: OfertaFlash | null = null;
@@ -20,33 +20,44 @@ export class FlashSaleBannerComponent implements OnInit, OnDestroy {
   private ofertasSubscription?: Subscription;
   private timerSubscription?: Subscription;
 
-  constructor(
-    private ofertaFlashService: OfertaFlashService,
-    private router: Router
-  ) {}
+  constructor(private ofertaFlashService: OfertaFlashService, private router: Router) {}
 
   ngOnInit(): void {
-    // Delay de 1 segundo para no bloquear la carga inicial de la landing page
+    // Delay de 2 segundos para no bloquear la carga inicial de la landing page
     setTimeout(() => {
+      console.log('🚀 Iniciando carga de ofertas flash...');
+
       // Iniciar el polling de ofertas cuando el componente se carga
       this.ofertaFlashService.iniciarPolling();
 
       // Suscribirse a las ofertas activas
-      this.ofertasSubscription = this.ofertaFlashService.ofertasActivas$.subscribe(ofertas => {
-        if (ofertas && ofertas.length > 0) {
-          // Mostrar la primera oferta activa
-          this.ofertaActual = ofertas[0];
-          this.mostrarBanner = true;
-          this.iniciarTemporizador();
-        } else {
+      this.ofertasSubscription = this.ofertaFlashService.ofertasActivas$.subscribe(
+        (ofertas) => {
+          console.log('📦 Ofertas recibidas:', ofertas);
+
+          if (ofertas && ofertas.length > 0) {
+            // Mostrar la primera oferta activa
+            this.ofertaActual = ofertas[0];
+            this.mostrarBanner = true;
+            this.iniciarTemporizador();
+            console.log('✅ Banner de oferta flash activado');
+          } else {
+            this.mostrarBanner = false;
+            this.ofertaActual = null;
+            console.log('ℹ️ No hay ofertas activas disponibles');
+          }
+        },
+        (error) => {
+          console.error('❌ Error al suscribirse a ofertas:', error);
           this.mostrarBanner = false;
-          this.ofertaActual = null;
         }
-      });
-    }, 1000);
+      );
+    }, 2000); // Aumentado a 2 segundos
   }
 
   ngOnDestroy(): void {
+    console.log('🧹 Limpiando suscripciones del banner de ofertas');
+
     if (this.ofertasSubscription) {
       this.ofertasSubscription.unsubscribe();
     }
@@ -70,6 +81,8 @@ export class FlashSaleBannerComponent implements OnInit, OnDestroy {
     this.actualizarTiempoRestante();
   }
 
+  // REEMPLAZAR EL MÉTODO actualizarTiempoRestante() COMPLETO:
+
   actualizarTiempoRestante(): void {
     if (!this.ofertaActual) return;
 
@@ -78,10 +91,17 @@ export class FlashSaleBannerComponent implements OnInit, OnDestroy {
     const diferencia = fechaFin - ahora;
 
     if (diferencia <= 0) {
+      // Oferta expirada - ocultar banner y detener temporizador
       this.tiempoRestante = 'Oferta expirada';
       this.mostrarBanner = false;
-      // Recargar ofertas para obtener la siguiente
-      this.ofertaFlashService.recargarOfertas();
+      this.ofertaActual = null;
+
+      // Detener el temporizador para evitar bucles
+      if (this.timerSubscription) {
+        this.timerSubscription.unsubscribe();
+      }
+
+      // NO recargar automáticamente - el polling lo hará cada 5 minutos
       return;
     }
 
@@ -98,10 +118,12 @@ export class FlashSaleBannerComponent implements OnInit, OnDestroy {
   }
 
   cerrarBanner(): void {
+    console.log('❌ Banner cerrado por el usuario');
     this.mostrarBanner = false;
   }
 
   irAReservas(): void {
+    console.log('🔗 Navegando a reservas desde banner de ofertas');
     this.router.navigate(['/reservas']);
   }
 }

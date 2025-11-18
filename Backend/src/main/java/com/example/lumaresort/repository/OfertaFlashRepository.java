@@ -15,10 +15,9 @@ public interface OfertaFlashRepository extends JpaRepository<OfertaFlash, Long> 
     List<OfertaFlash> findByActivaTrue();
 
     // Buscar ofertas activas en un rango de fechas 
-    @Query("SELECT o FROM OfertaFlash o WHERE o.activa = true AND o.fechaInicio <= :now AND o.fechaFin >= :now")
+    @Query("SELECT o FROM OfertaFlash o WHERE o.activa = true AND o.fechaInicio <= :now AND o.fechaFin > :now")
     List<OfertaFlash> findOfertasActivas(LocalDateTime now);
 
     // Buscar por tipo de oferta
     List<OfertaFlash> findByTipoOfertaAndActivaTrue(String tipoOferta);
 }
-

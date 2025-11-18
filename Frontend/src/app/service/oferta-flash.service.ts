@@ -5,7 +5,7 @@ import { switchMap, catchError } from 'rxjs/operators';
 import { OfertaFlash } from '../Models/OfertaFlash';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OfertaFlashService {
   private apiUrl = 'http://localhost:8080/ofertas-flash';
@@ -15,11 +15,8 @@ export class OfertaFlashService {
   private ofertasActivasSubject = new BehaviorSubject<OfertaFlash[]>([]);
   public ofertasActivas$ = this.ofertasActivasSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {}
 
-  }
-
- 
   iniciarPolling(): void {
     if (this.pollingEnabled) return;
 
@@ -29,16 +26,20 @@ export class OfertaFlashService {
     this.cargarOfertasActivas();
 
     // verificar nuevas ofertas
-    interval(300000).pipe(
-      switchMap(() => this.getOfertasActivas().pipe(
-        catchError(error => {
-          console.error('Error en polling de ofertas:', error);
-          return of([]);
-        })
-      ))
-    ).subscribe(ofertas => {
-      this.ofertasActivasSubject.next(ofertas);
-    });
+    interval(300000)
+      .pipe(
+        switchMap(() =>
+          this.getOfertasActivas().pipe(
+            catchError((error) => {
+              console.error('Error en polling de ofertas:', error);
+              return of([]);
+            })
+          )
+        )
+      )
+      .subscribe((ofertas) => {
+        this.ofertasActivasSubject.next(ofertas);
+      });
   }
 
   // Obtener todas las ofertas
@@ -76,24 +77,40 @@ export class OfertaFlashService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  // Cargar ofertas activas y actualizar 
+  // Cargar ofertas activas y actualizar
   cargarOfertasActivas(): void {
-    this.getOfertasActivas().pipe(
-      catchError(error => {
-        console.error('Error al cargar ofertas flash:', error);
-        console.warn('El backend no está disponible. El banner de ofertas no se mostrará.');
-        return of([]);
-      })
-    ).subscribe((ofertas) => {
-      if (ofertas && ofertas.length > 0) {
-        console.log('Ofertas flash activas cargadas:', ofertas);
-      }
-      this.ofertasActivasSubject.next(ofertas);
-    });
+    this.getOfertasActivas()
+      .pipe(
+        catchError((error) => {
+          console.error('Error al cargar ofertas flash:', error);
+          console.warn('El backend no está disponible. El banner de ofertas no se mostrará.');
+          return of([]);
+        })
+      )
+      .subscribe((ofertas) => {
+        // Filtrar ofertas válidas en el cliente
+        const ofertasValidas = this.filtrarOfertasValidas(ofertas);
+
+        if (ofertasValidas && ofertasValidas.length > 0) {
+          console.log('✅ Ofertas flash válidas cargadas:', ofertasValidas);
+        } else {
+          console.log('ℹ️ No hay ofertas válidas disponibles');
+        }
+        this.ofertasActivasSubject.next(ofertasValidas);
+      });
   }
 
   // Forzar recarga de ofertas
   recargarOfertas(): void {
     this.cargarOfertasActivas();
+  }
+
+  // Validar que las ofertas no estén expiradas en el cliente
+  private filtrarOfertasValidas(ofertas: OfertaFlash[]): OfertaFlash[] {
+    const ahora = new Date();
+    return ofertas.filter((oferta) => {
+      const fechaFin = new Date(oferta.fechaFin);
+      return fechaFin > ahora;
+    });
   }
 }

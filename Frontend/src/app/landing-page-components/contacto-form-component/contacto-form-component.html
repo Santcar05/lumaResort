@@ -3,19 +3,22 @@
     <div class="contact-header">
       <h2 class="section-title">{{ 'CONTACT.TITLE' | translate }}</h2>
       <h3 class="section-subtitle">{{ 'CONTACT.SUBTITLE' | translate }}</h3>
-      <p class="section-description">{{ 'CONTACT.DESCRIPTION' | translate }}</p>
       <div class="title-divider"></div>
     </div>
 
     <div class="contact-content">
       <div class="form-container" [class.submitted]="submitted">
-        <!-- FORMULARIO -->
+        <!-- ================= FORMULARIO ================= -->
         <form
           *ngIf="activeView === 'form' && !submitted"
           (ngSubmit)="onSubmit()"
           #contactFormRef="ngForm"
           class="contact-form"
         >
+          <p class="form-inline-description">
+            {{ 'CONTACT.DESCRIPTION' | translate }}
+          </p>
+
           <div class="form-row">
             <div class="form-group" [class.focused]="contactForm.name.length > 0">
               <input type="text" id="name" name="name" [(ngModel)]="contactForm.name" required />
@@ -81,7 +84,7 @@
           </button>
         </form>
 
-        <!-- MENSAJE DE ÉXITO -->
+        <!-- =============== MENSAJE DE ÉXITO =============== -->
         <div class="success-message" *ngIf="submitted && activeView === 'form'">
           <div class="success-content">
             <div class="success-icon-large">✓</div>
@@ -90,36 +93,45 @@
           </div>
         </div>
 
-        <!-- MAPA -->
-        <div *ngIf="activeView === 'map'" class="map-container">
-          <iframe ...></iframe>
+        <!-- ===================== MAPA ===================== -->
+        <div *ngIf="activeView === 'map'" class="map-wrapper">
+          <img src="assets/images/mapa.png" class="map-image" alt="Mapa" />
         </div>
 
-        <!-- CALENDARIO -->
-        <div *ngIf="activeView === 'schedule'" class="calendar-container">
-          <h3 class="calendar-title">{{ 'CONTACT.SCHEDULE.TITLE' | translate }}</h3>
-          <table class="calendar-table">
-            <thead>
-              <tr>
-                <th>{{ 'CONTACT.SCHEDULE.DAY' | translate }}</th>
-                <th>{{ 'CONTACT.SCHEDULE.TIME' | translate }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{ 'CONTACT.SCHEDULE.WEEK' | translate }}</td>
-                <td>08:00 - 20:00</td>
-              </tr>
-              <tr>
-                <td>{{ 'CONTACT.SCHEDULE.WEEKEND' | translate }}</td>
-                <td>09:00 - 18:00</td>
-              </tr>
-            </tbody>
-          </table>
+        <!-- ===================== HORARIO ===================== -->
+        <div *ngIf="activeView === 'schedule'" class="schedule-wrapper">
+          <img
+            class="schedule-image"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRueEYSaS7xQH--pHeQs58APBlMn9QXNdhmVA&s"
+            alt="Horario"
+          />
+
+          <div class="schedule-content">
+            <h3 class="schedule-title">Horarios</h3>
+
+            <table class="calendar-table">
+              <thead>
+                <tr>
+                  <th>{{ 'CONTACT.SCHEDULE.DAY' | translate }}</th>
+                  <th>{{ 'CONTACT.SCHEDULE.TIME' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ 'CONTACT.SCHEDULE.WEEK' | translate }}</td>
+                  <td>08:00 - 20:00</td>
+                </tr>
+                <tr>
+                  <td>{{ 'CONTACT.SCHEDULE.WEEKEND' | translate }}</td>
+                  <td>09:00 - 18:00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
-      <!-- INFO CONTACTO -->
+      <!-- ==================== INFO LATERAL ==================== -->
       <div class="contact-info">
         <div class="info-card" (click)="activeView = 'map'">
           <div class="info-icon">📍</div>

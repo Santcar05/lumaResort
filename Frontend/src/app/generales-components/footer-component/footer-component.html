@@ -125,11 +125,19 @@
         </div>
 
         <div class="legal-links">
-          <a href="#" class="legal-link">{{ 'FOOTER.PRIVACY' | translate }}</a>
+          <a (click)="openLegalModal('privacy')" class="legal-link">{{
+            'FOOTER.PRIVACY' | translate
+          }}</a>
           <span class="separator">•</span>
-          <a href="#" class="legal-link">{{ 'FOOTER.TERMS' | translate }}</a>
+
+          <a (click)="openLegalModal('terms')" class="legal-link">{{
+            'FOOTER.TERMS' | translate
+          }}</a>
           <span class="separator">•</span>
-          <a href="#" class="legal-link">{{ 'FOOTER.COOKIES' | translate }}</a>
+
+          <a (click)="openLegalModal('cookies')" class="legal-link">{{
+            'FOOTER.COOKIES' | translate
+          }}</a>
         </div>
 
         <button class="back-to-top" (click)="scrollToTop()">↑</button>
@@ -137,3 +145,32 @@
     </div>
   </div>
 </footer>
+<!-- ===== MODAL LEGAL ===== -->
+<div class="legal-modal-backdrop" *ngIf="activeLegalModal">
+  <div class="legal-modal">
+    <h2 class="legal-title">
+      {{ getModalTitle() }}
+    </h2>
+
+    <div class="legal-content">
+      <p>{{ getModalContent() }}</p>
+    </div>
+
+    <div class="legal-actions">
+      <button class="btn-accept" (click)="acceptLegal()">Aceptar</button>
+      <button class="btn-reject" (click)="rejectLegal()">Rechazar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div
+  *ngIf="toastMessage"
+  class="legal-toast"
+  [ngClass]="{
+    'toast-success': toastType === 'success',
+    'toast-error': toastType === 'error'
+  }"
+>
+  {{ toastMessage }}
+</div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-footer-component',
   imports: [CommonModule, FormsModule, TranslateModule],
@@ -10,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class FooterComponent implements OnInit {
   currentYear: number = new Date().getFullYear();
+
   socialLinks = [
     {
       icon: 'facebook',
@@ -25,7 +27,7 @@ export class FooterComponent implements OnInit {
     },
     {
       icon: 'instagram',
-      url: '#',
+      url: 'https://www.instagram.com/hotellumaresort?igsh=em5jdWM4N3Zidm4z',
       label: 'Instagram',
       path: 'M16 2a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V6a4 4 0 0 1 4-4h8zm0 2H8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm-4 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm4 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2z',
     },
@@ -37,7 +39,7 @@ export class FooterComponent implements OnInit {
     },
     {
       icon: 'youtube',
-      url: '#',
+      url: 'https://www.youtube.com/@HotelLumaResort',
       label: 'YouTube',
       path: 'M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.25V8.75L15 12l-5.25 3.25z',
     },
@@ -71,25 +73,31 @@ export class FooterComponent implements OnInit {
   isSubscribed: boolean = false;
   isLoading: boolean = false;
 
+  // ====== MODAL LEGAL ======
+  activeLegalModal: 'privacy' | 'terms' | 'cookies' | null = null;
+
+  // Toast
+  toastMessage: string | null = null;
+  toastType: 'success' | 'error' | null = null;
+
   ngOnInit() {
     this.startAnimations();
   }
 
   startAnimations() {
-    // Las animaciones se manejan principalmente por CSS
+    // Animaciones manejadas por CSS
   }
 
+  // ================= NEWSLETTER =================
   subscribeNewsletter() {
     if (this.newsletterEmail && this.isValidEmail(this.newsletterEmail)) {
       this.isLoading = true;
 
-      // Simular suscripción
       setTimeout(() => {
         this.isLoading = false;
         this.isSubscribed = true;
         this.newsletterEmail = '';
 
-        // Resetear después de 5 segundos
         setTimeout(() => {
           this.isSubscribed = false;
         }, 5000);
@@ -107,5 +115,71 @@ export class FooterComponent implements OnInit {
       top: 0,
       behavior: 'smooth',
     });
+  }
+
+  // ================= MODAL LEGAL =================
+  openLegalModal(type: 'privacy' | 'terms' | 'cookies') {
+    this.activeLegalModal = type;
+  }
+
+  closeLegalModal() {
+    this.activeLegalModal = null;
+  }
+
+  acceptLegal() {
+    this.closeLegalModal();
+    this.showToast('Gracias por aceptar, continúe su visita por nuestra página.', 'success');
+  }
+
+  rejectLegal() {
+    const typeMap = {
+      privacy: 'la Política de Privacidad',
+      terms: 'los Términos de Uso',
+      cookies: 'la Política de Cookies',
+    };
+
+    const text = `Dado que no aceptó ${
+      typeMap[this.activeLegalModal!]
+    }, se recomienda no continuar la visita en la página.`;
+
+    this.closeLegalModal();
+    this.showToast(text, 'error');
+  }
+
+  // ================= TOAST =================
+  showToast(message: string, type: 'success' | 'error') {
+    this.toastMessage = message;
+    this.toastType = type;
+
+    setTimeout(() => {
+      this.toastMessage = null;
+      this.toastType = null;
+    }, 4500);
+  }
+
+  // ================= TEXTOS PARA EL MODAL =================
+  getModalTitle() {
+    if (this.activeLegalModal === 'privacy') return 'Política de Privacidad';
+    if (this.activeLegalModal === 'terms') return 'Términos de Uso';
+    return 'Política de Cookies';
+  }
+
+  getModalContent() {
+    if (this.activeLegalModal === 'privacy')
+      return `En LumaResort, la protección de sus datos personales es prioridad. 
+      La información proporcionada será utilizada exclusivamente para la prestación 
+      de servicios turísticos, optimización de la experiencia del usuario y cumplimiento 
+      de obligaciones legales. No compartimos datos con terceros sin autorización previa.`;
+
+    if (this.activeLegalModal === 'terms')
+      return `El uso de este sitio web implica la aceptación de las condiciones de uso, 
+      responsabilidades del usuario, políticas de reserva, limitaciones de responsabilidad 
+      y normativas de comportamiento digital establecidas por LumaResort. 
+      Nos reservamos el derecho de modificar dichas condiciones en cualquier momento.`;
+
+    return `Este sitio utiliza cookies para optimizar la experiencia del usuario, mejorar 
+    tiempos de carga, personalizar contenido y analizar patrones de navegación. Usted puede 
+    aceptar o rechazar el uso de cookies, aunque al rechazarlas algunas funciones del sitio 
+    podrían no estar disponibles.`;
   }
 }

@@ -487,3 +487,148 @@
     display: none;
   }
 }
+/* ===== MODAL ===== */
+.legal-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5000;
+}
+
+.legal-modal {
+  background: white;
+  color: #0a1a2f;
+  width: 90%;
+  max-width: 600px;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+  animation: scaleInModal 0.3s ease;
+}
+
+@keyframes scaleInModal {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.legal-title {
+  margin-bottom: 1rem;
+  color: #1a3a5f;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.legal-content {
+  color: #3a4a5f;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Buttons */
+.legal-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-accept,
+.btn-reject {
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.btn-accept {
+  background: #1a8f3f;
+  color: white;
+}
+
+.btn-accept:hover {
+  background: #166f33;
+}
+
+.btn-reject {
+  background: #c62828;
+  color: white;
+}
+
+.btn-reject:hover {
+  background: #9e1f1f;
+}
+
+/* ===== TOAST ===== */
+/* Base del toast */
+.legal-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  z-index: 6000;
+  animation: fadeInOutCenter 4.5s ease forwards;
+  font-size: 0.95rem;
+}
+
+.toast-success {
+  background: #2ecc71 !important;
+}
+
+.toast-error {
+  background: #e74c3c !important;
+}
+
+@keyframes fadeInOutCenter {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  90% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  90% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+}

@@ -106,7 +106,7 @@ public class ReservaController {
         Reserva reservaExistente = reservaExistenteOpt.get();
 
         // Verificar que el usuario tenga acceso a modificar esta reserva
-        if (!tieneAccesoAReserva(authentication, reservaExistente)) {
+        if (!tieneAccesoAReserva(authentication, reserva)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(Map.of("mensaje", "No tiene permiso para modificar esta reserva"));
         }
@@ -239,7 +239,6 @@ public class ReservaController {
             Reserva reservaGuardada = reservaRepository.save(reservaExistente);
             System.out.println("Reserva guardada exitosamente - ID: " + reservaGuardada.getIdReserva());
 
-            // CORRECCIÓN: Devolver un objeto JSON en lugar de texto plano
             Map<String, Object> response = new HashMap<>();
             response.put("message", "Reserva actualizada correctamente");
             response.put("reserva", reservaGuardada);
@@ -251,7 +250,6 @@ public class ReservaController {
             System.out.println("ERROR EN ACTUALIZACIÓN: " + e.getMessage());
             e.printStackTrace();
 
-            // CORRECCIÓN: Devolver error como JSON
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("message", "Error interno del servidor: " + e.getMessage());
             errorResponse.put("success", false);
@@ -262,19 +260,26 @@ public class ReservaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id, Authentication authentication) {
+        System.out.println("=== DELETE RESERVA ===");
+        System.out.println("ID: " + id);
+
         Reserva reserva = reservaService.findById(id);
 
         if (reserva == null) {
+            System.out.println("Reserva no encontrada");
             return ResponseEntity.notFound().build();
         }
 
         // Verificar que el usuario tenga acceso a eliminar esta reserva
         if (!tieneAccesoAReserva(authentication, reserva)) {
+            System.out.println("Acceso denegado para eliminar reserva");
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(Map.of("mensaje", "No tiene permiso para eliminar esta reserva"));
         }
 
+        System.out.println("Eliminando reserva...");
         reservaService.delete(reserva);
+        System.out.println("Reserva eliminada correctamente");
         return ResponseEntity.ok(Map.of("mensaje", "Reserva eliminada correctamente"));
     }
 
@@ -283,7 +288,6 @@ public class ReservaController {
         return reservaService.findByUsuarioId(id);
     }
 
-    //Remover un servicio de una reserva basado en la peticion
     @DeleteMapping("/{idReserva}/servicios/{idServicio}")
     public ResponseEntity<?> removerServicio(@PathVariable Long idReserva, @PathVariable Long idServicio, Authentication authentication) {
         Reserva reserva = reservaService.findById(idReserva);
@@ -353,28 +357,43 @@ public class ReservaController {
     //  MÉTODOS HELPER DE SEGURIDAD
     // ============================
     /**
-     * Verifica si el usuario autenticado tiene el rol de OPERADOR
+     * Verifica si el usuario autenticado tiene el rol de OPERADOR o
+     * ADMINISTRADOR
      */
-    private boolean isOperador(Authentication authentication) {
+    private boolean tieneRolElevado(Authentication authentication) {
         if (authentication == null) {
             return false;
         }
+
+        System.out.println("=== DEBUG AUTENTICACIÓN ===");
+        System.out.println("Usuario: " + authentication.getName());
+        System.out.println("Authorities: " + authentication.getAuthorities());
+
         return authentication.getAuthorities().stream()
-                .anyMatch(auth -> auth.getAuthority().equals("ROLE_OPERADOR"));
+                .anyMatch(auth -> {
+                    String authority = auth.getAuthority();
+                    System.out.println("Verificando authority: " + authority);
+                    return authority.equals("ROLE_OPERADOR")
+                            || authority.equals("ROLE_ADMINISTRADOR")
+                            || authority.equals("OPERADOR")
+                            || authority.equals("ADMINISTRADOR");
+                });
     }
 
     /**
      * Verifica si el usuario autenticado tiene acceso a una reserva específica
      * Tiene acceso si: - Es el dueño de la reserva (su correo coincide con el
-     * de la reserva) - Tiene el rol de OPERADOR
+     * de la reserva) - Tiene el rol de OPERADOR o ADMINISTRADOR
      */
     private boolean tieneAccesoAReserva(Authentication authentication, Reserva reserva) {
         if (authentication == null || reserva == null || reserva.getUsuario() == null) {
+            System.out.println("Acceso denegado: authentication, reserva o usuario es null");
             return false;
         }
 
-        // Si es OPERADOR, tiene acceso a todas las reservas
-        if (isOperador(authentication)) {
+        // Si es OPERADOR o ADMINISTRADOR, tiene acceso a todas las reservas
+        if (tieneRolElevado(authentication)) {
+            System.out.println("Acceso permitido: usuario tiene rol elevado");
             return true;
         }
 
@@ -382,7 +401,10 @@ public class ReservaController {
         String correoAutenticado = authentication.getName();
         String correoReserva = reserva.getUsuario().getCorreo();
 
-        return correoAutenticado != null && correoAutenticado.equals(correoReserva);
-    }
+        System.out.println("Comparando correos - Autenticado: " + correoAutenticado + ", Reserva: " + correoReserva);
+        boolean esElDueno = correoAutenticado != null && correoAutenticado.equals(correoReserva);
 
+        System.out.println("Es el dueño: " + esElDueno);
+        return esElDueno;
+    }
 }

@@ -121,17 +121,15 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/servicios/**").hasAnyRole("OPERADOR", "ADMINISTRADOR")
                 .requestMatchers(HttpMethod.GET, "/servicios/**").permitAll()
                 // ========== ENDPOINTS DE RESERVAS ==========
-                // Ver TODAS las reservas (OPERADOR y ADMINISTRADOR)
-                .requestMatchers(HttpMethod.GET, "/reservas").hasAnyRole("OPERADOR", "ADMINISTRADOR")
-                // Crear nueva reserva (cualquier usuario autenticado)
+                // IMPORTANTE: Las reglas más específicas PRIMERO
                 .requestMatchers(HttpMethod.POST, "/reservas").authenticated()
-                // Buscar mis reservas (cualquier usuario autenticado)
                 .requestMatchers(HttpMethod.GET, "/reservas/buscar/**").authenticated()
-                // Ver detalles de una reserva, modificar, cancelar (cualquier autenticado)
                 .requestMatchers(HttpMethod.GET, "/reservas/**").authenticated()
                 .requestMatchers(HttpMethod.POST, "/reservas/**").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/reservas/**").authenticated()
                 .requestMatchers(HttpMethod.DELETE, "/reservas/**").authenticated()
+                // Ver TODAS las reservas (lista completa) solo para OPERADOR y ADMINISTRADOR
+                .requestMatchers(HttpMethod.GET, "/reservas").hasAnyRole("OPERADOR", "ADMINISTRADOR")
                 // Ver el usuario actual si está autenticado
                 .requestMatchers(HttpMethod.GET, "/usuario").hasAnyRole("OPERADOR", "ADMINISTRADOR")
                 .requestMatchers(HttpMethod.GET, "/usuario/**").hasAnyRole("OPERADOR", "ADMINISTRADOR")

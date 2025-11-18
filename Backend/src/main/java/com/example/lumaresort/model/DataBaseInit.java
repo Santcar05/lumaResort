@@ -97,7 +97,7 @@ public class DataBaseInit implements ApplicationRunner {
                 .descripcion("La suite más exclusiva del resort con servicio de mayordomo")
                 .imagenes(Arrays.asList("https://images.pexels.com/photos/2467285/pexels-photo-2467285.jpeg"))
                 .caracteristicas(Arrays.asList("Dos habitaciones", "Sala de estar", "Comedor privado", "Terraza con piscina", "Mayordomo 24h"))
-                .precio(800.0)
+                .precio(800000.0)
                 .build();
 
         TipoHabitacion tipo5 = TipoHabitacion.builder()
@@ -105,7 +105,7 @@ public class DataBaseInit implements ApplicationRunner {
                 .descripcion("Amplia habitación ideal para familias con niños")
                 .imagenes(Arrays.asList("https://images.pexels.com/photos/271643/pexels-photo-271643.jpeg"))
                 .caracteristicas(Arrays.asList("Dos camas queen size", "Sofá cama", "Área de juegos", "Vista al jardín", "Frigobar"))
-                .precio(250.0)
+                .precio(250000.0)
                 .build();
 
         TipoHabitacion tipo6 = TipoHabitacion.builder()
@@ -113,7 +113,7 @@ public class DataBaseInit implements ApplicationRunner {
                 .descripcion("Bungaló exclusivo con acceso directo a la playa privada")
                 .imagenes(Arrays.asList("https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg"))
                 .caracteristicas(Arrays.asList("Acceso directo a playa", "Hamaca privada", "Ducha exterior", "Cama king size", "Minibar premium"))
-                .precio(450.0)
+                .precio(450000.0)
                 .build();
 
         TipoHabitacion tipo7 = TipoHabitacion.builder()
@@ -121,7 +121,7 @@ public class DataBaseInit implements ApplicationRunner {
                 .descripcion("Villa independiente rodeada de naturaleza tropical")
                 .imagenes(Arrays.asList("https://images.pexels.com/photos/1134176/pexels-photo-1134176.jpeg"))
                 .caracteristicas(Arrays.asList("Jardín privado", "Piscina privada", "Cocina completa", "Dos habitaciones", "Sala de estar"))
-                .precio(600.0)
+                .precio(600000.0)
                 .build();
 
         TipoHabitacion tipo8 = TipoHabitacion.builder()
@@ -129,7 +129,7 @@ public class DataBaseInit implements ApplicationRunner {
                 .descripcion("Penthouse en el último piso con vistas espectaculares de 360°")
                 .imagenes(Arrays.asList("https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg"))
                 .caracteristicas(Arrays.asList("Terraza panorámica", "Jacuzzi en terraza", "Bar privado", "Tres habitaciones", "Vista 360°"))
-                .precio(950.0)
+                .precio(950000.0)
                 .build();
 
         TipoHabitacion tipo9 = TipoHabitacion.builder()
@@ -137,7 +137,7 @@ public class DataBaseInit implements ApplicationRunner {
                 .descripcion("Habitación moderna con área de trabajo para viajeros de negocios")
                 .imagenes(Arrays.asList("https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg"))
                 .caracteristicas(Arrays.asList("Escritorio ejecutivo", "Wi-Fi de alta velocidad", "Cafetera Nespresso", "Vista al mar", "Servicio express"))
-                .precio(200.0)
+                .precio(200000.0)
                 .build();
 
         TipoHabitacion tipo10 = TipoHabitacion.builder()
@@ -145,7 +145,7 @@ public class DataBaseInit implements ApplicationRunner {
                 .descripcion("Suite de lujo con piscina infinity privada y vistas al atardecer")
                 .imagenes(Arrays.asList("https://images.pexels.com/photos/2440471/pexels-photo-2440471.jpeg"))
                 .caracteristicas(Arrays.asList("Piscina infinity privada", "Terraza amplia", "Sala de estar", "Vista panorámica al océano", "Servicio de mayordomo"))
-                .precio(750.0)
+                .precio(750000.0)
                 .build();
 
         tipoHabitacionRepository.saveAll(List.of(tipo1, tipo2, tipo3, tipo4, tipo5, tipo6, tipo7, tipo8, tipo9, tipo10));
@@ -251,7 +251,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio1 = new Servicio(
                 "Spa Coral", "Spa y Bienestar",
                 "Spa de lujo con tratamientos exclusivos, sauna, baño turco y piscina termal con vista al mar",
-                85.0f, "https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg");
+                85000.0f, "https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg");
         List<Comentario> comentarios1 = new ArrayList<>();
         comentarios1.add(new Comentario("Experiencia increíble, muy relajante", new Date(), 5.0f, servicio1));
         comentarios1.add(new Comentario("El masaje fue excepcional", new Date(), 5.0f, servicio1));
@@ -270,7 +270,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio2 = new Servicio(
                 "Desayuno Buffet Caribeño", "Gastronomía",
                 "Buffet internacional con especialidades caribeñas, frutas tropicales frescas y estación de jugos naturales",
-                35.0f, "https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg");
+                35000.0f, "https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg");
         List<Comentario> comentarios2 = new ArrayList<>();
         comentarios2.add(new Comentario("Gran variedad de alimentos frescos", new Date(), 4.8f, servicio2));
         comentarios2.add(new Comentario("Las frutas tropicales estaban deliciosas", new Date(), 4.9f, servicio2));
@@ -289,7 +289,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio3 = new Servicio(
                 "Buceo en Arrecifes", "Deportes Acuáticos",
                 "Inmersión guiada en los arrecifes de coral con instructor certificado, equipo incluido",
-                120.0f, "https://images.pexels.com/photos/1350197/pexels-photo-1350197.jpeg");
+                120000.0f, "https://images.pexels.com/photos/1350197/pexels-photo-1350197.jpeg");
         List<Comentario> comentarios3 = new ArrayList<>();
         comentarios3.add(new Comentario("Los arrecifes son espectaculares", new Date(), 5.0f, servicio3));
         comentarios3.add(new Comentario("Guía muy experimentado y amable", new Date(), 4.9f, servicio3));
@@ -308,7 +308,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio4 = new Servicio(
                 "Masaje Piedras Calientes", "Spa y Bienestar",
                 "Terapia de relajación profunda con piedras volcánicas calientes y aceites aromáticos",
-                95.0f, "https://images.pexels.com/photos/3865792/pexels-photo-3865792.jpeg");
+                95000.0f, "https://images.pexels.com/photos/3865792/pexels-photo-3865792.jpeg");
         List<Comentario> comentarios4 = new ArrayList<>();
         comentarios4.add(new Comentario("Súper relajante", new Date(), 5.0f, servicio4));
         comentarios4.add(new Comentario("Alivió todas mis tensiones", new Date(), 4.9f, servicio4));
@@ -327,7 +327,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio5 = new Servicio(
                 "Cena Romántica en la Playa", "Gastronomía",
                 "Cena privada para dos en la playa con menú gourmet, velas y música en vivo",
-                180.0f, "https://images.pexels.com/photos/1395967/pexels-photo-1395967.jpeg");
+                180000.0f, "https://images.pexels.com/photos/1395967/pexels-photo-1395967.jpeg");
         List<Comentario> comentarios5 = new ArrayList<>();
         comentarios5.add(new Comentario("Noche mágica e inolvidable", new Date(), 5.0f, servicio5));
         comentarios5.add(new Comentario("Comida exquisita", new Date(), 5.0f, servicio5));
@@ -346,7 +346,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio6 = new Servicio(
                 "Yoga al Amanecer", "Bienestar",
                 "Sesión de yoga en la playa con instructor certificado, ideal para comenzar el día con energía",
-                25.0f, "https://images.pexels.com/photos/3822906/pexels-photo-3822906.jpeg");
+                25000.0f, "https://images.pexels.com/photos/3822906/pexels-photo-3822906.jpeg");
         List<Comentario> comentarios6 = new ArrayList<>();
         comentarios6.add(new Comentario("La mejor forma de comenzar el día", new Date(), 5.0f, servicio6));
         comentarios6.add(new Comentario("Instructor muy paciente", new Date(), 4.8f, servicio6));
@@ -365,7 +365,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio7 = new Servicio(
                 "Tour en Kayak", "Deportes Acuáticos",
                 "Recorrido en kayak por la costa con exploración de bahías escondidas",
-                45.0f, "https://images.pexels.com/photos/452738/pexels-photo-452738.jpeg");
+                450000.0f, "https://images.pexels.com/photos/452738/pexels-photo-452738.jpeg");
         List<Comentario> comentarios7 = new ArrayList<>();
         comentarios7.add(new Comentario("Aventura increíble", new Date(), 4.9f, servicio7));
         comentarios7.add(new Comentario("Descubrimos playas vírgenes", new Date(), 5.0f, servicio7));
@@ -384,7 +384,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio8 = new Servicio(
                 "Bar en la Piscina", "Bebidas y Cocteles",
                 "Servicio de bar junto a la piscina infinity con cocteles tropicales exclusivos",
-                15.0f, "https://images.pexels.com/photos/1238373/pexels-photo-1238373.jpeg");
+                15000.0f, "https://images.pexels.com/photos/1238373/pexels-photo-1238373.jpeg");
         List<Comentario> comentarios8 = new ArrayList<>();
         comentarios8.add(new Comentario("Los mojitos son los mejores", new Date(), 4.9f, servicio8));
         comentarios8.add(new Comentario("Servicio rápido y amable", new Date(), 4.8f, servicio8));
@@ -399,30 +399,11 @@ public class DataBaseInit implements ApplicationRunner {
         servicio8.setComentarios(comentarios8);
         servicios.add(servicio8);
 
-        // Servicio 9: Snorkel en Bahía Coral
-        Servicio servicio9 = new Servicio(
-                "Snorkel en Bahía Coral", "Deportes Acuáticos",
-                "Exploración submarina en aguas cristalinas con abundante vida marina",
-                55.0f, "https://images.pexels.com/photos/3155726/pexels-photo-3155726.jpeg");
-        List<Comentario> comentarios9 = new ArrayList<>();
-        comentarios9.add(new Comentario("Vimos peces de colores increíbles", new Date(), 5.0f, servicio9));
-        comentarios9.add(new Comentario("Agua super transparente", new Date(), 4.9f, servicio9));
-        comentarios9.add(new Comentario("Ideal para toda la familia", new Date(), 4.8f, servicio9));
-        comentarios9.add(new Comentario("Equipo de snorkel nuevo", new Date(), 4.7f, servicio9));
-        comentarios9.add(new Comentario("Guía nos mostró los mejores lugares", new Date(), 4.9f, servicio9));
-        comentarios9.add(new Comentario("Duración adecuada", new Date(), 4.6f, servicio9));
-        comentarios9.add(new Comentario("Los niños lo disfrutaron mucho", new Date(), 4.8f, servicio9));
-        comentarios9.add(new Comentario("Fotos bajo el agua incluidas", new Date(), 4.9f, servicio9));
-        comentarios9.add(new Comentario("Experiencia segura", new Date(), 5.0f, servicio9));
-        comentarios9.add(new Comentario("Buen precio", new Date(), 4.7f, servicio9));
-        servicio9.setComentarios(comentarios9);
-        servicios.add(servicio9);
-
         // Servicio 10: Gimnasio Premium
         Servicio servicio10 = new Servicio(
                 "Gimnasio Premium", "Fitness",
                 "Gimnasio equipado con tecnología de última generación y vista panorámica al mar",
-                20.0f, "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg");
+                20000.0f, "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg");
         List<Comentario> comentarios10 = new ArrayList<>();
         comentarios10.add(new Comentario("Equipamiento de primera", new Date(), 4.9f, servicio10));
         comentarios10.add(new Comentario("Vista motivadora al entrenar", new Date(), 4.8f, servicio10));
@@ -441,7 +422,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio11 = new Servicio(
                 "Clases de Surf", "Deportes Acuáticos",
                 "Lecciones de surf con instructores profesionales en las mejores olas de la zona",
-                65.0f, "https://images.pexels.com/photos/390051/surfer-wave-sunset-the-indian-ocean-390051.jpeg");
+                65000.0f, "https://images.pexels.com/photos/390051/surfer-wave-sunset-the-indian-ocean-390051.jpeg");
         List<Comentario> comentarios11 = new ArrayList<>();
         comentarios11.add(new Comentario("Aprendí a surfear en mi primera clase", new Date(), 5.0f, servicio11));
         comentarios11.add(new Comentario("Instructores súper pacientes", new Date(), 4.9f, servicio11));
@@ -460,7 +441,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio12 = new Servicio(
                 "Restaurante Gourmet Mar y Tierra", "Gastronomía",
                 "Restaurante de alta cocina con mariscos frescos y carnes premium",
-                75.0f, "https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg");
+                75000.0f, "https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg");
         List<Comentario> comentarios12 = new ArrayList<>();
         comentarios12.add(new Comentario("Langosta espectacular", new Date(), 5.0f, servicio12));
         comentarios12.add(new Comentario("Chef con mucho talento", new Date(), 4.9f, servicio12));
@@ -475,30 +456,11 @@ public class DataBaseInit implements ApplicationRunner {
         servicio12.setComentarios(comentarios12);
         servicios.add(servicio12);
 
-        // Servicio 13: Parasailing
-        Servicio servicio13 = new Servicio(
-                "Parasailing", "Deportes Acuáticos",
-                "Vuelo en paracaídas sobre el océano con vistas panorámicas impresionantes",
-                90.0f, "https://images.pexels.com/photos/848618/pexels-photo-848618.jpeg");
-        List<Comentario> comentarios13 = new ArrayList<>();
-        comentarios13.add(new Comentario("Vistas increíbles desde arriba", new Date(), 5.0f, servicio13));
-        comentarios13.add(new Comentario("Adrenalina al máximo", new Date(), 4.9f, servicio13));
-        comentarios13.add(new Comentario("Personal muy profesional", new Date(), 4.8f, servicio13));
-        comentarios13.add(new Comentario("Equipo de seguridad confiable", new Date(), 5.0f, servicio13));
-        comentarios13.add(new Comentario("Experiencia única", new Date(), 4.9f, servicio13));
-        comentarios13.add(new Comentario("Duración perfecta del vuelo", new Date(), 4.7f, servicio13));
-        comentarios13.add(new Comentario("Se ve todo el resort desde arriba", new Date(), 5.0f, servicio13));
-        comentarios13.add(new Comentario("Aterrizaje suave", new Date(), 4.8f, servicio13));
-        comentarios13.add(new Comentario("Fotos y video incluidos", new Date(), 4.9f, servicio13));
-        comentarios13.add(new Comentario("Lo mejor de mis vacaciones", new Date(), 5.0f, servicio13));
-        servicio13.setComentarios(comentarios13);
-        servicios.add(servicio13);
-
         // Servicio 14: Masaje Balinés
         Servicio servicio14 = new Servicio(
                 "Masaje Balinés", "Spa y Bienestar",
                 "Técnica tradicional de masaje con presión profunda y aromaterapia",
-                80.0f, "https://images.pexels.com/photos/3757952/pexels-photo-3757952.jpeg");
+                80000.0f, "https://images.pexels.com/photos/3757952/pexels-photo-3757952.jpeg");
         List<Comentario> comentarios14 = new ArrayList<>();
         comentarios14.add(new Comentario("Técnica maravillosa", new Date(), 5.0f, servicio14));
         comentarios14.add(new Comentario("Alivió mi dolor de espalda", new Date(), 4.9f, servicio14));
@@ -517,7 +479,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio15 = new Servicio(
                 "Tour de Avistamiento de Delfines", "Ecoturismo",
                 "Excursión en barco para observar delfines en su hábitat natural",
-                70.0f, "https://images.pexels.com/photos/1645028/pexels-photo-1645028.jpeg");
+                70000.0f, "https://images.pexels.com/photos/1645028/pexels-photo-1645028.jpeg");
         List<Comentario> comentarios15 = new ArrayList<>();
         comentarios15.add(new Comentario("Vimos más de 20 delfines", new Date(), 5.0f, servicio15));
         comentarios15.add(new Comentario("Experiencia mágica", new Date(), 5.0f, servicio15));
@@ -536,7 +498,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio16 = new Servicio(
                 "Club de Niños Aventura Marina", "Entretenimiento Infantil",
                 "Club infantil con actividades supervisadas, juegos y talleres creativos",
-                30.0f, "https://images.pexels.com/photos/1720186/pexels-photo-1720186.jpeg");
+                30000.0f, "https://images.pexels.com/photos/1720186/pexels-photo-1720186.jpeg");
         List<Comentario> comentarios16 = new ArrayList<>();
         comentarios16.add(new Comentario("Los niños no querían irse", new Date(), 5.0f, servicio16));
         comentarios16.add(new Comentario("Personal muy cariñoso", new Date(), 4.9f, servicio16));
@@ -555,7 +517,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio17 = new Servicio(
                 "Clases de Cocina Caribeña", "Gastronomía",
                 "Aprende a preparar platos típicos de la región con nuestro chef ejecutivo",
-                50.0f, "https://images.pexels.com/photos/1153655/pexels-photo-1153655.jpeg");
+                50000.0f, "https://images.pexels.com/photos/1153655/pexels-photo-1153655.jpeg");
         List<Comentario> comentarios17 = new ArrayList<>();
         comentarios17.add(new Comentario("Aprendí a hacer ceviche perfecto", new Date(), 5.0f, servicio17));
         comentarios17.add(new Comentario("Chef muy didáctico", new Date(), 4.8f, servicio17));
@@ -574,7 +536,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio18 = new Servicio(
                 "Jet Ski", "Deportes Acuáticos",
                 "Alquiler de motos acuáticas de última generación con recorrido guiado",
-                85.0f, "https://images.pexels.com/photos/1449667/pexels-photo-1449667.jpeg");
+                85000.0f, "https://images.pexels.com/photos/1449667/pexels-photo-1449667.jpeg");
         List<Comentario> comentarios18 = new ArrayList<>();
         comentarios18.add(new Comentario("Velocidad y diversión", new Date(), 5.0f, servicio18));
         comentarios18.add(new Comentario("Jet skis nuevos", new Date(), 4.9f, servicio18));
@@ -593,7 +555,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio19 = new Servicio(
                 "Tratamiento Facial con Algas Marinas", "Spa y Bienestar",
                 "Tratamiento facial hidratante y rejuvenecedor con productos del mar",
-                65.0f, "https://images.pexels.com/photos/3764013/pexels-photo-3764013.jpeg");
+                65000.0f, "https://images.pexels.com/photos/3764013/pexels-photo-3764013.jpeg");
         List<Comentario> comentarios19 = new ArrayList<>();
         comentarios19.add(new Comentario("Mi piel quedó radiante", new Date(), 5.0f, servicio19));
         comentarios19.add(new Comentario("Productos naturales de alta calidad", new Date(), 4.9f, servicio19));
@@ -612,7 +574,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio20 = new Servicio(
                 "Paseo a Caballo por la Playa", "Ecoturismo",
                 "Cabalgata al atardecer por la playa y bosque tropical",
-                60.0f, "https://images.pexels.com/photos/3714898/pexels-photo-3714898.jpeg");
+                60000.0f, "https://images.pexels.com/photos/3714898/pexels-photo-3714898.jpeg");
         List<Comentario> comentarios20 = new ArrayList<>();
         comentarios20.add(new Comentario("Atardecer espectacular a caballo", new Date(), 5.0f, servicio20));
         comentarios20.add(new Comentario("Caballos muy bien cuidados", new Date(), 4.9f, servicio20));
@@ -631,7 +593,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio21 = new Servicio(
                 "Fiesta en la Piscina", "Entretenimiento",
                 "Fiesta nocturna con DJ, luces y animación en la piscina principal",
-                25.0f, "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg");
+                25000.0f, "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg");
         List<Comentario> comentarios21 = new ArrayList<>();
         comentarios21.add(new Comentario("Fiesta increíble", new Date(), 5.0f, servicio21));
         comentarios21.add(new Comentario("DJ con buena música", new Date(), 4.8f, servicio21));
@@ -646,30 +608,11 @@ public class DataBaseInit implements ApplicationRunner {
         servicio21.setComentarios(comentarios21);
         servicios.add(servicio21);
 
-        // Servicio 22: Windsurf
-        Servicio servicio22 = new Servicio(
-                "Windsurf", "Deportes Acuáticos",
-                "Clases y alquiler de equipo de windsurf con instructores certificados",
-                70.0f, "https://images.pexels.com/photos/2272939/pexels-photo-2272939.jpeg");
-        List<Comentario> comentarios22 = new ArrayList<>();
-        comentarios22.add(new Comentario("Deporte emocionante", new Date(), 4.9f, servicio22));
-        comentarios22.add(new Comentario("Instructores muy pacientes", new Date(), 4.8f, servicio22));
-        comentarios22.add(new Comentario("Equipo moderno", new Date(), 4.7f, servicio22));
-        comentarios22.add(new Comentario("Viento perfecto por las tardes", new Date(), 4.9f, servicio22));
-        comentarios22.add(new Comentario("Logré mantenerme en la tabla", new Date(), 4.6f, servicio22));
-        comentarios22.add(new Comentario("Clases en grupos pequeños", new Date(), 4.8f, servicio22));
-        comentarios22.add(new Comentario("Desafiante pero divertido", new Date(), 4.7f, servicio22));
-        comentarios22.add(new Comentario("Zona segura para aprender", new Date(), 4.8f, servicio22));
-        comentarios22.add(new Comentario("Buena relación precio-calidad", new Date(), 4.5f, servicio22));
-        comentarios22.add(new Comentario("Definitivamente volveré", new Date(), 4.9f, servicio22));
-        servicio22.setComentarios(comentarios22);
-        servicios.add(servicio22);
-
         // Servicio 23: Servicio de Spa en Habitación
         Servicio servicio23 = new Servicio(
                 "Servicio de Spa en Habitación", "Spa y Bienestar",
                 "Masajes y tratamientos de spa en la comodidad de tu habitación",
-                110.0f, "https://images.pexels.com/photos/3997386/pexels-photo-3997386.jpeg");
+                110000.0f, "https://images.pexels.com/photos/3997386/pexels-photo-3997386.jpeg");
         List<Comentario> comentarios23 = new ArrayList<>();
         comentarios23.add(new Comentario("Comodidad total", new Date(), 5.0f, servicio23));
         comentarios23.add(new Comentario("Terapeuta llegó puntual", new Date(), 4.9f, servicio23));
@@ -688,7 +631,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio24 = new Servicio(
                 "Tour Fotográfico al Atardecer", "Entretenimiento",
                 "Sesión fotográfica profesional en los mejores spots del resort",
-                95.0f, "https://images.pexels.com/photos/1906658/pexels-photo-1906658.jpeg");
+                45000.0f, "https://images.pexels.com/photos/1906658/pexels-photo-1906658.jpeg");
         List<Comentario> comentarios24 = new ArrayList<>();
         comentarios24.add(new Comentario("Fotos espectaculares", new Date(), 5.0f, servicio24));
         comentarios24.add(new Comentario("Fotógrafo muy profesional", new Date(), 4.9f, servicio24));
@@ -707,7 +650,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio25 = new Servicio(
                 "Pesca Deportiva", "Deportes Acuáticos",
                 "Salida de pesca en alta mar con equipo profesional y capitán experto",
-                150.0f, "https://images.pexels.com/photos/1007025/pexels-photo-1007025.jpeg");
+                150000.0f, "https://images.pexels.com/photos/1007025/pexels-photo-1007025.jpeg");
         List<Comentario> comentarios25 = new ArrayList<>();
         comentarios25.add(new Comentario("Pescamos un marlín", new Date(), 5.0f, servicio25));
         comentarios25.add(new Comentario("Capitán con mucha experiencia", new Date(), 4.9f, servicio25));
@@ -726,7 +669,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio26 = new Servicio(
                 "Reflexología Podal", "Spa y Bienestar",
                 "Masaje terapéutico en pies y piernas con técnicas de reflexología",
-                40.0f, "https://images.pexels.com/photos/6530620/pexels-photo-6530620.jpeg");
+                40000.0f, "https://images.pexels.com/photos/6530620/pexels-photo-6530620.jpeg");
         List<Comentario> comentarios26 = new ArrayList<>();
         comentarios26.add(new Comentario("Mis pies lo necesitaban", new Date(), 5.0f, servicio26));
         comentarios26.add(new Comentario("Técnica muy efectiva", new Date(), 4.8f, servicio26));
@@ -743,30 +686,11 @@ public class DataBaseInit implements ApplicationRunner {
         servicio26.setComentarios(comentarios26);
         servicios.add(servicio26);
 
-        // Servicio 27: Excursión en Catamarán
-        Servicio servicio27 = new Servicio(
-                "Excursión en Catamarán", "Deportes Acuáticos",
-                "Tour de medio día en catamarán con música, bebidas y paradas para nadar",
-                100.0f, "https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg");
-        List<Comentario> comentarios27 = new ArrayList<>();
-        comentarios27.add(new Comentario("Día perfecto en el mar", new Date(), 5.0f, servicio27));
-        comentarios27.add(new Comentario("Tripulación muy amable", new Date(), 4.9f, servicio27));
-        comentarios27.add(new Comentario("Bebidas ilimitadas incluidas", new Date(), 4.8f, servicio27));
-        comentarios27.add(new Comentario("Música genial", new Date(), 4.7f, servicio27));
-        comentarios27.add(new Comentario("Vimos una isla hermosa", new Date(), 5.0f, servicio27));
-        comentarios27.add(new Comentario("Catamarán espacioso y cómodo", new Date(), 4.8f, servicio27));
-        comentarios27.add(new Comentario("Snorkel incluido", new Date(), 4.9f, servicio27));
-        comentarios27.add(new Comentario("Almuerzo delicioso", new Date(), 4.6f, servicio27));
-        comentarios27.add(new Comentario("Ambiente muy divertido", new Date(), 4.8f, servicio27));
-        comentarios27.add(new Comentario("Mejor tour del viaje", new Date(), 5.0f, servicio27));
-        servicio27.setComentarios(comentarios27);
-        servicios.add(servicio27);
-
         // Servicio 28: Manicure y Pedicure
         Servicio servicio28 = new Servicio(
                 "Manicure y Pedicure", "Spa y Bienestar",
                 "Servicio completo de manicure y pedicure con esmaltado permanente",
-                55.0f, "https://images.pexels.com/photos/3997350/pexels-photo-3997350.jpeg");
+                55000.0f, "https://images.pexels.com/photos/3997350/pexels-photo-3997350.jpeg");
         List<Comentario> comentarios28 = new ArrayList<>();
         comentarios28.add(new Comentario("Trabajo impecable", new Date(), 5.0f, servicio28));
         comentarios28.add(new Comentario("Gran variedad de colores", new Date(), 4.8f, servicio28));
@@ -781,30 +705,11 @@ public class DataBaseInit implements ApplicationRunner {
         servicio28.setComentarios(comentarios28);
         servicios.add(servicio28);
 
-        // Servicio 29: Stand Up Paddle
-        Servicio servicio29 = new Servicio(
-                "Stand Up Paddle", "Deportes Acuáticos",
-                "Alquiler de tablas de paddle con clases para principiantes",
-                30.0f, "https://images.pexels.com/photos/2131967/pexels-photo-2131967.jpeg");
-        List<Comentario> comentarios29 = new ArrayList<>();
-        comentarios29.add(new Comentario("Muy divertido y relajante", new Date(), 4.8f, servicio29));
-        comentarios29.add(new Comentario("Fácil de aprender", new Date(), 4.7f, servicio29));
-        comentarios29.add(new Comentario("Tablas en buen estado", new Date(), 4.6f, servicio29));
-        comentarios29.add(new Comentario("Buen ejercicio", new Date(), 4.8f, servicio29));
-        comentarios29.add(new Comentario("Agua tranquila perfecta", new Date(), 4.9f, servicio29));
-        comentarios29.add(new Comentario("Instructor paciente", new Date(), 4.7f, servicio29));
-        comentarios29.add(new Comentario("Vistas hermosas", new Date(), 5.0f, servicio29));
-        comentarios29.add(new Comentario("Precio accesible", new Date(), 4.6f, servicio29));
-        comentarios29.add(new Comentario("Para todos los niveles", new Date(), 4.8f, servicio29));
-        comentarios29.add(new Comentario("Lo haría de nuevo", new Date(), 4.7f, servicio29));
-        servicio29.setComentarios(comentarios29);
-        servicios.add(servicio29);
-
         // Servicio 30: Tour de Observación de Estrellas
         Servicio servicio30 = new Servicio(
                 "Tour de Observación de Estrellas", "Ecoturismo",
                 "Noche de astronomía con telescopio profesional y experto en constelaciones",
-                45.0f, "https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg");
+                45000.0f, "https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg");
         List<Comentario> comentarios30 = new ArrayList<>();
         comentarios30.add(new Comentario("Experiencia única", new Date(), 5.0f, servicio30));
         comentarios30.add(new Comentario("El guía sabe mucho", new Date(), 4.9f, servicio30));
@@ -823,7 +728,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio31 = new Servicio(
                 "Aromaterapia", "Spa y Bienestar",
                 "Sesión de aromaterapia con aceites esenciales y masaje terapéutico",
-                70.0f, "https://images.pexels.com/photos/3865583/pexels-photo-3865583.jpeg");
+                70000.0f, "https://images.pexels.com/photos/3865583/pexels-photo-3865583.jpeg");
         List<Comentario> comentarios31 = new ArrayList<>();
         comentarios31.add(new Comentario("Olores divinos", new Date(), 5.0f, servicio31));
         comentarios31.add(new Comentario("Muy relajante", new Date(), 4.9f, servicio31));
@@ -842,7 +747,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio32 = new Servicio(
                 "Clases de Baile Latino", "Entretenimiento",
                 "Aprende salsa, bachata y merengue con instructores profesionales",
-                35.0f, "https://images.pexels.com/photos/3621104/pexels-photo-3621104.jpeg");
+                35000.0f, "https://images.pexels.com/photos/3621104/pexels-photo-3621104.jpeg");
         List<Comentario> comentarios32 = new ArrayList<>();
         comentarios32.add(new Comentario("Muy divertido", new Date(), 5.0f, servicio32));
         comentarios32.add(new Comentario("Instructores pacientes", new Date(), 4.8f, servicio32));
@@ -861,7 +766,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio33 = new Servicio(
                 "Banana Boat", "Deportes Acuáticos",
                 "Paseo extremo en banana boat con adrenalina garantizada",
-                40.0f, "https://images.pexels.com/photos/2265876/pexels-photo-2265876.jpeg");
+                40000.0f, "https://images.pexels.com/photos/2265876/pexels-photo-2265876.jpeg");
         List<Comentario> comentarios33 = new ArrayList<>();
         comentarios33.add(new Comentario("Súper divertido", new Date(), 5.0f, servicio33));
         comentarios33.add(new Comentario("Adrenalina pura", new Date(), 4.9f, servicio33));
@@ -880,7 +785,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio34 = new Servicio(
                 "Servicio de Habitación Premium", "Gastronomía",
                 "Servicio de comidas gourmet a la habitación disponible 24/7",
-                20.0f, "https://images.pexels.com/photos/4577179/pexels-photo-4577179.jpeg");
+                20000.0f, "https://images.pexels.com/photos/4577179/pexels-photo-4577179.jpeg");
         List<Comentario> comentarios34 = new ArrayList<>();
         comentarios34.add(new Comentario("Comida deliciosa", new Date(), 4.9f, servicio34));
         comentarios34.add(new Comentario("Llegó caliente", new Date(), 4.8f, servicio34));
@@ -899,7 +804,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio35 = new Servicio(
                 "Temazcal", "Spa y Bienestar",
                 "Ceremonia ancestral de purificación en temazcal tradicional",
-                60.0f, "https://images.pexels.com/photos/3822621/pexels-photo-3822621.jpeg");
+                60000.0f, "https://images.pexels.com/photos/3822621/pexels-photo-3822621.jpeg");
         List<Comentario> comentarios35 = new ArrayList<>();
         comentarios35.add(new Comentario("Experiencia espiritual única", new Date(), 5.0f, servicio35));
         comentarios35.add(new Comentario("Muy purificante", new Date(), 4.9f, servicio35));
@@ -918,7 +823,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio36 = new Servicio(
                 "Voleibol Playero", "Deportes",
                 "Torneos y juegos recreativos de voleibol en la playa",
-                10.0f, "https://images.pexels.com/photos/1263348/pexels-photo-1263348.jpeg");
+                10000.0f, "https://images.pexels.com/photos/1263348/pexels-photo-1263348.jpeg");
         List<Comentario> comentarios36 = new ArrayList<>();
         comentarios36.add(new Comentario("Muy divertido", new Date(), 4.8f, servicio36));
         comentarios36.add(new Comentario("Conocimos gente nueva", new Date(), 4.7f, servicio36));
@@ -937,7 +842,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio37 = new Servicio(
                 "Cena Temática Internacional", "Gastronomía",
                 "Cenas temáticas semanales con cocina de diferentes países",
-                65.0f, "https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg");
+                65000.0f, "https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg");
         List<Comentario> comentarios37 = new ArrayList<>();
         comentarios37.add(new Comentario("Comida auténtica", new Date(), 5.0f, servicio37));
         comentarios37.add(new Comentario("Chef muy talentoso", new Date(), 4.9f, servicio37));
@@ -952,30 +857,11 @@ public class DataBaseInit implements ApplicationRunner {
         servicio37.setComentarios(comentarios37);
         servicios.add(servicio37);
 
-        // Servicio 38: Flyboard
-        Servicio servicio38 = new Servicio(
-                "Flyboard", "Deportes Acuáticos",
-                "Vuela sobre el agua con la última tecnología en deportes acuáticos",
-                110.0f, "https://images.pexels.com/photos/1654698/pexels-photo-1654698.jpeg");
-        List<Comentario> comentarios38 = new ArrayList<>();
-        comentarios38.add(new Comentario("Experiencia alucinante", new Date(), 5.0f, servicio38));
-        comentarios38.add(new Comentario("Adrenalina al máximo", new Date(), 5.0f, servicio38));
-        comentarios38.add(new Comentario("Instructor muy profesional", new Date(), 4.9f, servicio38));
-        comentarios38.add(new Comentario("Logré volar al tercer intento", new Date(), 4.8f, servicio38));
-        comentarios38.add(new Comentario("Equipo de seguridad top", new Date(), 5.0f, servicio38));
-        comentarios38.add(new Comentario("Vale cada centavo", new Date(), 4.9f, servicio38));
-        comentarios38.add(new Comentario("Sensación increíble", new Date(), 5.0f, servicio38));
-        comentarios38.add(new Comentario("Más difícil de lo que parece", new Date(), 4.7f, servicio38));
-        comentarios38.add(new Comentario("Fotos y video incluidos", new Date(), 4.8f, servicio38));
-        comentarios38.add(new Comentario("Lo mejor que he hecho", new Date(), 5.0f, servicio38));
-        servicio38.setComentarios(comentarios38);
-        servicios.add(servicio38);
-
         // Servicio 39: Meditación Guiada
         Servicio servicio39 = new Servicio(
                 "Meditación Guiada", "Bienestar",
                 "Sesiones de meditación al aire libre con maestro certificado",
-                20.0f, "https://images.pexels.com/photos/3822864/pexels-photo-3822864.jpeg");
+                20000.0f, "https://images.pexels.com/photos/3822864/pexels-photo-3822864.jpeg");
         List<Comentario> comentarios39 = new ArrayList<>();
         comentarios39.add(new Comentario("Paz interior", new Date(), 5.0f, servicio39));
         comentarios39.add(new Comentario("Maestro muy sabio", new Date(), 4.9f, servicio39));
@@ -994,7 +880,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio40 = new Servicio(
                 "Bar de Jugos y Smoothies", "Bebidas Saludables",
                 "Bar de jugos naturales y smoothies con frutas tropicales frescas",
-                12.0f, "https://images.pexels.com/photos/1092730/pexels-photo-1092730.jpeg");
+                12000.0f, "https://images.pexels.com/photos/1092730/pexels-photo-1092730.jpeg");
         List<Comentario> comentarios40 = new ArrayList<>();
         comentarios40.add(new Comentario("Jugos deliciosos", new Date(), 4.9f, servicio40));
         comentarios40.add(new Comentario("Frutas super frescas", new Date(), 5.0f, servicio40));
@@ -1009,30 +895,11 @@ public class DataBaseInit implements ApplicationRunner {
         servicio40.setComentarios(comentarios40);
         servicios.add(servicio40);
 
-        // Servicio 41: Masaje Prenatal
-        Servicio servicio41 = new Servicio(
-                "Masaje Prenatal", "Spa y Bienestar",
-                "Masaje especializado para futuras mamás con técnicas seguras",
-                90.0f, "https://images.pexels.com/photos/3997987/pexels-photo-3997987.jpeg");
-        List<Comentario> comentarios41 = new ArrayList<>();
-        comentarios41.add(new Comentario("Alivió mi dolor de espalda", new Date(), 5.0f, servicio41));
-        comentarios41.add(new Comentario("Terapeuta especializada", new Date(), 5.0f, servicio41));
-        comentarios41.add(new Comentario("Camilla especial muy cómoda", new Date(), 4.9f, servicio41));
-        comentarios41.add(new Comentario("Técnica segura y relajante", new Date(), 5.0f, servicio41));
-        comentarios41.add(new Comentario("Me sentí cuidada", new Date(), 4.9f, servicio41));
-        comentarios41.add(new Comentario("Presión perfecta", new Date(), 4.8f, servicio41));
-        comentarios41.add(new Comentario("Aceites seguros para el embarazo", new Date(), 5.0f, servicio41));
-        comentarios41.add(new Comentario("Duración adecuada", new Date(), 4.7f, servicio41));
-        comentarios41.add(new Comentario("Totalmente recomendado", new Date(), 5.0f, servicio41));
-        comentarios41.add(new Comentario("Vale la pena", new Date(), 4.9f, servicio41));
-        servicio41.setComentarios(comentarios41);
-        servicios.add(servicio41);
-
         // Servicio 42: Aqua Zumba
         Servicio servicio42 = new Servicio(
                 "Aqua Zumba", "Fitness",
                 "Clases de zumba en la piscina con ritmos latinos",
-                15.0f, "https://images.pexels.com/photos/863988/pexels-photo-863988.jpeg");
+                15000.0f, "https://images.pexels.com/photos/863988/pexels-photo-863988.jpeg");
         List<Comentario> comentarios42 = new ArrayList<>();
         comentarios42.add(new Comentario("Súper divertido", new Date(), 5.0f, servicio42));
         comentarios42.add(new Comentario("Instructora con mucha energía", new Date(), 4.9f, servicio42));
@@ -1051,7 +918,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio43 = new Servicio(
                 "Tour de Snorkeling Nocturno", "Deportes Acuáticos",
                 "Experiencia única de snorkeling nocturno con linternas submarinas",
-                75.0f, "https://images.pexels.com/photos/2404370/pexels-photo-2404370.jpeg");
+                750000.0f, "https://images.pexels.com/photos/2404370/pexels-photo-2404370.jpeg");
         List<Comentario> comentarios43 = new ArrayList<>();
         comentarios43.add(new Comentario("Experiencia mágica", new Date(), 5.0f, servicio43));
         comentarios43.add(new Comentario("Vida marina diferente de noche", new Date(), 5.0f, servicio43));
@@ -1070,7 +937,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio44 = new Servicio(
                 "Sauna y Baño Turco", "Spa y Bienestar",
                 "Acceso ilimitado a sauna finlandesa y baño turco",
-                30.0f, "https://images.pexels.com/photos/3865554/pexels-photo-3865554.jpeg");
+                30000.0f, "https://images.pexels.com/photos/3865554/pexels-photo-3865554.jpeg");
         List<Comentario> comentarios44 = new ArrayList<>();
         comentarios44.add(new Comentario("Muy relajante", new Date(), 4.9f, servicio44));
         comentarios44.add(new Comentario("Instalaciones limpias", new Date(), 5.0f, servicio44));
@@ -1089,7 +956,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio45 = new Servicio(
                 "Parrillada en la Playa", "Gastronomía",
                 "BBQ nocturno en la playa con carnes, mariscos y música en vivo",
-                80.0f, "https://images.pexels.com/photos/1105325/pexels-photo-1105325.jpeg");
+                80000.0f, "https://images.pexels.com/photos/1105325/pexels-photo-1105325.jpeg");
         List<Comentario> comentarios45 = new ArrayList<>();
         comentarios45.add(new Comentario("Comida deliciosa", new Date(), 5.0f, servicio45));
         comentarios45.add(new Comentario("Carnes en su punto", new Date(), 4.9f, servicio45));
@@ -1108,7 +975,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio46 = new Servicio(
                 "Clases de Mixología", "Entretenimiento",
                 "Aprende a preparar cocteles tropicales con bartender profesional",
-                40.0f, "https://images.pexels.com/photos/5490965/pexels-photo-5490965.jpeg");
+                40000.0f, "https://images.pexels.com/photos/5490965/pexels-photo-5490965.jpeg");
         List<Comentario> comentarios46 = new ArrayList<>();
         comentarios46.add(new Comentario("Muy divertido", new Date(), 5.0f, servicio46));
         comentarios46.add(new Comentario("Aprendí muchas recetas", new Date(), 4.8f, servicio46));
@@ -1123,49 +990,11 @@ public class DataBaseInit implements ApplicationRunner {
         servicio46.setComentarios(comentarios46);
         servicios.add(servicio46);
 
-        // Servicio 47: Masaje en Pareja
-        Servicio servicio47 = new Servicio(
-                "Masaje en Pareja", "Spa y Bienestar",
-                "Sesión de masaje simultáneo para parejas en sala privada",
-                170.0f, "https://images.pexels.com/photos/3757959/pexels-photo-3757959.jpeg");
-        List<Comentario> comentarios47 = new ArrayList<>();
-        comentarios47.add(new Comentario("Experiencia romántica", new Date(), 5.0f, servicio47));
-        comentarios47.add(new Comentario("Sala hermosa con vista", new Date(), 5.0f, servicio47));
-        comentarios47.add(new Comentario("Ambos terapeutas excelentes", new Date(), 4.9f, servicio47));
-        comentarios47.add(new Comentario("Champán de cortesía", new Date(), 4.8f, servicio47));
-        comentarios47.add(new Comentario("Música relajante", new Date(), 4.7f, servicio47));
-        comentarios47.add(new Comentario("Privacidad total", new Date(), 5.0f, servicio47));
-        comentarios47.add(new Comentario("Pétalos de rosa", new Date(), 4.9f, servicio47));
-        comentarios47.add(new Comentario("Técnica sincronizada", new Date(), 4.8f, servicio47));
-        comentarios47.add(new Comentario("Perfecto para aniversario", new Date(), 5.0f, servicio47));
-        comentarios47.add(new Comentario("Vale cada centavo", new Date(), 4.9f, servicio47));
-        servicio47.setComentarios(comentarios47);
-        servicios.add(servicio47);
-
-        // Servicio 48: Bodyboard
-        Servicio servicio48 = new Servicio(
-                "Bodyboard", "Deportes Acuáticos",
-                "Alquiler de bodyboards y clases para surfear las olas",
-                25.0f, "https://images.pexels.com/photos/416676/pexels-photo-416676.jpeg");
-        List<Comentario> comentarios48 = new ArrayList<>();
-        comentarios48.add(new Comentario("Muy divertido", new Date(), 4.8f, servicio48));
-        comentarios48.add(new Comentario("Más fácil que el surf", new Date(), 4.7f, servicio48));
-        comentarios48.add(new Comentario("Tablas en buen estado", new Date(), 4.6f, servicio48));
-        comentarios48.add(new Comentario("Instructor paciente", new Date(), 4.8f, servicio48));
-        comentarios48.add(new Comentario("Olas perfectas", new Date(), 4.9f, servicio48));
-        comentarios48.add(new Comentario("Para niños y adultos", new Date(), 4.7f, servicio48));
-        comentarios48.add(new Comentario("Aletas incluidas", new Date(), 4.5f, servicio48));
-        comentarios48.add(new Comentario("Buen ejercicio", new Date(), 4.6f, servicio48));
-        comentarios48.add(new Comentario("Precio accesible", new Date(), 4.8f, servicio48));
-        comentarios48.add(new Comentario("Lo repetiría", new Date(), 4.7f, servicio48));
-        servicio48.setComentarios(comentarios48);
-        servicios.add(servicio48);
-
         // Servicio 49: Conciertos en Vivo
         Servicio servicio49 = new Servicio(
                 "Conciertos en Vivo", "Entretenimiento",
                 "Shows musicales en vivo con artistas locales e internacionales",
-                50.0f, "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg");
+                50000.0f, "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg");
         List<Comentario> comentarios49 = new ArrayList<>();
         comentarios49.add(new Comentario("Artistas increíbles", new Date(), 5.0f, servicio49));
         comentarios49.add(new Comentario("Variedad de géneros musicales", new Date(), 4.8f, servicio49));
@@ -1184,7 +1013,7 @@ public class DataBaseInit implements ApplicationRunner {
         Servicio servicio50 = new Servicio(
                 "Excursión a Islas Cercanas", "Ecoturismo",
                 "Tour de día completo a islas paradisíacas con almuerzo incluido",
-                130.0f, "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg");
+                130000.0f, "https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg");
         List<Comentario> comentarios50 = new ArrayList<>();
         comentarios50.add(new Comentario("Día perfecto", new Date(), 5.0f, servicio50));
         comentarios50.add(new Comentario("Islas espectaculares", new Date(), 5.0f, servicio50));

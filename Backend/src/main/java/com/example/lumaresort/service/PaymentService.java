@@ -42,7 +42,7 @@ public class PaymentService {
 
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
                 .setAmount(amountInCents)
-                .setCurrency("usd")
+                .setCurrency("cop")
                 .addPaymentMethodType("card")
                 .putMetadata("reservaId", reservaId.toString())
                 .build();

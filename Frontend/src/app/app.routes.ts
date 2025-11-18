@@ -24,7 +24,7 @@ import { ChatbotComponent } from './chatbot-component/chatbot-component';
 import { OperadorPasarelaPagosComponent } from './operador-pasarela-pagos-component/operador-pasarela-pagos-component';
 
 export const routes: Routes = [
-  { path: '', component: LandingPageComponent }, // por defecto muestra Landing
+  { path: '', component: LandingPageComponent, canActivate: [publicGuard] }, // por defecto muestra Landing
   { path: 'login', component: LoginComponent, canActivate: [publicGuard] },
   { path: 'signup', component: SignUpComponent, canActivate: [publicGuard] },
   { path: 'perfil/:id', component: PerfilComponent }, // muestra perfil

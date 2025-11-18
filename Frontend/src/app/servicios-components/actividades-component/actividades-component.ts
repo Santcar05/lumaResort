@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Observable } from 'rxjs';
@@ -22,9 +22,10 @@ import { TranslateModule } from '@ngx-translate/core';
     ]),
   ],
 })
-export class ActividadesComponent {
+export class ActividadesComponent implements OnInit {
   activeCategory: string = '';
   selectedImageIndex: number = 0;
+  isLoading: boolean = true;
 
   categories: {
     id: string;
@@ -41,11 +42,27 @@ export class ActividadesComponent {
   ) {}
 
   ngOnInit(): void {
-    this.findAll().subscribe((data) => {
-      this.buildCategories(data);
-      if (this.categories.length > 0) {
-        this.activeCategory = this.categories[0].id;
-      }
+    console.log('🎯 Iniciando carga de actividades...');
+    this.isLoading = true;
+
+    this.findAll().subscribe({
+      next: (data) => {
+        console.log('📦 Actividades recibidas:', data);
+        this.buildCategories(data);
+
+        if (this.categories.length > 0) {
+          this.activeCategory = this.categories[0].id;
+          console.log('✅ Categoría activa inicial:', this.activeCategory);
+        } else {
+          console.warn('⚠️ No hay categorías disponibles');
+        }
+
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('❌ Error al cargar actividades:', error);
+        this.isLoading = false;
+      },
     });
   }
 
@@ -66,29 +83,51 @@ export class ActividadesComponent {
     this.categories = Object.keys(grouped).map((tipo) => ({
       id: tipo,
       nombre: tipo,
-      images: grouped[tipo].map((s) => s.imagenURL),
-      imageNames: grouped[tipo].map((s) => s.nombre),
+      images: grouped[tipo].map((s) => s.imagenURL || ''),
+      imageNames: grouped[tipo].map((s) => s.nombre || 'Sin nombre'),
       servicios: grouped[tipo],
     }));
+
+    console.log('📂 Categorías construidas:', this.categories.length);
   }
 
   selectCategory(categoryId: string): void {
     this.activeCategory = categoryId;
-    this.selectedImageIndex = 0; // reset a primera imagen
+    this.selectedImageIndex = 0;
+    console.log('🔄 Categoría seleccionada:', categoryId);
   }
 
   selectImage(index: number): void {
     this.selectedImageIndex = index;
   }
 
-  getCurrentCategory(): any {
-    return this.categories.find((cat) => cat.id === this.activeCategory) || this.categories[0];
+  getCurrentCategory(): {
+    id: string;
+    nombre: string;
+    images: string[];
+    imageNames: string[];
+    servicios: Servicio[];
+  } | null {
+    if (this.categories.length === 0) {
+      return null;
+    }
+
+    const category = this.categories.find((cat) => cat.id === this.activeCategory);
+    return category || this.categories[0];
   }
 
   explorarServicio(): void {
     const categoriaActual = this.getCurrentCategory();
+
+    if (!categoriaActual || !categoriaActual.servicios || categoriaActual.servicios.length === 0) {
+      console.warn('⚠️ No hay servicios disponibles');
+      return;
+    }
+
     const servicio = categoriaActual.servicios[this.selectedImageIndex];
-    if (servicio) {
+
+    if (servicio && servicio.idServicio) {
+      console.log('🔗 Navegando al servicio:', servicio.idServicio);
       this.router.navigate(['/servicios', servicio.idServicio]);
     }
   }

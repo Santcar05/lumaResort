@@ -7,7 +7,29 @@
     </h3>
   </div>
 
-  <div class="activities-container">
+  <!-- ========== LOADING STATE ========== -->
+  <div
+    *ngIf="isLoading"
+    class="loading-container"
+    style="min-height: 400px; display: flex; justify-content: center; align-items: center"
+  >
+    <p style="font-size: 1.2rem; color: #666">Cargando actividades...</p>
+  </div>
+
+  <!-- ========== NO DATA STATE ========== -->
+  <div
+    *ngIf="!isLoading && categories.length === 0"
+    class="no-data-container"
+    style="min-height: 400px; display: flex; justify-content: center; align-items: center"
+  >
+    <p style="font-size: 1.2rem; color: #666">No hay actividades disponibles en este momento.</p>
+  </div>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <div
+    class="activities-container"
+    *ngIf="!isLoading && categories.length > 0 && getCurrentCategory()"
+  >
     <div class="activities-nav">
       <button
         *ngFor="let category of categories"
@@ -22,31 +44,76 @@
     <div class="carousel-container">
       <div class="main-carousel">
         <div class="main-image-container">
+          <!-- ========== IMAGEN PRINCIPAL ========== -->
           <img
-            [src]="getCurrentCategory().images?.[selectedImageIndex]"
-            [alt]="getCurrentCategory()?.title | translate"
+            *ngIf="
+              getCurrentCategory() &&
+              getCurrentCategory()!.images &&
+              getCurrentCategory()!.images.length > 0
+            "
+            [src]="getCurrentCategory()!.images[selectedImageIndex]"
+            [alt]="getCurrentCategory()!.imageNames?.[selectedImageIndex] || 'Actividad'"
             class="main-image"
           />
 
-          <div class="image-info-overlay">
+          <!-- ========== FALLBACK SI NO HAY IMAGEN ========== -->
+          <div
+            *ngIf="
+              !getCurrentCategory() ||
+              !getCurrentCategory()!.images ||
+              getCurrentCategory()!.images.length === 0
+            "
+            class="no-image-placeholder"
+            style="
+              width: 100%;
+              height: 500px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white;
+              font-size: 1.5rem;
+              border-radius: 15px;
+            "
+          >
+            <p>No hay imágenes disponibles</p>
+          </div>
+
+          <!-- ========== OVERLAY DE INFORMACIÓN ========== -->
+          <div
+            class="image-info-overlay"
+            *ngIf="
+              getCurrentCategory() &&
+              getCurrentCategory()!.imageNames &&
+              getCurrentCategory()!.imageNames.length > 0
+            "
+          >
             <div class="image-title">
-              {{ getCurrentCategory().imageNames[selectedImageIndex] | translate }}
+              {{ getCurrentCategory()!.imageNames[selectedImageIndex] | translate }}
             </div>
             <button class="btn" (click)="explorarServicio()">
               {{ 'ACTIVITIES.EXPLORE' | translate }}
             </button>
           </div>
 
-          <div class="thumbnail-container">
+          <!-- ========== THUMBNAILS ========== -->
+          <div
+            class="thumbnail-container"
+            *ngIf="
+              getCurrentCategory() &&
+              getCurrentCategory()!.images &&
+              getCurrentCategory()!.images.length > 1
+            "
+          >
             <div
-              *ngFor="let image of getCurrentCategory()?.images; let i = index"
+              *ngFor="let image of getCurrentCategory()!.images; let i = index"
               class="thumbnail-item"
               [class.active]="selectedImageIndex === i"
               (click)="selectImage(i)"
             >
               <img
                 [src]="image"
-                [alt]="(getCurrentCategory().title | translate) + ' ' + (i + 1)"
+                [alt]="(getCurrentCategory()!.nombre || 'Actividad') + ' ' + (i + 1)"
                 class="thumbnail-image"
               />
             </div>

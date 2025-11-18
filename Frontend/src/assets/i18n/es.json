@@ -233,8 +233,27 @@
   "TESTIMONIALS": {
     "TITLE": "TESTIMONIOS",
     "SUBTITLE_PART1": "Lo que nuestros huéspedes",
-    "SUBTITLE_PART2": "dicen de nosotros"
+    "SUBTITLE_PART2": "dicen de nosotros",
+    "SEE_MORE": "Da click aquí para ver más testimonios"
   },
+  "VIDEO_TESTIMONIALS": {
+    "TITLE": "Testimonios en",
+    "HIGHLIGHT": "Video",
+    "SUBTITLE": "Escucha lo que nuestros huéspedes y gerentes tienen para contar sobre el hotel",
+    "VIDEO_TITLE": "Testimonio Short",
+    "SIDE_MESSAGE": "Los gerentes siempre estamos felices de recibir sus retroalimentaciones del hotel",
+    "IMAGE_ALT": "Gerente"
+  },
+  "MANAGERS_FEEDBACK": {
+    "TITLE": "Retroalimentación de los",
+    "HIGHLIGHT": "Gerentes",
+    "SUBTITLE": "Antes y después de nuestras remodelaciones, escucha lo que dicen",
+    "LEFT_TITLE": "Antes de las remodelaciones",
+    "LEFT_VIDEO_TITLE": "Antes remodelaciones",
+    "RIGHT_TITLE": "Después de las remodelaciones",
+    "RIGHT_VIDEO_TITLE": "Después remodelaciones"
+  },
+
   "SIGNUP": {
     "TITLE": "Crear Cuenta",
     "SUBTITLE": "Regístrate para comenzar tu experiencia",

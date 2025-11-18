@@ -1,5 +1,6 @@
 <section class="testimonials-section">
   <div class="testimonials-container">
+    <!-- Header de la sección -->
     <div class="testimonials-header">
       <h2 class="section-title">{{ 'TESTIMONIALS.TITLE' | translate }}</h2>
       <h3 class="section-subtitle">
@@ -9,12 +10,20 @@
       <div class="title-divider"></div>
     </div>
 
+    <!-- Botón de más testimonios alineado a la derecha -->
+    <div class="more-testimonials">
+      <a [routerLink]="['/video-testimonials']" class="more-testimonials-btn">
+        {{ 'TESTIMONIALS.SEE_MORE' | translate }}
+      </a>
+    </div>
+
     <!-- Loading State -->
     <div *ngIf="translating" class="loading-overlay">
       <div class="loading-spinner"></div>
       <p>{{ 'TESTIMONIALS.TRANSLATING' | translate }}</p>
     </div>
 
+    <!-- Carrusel de testimonios -->
     <div class="testimonials-carousel">
       <div class="carousel-wrapper">
         <button
@@ -44,13 +53,11 @@
             >
               <div class="testimonial-content">
                 <div class="quote-icon">"</div>
-                <!-- ✅ Traducción dinámica del texto del testimonio -->
                 <p class="testimonial-text">{{ getTranslatedText(i) }}</p>
                 <div class="testimonial-author">
                   <img [src]="testimonial.avatar" [alt]="testimonial.name" class="author-avatar" />
                   <div class="author-info">
                     <h4 class="author-name">{{ testimonial.name }}</h4>
-                    <!-- ✅ Traducción dinámica del título -->
                     <p class="author-title">{{ getTranslatedTitle(i) }}</p>
                   </div>
                 </div>

@@ -233,7 +233,25 @@
   "TESTIMONIALS": {
     "TITLE": "TESTIMONIALS",
     "SUBTITLE_PART1": "What our guests",
-    "SUBTITLE_PART2": "say about us"
+    "SUBTITLE_PART2": "say about us",
+    "SEE_MORE": "Click here to see more testimonials"
+  },
+  "VIDEO_TESTIMONIALS": {
+    "TITLE": "Video",
+    "HIGHLIGHT": "Testimonials",
+    "SUBTITLE": "Listen to what our guests and managers have to say about the hotel",
+    "VIDEO_TITLE": "Testimonial Short",
+    "SIDE_MESSAGE": "Managers are always happy to receive your feedback about the hotel",
+    "IMAGE_ALT": "Manager"
+  },
+  "MANAGERS_FEEDBACK": {
+    "TITLE": "Managers",
+    "HIGHLIGHT": "Feedback",
+    "SUBTITLE": "Before and after our renovations, hear what they say",
+    "LEFT_TITLE": "Before Renovations",
+    "LEFT_VIDEO_TITLE": "Before Renovations",
+    "RIGHT_TITLE": "After Renovations",
+    "RIGHT_VIDEO_TITLE": "After Renovations"
   },
   "SIGNUP": {
     "TITLE": "Create Account",

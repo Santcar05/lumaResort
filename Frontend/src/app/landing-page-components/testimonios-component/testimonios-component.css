@@ -1,10 +1,10 @@
 .testimonials-section {
   background: linear-gradient(135deg, #0a1a2f 0%, #1a3a5f 100%);
-  padding: 6rem 2rem;
+  padding: 1.5rem 1rem; /* padding vertical mínimo, horizontal sigue igual */
   position: relative;
   overflow: hidden;
   font-family: 'Arial', sans-serif;
-  height: 100vh;
+  height: auto; /* Ajusta a contenido, ya no ocupa 100vh */
 }
 
 .testimonials-container {
@@ -16,7 +16,7 @@
 
 .testimonials-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }
 
 .section-title {
@@ -315,5 +315,41 @@
 
   .floating-element {
     font-size: 1.5rem;
+  }
+}
+/* Contenedor para el botón de más testimonios */
+.more-testimonials {
+  display: flex; /* Contenedor flexible */
+  justify-content: center; /* Empuja el botón a la derecha */
+  margin-bottom: 2rem; /* Separación del carrusel */
+}
+
+/* Estilo del botón */
+.more-testimonials-btn {
+  background: #5aa8ff;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.more-testimonials-btn:hover {
+  background: #4a90e2;
+  transform: scale(1.05);
+}
+
+/* Para móviles, que no quede muy grande ni desalineado */
+@media (max-width: 768px) {
+  .more-testimonials {
+    justify-content: center; /* Centrar el botón en móviles */
+    margin-bottom: 1.5rem;
+  }
+
+  .more-testimonials-btn {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
   }
 }

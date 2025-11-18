@@ -21,6 +21,7 @@ import { EstadiaOperadorComponent } from './estadia-operador-component/estadia-o
 import { adminGuard, clienteGuard, operadorGuard, publicGuard } from './guards/auth.guard';
 import { AdminDashboardComponentComponent } from './admin-dashboard-component/admin-dashboard-component';
 import { ChatbotComponent } from './chatbot-component/chatbot-component';
+import { VideoTestimonialsComponent } from './video-testimonials/video-testimonials.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // por defecto muestra Landing
@@ -28,6 +29,7 @@ export const routes: Routes = [
   { path: 'signup', component: SignUpComponent, canActivate: [publicGuard] },
   { path: 'perfil/:id', component: PerfilComponent }, // muestra perfil
   { path: 'chatbot', component: ChatbotComponent }, // muestra chatbot
+  { path: 'video-testimonials', component: VideoTestimonialsComponent },
   {
     path: 'admin',
     component: AdminComponent,

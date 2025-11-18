@@ -3,6 +3,8 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AutoTranslateService } from '../../service/translation/auto-translate-service';
 import { Subscription, forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 interface Testimonial {
   text: string;
@@ -19,7 +21,7 @@ interface TranslatedTestimonial {
 @Component({
   selector: 'app-testimonios-component',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, RouterModule],
   templateUrl: './testimonios-component.html',
   styleUrls: ['./testimonios-component.css'],
 })
@@ -76,7 +78,8 @@ export class TestimoniosComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private translate: TranslateService,
-    private autoTranslate: AutoTranslateService
+    private autoTranslate: AutoTranslateService,
+    private router: Router
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
@@ -89,11 +92,9 @@ export class TestimoniosComponent implements OnInit, OnDestroy {
       this.startAutoPlay();
     }
 
-    // Traducir al idioma actual
     const currentLang = this.translate.currentLang ?? this.translate.getDefaultLang() ?? 'es';
     this.translateAllTestimonials(currentLang);
 
-    // Suscribirse a cambios de idioma
     this.langChangeSubscription = this.translate.onLangChange.subscribe((event) => {
       this.translateAllTestimonials(event.lang);
     });
@@ -111,19 +112,14 @@ export class TestimoniosComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * Traduce todos los testimonios al idioma especificado
-   */
   private translateAllTestimonials(targetLang: string): void {
     if (targetLang === 'es') {
-      // Si es español, limpiar traducciones
       this.translatedTestimonials.clear();
       return;
     }
 
     this.translating = true;
 
-    // Traducir cada testimonio
     const translations$ = this.testimonials.map((testimonial, index) => {
       return forkJoin({
         text: this.autoTranslate.translate(testimonial.text, targetLang),
@@ -131,7 +127,6 @@ export class TestimoniosComponent implements OnInit, OnDestroy {
       });
     });
 
-    // Ejecutar todas las traducciones en paralelo
     forkJoin(translations$).subscribe({
       next: (results) => {
         results.forEach((translation, index) => {
@@ -146,33 +141,22 @@ export class TestimoniosComponent implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * Obtiene el texto traducido del testimonio
-   */
   getTranslatedText(index: number): string {
     const currentLang = this.translate.currentLang ?? this.translate.getDefaultLang() ?? 'es';
-    if (currentLang === 'es') {
-      return this.testimonials[index].text;
-    }
+    if (currentLang === 'es') return this.testimonials[index].text;
     return this.translatedTestimonials.get(index)?.text || this.testimonials[index].text;
   }
 
-  /**
-   * Obtiene el título traducido del testimonio
-   */
   getTranslatedTitle(index: number): string {
     const currentLang = this.translate.currentLang ?? this.translate.getDefaultLang() ?? 'es';
-    if (currentLang === 'es') {
-      return this.testimonials[index].title;
-    }
+    if (currentLang === 'es') return this.testimonials[index].title;
     return this.translatedTestimonials.get(index)?.title || this.testimonials[index].title;
   }
 
-  // ========== Métodos del carrusel (sin cambios) ==========
+  // ========== Métodos del carrusel ==========
 
   calculateVisibleCards() {
     if (!this.isBrowser) return;
-
     if (window.innerWidth < 768) {
       this.visibleCards = 1;
     } else if (window.innerWidth < 1024) {
@@ -184,7 +168,6 @@ export class TestimoniosComponent implements OnInit, OnDestroy {
 
   startAutoPlay(): void {
     if (!this.isBrowser) return;
-
     this.autoPlayInterval = setInterval(() => {
       this.nextTestimonial();
     }, 5000);
@@ -221,9 +204,7 @@ export class TestimoniosComponent implements OnInit, OnDestroy {
   }
 
   selectTestimonial(index: number): void {
-    if (index >= this.currentIndex && index < this.currentIndex + this.visibleCards) {
-      return;
-    }
+    if (index >= this.currentIndex && index < this.currentIndex + this.visibleCards) return;
 
     let newIndex = index - Math.floor(this.visibleCards / 2);
     newIndex = Math.max(0, Math.min(newIndex, this.totalTestimonials - this.visibleCards));
@@ -246,5 +227,11 @@ export class TestimoniosComponent implements OnInit, OnDestroy {
 
   getTestimonialPosition(index: number): number {
     return index - this.currentIndex;
+  }
+
+  // =================== NUEVO MÉTODO ===================
+  goToVideoTestimonials() {
+    // Redirecciona a la nueva ruta 'video-testimonials'
+    this.router.navigate(['/video-testimonials']);
   }
 }

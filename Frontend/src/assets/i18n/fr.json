@@ -232,7 +232,25 @@
   "TESTIMONIALS": {
     "TITLE": "TÉMOIGNAGES",
     "SUBTITLE_PART1": "Ce que nos clients",
-    "SUBTITLE_PART2": "disent de nous"
+    "SUBTITLE_PART2": "disent de nous",
+    "SEE_MORE": "Cliquez ici pour voir plus de témoignages"
+  },
+  "VIDEO_TESTIMONIALS": {
+    "TITLE": "Témoignages en",
+    "HIGHLIGHT": "Vidéo",
+    "SUBTITLE": "Écoutez ce que nos clients et nos managers ont à dire sur l'hôtel",
+    "VIDEO_TITLE": "Témoignage court",
+    "SIDE_MESSAGE": "Les managers sont toujours heureux de recevoir vos retours sur l'hôtel",
+    "IMAGE_ALT": "Manager"
+  },
+  "MANAGERS_FEEDBACK": {
+    "TITLE": "Retour d'information des",
+    "HIGHLIGHT": "Managers",
+    "SUBTITLE": "Avant et après nos rénovations, écoutez ce qu'ils disent",
+    "LEFT_TITLE": "Avant les rénovations",
+    "LEFT_VIDEO_TITLE": "Avant les rénovations",
+    "RIGHT_TITLE": "Après les rénovations",
+    "RIGHT_VIDEO_TITLE": "Après les rénovations"
   },
   "SIGNUP": {
     "TITLE": "Créer un Compte",

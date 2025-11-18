@@ -1,0 +1,87 @@
+<app-header-component></app-header-component>
+
+<section class="video-testimonials-section">
+  <div class="video-testimonials-container">
+    <!-- Header similar al chatbot -->
+    <div class="video-header">
+      <h1 class="main-title">
+        {{ 'VIDEO_TESTIMONIALS.TITLE' | translate }}
+        <span class="highlight">{{ 'VIDEO_TESTIMONIALS.HIGHLIGHT' | translate }}</span>
+      </h1>
+      <p class="subtitle">
+        {{ 'VIDEO_TESTIMONIALS.SUBTITLE' | translate }}
+      </p>
+      <div class="title-divider"></div>
+    </div>
+
+    <!-- Sección principal de videos -->
+    <div class="video-testimonials-main">
+      <!-- Video a la izquierda -->
+      <div class="video-left">
+        <iframe
+          width="100%"
+          height="450"
+          src="https://www.youtube.com/embed/JxqFSaaXas4?rel=0"
+          title="{{ 'VIDEO_TESTIMONIALS.VIDEO_TITLE' | translate }}"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <!-- Imagen y mensaje a la derecha -->
+      <div class="video-right">
+        <p class="side-message">
+          {{ 'VIDEO_TESTIMONIALS.SIDE_MESSAGE' | translate }}
+        </p>
+        <img
+          src="assets/images/Lina.jpg"
+          alt="{{ 'VIDEO_TESTIMONIALS.IMAGE_ALT' | translate }}"
+          class="side-image"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="managers-feedback-section">
+  <div class="managers-feedback-container">
+    <!-- Header de la sección -->
+    <div class="feedback-header">
+      <h1 class="main-title">
+        {{ 'MANAGERS_FEEDBACK.TITLE' | translate }}
+        <span class="highlight">{{ 'MANAGERS_FEEDBACK.HIGHLIGHT' | translate }}</span>
+      </h1>
+      <p class="subtitle">{{ 'MANAGERS_FEEDBACK.SUBTITLE' | translate }}</p>
+      <div class="title-divider"></div>
+    </div>
+
+    <!-- Layout de videos con fondo completo -->
+    <div class="feedback-main-layout">
+      <!-- Izquierda: Antes -->
+      <div class="feedback-left">
+        <h2 class="feedback-subtitle">{{ 'MANAGERS_FEEDBACK.LEFT_TITLE' | translate }}</h2>
+        <iframe
+          width="100%"
+          height="400"
+          src="https://www.youtube.com/embed/B9glGNS0GCM?rel=0"
+          title="{{ 'MANAGERS_FEEDBACK.LEFT_VIDEO_TITLE' | translate }}"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <!-- Derecha: Después -->
+      <div class="feedback-right">
+        <h2 class="feedback-subtitle">{{ 'MANAGERS_FEEDBACK.RIGHT_TITLE' | translate }}</h2>
+        <iframe
+          width="100%"
+          height="400"
+          src="https://www.youtube.com/embed/AGniywX2aks?rel=0"
+          title="{{ 'MANAGERS_FEEDBACK.RIGHT_VIDEO_TITLE' | translate }}"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>

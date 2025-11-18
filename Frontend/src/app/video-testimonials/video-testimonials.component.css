@@ -1,0 +1,146 @@
+/* Evita que el header tape la sección */
+.video-testimonials-section,
+.managers-feedback-section {
+  padding-top: 120px; /* Ajusta según la altura de tu header */
+  padding-bottom: 2rem;
+  background: linear-gradient(to bottom, #0a1a2f 0%, #5aa8ff 50%, #0a1a2f 100%);
+}
+
+.video-testimonials-container,
+.managers-feedback-container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* Header estilo chatbot */
+.video-header,
+.feedback-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.main-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.main-title .highlight {
+  color: #277ee1;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  margin-top: 0.5rem;
+  color: #c9e2ff;
+}
+
+.title-divider {
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #4a90e2, #5aa8ff);
+  margin: 1rem auto 0;
+  border-radius: 2px;
+}
+
+/* Layout principal de videos */
+.video-testimonials-main,
+.feedback-main-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+/* Video a la izquierda y derecha */
+.video-left iframe,
+.feedback-left iframe,
+.feedback-right iframe {
+  border-radius: 14px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+}
+
+/* Imagen y mensaje a la derecha - mismo tamaño que video */
+.video-right .side-image {
+  width: 100%;
+  max-width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 2rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+}
+
+.video-right .side-message {
+  font-size: 1.4rem;
+  color: #c7e1ff;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Sección Feedback: fondo completo */
+.managers-feedback-section {
+  background-image: url('https://e00-telva.uecdn.es/assets/multimedia/imagenes/2020/04/08/15863625362813.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 58px 1rem 3rem; /* Evita que el header tape la sección */
+  color: #ffffff;
+}
+
+/* Textos más grandes para Antes/Después */
+.feedback-subtitle {
+  font-size: 2.2rem;
+  margin-bottom: 0.2rem;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .video-testimonials-main,
+  .feedback-main-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .video-left iframe,
+  .feedback-left iframe,
+  .feedback-right iframe,
+  .video-right .side-image {
+    height: 350px;
+  }
+
+  .main-title {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+
+  .feedback-subtitle {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .video-left iframe,
+  .feedback-left iframe,
+  .feedback-right iframe,
+  .video-right .side-image {
+    height: 280px;
+  }
+
+  .main-title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .feedback-subtitle {
+    font-size: 1.4rem;
+  }
+}

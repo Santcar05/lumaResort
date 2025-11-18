@@ -1,0 +1,45 @@
+<div class="modal-overlay" *ngIf="mostrarRuleta" (click)="onOverlayClick($event)">
+  <div class="ruleta-container" (click)="$event.stopPropagation()">
+    <!-- Header -->
+    <div class="ruleta-header">
+      <span class="section-label">¡FELICIDADES!</span>
+      <h2 class="ruleta-title">Gira la Ruleta de <span class="highlight">Premios</span></h2>
+      <p class="ruleta-subtitle">¡Obtén beneficios exclusivos para tu reserva!</p>
+    </div>
+
+    <!-- Loading Ofertas -->
+    <div class="cargando-ofertas" *ngIf="cargandoOfertas">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Cargando ofertas...</p>
+    </div>
+
+    <!-- Ruleta Circular -->
+    <div class="ruleta-wheel-container" *ngIf="!cargandoOfertas">
+      <div class="wheel-pointer">▼</div>
+      <canvas #ruletaCanvas class="ruleta-canvas"></canvas>
+      <div class="wheel-center">
+        <span class="center-icon">🎯</span>
+      </div>
+    </div>
+
+    <!-- Estado de giro -->
+    <div class="girando-indicator" *ngIf="girando && !mostrarResultado">
+      <div class="loading-spinner"></div>
+      <p class="girando-text">¡Girando la ruleta!</p>
+    </div>
+
+    <!-- Resultado -->
+    <div class="resultado-container" *ngIf="mostrarResultado && premioGanado">
+      <div class="resultado-card">
+        <div class="resultado-icon">{{ premioGanado.icono }}</div>
+        <h3 class="resultado-titulo">¡Has Ganado!</h3>
+        <p class="resultado-premio">{{ premioGanado.titulo }}</p>
+        <p class="resultado-descripcion">{{ premioGanado.descripcion }}</p>
+        <button class="btn-aceptar" (click)="cerrarRuleta()">
+          <span class="btn-icon">✓</span>
+          Reclamar Premio
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

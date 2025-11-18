@@ -14,6 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.lumaresort.dto.ActualizarReservaRequest;
 import com.example.lumaresort.entities.Habitacion;
+import com.example.lumaresort.entities.OfertaFlash;
 import com.example.lumaresort.entities.Reserva;
 import com.example.lumaresort.entities.Servicio;
 import com.example.lumaresort.entities.Usuario;
@@ -30,6 +32,7 @@ import com.example.lumaresort.repository.HabitacionRepository;
 import com.example.lumaresort.repository.ReservaRepository;
 import com.example.lumaresort.repository.ServicioRepository;
 import com.example.lumaresort.repository.UsuarioRepository;
+import com.example.lumaresort.service.OfertaFlashService;
 import com.example.lumaresort.service.ReservaService;
 
 @RestController
@@ -47,6 +50,8 @@ public class ReservaController {
     private HabitacionRepository habitacionRepository;
     @Autowired
     private ServicioRepository servicioRepository;
+    @Autowired
+    private OfertaFlashService ofertaFlashService;
 
     @GetMapping
     public List<Reserva> getAll() {
@@ -406,5 +411,25 @@ public class ReservaController {
 
         System.out.println("Es el dueño: " + esElDueno);
         return esElDueno;
+    }
+
+    // Agregar este endpoint:
+    @PatchMapping("/{id}/aplicar-oferta/{ofertaId}")
+    public ResponseEntity<Reserva> aplicarOferta(
+            @PathVariable Long id,
+            @PathVariable Long ofertaId) {
+        Reserva reserva = reservaService.findById(id);
+        OfertaFlash oferta = ofertaFlashService.findById(ofertaId);
+
+        reserva.setOfertaFlash(oferta);
+
+        // Calcular descuento si aplica
+        if (oferta.getTipoOferta() == OfertaFlash.TipoOferta.DESCUENTO_HABITACION) {
+            double descuento = reserva.getHabitacion().getPrecioPorNoche()
+                    * (oferta.getPorcentajeDescuento() / 100.0);
+            reserva.setDescuentoAplicado(descuento);
+        }
+
+        return ResponseEntity.ok(reservaService.actualizar(reserva));
     }
 }

@@ -378,6 +378,14 @@
           <button class="btn-modal-close" (click)="cerrarModal()">Entendido</button>
         </div>
       </div>
+
+      <!-- 🎡 Ruleta de Premios -->
+      <app-ruleta-component
+        *ngIf="mostrarRuleta"
+        (premioSeleccionado)="onPremioSeleccionado($event)"
+        (cerrar)="onCerrarRuleta()"
+      >
+      </app-ruleta-component>
     </div>
   </div>
 </div>

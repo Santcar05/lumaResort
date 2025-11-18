@@ -13,6 +13,7 @@ import { Usuario } from '../Models/Usuario';
 
 // Componentes
 import { HeaderComponent } from '../generales-components/header-component/header-component';
+import { RuletaComponent } from '../ruleta-component/ruleta-component';
 
 // Servicios
 import { AuthService } from '../service/auth/auth.service';
@@ -20,12 +21,11 @@ import { AuthService } from '../service/auth/auth.service';
 @Component({
   selector: 'app-reservas',
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent],
+  imports: [CommonModule, FormsModule, HeaderComponent, RuletaComponent],
   templateUrl: './reservas-component.html',
   styleUrls: ['./reservas-component.css'],
 })
 export class ReservasComponent implements OnInit {
-  
   // Datos del formulario
   fechaInicio: string = '';
   fechaFin: string = '';
@@ -49,7 +49,9 @@ export class ReservasComponent implements OnInit {
   errorMsg = '';
   procesando = false;
   mostrarExito = false;
+  mostrarRuleta = false;
   reservaCreada: Reserva | null = null;
+  premioGanado = '';
 
   /** ------------------ CONVERSOR DE MONEDAS ------------------ **/
   monedas = [
@@ -173,7 +175,6 @@ export class ReservasComponent implements OnInit {
   }
 
   /** ------------------ FILTRO DE DISPONIBILIDAD ------------------ **/
-  // Nueva función: consulta al backend las habitaciones disponibles en las fechas seleccionadas
   filtrarHabitacionesDisponibles(): void {
     if (!this.fechaInicio || !this.fechaFin) {
       return;
@@ -213,7 +214,7 @@ export class ReservasComponent implements OnInit {
         console.error('Error al cargar habitaciones disponibles:', err);
         this.errorMsg = 'Error al cargar habitaciones disponibles';
         this.habitacionesFiltradas = [];
-      }
+      },
     });
   }
 
@@ -266,6 +267,7 @@ export class ReservasComponent implements OnInit {
   }
 
   /** ------------------ RESERVA ------------------ **/
+  // En el método realizarReserva(), después de recibir la respuesta:
   realizarReserva(): void {
     if (!this.puedeReservar() || this.procesando) return;
     this.procesando = true;
@@ -294,8 +296,52 @@ export class ReservasComponent implements OnInit {
         if (response) {
           this.reservaCreada = response;
           this.mostrarExito = true;
+
+          setTimeout(() => {
+            this.mostrarExito = false;
+            this.mostrarRuleta = true;
+          }, 2000);
         }
       });
+  }
+
+  /** ------------------ MANEJO DE RULETA ------------------ **/
+  onPremioSeleccionado(premio: any): void {
+    // Si es un string, úsalo directamente
+    if (typeof premio === 'string') {
+      this.premioGanado = premio;
+    }
+    // Si es un objeto OfertaFlash, extrae la propiedad nombre
+    else if (premio && premio.nombre) {
+      this.premioGanado = premio.nombre;
+    }
+    // Si tiene otra estructura, manéjalo según corresponda
+    else if (premio && premio.descripcion) {
+      this.premioGanado = premio.descripcion;
+    }
+
+    console.log('🎉 Premio ganado:', this.premioGanado);
+  }
+
+  onCerrarRuleta(): void {
+    this.mostrarRuleta = false;
+
+    // Redirigir a "Ver Reservas" después de cerrar la ruleta
+    setTimeout(() => {
+      this.router.navigate(['/ver-reservas']); // Ajusta la ruta según tu configuración
+    }, 300);
+  }
+
+  /** ------------------ GUARDAR PREMIO (OPCIONAL) ------------------ **/
+  guardarPremioEnReserva(idReserva: number | undefined, premio: string): void {
+    if (!idReserva) return;
+
+    const url = `${this.baseUrlReservas}/${idReserva}/premio`;
+
+    this.http.patch(url, { premio }).subscribe({
+      next: () => console.log('✅ Premio guardado en la reserva'),
+      error: (err) => console.error('❌ Error al guardar premio:', err),
+    });
   }
 
   /** ------------------ UTILIDADES ------------------ **/
@@ -315,7 +361,8 @@ export class ReservasComponent implements OnInit {
 
   cerrarModal(): void {
     this.mostrarExito = false;
-    this.limpiarFormulario();
+    // Mostrar ruleta inmediatamente al cerrar el modal manualmente
+    this.mostrarRuleta = true;
   }
 
   volver(): void {

@@ -37,6 +37,10 @@ public class ReservaService {
         return reservaRepository.save(reserva);
     }
 
+    public Reserva actualizar(Reserva reserva) {
+        return reservaRepository.save(reserva);
+    }
+
     public void delete(Reserva reserva) {
         reservaRepository.delete(reserva);
     }

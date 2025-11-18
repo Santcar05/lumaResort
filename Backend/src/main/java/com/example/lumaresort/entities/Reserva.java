@@ -66,6 +66,13 @@ public class Reserva {
     @Builder.Default
     private List<Servicio> servicios = new ArrayList<>();
 
+    // Agregar en la clase Reserva:
+    @ManyToOne
+    @JoinColumn(name = "oferta_flash_id")
+    private OfertaFlash ofertaFlash;
+
+    private Double descuentoAplicado = 0.0;
+
     public Reserva(Date fechaInicio, Date fechaFin, Integer cantidadPersonas, String estado, Usuario cliente, Habitacion habitacion) {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -88,15 +95,15 @@ public class Reserva {
 
     @Override
     public String toString() {
-        return "Reserva{" +
-                "idReserva=" + idReserva +
-                ", fechaInicio=" + fechaInicio +
-                ", fechaFin=" + fechaFin +
-                ", cantidadPersonas=" + cantidadPersonas +
-                ", estado='" + estado + '\'' +
-                ", habitacionId=" + (habitacion != null ? habitacion.getIdHabitacion() : null) +
-                ", usuarioId=" + (usuario != null ? usuario.getIdUsuario() : null) +
-                ", serviciosCount=" + (servicios != null ? servicios.size() : 0) +
-                '}';
+        return "Reserva{"
+                + "idReserva=" + idReserva
+                + ", fechaInicio=" + fechaInicio
+                + ", fechaFin=" + fechaFin
+                + ", cantidadPersonas=" + cantidadPersonas
+                + ", estado='" + estado + '\''
+                + ", habitacionId=" + (habitacion != null ? habitacion.getIdHabitacion() : null)
+                + ", usuarioId=" + (usuario != null ? usuario.getIdUsuario() : null)
+                + ", serviciosCount=" + (servicios != null ? servicios.size() : 0)
+                + '}';
     }
 }
